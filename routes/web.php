@@ -63,7 +63,9 @@ Route::get('/karir', 'webpageController@karir');
 // Dashboard data url
 Route::group(['middleware' => ['islogin']], function () {
     Route::get('/tool', function () {
-        return Redirect::to('/tools');
+        return Redirect::to('/tools/{any}');
     });
-    Route::get('/tools', 'DashboardController@index');
+    Route::get('/tools/{any}', function () {
+        return view('dashboard.layout');
+    })->where('any', '.*');
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class authController extends Controller
 {
@@ -14,7 +15,7 @@ class authController extends Controller
     }
     public function loginProcess(Request $request)
     {
-        $tokens = str_random(50);
+        $tokens = Str::random(50);
         $email = $request->email;
         $password = $request->pass;
         $check = DB::table('users')
