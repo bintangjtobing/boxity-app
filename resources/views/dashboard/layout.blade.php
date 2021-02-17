@@ -276,7 +276,7 @@
                                                 <span data-feather="settings"></span> Settings</a>
                                         </li>
                                     </ul>
-                                    <a href="" class="nav-author__signout">
+                                    <a href="/sign-out" class="nav-author__signout">
                                         <span data-feather="log-out"></span> Sign Out</a>
                                 </div>
                             </div>

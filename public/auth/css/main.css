@@ -238,7 +238,7 @@ iframe {
     background: #252525;
     border-radius: 10px;
     overflow: hidden;
-    padding: 33px 55px 33px 55px;
+    padding: 33px 33px 33px 33px;
 
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -285,7 +285,7 @@ iframe {
 .input100 {
     font-family: Poppins-Regular;
     font-size: 15px;
-    color: #555555;
+    color: #fff;
     line-height: 1.2;
 
     display: block;

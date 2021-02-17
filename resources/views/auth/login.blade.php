@@ -33,11 +33,21 @@
                 Your browser does not support HTML5 video.
             </video>
             <div class="wrap-login100">
-                <form class="login100-form validate-form">
+                <?php $tokens=bin2hex(openssl_random_pseudo_bytes(64));?>
+                @if(session('gagal'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{session('gagal')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+                <form action="/login/{{$tokens}}" method="POST" class="login100-form validate-form">
+                    {{ csrf_field() }}
                     <span class="login100-form-title p-b-16">
                         Welcome to<br>BTSA LOGISTICS
                     </span>
-                    <span class="login100-form-title">
+                    <span class="login100-form-title p-b-40">
                         <img src="{!!asset('faviconv2.ico')!!}" alt="BTSA LOGISTICS Authentication">
                     </span>
 

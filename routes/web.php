@@ -26,8 +26,9 @@ Route::get('/clear-view', function () {
     $exitCode = Artisan::call('view:clear');
     return redirect('/');
 });
-Route::get('/newissue', function () {
-    return view('emails.sites.newIssue');
+Route::get('/sign-out', function () {
+    session()->flush();
+    return redirect('/tool');
 });
 
 // Social Media Redirect
@@ -45,7 +46,12 @@ Route::get('/wikipedia', function () {
 });
 
 // Auth url
-Route::get('/login', 'authController@index');
+Route::get('/login', function () {
+    $tokens = bin2hex(openssl_random_pseudo_bytes(64));
+    return Redirect::to('/login/' . $tokens);
+});
+Route::get('/login/{tokens}', 'authController@index');
+Route::post('/login/{tokens}', 'authController@loginProcess');
 
 // Homepage Data
 Route::get('/', 'webpageController@index');
@@ -55,4 +61,9 @@ Route::get('/galeri', 'webpageController@galeri');
 Route::get('/karir', 'webpageController@karir');
 
 // Dashboard data url
-Route::get('/tools', 'DashboardController@index');
+Route::group(['middleware' => ['islogin']], function () {
+    Route::get('/tool', function () {
+        return Redirect::to('/tools');
+    });
+    Route::get('/tools', 'DashboardController@index');
+});
