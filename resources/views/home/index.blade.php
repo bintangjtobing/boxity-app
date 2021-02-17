@@ -34,7 +34,7 @@
 
     <!-- Document Title
 	============================================= -->
-    <title>@yield('titlepage') | BTSA LOGISTICS PPJK | EMKL | EMKU</title>
+    <title>@yield('titlepage') - BTSA LOGISTICS PPJK | EMKL | EMKU</title>
     <link rel="shortcut icon" href="{!!asset('faviconv2.ico')!!}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description"

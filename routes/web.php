@@ -48,8 +48,11 @@ Route::get('/wikipedia', function () {
 Route::get('/login', 'authController@index');
 
 // Homepage Data
-Route::get('/', 'DashboardController@index');
-Route::get('/tentang-kami', 'DashboardController@tentangkami');
-Route::get('/blog', 'DashboardController@blog');
-Route::get('/galeri', 'DashboardController@galeri');
-Route::get('/karir', 'DashboardController@karir');
+Route::get('/', 'webpageController@index');
+Route::get('/tentang-kami', 'webpageController@tentangkami');
+Route::get('/blog', 'webpageController@blog');
+Route::get('/galeri', 'webpageController@galeri');
+Route::get('/karir', 'webpageController@karir');
+
+// Dashboard data url
+Route::get('/tools', 'DashboardController@index');
