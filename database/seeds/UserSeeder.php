@@ -18,6 +18,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 1,
             'role' => User::ROLES['ADMIN'],
+            'username' => 'admin',
+            'divisi' => 'developer',
             'status' => 1,
             'name' => 'admin',
             'email' => 'admin@admin.com',
@@ -29,6 +31,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 2,
             'role' => User::ROLES['USER'],
+            'username' => 'user',
+            'divisi' => 'developer',
             'status' => 1,
             'name' => 'user',
             'email' => 'user@user.com',

@@ -6,6 +6,8 @@ use Database\Seeders\DomisilisSeeder;
 use Database\Seeders\KelurahansSeeder;
 use Database\Seeders\ProvincesSeeder;
 use Database\Seeders\KecamatansSeeder;
+use Database\Seeders\AgamaSeeder;
+use Database\Seeders\SukuSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(KelurahansSeeder::class);
         $this->call(ProvincesSeeder::class);
         $this->call(KecamatansSeeder::class);
+        $this->call(SukuSeeder::class);
+        $this->call(AgamaSeeder::class);
     }
 }
