@@ -44,6 +44,9 @@ Route::get('/wikipedia', function () {
     return Redirect::to('https://id.wikipedia.org/wiki/Pengguna:Btsalogistics');
 });
 
+// Auth url
+Route::get('/login', 'authController@index');
+
 // Homepage Data
 Route::get('/', 'DashboardController@index');
 Route::get('/tentang-kami', 'DashboardController@tentangkami');
