@@ -2,7 +2,7 @@ const toastButtons = document.querySelectorAll('.btn-toast');
   let toastCount = 0;
   function createToast(type,icon,close){
     let toast = ``;
-    
+
     console.log(icon)
     const notificationShocase = $('.notification-wrapper');
     if(type == "default"){
@@ -17,7 +17,7 @@ const toastButtons = document.querySelectorAll('.btn-toast');
             </div>
         </div>
         <a href="#" class="atbd-notification-box__close" data-toast="close">
-            <span data-feather="x"></span>
+            <i data-feather="x"></i>
         </a>
       </div>
       `;
@@ -26,7 +26,7 @@ const toastButtons = document.querySelectorAll('.btn-toast');
       <div class="atbd-notification-box notification-${type} notification-${toastCount}">
         <div class="atbd-notification-box__content media">
             <div class="atbd-notification-box__icon">
-                <span data-feather="${icon}"></span>
+                <i data-feather="${icon}"></i>
             </div>
             <div class="atbd-notification-box__text media-body">
                 <h6>Notification Title</h6>
@@ -36,7 +36,7 @@ const toastButtons = document.querySelectorAll('.btn-toast');
             </div>
         </div>
         <a href="#" class="atbd-notification-box__close" data-toast="close">
-            <span data-feather="x"></span>
+            <i data-feather="x"></i>
         </a>
     </div>
     `;
@@ -57,23 +57,23 @@ const toastButtons = document.querySelectorAll('.btn-toast');
                 </div>
             </div>
             <a href="#" class="atbd-notification-box__close" data-toast="close">
-                <span data-feather="x"></span>
+                <i data-feather="x"></i>
             </a>
         </div>
         `
     }
-    
+
     notificationShocase.append(toast);
     toastCount++;
   }
   function showNotification(e){
     e.preventDefault();
-    
+
     let duration = (optionValue, defaultValue) =>
       typeof optionValue === "undefined" ? defaultValue : optionValue;
 
     dureation = this.dataset.toastduration;
-    
+
     let toastType = this.dataset.toasttype;
     let toastIcon = this.dataset.toasticon;
     let customClose = this.dataset.customclose;
@@ -102,34 +102,34 @@ if(placementSelect){
         let selectElement = (typeof this.selectedIndex === "undefined" ? window.event.srcElement : this);
         var selectValue = selectElement.value || selectElement.options[selectElement.selectedIndex].value;
         switch (selectValue) {
-            case "tl":  
+            case "tl":
                 notificationWrapper.classList.add('top-left');
                 notificationWrapper.classList.remove('top-right');
                 notificationWrapper.classList.remove('bottom-left');
                 notificationWrapper.classList.remove('bottom-right');
                 break;
-            
-            case "tr": 
+
+            case "tr":
                 notificationWrapper.classList.remove('top-right');
                 notificationWrapper.classList.add('top-right');
                 notificationWrapper.classList.remove('bottom-left');
                 notificationWrapper.classList.remove('bottom-right');
                 break;
-            
-            case "bl": 
+
+            case "bl":
                 notificationWrapper.classList.remove('bottom-left');
                 notificationWrapper.classList.remove('top-right');
                 notificationWrapper.classList.add('bottom-left');
                 notificationWrapper.classList.remove('bottom-right');
                 break;
-    
-            case "br": 
+
+            case "br":
                 notificationWrapper.classList.remove('bottom-right');
                 notificationWrapper.classList.remove('top-right');
                 notificationWrapper.classList.remove('bottom-left');
                 notificationWrapper.classList.add('bottom-right');
                 break;
-            
+
             default: break;
         }
     }

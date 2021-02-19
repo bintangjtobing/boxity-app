@@ -1,53 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ mix('css/asset.css') }}" type="text/css" rel="stylesheet" />
+    <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BTSA LOGISTICS</title>
     <link rel="shortcut icon" href="{!!asset('faviconv2.ico')!!}">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/bootstrap/bootstrap.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/daterangepicker.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/fontawesome.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/fullcalendar@5.2.0.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/jquery-jvectormap-2.0.5.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/jquery.mCustomScrollbar.min.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/leaflet.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/line-awesome.min.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/magnific-popup.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/MarkerCluster.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/MarkerCluster.Default.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/select2.min.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/slick.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/star-rating-svg.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/trumbowyg.min.css')!!}">
-
-    <link rel="stylesheet" href="{!!asset('dashboard/assets/vendor_assets/css/wickedpicker.min.css')!!}">
-
     <link rel="stylesheet" href="{!!asset('dashboard/style.css')!!}">
 </head>
 
-<body class="layout-light side-menu" data-app>
+<body class="layout-light side-menu">
     <div class="mobile-search"></div>
-
     <div class="mobile-author-actions"></div>
     <header class="header-top">
         <nav class="navbar navbar-light">
@@ -59,13 +26,12 @@
                         alt="logo BTSA Logistics"></a>
             </div>
             <!-- ends: navbar-left -->
-
             <div class="navbar-right">
                 <ul class="navbar-right__menu">
                     <li class="nav-message">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle">
-                                <span data-feather="mail"></span></a>
+                                <i data-feather="mail"></i></a>
                             <div class="dropdown-wrapper">
                                 <h2 class="dropdown-wrapper__title">Messages <span
                                         class="badge-circle badge-success ml-1">2</span></h2>
@@ -81,7 +47,8 @@
                                                 <span class="time-posted">3 hrs ago</span>
                                             </p>
                                             <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem ipsum
+                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
+                                                    ipsum
                                                     dolor amet cosec Lorem ipsum</span>
                                                 <span class="msg-count badge-circle badge-success badge-sm">1</span>
                                             </p>
@@ -98,7 +65,8 @@
                                                 <span class="time-posted">3 hrs ago</span>
                                             </p>
                                             <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem ipsum
+                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
+                                                    ipsum
                                                     dolor amet cosec Lorem ipsum</span>
                                                 <span class="msg-count badge-circle badge-success badge-sm">1</span>
                                             </p>
@@ -115,7 +83,8 @@
                                                 <span class="time-posted">3 hrs ago</span>
                                             </p>
                                             <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem ipsum
+                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
+                                                    ipsum
                                                     dolor amet cosec Lorem ipsum</span>
                                                 <span class="msg-count badge-circle badge-success badge-sm">1</span>
                                             </p>
@@ -132,7 +101,8 @@
                                                 <span class="time-posted">3 hrs ago</span>
                                             </p>
                                             <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem ipsum
+                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
+                                                    ipsum
                                                     dolor amet cosec Lorem ipsum</span>
                                             </p>
                                         </div>
@@ -148,7 +118,8 @@
                                                 <span class="time-posted">3 hrs ago</span>
                                             </p>
                                             <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem ipsum
+                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
+                                                    ipsum
                                                     dolor amet cosec Lorem ipsum</span>
                                             </p>
                                         </div>
@@ -162,7 +133,7 @@
                     <li class="nav-notification">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle">
-                                <span data-feather="bell"></span></a>
+                                <i data-feather="bell"></i></a>
                             <div class="dropdown-wrapper">
                                 <h2 class="dropdown-wrapper__title">Notifications <span
                                         class="badge-circle badge-warning ml-1">4</span></h2>
@@ -170,7 +141,7 @@
                                     <li
                                         class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
                                         <div class="nav-notification__type nav-notification__type--primary">
-                                            <span data-feather="inbox"></span>
+                                            <i data-feather="inbox"></i>
                                         </div>
                                         <div class="nav-notification__details">
                                             <p>
@@ -186,7 +157,7 @@
                                     <li
                                         class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
                                         <div class="nav-notification__type nav-notification__type--secondary">
-                                            <span data-feather="upload"></span>
+                                            <i data-feather="upload"></i>
                                         </div>
                                         <div class="nav-notification__details">
                                             <p>
@@ -202,7 +173,7 @@
                                     <li
                                         class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
                                         <div class="nav-notification__type nav-notification__type--success">
-                                            <span data-feather="log-in"></span>
+                                            <i data-feather="log-in"></i>
                                         </div>
                                         <div class="nav-notification__details">
                                             <p>
@@ -217,7 +188,7 @@
                                     </li>
                                     <li class="nav-notification__single nav-notification__single d-flex flex-wrap">
                                         <div class="nav-notification__type nav-notification__type--info">
-                                            <span data-feather="at-sign"></span>
+                                            <i data-feather="at-sign"></i>
                                         </div>
                                         <div class="nav-notification__details">
                                             <p>
@@ -232,7 +203,7 @@
                                     </li>
                                     <li class="nav-notification__single nav-notification__single d-flex flex-wrap">
                                         <div class="nav-notification__type nav-notification__type--danger">
-                                            <span data-feather="heart"></span>
+                                            <i data-feather="heart"></i>
                                         </div>
                                         <div class="nav-notification__details">
                                             <p>
@@ -253,32 +224,32 @@
                     <li class="nav-author">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle"><img
-                                    src="{!!asset('dashboard/img/author/profile/5.jpg')!!}" alt=""
-                                    class="rounded-circle"></a>
+                                    src="{!!asset('dashboard/img/author/profile/'.auth()->user()->avatar)!!}"
+                                    alt="User avatar" class="rounded-circle"></a>
                             <div class="dropdown-wrapper">
                                 <div class="nav-author__info">
                                     <div class="author-img">
-                                        <img src="{!!asset('dashboard/img/author/profile/5.jpg')!!}" alt=""
-                                            class="rounded-circle">
+                                        <img src="{!!asset('dashboard/img/author/profile/'.auth()->user()->avatar)!!}"
+                                            alt="User avatar" class="rounded-circle">
                                     </div>
                                     <div>
-                                        <h6>Bintang Tobing</h6>
-                                        <span>Developer</span>
+                                        <h6>{{auth()->user()->name}}</h6>
+                                        <span>{{auth()->user()->divisi}}</span>
                                     </div>
                                 </div>
                                 <div class="nav-author__options">
                                     <ul>
                                         <li>
                                             <a href="">
-                                                <span data-feather="user"></span> Profile</a>
+                                                <i data-feather="user"></i> Profile</a>
                                         </li>
                                         <li>
                                             <a href="">
-                                                <span data-feather="settings"></span> Settings</a>
+                                                <i data-feather="settings"></i> Settings</a>
                                         </li>
                                     </ul>
                                     <a href="/sign-out" class="nav-author__signout">
-                                        <span data-feather="log-out"></span> Sign Out</a>
+                                        <i data-feather="log-out"></i> Sign Out</a>
                                 </div>
                             </div>
                             <!-- ends: .dropdown-wrapper -->
@@ -289,7 +260,6 @@
         </nav>
     </header>
     <main class="main-content">
-
         <aside class="sidebar">
             <div class="sidebar__menu-group">
                 <ul class="sidebar_nav">
@@ -297,14 +267,14 @@
                         <span>Main menu</span>
                     </li>
                     <li>
-                        <a href="/tools" class="active">
-                            <span data-feather="home" class="nav-icon"></span>
+                        <a href="/tools" active-class="mm-active">
+                            <i data-feather="home" class="nav-icon"></i>
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/tools/version-control" class="">
-                            <span data-feather="activity" class="nav-icon"></span>
+                        <a href="/version-control" active-class="mm-active">
+                            <i data-feather="activity" class="nav-icon"></i>
                             <span class="menu-text">Version control</span>
                             <span class="badge badge-primary menuItem">3.0.0</span>
                         </a>
@@ -313,67 +283,65 @@
                         <span>Applications</span>
                     </li>
                     <li>
-                        <a href="/tools/users" class="">
-                            <span data-feather="users" class="nav-icon"></span>
+                        <a href="/users" active-class="mm-active">
+                            <i data-feather="users" class="nav-icon"></i>
                             <span class="menu-text">Users management</span>
                         </a>
                     </li>
                     <li class="has-child">
                         <a href="#" class="">
-                            <span data-feather="rss" class="nav-icon"></span>
-                            <span class="menu-text">Human resources management</span>
+                            <i data-feather="rss" class="nav-icon"></i>
+                            <span class="menu-text">Human resources</span>
                             <span class="toggle-icon"></span>
                         </a>
                         <ul>
                             <li>
-                                <a class="" href="/tools/career">Career</a>
+                                <a active-class="mm-active" href="/career">Career</a>
                             </li>
                             <li>
-                                <a class="" href="/tools/candidate">Candidate</a>
+                                <a active-class="mm-active" href="/candidate">Candidate</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/tools/issues" class="">
-                            <span data-feather="file-text" class="nav-icon"></span>
-                            <span class="menu-text">Issue reports</span>
+                        <a href="/issues" active-class="mm-active">
+                            <i data-feather="headphones" class="nav-icon"></i>
+                            <span class="menu-text">Issue center</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/tools/quote" class="">
-                            <span data-feather="star" class="nav-icon"></span>
+                    {{-- <li>
+                        <a href="/quote" active-class="mm-active">
+                            <i data-feather="star" class="nav-icon"></i>
                             <span class="menu-text">Quote report</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
-                        <a href="/tools/gallery" class="">
-                            <span data-feather="image" class="nav-icon"></span>
+                        <a href="/gallery" active-class="mm-active">
+                            <i data-feather="image" class="nav-icon"></i>
                             <span class="menu-text">Gallery</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/tools/blog" class="">
-                            <span data-feather="package" class="nav-icon"></span>
+                        <a href="/blog-management" active-class="mm-active">
+                            <i data-feather="package" class="nav-icon"></i>
                             <span class="menu-text">Blog</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/tools/track-delivery" class="">
-                            <span data-feather="map" class="nav-icon"></span>
+                        <a href="/track-delivery" active-class="mm-active">
+                            <i data-feather="map" class="nav-icon"></i>
                             <span class="menu-text">Track delivery</span>
                         </a>
                     </li>
                 </ul>
             </div>
         </aside>
-
-        <div class="contents">
-
-            <div class="container-fluid">
-                <div id="app"></div>
-                <script src="{{asset('js/app.js')}}"></script>
+        <div id="App">
+            <div class="contents">
+                <div class="container-fluid">
+                    <router-view></router-view>
+                </div>
             </div>
-
         </div>
         <footer class="footer-wrapper">
             <div class="container-fluid">
@@ -381,7 +349,8 @@
                     <div class="col-md-6">
                         <div class="footer-copyright">
                             <?php $y = Date('Y'); ?>
-                            <p>&copy; Copyright {{$y}} -<a href="/" target="_blank">BTSA LOGISTICS</a> | All reserved
+                            <p>&copy; Copyright {{$y}} -<a href="/" target="_blank">BTSA LOGISTICS</a> | All
+                                reserved
                                 by<a href="https://infinitysolutions.co.id">Infinity Solutions</a>
                             </p>
                         </div>
@@ -408,7 +377,6 @@
     <div class="customizer-overlay"></div>
 
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
-    <!-- inject:js-->
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-3.5.1.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-ui.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/bootstrap/popper.js')!!}"></script>
@@ -421,7 +389,6 @@
     <script src="{!!asset('dashboard/assets/vendor_assets/js/drawer.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/dynamicBadge.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/dynamicCheckbox.js')!!}"></script>
-    <script src="{!!asset('dashboard/assets/vendor_assets/js/feather.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/fullcalendar@5.2.0.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/google-chart.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery-jvectormap-2.0.5.min.js')!!}"></script>
@@ -444,14 +411,17 @@
     <script src="{!!asset('dashboard/assets/vendor_assets/js/slick.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/trumbowyg.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/wickedpicker.min.js')!!}"></script>
-    <script src="{!!asset('dashboard/assets/theme_assets/js/drag-drop.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/full-calendar.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/googlemap-init.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/icon-loader.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/jvectormap-init.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/leaflet-init.js')!!}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/main.js')!!}"></script>
-    <!-- endinject-->
+    <script>
+        feather.replace()
+
+    </script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 @extends('home.index')
 @section('activetentang','active')
+@section('titlepage','Tentang kami')
 @section('content')
 <section id="page-title" class="page-title-mini">
     <div class="container clearfix">

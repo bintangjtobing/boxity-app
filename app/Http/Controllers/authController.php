@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class authController extends Controller
 {
@@ -15,21 +18,12 @@ class authController extends Controller
     }
     public function loginProcess(Request $request)
     {
-        $tokens = Str::random(50);
-        $email = $request->email;
-        $password = $request->pass;
-        $check = DB::table('users')
-            ->where('email', $email)
-            ->first();
-
-        if ($check && HASH::check($password, $check->password)) {
-            $check->isLogin = 'login';
-            $check = (array)$check;
-            session($check);
-
+        $request->merge(['status' => '1']);
+        if (Auth::attempt($request->only('email', 'password', 'status'))) {
+            $user = User::where(['email' => $request->email])->first();
+            Auth::loginUsingId($user->id, TRUE);
             return redirect('/tool');
         }
-
-        return back()->with('gagal', 'Please check your auth status or your input!');
+        return back()->with('gagal', ' Please check your auth status or your input!');
     }
 }

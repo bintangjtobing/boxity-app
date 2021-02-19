@@ -28,5 +28,9 @@
         "vue-loader": "^15.9.6",
         "vue-template-compiler": "^2.6.10",
         "webpack": "^5.22.0"
+    },
+    "dependencies": {
+        "vue-axios": "^3.2.4",
+        "vue-router": "^3.5.1"
     }
 }
