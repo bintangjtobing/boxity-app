@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{!!asset('dashboard/style.css')!!}">
 </head>
 
-<body class="layout-light side-menu">
+<body class="side-menu">
     <div class="mobile-search"></div>
     <div class="mobile-author-actions"></div>
     <header class="header-top">
@@ -28,6 +28,11 @@
             <!-- ends: navbar-left -->
             <div class="navbar-right">
                 <ul class="navbar-right__menu">
+                    <li>
+                        <button class="btn" onclick="turnOnDarkMode()"><span>
+                                <div id="sunmoon" class="fas fa-moon"></div>
+                            </span></button>
+                    </li>
                     <li class="nav-message">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle">
@@ -420,6 +425,20 @@
     <script src="{!!asset('dashboard/assets/theme_assets/js/main.js')!!}"></script>
     <script>
         feather.replace()
+
+    </script>
+    <script type="text/javascript">
+        function turnOnDarkMode() {
+            if ($('#sunmoon').hasClass('fa-moon')) {
+                $('#sunmoon').removeClass('fa-moon');
+                $('#sunmoon').addClass('fa-sun');
+            } else {
+                $('#sunmoon').removeClass('fa-sun');
+                $('#sunmoon').addClass('fa-moon');
+            }
+            var darkMode = document.body;
+            darkMode.classList.toggle('layout-dark');
+        }
 
     </script>
 </body>
