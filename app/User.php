@@ -15,9 +15,13 @@ class User extends Authenticatable
         'USER' => 'user',
     ];
 
-    const STATUSES = [
+    const STATUS = [
         'ACTIVE' => 1,
         'INACTIVE' => 0,
+    ];
+    const GENDER = [
+        'MALE' => 'M',
+        'FEMALE' => 'F',
     ];
 
     /**
@@ -26,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'status', 'createdBy', 'divisi', 'department', 'avatar', 'organisation', 'username'
+        'name', 'email', 'password', 'role', 'status', 'createdBy', 'divisi', 'department', 'avatar', 'organisation', 'username', 'gender'
     ];
 
     protected $hidden = ['password'];

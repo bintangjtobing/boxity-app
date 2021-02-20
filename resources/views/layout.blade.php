@@ -287,12 +287,14 @@
                     <li class="menu-title m-top-30">
                         <span>Applications</span>
                     </li>
+                    @if(auth()->user()->role=='admin')
                     <li>
-                        <a href="/users" active-class="mm-active">
+                        <a href="/users-management" active-class="mm-active">
                             <i data-feather="users" class="nav-icon"></i>
                             <span class="menu-text">Users management</span>
                         </a>
                     </li>
+                    @endif
                     <li class="has-child">
                         <a href="#" class="">
                             <i data-feather="rss" class="nav-icon"></i>

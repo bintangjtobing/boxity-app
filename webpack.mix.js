@@ -14,6 +14,7 @@ mix.styles([
     'public/dashboard/assets/vendor_assets/css/line-awesome.min.css',
     'public/dashboard/assets/vendor_assets/css/magnific-popup.css',
     'public/dashboard/assets/vendor_assets/css/MarkerCluster.css',
+    'public/dashboard/assets/custom.css',
     'public/dashboard/assets/vendor_assets/css/MarkerCluster.Default.css',
     'public/dashboard/assets/vendor_assets/css/select2.min.css',
     'public/dashboard/assets/vendor_assets/css/slick.css',

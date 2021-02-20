@@ -23871,6 +23871,14 @@ img.mfp-img {
 	transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in;
 }
 
+.text-danger {
+    font-size: 12px !important;
+}
+
+.modal-backdrop {
+    z-index: 1 !important;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}

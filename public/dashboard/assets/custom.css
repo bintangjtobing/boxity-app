@@ -1,0 +1,7 @@
+.text-danger {
+    font-size: 12px !important;
+}
+
+.modal-backdrop {
+    z-index: 1 !important;
+}

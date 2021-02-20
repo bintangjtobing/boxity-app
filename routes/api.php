@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Http\Request;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+use App\Http\Controllers\apiController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Users API
+Route::get('/users', 'apiController@getUsers');
+Route::get('/user/{id}', 'apiController@getUserbyId');
+Route::delete('/users/{id}', 'apiController@deleteUser');
+Route::post('/users', 'apiController@addUser');
+Route::get('/count-users', 'apiController@countUsers');
+Route::patch('/users/{id}','apiController@updateUser');
+
+// Check user data first
+Route::post('/users/check-user-data', 'apiController@checkUserData');

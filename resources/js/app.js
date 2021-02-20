@@ -8,12 +8,14 @@ import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import Axios from 'axios';
 import titleMixin from './mixins/titleMixins.js';
+import VueSweetalert2 from 'vue-sweetalert2';
+import vuetify from './plugins/vuetify.js';
 
 Vue.mixin(titleMixin);
-Vue.use(VueRouter, VueAxios, Axios);
+Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);
 
 import Index from './components/index.vue';
-import User from './components/user.vue';
+import UserLists from './components/user-lists.vue';
 import Career from './components/career.vue';
 import Candidate from './components/candidate.vue';
 import Issue from './components/issue.vue';
@@ -22,6 +24,7 @@ import Gallery from './components/gallery.vue';
 import Blog from './components/blog.vue';
 import TrackDev from './components/trackDelivery.vue';
 import VersionControl from './components/version-control.vue';
+import userForm from './components/userForm.vue';
 
 // membuat router
 const routes = [{
@@ -30,8 +33,8 @@ const routes = [{
     component: Index
 }, {
     name: 'user',
-    path: '/users',
-    component: User
+    path: '/users-management',
+    component: UserLists
 }, {
     name: 'career',
     path: '/career',
@@ -64,6 +67,10 @@ const routes = [{
     name: 'version-control',
     path: '/version-control',
     component: VersionControl
+}, {
+    name: 'update-user',
+    path: '/detail/user/:id',
+    component: userForm,
 }]
 
 const router = new VueRouter({
@@ -73,4 +80,5 @@ const router = new VueRouter({
 });
 new Vue(Vue.util.extend({
     router,
+    vuetify
 })).$mount("#App");

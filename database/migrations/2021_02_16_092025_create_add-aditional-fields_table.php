@@ -15,6 +15,7 @@ class CreateAddAditionalFieldsTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('department')->default('staff')->after('role');
+            $table->string('gender')->after('status');
             $table->string('divisi')->after('department');
             $table->string('logip')->after('updated_at');
             $table->string('lastLogin')->after('logip');
