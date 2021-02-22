@@ -59,7 +59,7 @@
       },
     ],
     className: "success",
-    textColor: "#20C997",
+    textColor: "#238636",
   };
 
   let projectUpdate = {

@@ -83,8 +83,8 @@ const customTooltips = function (tooltip) {
 function chartjsLineChartOne(
   selector,
   label = "Data",
-  bgColor = "#20C99710",
-  bColor = "#20C997",
+  bgColor = "#23863610",
+  bColor = "#238636",
   data = [5, 10, 20, 25, 20, 30, 15, 25, 15, 10]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -199,8 +199,8 @@ function fOverviewWeek() {
   chartjsLineChartOne(
     "#lineChartFive",
     (label = "label"),
-    (bgColor = "#20C99710"),
-    (bColor = "#20C997"),
+    (bgColor = "#23863610"),
+    (bColor = "#238636"),
     (data = [1000, 5000, 1500, 10000, 14000, 24000, 20000])
   );
   chartjsLineChartOne(
@@ -230,8 +230,8 @@ function fOverviewMonth() {
   chartjsLineChartOne(
     "#lineChartNine",
     (label = "label"),
-    (bgColor = "#20C99710"),
-    (bColor = "#20C997"),
+    (bgColor = "#23863610"),
+    (bColor = "#238636"),
     (data = [15000, 50000, 15000, 15000, 40000, 24000, 20000])
   );
   chartjsLineChartOne(
@@ -261,8 +261,8 @@ function fOverviewYear() {
   chartjsLineChartOne(
     "#lineChartThirteen",
     (label = "label"),
-    (bgColor = "#20C99710"),
-    (bColor = "#20C997"),
+    (bgColor = "#23863610"),
+    (bColor = "#238636"),
     (data = [95000, 19000, 55000, 90000, 240000, 95000, 55000, 19000, 55000, 66000, 90000, 240000])
   );
   chartjsLineChartOne(
@@ -291,8 +291,8 @@ function fOverviewYear() {
 chartjsLineChartOne(
   "#lineChartOne",
   (label = "label"),
-  (bgColor = "#20C99710"),
-  (bColor = "#20C997"),
+  (bgColor = "#23863610"),
+  (bColor = "#238636"),
   (data = [150, 100, 200, 250, 200, 300, 150])
 );
 chartjsLineChartOne(
@@ -331,7 +331,7 @@ function chartjsLineChartForcast(
   label = "",
   startGradient = "#29266312",
   endGradient = "#29266302",
-  bColor = "#20C997",
+  bColor = "#238636",
   data = [30, 10, 20, 25, 20, 30, 15, 25, 15, 10]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -457,9 +457,9 @@ chartjsLineChartForcast(
 chartjsLineChartForcast(
   "#lineChartforcastTwo",
   (label = "Line Chart dataset"),
-  (startGradient = "#20C99712"),
-  (endGradient = "#20C99703"),
-  (bColor = "#20C997"),
+  (startGradient = "#23863612"),
+  (endGradient = "#23863603"),
+  (bColor = "#238636"),
   (data = [5, 15, 15, 10, 15, 25, 15, 25, 20, 10])
 );
 
@@ -467,8 +467,8 @@ chartjsLineChartForcast(
 function chartjsLineChartSmall(
   selector,
   label = "Line Chart dataset",
-  bgColor = "#20C99700",
-  bColor = "#20C997",
+  bgColor = "#23863600",
+  bColor = "#238636",
   data = [5, 10, 20, 25, 20, 30]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -547,28 +547,28 @@ chartjsLineChartSmall("#lineChartSm1");
 chartjsLineChartSmall(
   "#lineChartSm2",
   (label = "Line Chart dataset"),
-  (bgColor = "#20C99700"),
+  (bgColor = "#23863600"),
   (bColor = "#FF69A5"),
   (data = [0, 10, 8, 14, 7, 10])
 );
 chartjsLineChartSmall(
   "#lineChartSm3",
   (label = "Line Chart dataset"),
-  (bgColor = "#20C99700"),
+  (bgColor = "#23863600"),
   (bColor = "#292663"),
   (data = [5, 15, 5, 11, 17, 11])
 );
 chartjsLineChartSmall(
   "#lineChartSm4",
   (label = "Line Chart dataset"),
-  (bgColor = "#20C99700"),
+  (bgColor = "#23863600"),
   (bColor = "#2C99FF"),
   (data = [4, 16, 9, 24, 8, 16])
 );
 chartjsLineChartSmall(
   "#lineChartSm5",
   (label = "Line Chart dataset"),
-  (bgColor = "#20C99700"),
+  (bgColor = "#23863600"),
   (bColor = "#FA8B0C"),
   (data = [0, 10, 8, 14, 7, 10])
 );
@@ -616,9 +616,9 @@ function chartjsLineChartTwo(
             "transparent",
             "transparent",
             "transparent",
-            "#20C997",
+            "#238636",
           ],
-          pointHoverBackgroundColor: "#20C997",
+          pointHoverBackgroundColor: "#238636",
           pointHoverRadius: 6,
           pointBorderColor: "transparent",
         }, ],
@@ -634,7 +634,7 @@ function chartjsLineChartTwo(
           callbacks: {
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#20C997",
+                backgroundColor: "#238636",
                 borderColor: "transparent",
               };
             },
@@ -2162,8 +2162,8 @@ function chartjsBarChartCashflowExtra(selector, dataCIn, DataCOut, labels, label
         labels: labels,
         datasets: [{
             data: dataCIn,
-            backgroundColor: "#20C99770",
-            hoverBackgroundColor: "#20C997",
+            backgroundColor: "#23863670",
+            hoverBackgroundColor: "#238636",
             label: "Won",
           },
           {
@@ -2193,7 +2193,7 @@ function chartjsBarChartCashflowExtra(selector, dataCIn, DataCOut, labels, label
             },
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#20C997",
+                backgroundColor: "#238636",
                 borderColor: "transparent",
               };
             },
@@ -2330,8 +2330,8 @@ function chartjsBarChartCashflow(selector, dataCIn, DataCOut, labels, label = "B
         labels: labels,
         datasets: [{
             data: dataCIn,
-            backgroundColor: "#20C99770",
-            hoverBackgroundColor: "#20C997",
+            backgroundColor: "#23863670",
+            hoverBackgroundColor: "#238636",
             label: "Cash in",
           },
           {
@@ -2361,7 +2361,7 @@ function chartjsBarChartCashflow(selector, dataCIn, DataCOut, labels, label = "B
             },
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#20C997",
+                backgroundColor: "#238636",
                 borderColor: "transparent",
               };
             },
@@ -2511,8 +2511,8 @@ function chartjsBarChartInEx(selector, data1, data2, data3, data4, labels, label
           },
           {
             data: data4,
-            backgroundColor: "#20C99750",
-            hoverBackgroundColor: "#20C997",
+            backgroundColor: "#23863650",
+            hoverBackgroundColor: "#238636",
             label: "Net profit",
           },
         ],
@@ -3165,13 +3165,13 @@ chartjsBarChartVertical("barChartVertical");
 chartjsBarChartStacked("barChartstacked");
 chartJsBarChartThree("mychart8", "#29266320", "#292663", "Order");
 chartJsBarChartThree("mychart9", "#FF69A520", "#FF69A5", "Revenue");
-chartJsBarChartThree("mychart10", "#20C99720", "#20C997", "Avg. Order");
+chartJsBarChartThree("mychart10", "#23863620", "#238636", "Avg. Order");
 chartJsBarChartThree("mychart11", "#2C99FF20", "#2C99FF", "Visitors");
 
 
 chartJsBarChartFour("mychart12", "#FF69A520", "#FF69A5", "New Contact");
 chartJsBarChartFour("mychart13", "#29266320", "#292663", "New Deals");
-chartJsBarChartFour("mychart14", "#20C99720", "#20C997", "New Leads");
+chartJsBarChartFour("mychart14", "#23863620", "#238636", "New Leads");
 chartJsBarChartFour("mychart15", "#2C99FF20", "#2C99FF", "Revenue");
 // Area Chart
 function chartjsAreaChartBasic(selector, label = "Bar chart Basic") {
@@ -3311,7 +3311,7 @@ function chartjsDoughnut(selector, cHeight, data) {
         labels: ["Desktop", "Mobile", "Tablets"],
         datasets: [{
           data: data,
-          backgroundColor: ["#20C997", "#292663", "#FA8B0C"],
+          backgroundColor: ["#238636", "#292663", "#FA8B0C"],
           total: "9,283",
         }, ],
       },
@@ -3396,7 +3396,7 @@ function chartjsDoughnutExtra(selector, cHeight, data) {
         labels: ["Total Send", "Open", "Not Open"],
         datasets: [{
           data: data,
-          backgroundColor: ["#20C997", "#292663", "#FA8B0C"],
+          backgroundColor: ["#238636", "#292663", "#FA8B0C"],
           total: "9,283",
         }, ],
       },

@@ -17,10 +17,11 @@
                                 <p>Anything we can help? Take it easy, we will help you as much as possible.
                                 </p>
                                 <div class="d-flex justify-content-start">
-                                    <button class="btn btn-primary btn-default btn-squared btn-shadow-primary"
+                                    <router-link :to="`/new-issue`"
+                                        class="btn btn-primary btn-default btn-squared btn-shadow-primary"
                                         type="button">Create
-                                        Issue Ticket
-                                    </button>
+                                        Issue
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -35,8 +36,11 @@
         </div>
         <div class="row mt-4">
             <div class="col-12">
-                <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Issue lists</h4>
+                <div class="headerIssueList mb-4">
+                    <div class="breadcrumb-main">
+                        <h4 class="text-capitalize breadcrumb-title">Issue lists</h4>
+                    </div>
+                    <span>The information displayed here is only the information assigned to you.</span>
                 </div>
                 <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
@@ -56,53 +60,74 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-if="!issues.length">
+                                    <td colspan="3">
+                                        <div class="atbd-empty text-center">
+                                            <div class="atbd-empty__image">
+                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
+                                            </div>
+                                            <div class="atbd-empty__text">
+                                                <p class="">No issue assigned to you.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr v-for="issue in issues" :key="issue.id">
                                     <td>
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
                                                 <a href="#" class="text-dark fw-500">
-                                                    <h6>Bantu buka HRM</h6>
-                                                    <p>Created 2 days ago by Tanty | 2021-02-17</p>
+                                                    <router-link :to="`/issues/${issue.id}`">
+                                                        <h6>{{issue.title}}</h6>
+                                                        <p>Created {{created}} by {{issue.name}} · {{countComment}}
+                                                            comments
+                                                        </p>
+                                                    </router-link>
                                                 </a>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            <span style="color: #d4000b;"><i class="fas fa-arrow-up"></i></span> Highest
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-inline-block">
-                                            <span
-                                                class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6>Bantu buka otoritas</h6>
-                                                    <p>Created 1 days ago by David | 2021-02-18</p>
-                                                </a>
+                                            <div v-if="issue.priority===0">
+                                                <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
+                                                    Lowest</span>
+                                            </div>
+                                            <div v-if="issue.priority===1">
+                                                <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                            </div>
+                                            <div v-if="issue.priority===2">
+                                                <span class="priority-medium"><i class="fas fa-arrow-up"></i>
+                                                    Medium</span>
+                                            </div>
+                                            <div v-if="issue.priority===3">
+                                                <span class="priority-high"><i class="fas fa-arrow-up"></i>
+                                                    High</span>
+                                            </div>
+                                            <div v-if="issue.priority===4">
+                                                <span class="priority-highest"><i class="fas fa-arrow-up"></i>
+                                                    Highest</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="userDatatable-content">
-                                            <span style="color: #ef7d32;"><i class="fas fa-arrow-up"></i></span> Medium
-                                        </div>
-                                    </td>
-                                    <td>
                                         <div class="userDatatable-content d-inline-block">
-                                            <span
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">Approved</span>
+                                            <div v-if="issue.status=='0'">
+                                                <span
+                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
+                                            </div>
+                                            <div v-if="issue.status=='1'">
+                                                <span
+                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
+                                            </div>
+                                            <div v-if="issue.status=='2'">
+                                                <span class="bg-opacity-success color-success rounded-pill
+                                                    userDatatable-content-status active"><span><i
+                                                            class="fas fa-clock"></i> </span>&nbsp;Done</span>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -112,10 +137,35 @@
     </div>
 </template>
 <script>
+    import * as timeago from 'timeago.js';
     export default {
         title() {
             return 'Issue report';
         },
+        data() {
+            return {
+                issues: {},
+                countComment: '0',
+            }
+        },
+        computed: {
+            created: function () {
+                let now = 0;
+                for (let i = 0; i < this.issues.length; i++) {
+                    now = timeago.format(this.issues[i].created_at);
+                }
+                return now;
+            }
+        },
+        mounted() {
+            this.loadIssues();
+        },
+        methods: {
+            async loadIssues() {
+                const resp = await axios.get('/api/issue');
+                this.issues = resp.data;
+            },
+        }
     }
 
 </script>

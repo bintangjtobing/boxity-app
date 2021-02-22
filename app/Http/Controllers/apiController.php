@@ -11,12 +11,18 @@ use App\User;
 use App\album_photos;
 use App\albums;
 use App\changeLog;
+use App\commentIssue;
 use App\id_agamas;
+use App\issue;
 use App\id_domisilis;
 
 
 class apiController extends Controller
 {
+    public function getLoggedUser()
+    {
+        return User::find(Auth::id());
+    }
     public function getUsers()
     {
         return response()->json(User::all());
@@ -65,6 +71,8 @@ class apiController extends Controller
         }
         $user->password = Hash::make($request->password);
         $user->createdBy = Auth::id();
+        $user->logip = $request->ip();
+        $user->lastLogin = '0';
         $user->save();
 
         return response()->json($user, 201);
@@ -93,5 +101,103 @@ class apiController extends Controller
         }
         $user->save();
         return response()->json($user);
+    }
+    //
+    // ISSUE API
+    public function addNewIssue(Request $request)
+    {
+        $issue = new issue();
+        $issue->title = $request->title;
+        $issue->issue = $request->description;
+        $issue->status = '0';
+        $issue->assignee = $request->assignee;
+        $issue->priority = $request->priority;
+        $issue->approved_by = 0;
+        $issue->created_by = auth()->user()->id;
+        $issue->save();
+        return response()->json($issue, 201);
+    }
+    public function getIssues()
+    {
+        $issueGet = DB::table('issues')
+            ->join('users', 'issues.created_by', '=', 'users.id')
+            ->where('issues.status', '!=', '2')
+            ->where('issues.assignee', Auth::id())
+            ->select('issues.*', 'users.name')
+            ->get();
+        return $issueGet;
+    }
+    public function getIssuewithComment()
+    {
+        $issueGet = DB::table('issues')
+            ->join('comment_issues', 'comment_issues.issueId', '=', 'issues.id')
+            ->get()
+            // ->select(array(DB::Raw('COUNT(comment_issues.issueId) as countId')))
+            ->groupBy('comment_issues.issueId');
+        return response()->json($issueGet);
+    }
+    public function getIssueById($id)
+    {
+        $issueGet = DB::table('issues')
+            ->where('issues.id', '=', $id)
+            ->join('users', 'issues.created_by', '=', 'users.id')
+            ->select('issues.*', 'users.name', 'users.avatar')
+            ->get();
+        return response()->json($issueGet);
+    }
+    public function getAssigneebyId($id)
+    {
+        $issueGet = DB::table('issues')
+            ->where('issues.id', '=', $id)
+            ->join('users', 'issues.assignee', '=', 'users.id')
+            ->select('users.name', 'users.avatar', 'issues.id', 'issues.title')
+            ->get();
+        return response()->json($issueGet);
+    }
+    public function getApprovedbyId($id)
+    {
+        $issueGet = DB::table('issues')
+            ->where('issues.id', '=', $id)
+            ->join('users', 'issues.approved_by', '=', 'users.id')
+            ->select('users.name', 'users.id', 'issues.status')
+            ->get();
+        return response()->json($issueGet);
+    }
+    public function postComment(Request $request)
+    {
+        $newComment = new commentIssue();
+        $newComment->fromId = Auth::id();
+        $newComment->issueId = $request->issueid;
+        $newComment->comment = $request->comment;
+        $newComment->save();
+        return response()->json($newComment, 201);
+    }
+    public function getCommentbyId($id)
+    {
+        $getComment = DB::table('comment_issues')
+            ->where('comment_issues.issueId', '=', $id)
+            ->join('users', 'comment_issues.fromId', '=', 'users.id')
+            ->select('comment_issues.*', 'users.name')
+            ->get();
+        return response()->json($getComment);
+    }
+    public function approveIssue($id)
+    {
+        $issue = issue::find($id);
+        $issue->approved_by = Auth::id();
+        $issue->status = '1';
+        $issue->save();
+        return response()->json($issue, 201);
+    }
+    public function closedIssue($id, Request $req)
+    {
+        $issue = issue::find($id);
+        $issue->status = '2';
+        $issue->save();
+        return response()->json($issue, 201);
+    }
+    public function countCommentDB($id)
+    {
+        return response()->json(commentIssue::where('issueId', $id)->get()->count());
     }
 }

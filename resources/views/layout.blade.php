@@ -281,7 +281,7 @@
                         <a href="/version-control" active-class="mm-active">
                             <i data-feather="activity" class="nav-icon"></i>
                             <span class="menu-text">Version control</span>
-                            <span class="badge badge-primary menuItem">3.0.0</span>
+                            <span class="badge badge-danger menuItem">3.0.0</span>
                         </a>
                     </li>
                     <li class="menu-title m-top-30">
@@ -295,6 +295,12 @@
                         </a>
                     </li>
                     @endif
+                    <li>
+                        <a href="/contact-list" active-class="mm-active">
+                            <i data-feather="list" class="nav-icon"></i>
+                            <span class="menu-text">Contact lists</span>
+                        </a>
+                    </li>
                     <li class="has-child">
                         <a href="#" class="">
                             <i data-feather="rss" class="nav-icon"></i>
@@ -316,12 +322,12 @@
                             <span class="menu-text">Issue center</span>
                         </a>
                     </li>
-                    {{-- <li>
+                    <li>
                         <a href="/quote" active-class="mm-active">
                             <i data-feather="star" class="nav-icon"></i>
                             <span class="menu-text">Quote report</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <li>
                         <a href="/gallery" active-class="mm-active">
                             <i data-feather="image" class="nav-icon"></i>

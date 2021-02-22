@@ -1393,36 +1393,36 @@ a:hover h6, .navbar-right__menu .dropdown-wrapper__more:hover, .strikingDash-top
 .color-success, .badge.badge-transparent.badge-success, .avatar.avatar-success.avatar-transparent, .avatar .avatar-badge-wrap .badge-icon.badge-icon-success, .card-overview-progress .card-progress__bar .progress-upword strong, .feature-cards6 .card-short .card-short-checkbox .checkbox-text, .atbd-notification-box.notification-success .atbd-notification-box__icon svg, .performance-stats__up strong sub, .revenue-chart-box__Icon.order-bg-opacity-success svg, .modal-info-body .modal-info-icon.success svg, .atbd-pop-message.message-success .atbd-pop-message__icon i,
 .atbd-pop-message.message-success .atbd-pop-message__icon svg,
 .atbd-pop-message.message-success .atbd-pop-message__icon span, .atbd-tag.tag-success.tag-transparented, .statistics-item.statistics-success .statistics-item__number, .product-details__availability .title span.stock, .select-cupon .select2-container--default .select2-selection--single .select2-selection__placeholder, .select-cupon .select2-container .select2-selection--single .select2-selection__rendered, .wizard10 .payment-success-modal .modal-icon span, .pricing__features ul li span.fa-check {
-  color: #20c997;
+  color: #238636;
 }
 
 .bg-success, .badge-dot.dot-success, .btn.btn-transparent-success:hover, .avatar.avatar-success, .custom-switch.switch-success .custom-control-input:checked ~ .custom-control-label::before, .feature-cards6 .card-short .card-short-checkbox .custom-checkbox input[type="checkbox"]:checked + label:after, .label-dot.dot-success, .sales-target__progress-bar .left, .top-circle, .modal-content.modal-bg-success, .media-ui--completed .progress-icon, .atbd-tag.tag-success, .project-task .ptl--hover .custom-checkbox input[type="checkbox"]:checked + label:after,
 .todo-task .ptl--hover .custom-checkbox input[type="checkbox"]:checked + label:after, .avatar-online, .fc-daygrid-day .fc-daygrid-event.success, .checkout-progress div.step.completed span:nth-of-type(1), .wizard9 .checkout-progress2 .step.completed span:first-child, .wizard7 .checkout-shipping-form .custom-checkbox input[type="checkbox"]:checked + label:after, .version-list__single ul.version-success li::after, .kanban-modal__list .custom-checkbox input[type="checkbox"]:checked + label:after, .task-card__header .checkbox-group .custom-checkbox input[type="checkbox"]:checked + label:after {
-  background: #20c997;
+  background: #238636;
 }
 
 .iborder-success {
-  color: #20c997;
+  color: #238636;
 }
 
 .outline-success {
-  border: 1px solid #20c997;
-  color: #20c997;
+  border: 1px solid #238636;
+  color: #238636;
 }
 
 .active-color-success label input:checked + span {
-  background: #20c997;
-  border-color: #20c997;
+  background: #238636;
+  border-color: #238636;
 }
 
 .circle-success {
-  color: #20c997;
+  color: #238636;
   background: rgba(32, 201, 151, 0.1);
 }
 
 .border-success, .feature-cards6 .card-short .card-short-checkbox .custom-checkbox input[type="checkbox"]:checked + label:after, .timeline-box .timeline-single__buble.buble-success, .project-task .ptl--hover .custom-checkbox input[type="checkbox"]:checked + label:after,
 .todo-task .ptl--hover .custom-checkbox input[type="checkbox"]:checked + label:after, .promo-code div a, .wizard10 .payment-success-modal .modal-icon, .wizard7 .checkout-shipping-form .custom-checkbox input[type="checkbox"]:checked + label:after, .kanban-modal__list .custom-checkbox input[type="checkbox"]:checked + label:after, .task-card__header .checkbox-group .custom-checkbox input[type="checkbox"]:checked + label:after {
-  border: 1px solid #20c997;
+  border: 1px solid #238636;
 }
 
 .bg-opacity-success {
@@ -1434,7 +1434,7 @@ a:hover h6, .navbar-right__menu .dropdown-wrapper__more:hover, .strikingDash-top
 }
 
 .hover-success:hover {
-  background: #20c997;
+  background: #238636;
   color: #ffffff;
 }
 
@@ -2238,9 +2238,9 @@ table.table-rounded tr td, .table5 .pagination-total-text, .add-product__body .f
 }
 
 .outline-lg-success {
-  border: 2px solid #20c997;
+  border: 2px solid #238636;
   background: none;
-  color: #20c997;
+  color: #238636;
 }
 
 .outline-lg-info {
@@ -2315,7 +2315,7 @@ table.table-rounded tr td, .table5 .pagination-total-text, .add-product__body .f
 
 .btn-transparent-success {
   background: rgba(32, 201, 151, 0.15);
-  color: #20c997;
+  color: #238636;
 }
 
 .btn-transparent-info {
@@ -2395,12 +2395,12 @@ table.table-rounded tr td, .table5 .pagination-total-text, .add-product__body .f
 }
 
 .checkbox-success .custom-control-label::before {
-  background: #20c997;
+  background: #238636;
 }
 
 .checkbox-success .custom-control-input:checked ~ .custom-control-label::before {
-  background: #20c997;
-  border: 1px solid #20c997;
+  background: #238636;
+  border: 1px solid #238636;
 }
 
 .checkbox-success .custom-control-input:checked ~ .custom-control-label::after {
@@ -2568,8 +2568,8 @@ table.table-rounded tr td, .table5 .pagination-total-text, .add-product__body .f
 }
 
 .checkbox-outline-success .custom-control-input:checked ~ .custom-control-label::before {
-  border: 1px solid #20c997;
-  background: #20c997;
+  border: 1px solid #238636;
+  background: #238636;
 }
 
 .checkbox-outline-success .custom-control-input:checked ~ .custom-control-label::after {
@@ -4258,7 +4258,7 @@ ul {
 }
 
 .navbar-right__menu .nav-message .nav-item-toggle:before {
-  background: #20c997;
+  background: #238636;
 }
 
 @media only screen and (max-width: 479px) {
@@ -4344,7 +4344,7 @@ ul {
 }
 
 .navbar-right__menu .nav-message .dropdown-wrapper .author-online .user-avater:before {
-  background: #20c997;
+  background: #238636;
 }
 
 .navbar-right__menu .nav-message .dropdown-wrapper .author-offline .user-avater:before {
@@ -4389,7 +4389,7 @@ ul {
 }
 
 .navbar-right__menu .nav-message .dropdown-wrapper .has-new-message .time-posted {
-  color: #20c997;
+  color: #238636;
 }
 
 .navbar-right__menu .nav-notification ul {
@@ -4440,7 +4440,7 @@ ul {
 }
 
 .navbar-right__menu .nav-notification__type--success {
-  color: #20c997;
+  color: #238636;
   background: #d2f4ea;
 }
 
@@ -6447,7 +6447,7 @@ ul {
 }
 
 .custom-switch.switch-success .custom-control-input:checked ~ .custom-control-label::before {
-  border-color: #20c997;
+  border-color: #238636;
 }
 
 .custom-switch.switch-warning .custom-control-input:checked ~ .custom-control-label::before {
@@ -8886,8 +8886,8 @@ table.table-rounded tbody tr td.card .card-body,
   border-radius: 50%;
   box-sizing: border-box;
   border: 15px solid #E8FAF4;
-  border-bottom-color: #20c997;
-  border-right-color: #20c997;
+  border-bottom-color: #238636;
+  border-right-color: #238636;
   transform: rotate(45deg);
 }
 
@@ -15413,13 +15413,13 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 
 .fc-timegrid-event.success {
   background-color: #e8faf4 !important;
-  border-left-color: #20c997;
+  border-left-color: #238636;
   border-left-width: 2px;
 }
 
 .fc-timegrid-event.success .fc-event-time,
 .fc-timegrid-event.success .fc-event-title {
-  color: #20c997;
+  color: #238636;
 }
 
 .fc-timegrid-event.success:hover {
@@ -15439,13 +15439,13 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 
 .fc-timegrid-event.warning.success {
   background-color: #fff3e6 !important;
-  border-left-color: #20c997;
+  border-left-color: #238636;
   border-left-width: 2px;
 }
 
 .fc-timegrid-event.warning.success .fc-event-time,
 .fc-timegrid-event.warning.success .fc-event-title {
-  color: #20c997;
+  color: #238636;
 }
 
 .fc-timegrid-event.warning.success:hover {
@@ -15474,7 +15474,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 }
 
 .fc-daygrid-day .fc-daygrid-event.success.fc-h-event {
-  border-color: #20c997;
+  border-color: #238636;
 }
 
 .fc-daygrid-day .fc-daygrid-event.warning.fc-h-event {
@@ -15931,7 +15931,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 
 .product-item__button button.btn-primary {
   color: white;
-  box-shadow: 0px 3px 5px #20C9970D;
+  box-shadow: 0px 3px 5px #2386360D;
 }
 
 .product--list .product-item .product-item__image {
@@ -16911,7 +16911,7 @@ td.order-summery .total > div {
 }
 
 .promo-code div a {
-  color: #20c997;
+  color: #238636;
 }
 
 .select-cupon {
@@ -19420,7 +19420,7 @@ table.table-rounded tbody tr td:last-child {
 }
 
 .note-sidebar .note-labels .label-work span {
-  background: #20c997;
+  background: #238636;
 }
 
 .note-sidebar .note-labels .label-social span {
@@ -19490,7 +19490,7 @@ table.table-rounded tbody tr td:last-child {
 }
 
 .note-work .note-title .note-status {
-  background: #20c997;
+  background: #238636;
 }
 
 .note-important {
@@ -19571,7 +19571,7 @@ table.table-rounded tbody tr td:last-child {
 }
 
 .label-dropdown a.dropdown-item.nl-work:before {
-  background: #20c997;
+  background: #238636;
 }
 
 .label-dropdown a.dropdown-item.nl-social:before {

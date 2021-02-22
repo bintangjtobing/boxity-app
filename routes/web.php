@@ -53,6 +53,7 @@ Route::get('/login', function () {
 })->name('login');
 Route::get('/login/{tokens}', 'authController@index');
 Route::post('/login/{tokens}', 'authController@loginProcess');
+Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
 
 // Homepage Data
 Route::get('/', 'webpageController@index');

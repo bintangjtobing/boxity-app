@@ -13,11 +13,15 @@ class User extends Authenticatable
     const ROLES = [
         'ADMIN' => 'admin',
         'USER' => 'user',
+        'HEAD' => 'head',
+        'IT' => 'it',
+        'HRDGA' => 'hrdga',
     ];
 
     const STATUS = [
         'ACTIVE' => 1,
         'INACTIVE' => 0,
+        'TERMINATED' => 2,
     ];
     const GENDER = [
         'MALE' => 'M',

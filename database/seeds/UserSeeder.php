@@ -29,6 +29,8 @@ class UserSeeder extends Seeder
             'phone' => '81262845980',
             'organisation' => '',
             'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
         ]);
 
         DB::table('users')->insert([
@@ -45,6 +47,8 @@ class UserSeeder extends Seeder
             'phone' => '81262845980',
             'organisation' => '',
             'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
         ]);
         DB::table('users')->insert([
             'id' => 3,
@@ -60,6 +64,59 @@ class UserSeeder extends Seeder
             'phone' => '81262845980',
             'organisation' => '',
             'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
+        ]);
+        DB::table('users')->insert([
+            'id' => 4,
+            'role' => User::ROLES['HEAD'],
+            'username' => 'head',
+            'divisi' => 'developer',
+            'status' => User::STATUS['ACTIVE'],
+            'gender' => User::GENDER['FEMALE'],
+            'department' => 'testing Department',
+            'avatar' => '4.jpg',
+            'name' => 'Head',
+            'email' => 'head@head.com',
+            'phone' => '81262845980',
+            'organisation' => '',
+            'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
+        ]);
+        DB::table('users')->insert([
+            'id' => 5,
+            'role' => User::ROLES['IT'],
+            'username' => 'IT',
+            'divisi' => 'developer',
+            'status' => User::STATUS['ACTIVE'],
+            'gender' => User::GENDER['MALE'],
+            'department' => 'testing Department',
+            'avatar' => '1.jpg',
+            'name' => 'IT',
+            'email' => 'it@it.com',
+            'phone' => '81262845980',
+            'organisation' => '',
+            'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
+        ]);
+        DB::table('users')->insert([
+            'id' => 6,
+            'role' => User::ROLES['HRDGA'],
+            'username' => 'HRDGA',
+            'divisi' => 'developer',
+            'status' => User::STATUS['ACTIVE'],
+            'gender' => User::GENDER['FEMALE'],
+            'department' => 'testing Department',
+            'avatar' => '6.jpg',
+            'name' => 'HRD & GA',
+            'email' => 'hrdga@hrdga.com',
+            'phone' => '81262845980',
+            'organisation' => '',
+            'password' => '$2y$12$oQ63NRQaAV.L/ugDTealLeXXZR8d8ZM1R21h2/0fMo2zhqcNm72Yy', // admin
+            'logip' => '-',
+            'lastLogin' => '-',
         ]);
     }
 }

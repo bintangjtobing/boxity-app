@@ -25,8 +25,8 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <select v-model="user.gender" required id="select-tag"
-                                                class="form-control custom-select">
-                                                <option>Select gender:</option>
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                <option disabled value="">Select gender:</option>
                                                 <option v-bind:value="`M`">Male</option>
                                                 <option v-bind:value="`F`">Female</option>
                                             </select>
@@ -58,16 +58,18 @@
                                     <div class="form-row">
                                         <div class="col-lg-4">
                                             <select v-model="user.role" required id="select-tag"
-                                                class="form-control custom-select">
-                                                <option>Select role:</option>
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                <option disabled value="">Select role:</option>
                                                 <option v-bind:value="`user`">User</option>
                                                 <option v-bind:value="`head`">Head</option>
+                                                <option v-bind:value="`it`">IT</option>
+                                                <option v-bind:value="`hrdga`">HRD & GA</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-4">
                                             <select v-model="user.department" required id="select-tag"
-                                                class="form-control custom-select">
-                                                <option>Select department:</option>
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                <option disabled value="">Select department:</option>
                                                 <option v-bind:value="`ekspor`">Ekspor</option>
                                                 <option v-bind:value="`impor`">Impor</option>
                                                 <option v-bind:value="`trucking`">Trucking</option>
@@ -82,8 +84,8 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <select v-model="user.divisi" required id="select-tag"
-                                                class="form-control custom-select">
-                                                <option>Select division:</option>
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                <option disabled value="">Select division:</option>
                                                 <option v-bind:value="`staff`">Staff</option>
                                                 <option v-bind:value="`supervisor`">Supervisor</option>
                                                 <option v-bind:value="`manager`">Manager</option>
