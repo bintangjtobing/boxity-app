@@ -109,21 +109,42 @@ class apiController extends Controller
         $issue = new issue();
         $issue->title = $request->title;
         $issue->issue = $request->description;
-        $issue->status = '0';
         $issue->assignee = $request->assignee;
         $issue->priority = $request->priority;
-        $issue->approved_by = 0;
+        if (auth()->user()->role == 'head') {
+            $issue->approved_by = Auth::id();
+            $issue->status = '1';
+        } else {
+            $issue->approved_by = 0;
+            $issue->status = '0';
+        }
         $issue->created_by = auth()->user()->id;
         $issue->save();
         return response()->json($issue, 201);
     }
     public function getIssues()
     {
-        $issueGet = DB::table('issues')
-            ->join('users', 'issues.created_by', '=', 'users.id')
-            ->where('issues.status', '!=', '2')
-            ->where('issues.assignee', Auth::id())
-            ->select('issues.*', 'users.name')
+        if (auth()->user()->role != 'head') {
+            return issue::with('user')
+                ->withCount('comments')
+                ->where('assignee', Auth::id())
+                ->where('status', '!=', '2')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        } else {
+            return issue::with('user')->with('comments')
+                ->where('status', '=', '0')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+    }
+    public function getIssuesfromMe()
+    {
+        $issueGet = issue::with('user')
+            ->withCount('comments')
+            ->where('created_by', Auth::id())
+            ->where('status', '!=', '0')
+            ->orderBy('created_at', 'DESC')
             ->get();
         return $issueGet;
     }

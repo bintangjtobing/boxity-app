@@ -24020,9 +24020,18 @@ td {
     margin-bottom: 0px;
 }
 
+.headerIssueList span {
+    font-size: 14px;
+}
+
 .btn span,
 .btn i {
     margin-right: 0 !important;
+}
+
+.comment-list hr {
+    margin-top: 0;
+    margin-bottom: 2rem;
 }
 
 .marker-cluster-small {

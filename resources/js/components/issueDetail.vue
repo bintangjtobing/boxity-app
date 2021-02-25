@@ -11,7 +11,7 @@
                             <i class="fas fa-info-circle"></i>&nbsp;Unapproved
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            comments</span>
+                            <i class="fas fa-comment"></i></span>
                     </div>
                 </div>
                 <div v-if="issues.status=='1'">
@@ -20,7 +20,7 @@
                             <i class="fas fa-info-circle"></i>&nbsp;Open
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            comments</span>
+                            <i class="fas fa-comment"></i></span>
                     </div>
                 </div>
                 <div v-if="issues.status=='2'">
@@ -29,7 +29,7 @@
                             <i class="fas fa-info-circle"></i>&nbsp;Closed
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            comments</span>
+                            <i class="fas fa-comment"></i></span>
                     </div>
                 </div>
             </div>
@@ -65,6 +65,7 @@
                                 <li class="mb-20 text-center listComment" v-if="!comments.length && issues.status!=0">
                                     No comments, <span v-on:click="Hidden=true">add some comments?</span>
                                 </li>
+                                <hr>
                                 <li class="mb-20" v-for="comment in comments" :key="comment.id">
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
@@ -260,6 +261,7 @@
                     title: 'Congratulations',
                     text: 'Success approve and open this issue.',
                 });
+                this.$router.push('/issues');
             },
             async closeIssue() {
                 await axios.patch('/api/issue/closed/' + this.$route.params.id);

@@ -3381,6 +3381,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   title: function title() {
@@ -3389,19 +3467,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       issues: {},
+      fromYou: {},
+      fromCreated: [],
       countComment: '0'
     };
-  },
-  computed: {
-    created: function created() {
-      var now = 0;
-
-      for (var i = 0; i < this.issues.length; i++) {
-        now = timeago_js__WEBPACK_IMPORTED_MODULE_1__.format(this.issues[i].created_at);
-      }
-
-      return now;
-    }
   },
   mounted: function mounted() {
     this.loadIssues();
@@ -3411,7 +3480,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var resp;
+        var resp, respy, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3422,8 +3491,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 resp = _context.sent;
                 _this.issues = resp.data;
+                _context.next = 6;
+                return axios.get('/api/issue/created');
 
-              case 4:
+              case 6:
+                respy = _context.sent;
+                _this.fromYou = respy.data;
+
+                for (i = 0; i < resp.data.length; i++) {
+                  _this.fromCreated.push(timeago_js__WEBPACK_IMPORTED_MODULE_1__.format(resp.data[i].created_at));
+                }
+
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -3458,6 +3537,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -3855,7 +3935,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   text: 'Success approve and open this issue.'
                 });
 
-              case 5:
+                _this7.$router.push('/issues');
+
+              case 6:
               case "end":
                 return _context7.stop();
             }
@@ -53745,8 +53827,8 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row mt-4" }, [
-      _c("div", { staticClass: "col-12" }, [
+    _c("div", { staticClass: "row my-4" }, [
+      _c("div", { staticClass: "col-7" }, [
         _vm._m(1),
         _vm._v(" "),
         _c(
@@ -53784,17 +53866,38 @@ var render = function() {
                                       "router-link",
                                       { attrs: { to: "/issues/" + issue.id } },
                                       [
-                                        _c("h6", [_vm._v(_vm._s(issue.title))]),
+                                        issue.title.length < 35
+                                          ? _c("h6", [
+                                              _vm._v(_vm._s(issue.title))
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        issue.title.length >= 35
+                                          ? _c("h6", [
+                                              _vm._v(
+                                                "\n                                                        " +
+                                                  _vm._s(
+                                                    issue.title.substring(
+                                                      0,
+                                                      34
+                                                    ) + "..."
+                                                  )
+                                              )
+                                            ])
+                                          : _vm._e(),
                                         _vm._v(" "),
                                         _c("p", [
                                           _vm._v(
-                                            "Created " +
-                                              _vm._s(_vm.created) +
-                                              " by " +
-                                              _vm._s(issue.name) +
-                                              " · " +
-                                              _vm._s(_vm.countComment) +
-                                              "\n                                                        comments\n                                                    "
+                                            _vm._s(issue.comments_count) +
+                                              "\n                                                        "
+                                          ),
+                                          _c("i", {
+                                            staticClass: "fas fa-comment"
+                                          }),
+                                          _vm._v(
+                                            " · Created by\n                                                        " +
+                                              _vm._s(issue.user.name) +
+                                              "\n                                                    "
                                           )
                                         ])
                                       ]
@@ -53880,7 +53983,154 @@ var render = function() {
             ])
           ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-5",
+          staticStyle: {
+            "background-color": "#272b411a",
+            "border-radius": ".45rem"
+          }
+        },
+        [
+          _vm._m(10),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30"
+            },
+            [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table mb-0 table-borderless" }, [
+                  _vm._m(11),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      !_vm.fromYou.length ? _c("tr", [_vm._m(12)]) : _vm._e(),
+                      _vm._v(" "),
+                      _vm._l(_vm.fromYou, function(fromYous) {
+                        return _c("tr", { key: fromYous.id }, [
+                          _c("td", [
+                            _c("div", { staticClass: "d-flex" }, [
+                              _c(
+                                "div",
+                                { staticClass: "userDatatable-inline-title" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "text-dark fw-500",
+                                      attrs: { href: "#" }
+                                    },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: "/issues/" + fromYous.id
+                                          }
+                                        },
+                                        [
+                                          fromYous.title.length < 35
+                                            ? _c("h6", [
+                                                _vm._v(_vm._s(fromYous.title))
+                                              ])
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          fromYous.title.length >= 35
+                                            ? _c("h6", [
+                                                _vm._v(
+                                                  "\n                                                        " +
+                                                    _vm._s(
+                                                      fromYous.title.substring(
+                                                        0,
+                                                        34
+                                                      ) + "..."
+                                                    )
+                                                )
+                                              ])
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _vm._v(
+                                              _vm._s(fromYous.comments_count) +
+                                                "\n                                                        "
+                                            ),
+                                            _c("i", {
+                                              staticClass: "fas fa-comment"
+                                            }),
+                                            _vm._v(
+                                              " · Created by\n                                                        " +
+                                                _vm._s(fromYous.user.name) +
+                                                "\n                                                    "
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "userDatatable-content d-inline-block"
+                              },
+                              [
+                                fromYous.status == "0"
+                                  ? _c("div", [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "bg-opacity-danger color-danger rounded-pill userDatatable-content-status active"
+                                        },
+                                        [_vm._v("Unapproved")]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                fromYous.status == "1"
+                                  ? _c("div", [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "bg-opacity-primary color-primary rounded-pill userDatatable-content-status active"
+                                        },
+                                        [_vm._v("Approved")]
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                fromYous.status == "2"
+                                  ? _c("div", [_vm._m(13, true)])
+                                  : _vm._e()
+                              ]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
     ])
   ])
 }
@@ -53912,8 +54162,10 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("span", [
         _vm._v(
-          "The information displayed here is only the information assigned to you."
-        )
+          "The information displayed here is only the information assigned "
+        ),
+        _c("u", [_vm._v("to you")]),
+        _vm._v(".")
       ])
     ])
   },
@@ -54017,6 +54269,76 @@ var staticRenderFns = [
       },
       [_c("span", [_c("i", { staticClass: "fas fa-clock" })]), _vm._v(" Done")]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "headerIssueList mb-4" }, [
+      _c("div", { staticClass: "breadcrumb-main" }, [
+        _c("h4", { staticClass: "text-capitalize breadcrumb-title" }, [
+          _vm._v("From you.")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v(
+          "The information displayed here is only the information assigned "
+        ),
+        _c("u", [_vm._v("from you")]),
+        _vm._v(".")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "userDatatable-header" }, [
+        _c("th", [
+          _c("span", { staticClass: "userDatatable-title" }, [
+            _c("i", { staticClass: "fas fa-code-branch" }),
+            _vm._v("\n                                        issue")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _c("span", { staticClass: "userDatatable-title" }, [_vm._v("status")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "3" } }, [
+      _c("div", { staticClass: "atbd-empty text-center" }, [
+        _c("div", { staticClass: "atbd-empty__image" }, [
+          _c("img", {
+            attrs: { src: "/dashboard/img/folders/1.svg", alt: "Admin Empty" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "atbd-empty__text" }, [
+          _c("p", {}, [_vm._v("No issue assigned to you.")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass:
+          "bg-opacity-success color-success rounded-pill\n                                                userDatatable-content-status active"
+      },
+      [_c("span", [_c("i", { staticClass: "fas fa-clock" })]), _vm._v(" Done")]
+    )
   }
 ]
 render._withStripped = true
@@ -54063,8 +54385,9 @@ var render = function() {
                       _vm._s(_vm.created) +
                       " · " +
                       _vm._s(_vm.countComment) +
-                      "\n                        comments"
-                  )
+                      "\n                        "
+                  ),
+                  _c("i", { staticClass: "fas fa-comment" })
                 ])
               ])
             ])
@@ -54082,8 +54405,9 @@ var render = function() {
                       _vm._s(_vm.created) +
                       " · " +
                       _vm._s(_vm.countComment) +
-                      "\n                        comments"
-                  )
+                      "\n                        "
+                  ),
+                  _c("i", { staticClass: "fas fa-comment" })
                 ])
               ])
             ])
@@ -54101,8 +54425,9 @@ var render = function() {
                       _vm._s(_vm.created) +
                       " · " +
                       _vm._s(_vm.countComment) +
-                      "\n                        comments"
-                  )
+                      "\n                        "
+                  ),
+                  _c("i", { staticClass: "fas fa-comment" })
                 ])
               ])
             ])
@@ -54207,6 +54532,8 @@ var render = function() {
                           ]
                         )
                       : _vm._e(),
+                    _vm._v(" "),
+                    _c("hr"),
                     _vm._v(" "),
                     _vm._l(_vm.comments, function(comment) {
                       return _c(

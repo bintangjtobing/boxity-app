@@ -25,6 +25,7 @@ Route::post('/users/check-user-data', 'apiController@checkUserData');
 // Issue API
 Route::post('/issue', 'apiController@addNewIssue');
 Route::get('/issue', 'apiController@getIssues');
+Route::get('/issue/created', 'apiController@getIssuesfromMe');
 Route::get('/issue-with-comment', 'apiController@getIssuewithComment');
 Route::get('/issue/{id}', 'apiController@getIssueById');
 // Get the assignee name & approver to issue

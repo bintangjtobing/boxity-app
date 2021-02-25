@@ -33,8 +33,14 @@ class issue extends Model
         'approved_by',
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+    public function comments()
+    {
+        return $this->belongsTo(commentIssue::class, 'id', 'issueId');
     }
 }

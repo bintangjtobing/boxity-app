@@ -34,13 +34,13 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-12">
+        <div class="row my-4">
+            <div class="col-7">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
                         <h4 class="text-capitalize breadcrumb-title">Issue lists</h4>
                     </div>
-                    <span>The information displayed here is only the information assigned to you.</span>
+                    <span>The information displayed here is only the information assigned <u>to you</u>.</span>
                 </div>
                 <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
@@ -78,9 +78,12 @@
                                             <div class="userDatatable-inline-title">
                                                 <a href="#" class="text-dark fw-500">
                                                     <router-link :to="`/issues/${issue.id}`">
-                                                        <h6>{{issue.title}}</h6>
-                                                        <p>Created {{created}} by {{issue.name}} · {{countComment}}
-                                                            comments
+                                                        <h6 v-if="issue.title.length<35">{{issue.title}}</h6>
+                                                        <h6 v-if="issue.title.length>=35">
+                                                            {{issue.title.substring(0,34)+"..."}}</h6>
+                                                        <p>{{issue.comments_count}}
+                                                            <i class="fas fa-comment"></i> · Created by
+                                                            {{issue.user.name}}
                                                         </p>
                                                     </router-link>
                                                 </a>
@@ -133,6 +136,81 @@
                     </div>
                 </div>
             </div>
+            <div class="col-5" style="background-color: #272b411a; border-radius: .45rem;">
+                <div class="headerIssueList mb-4">
+                    <div class="breadcrumb-main">
+                        <h4 class="text-capitalize breadcrumb-title">From you.</h4>
+                    </div>
+                    <span>The information displayed here is only the information assigned <u>from you</u>.</span>
+                </div>
+                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-borderless">
+                            <thead>
+                                <tr class="userDatatable-header">
+                                    <th>
+                                        <span class="userDatatable-title"><i class="fas fa-code-branch"></i>
+                                            issue</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">status</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="!fromYou.length">
+                                    <td colspan="3">
+                                        <div class="atbd-empty text-center">
+                                            <div class="atbd-empty__image">
+                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
+                                            </div>
+                                            <div class="atbd-empty__text">
+                                                <p class="">No issue assigned to you.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr v-for="fromYous in fromYou" :key="fromYous.id">
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="userDatatable-inline-title">
+                                                <a href="#" class="text-dark fw-500">
+                                                    <router-link :to="`/issues/${fromYous.id}`">
+                                                        <h6 v-if="fromYous.title.length<35">{{fromYous.title}}</h6>
+                                                        <h6 v-if="fromYous.title.length>=35">
+                                                            {{fromYous.title.substring(0,34)+"..."}}</h6>
+                                                        <p>{{fromYous.comments_count}}
+                                                            <i class="fas fa-comment"></i> · Created by
+                                                            {{fromYous.user.name}}
+                                                        </p>
+                                                    </router-link>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="userDatatable-content d-inline-block">
+                                            <div v-if="fromYous.status=='0'">
+                                                <span
+                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
+                                            </div>
+                                            <div v-if="fromYous.status=='1'">
+                                                <span
+                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
+                                            </div>
+                                            <div v-if="fromYous.status=='2'">
+                                                <span class="bg-opacity-success color-success rounded-pill
+                                                    userDatatable-content-status active"><span><i
+                                                            class="fas fa-clock"></i> </span>&nbsp;Done</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -145,16 +223,9 @@
         data() {
             return {
                 issues: {},
+                fromYou: {},
+                fromCreated: [],
                 countComment: '0',
-            }
-        },
-        computed: {
-            created: function () {
-                let now = 0;
-                for (let i = 0; i < this.issues.length; i++) {
-                    now = timeago.format(this.issues[i].created_at);
-                }
-                return now;
             }
         },
         mounted() {
@@ -164,6 +235,11 @@
             async loadIssues() {
                 const resp = await axios.get('/api/issue');
                 this.issues = resp.data;
+                const respy = await axios.get('/api/issue/created');
+                this.fromYou = respy.data;
+                for (let i = 0; i < resp.data.length; i++) {
+                    this.fromCreated.push(timeago.format(resp.data[i].created_at));
+                }
             },
         }
     }
