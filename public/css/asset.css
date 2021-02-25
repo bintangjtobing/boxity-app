@@ -24020,6 +24020,11 @@ td {
     margin-bottom: 0px;
 }
 
+.btn span,
+.btn i {
+    margin-right: 0 !important;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}

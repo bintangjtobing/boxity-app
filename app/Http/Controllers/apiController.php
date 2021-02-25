@@ -15,7 +15,7 @@ use App\commentIssue;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
-
+use App\jobvacancy;
 
 class apiController extends Controller
 {
@@ -199,5 +199,31 @@ class apiController extends Controller
     public function countCommentDB($id)
     {
         return response()->json(commentIssue::where('issueId', $id)->get()->count());
+    }
+    // API FOR JOB
+    public function getJob()
+    {
+        return jobvacancy::all();
+    }
+    public function addJob(Request $request)
+    {
+        $job = new jobvacancy();
+        $job->title = $request->title;
+        $job->location = $request->location;
+        $job->divisi = $request->divisi;
+        $job->part = $request->partof;
+        $job->description = $request->desc;
+        $job->save();
+        return response()->json($job, 201);
+    }
+    public function deleteJob($id)
+    {
+        $career = jobvacancy::find($id);
+        $career->delete();
+        return response()->json([], 204);
+    }
+    public function getJobbyId($id)
+    {
+        return response()->json(jobvacancy::find($id));
     }
 }

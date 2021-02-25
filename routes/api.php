@@ -36,3 +36,9 @@ Route::get('/issue/comment/{id}', 'apiController@getCommentbyId');
 Route::patch('/issue/approved/{id}', 'apiController@approveIssue');
 Route::patch('/issue/closed/{id}', 'apiController@closedIssue');
 Route::get('/count-comment/{id}', 'apiController@countCommentDB');
+
+// Career API
+Route::get('/career/{id}', 'apiController@getJobbyId');
+Route::post('/career', 'apiController@addJob');
+Route::get('/career', 'apiController@getJob');
+Route::delete('/career/{id}', 'apiController@deleteJob');

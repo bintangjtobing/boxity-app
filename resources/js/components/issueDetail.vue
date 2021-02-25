@@ -119,7 +119,7 @@
                 <div class="form-group" v-if="issues.status!=2">
                     <div class="justify-content-end">
                         <button v-on:click="closeIssue" type="submit"
-                            class="btn btn-danger btn-default btn-squared px-30"><i class="fas fa-times"></i> Close
+                            class="btn btn-danger btn-default btn-squared px-30"><i class="fas fa-times"></i>&nbsp;Close
                             issue</button>
                     </div>
                 </div>
