@@ -24034,6 +24034,30 @@ td {
     margin-bottom: 2rem;
 }
 
+figcaption .explainCareers p {
+    font-size: 12px !important;
+}
+
+figcaption .explainCareers span::before,
+figcaption .explainCareers span::after {
+    content: "\a";
+    white-space: pre;
+}
+
+figcaption .explainCareers span {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+figcaption .explainCareers .descCareer {
+    background-color: #0000001a;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: .25rem;
+    border: .5px solid #5a5f7d;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}

@@ -82,7 +82,8 @@
                                                         <h6 v-if="issue.title.length>=35">
                                                             {{issue.title.substring(0,34)+"..."}}</h6>
                                                         <p>{{issue.comments_count}}
-                                                            <i class="fas fa-comment"></i> · Created by
+                                                            <i class="fas fa-comment"></i> · Created
+                                                            {{issue.created_at}} by
                                                             {{issue.user.name}}
                                                         </p>
                                                     </router-link>
@@ -237,10 +238,10 @@
                 this.issues = resp.data;
                 const respy = await axios.get('/api/issue/created');
                 this.fromYou = respy.data;
-                for (let i = 0; i < resp.data.length; i++) {
-                    this.fromCreated.push(timeago.format(resp.data[i].created_at));
-                }
             },
+            dateFromCreated() {
+                return timeago.format(created_at);
+            }
         }
     }
 

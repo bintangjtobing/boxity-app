@@ -25,7 +25,7 @@ class apiController extends Controller
     }
     public function getUsers()
     {
-        return response()->json(User::all());
+        return response()->json(User::orderBy('name', 'asc')->get());
     }
     public function deleteUser($id)
     {
@@ -143,7 +143,7 @@ class apiController extends Controller
         $issueGet = issue::with('user')
             ->withCount('comments')
             ->where('created_by', Auth::id())
-            ->where('status', '!=', '0')
+            ->where('status', '=', '1')
             ->orderBy('created_at', 'DESC')
             ->get();
         return $issueGet;
@@ -153,7 +153,6 @@ class apiController extends Controller
         $issueGet = DB::table('issues')
             ->join('comment_issues', 'comment_issues.issueId', '=', 'issues.id')
             ->get()
-            // ->select(array(DB::Raw('COUNT(comment_issues.issueId) as countId')))
             ->groupBy('comment_issues.issueId');
         return response()->json($issueGet);
     }
@@ -224,7 +223,7 @@ class apiController extends Controller
     // API FOR JOB
     public function getJob()
     {
-        return jobvacancy::all();
+        return jobvacancy::orderBy('created_at', 'desc')->get();
     }
     public function addJob(Request $request)
     {
@@ -246,5 +245,16 @@ class apiController extends Controller
     public function getJobbyId($id)
     {
         return response()->json(jobvacancy::find($id));
+    }
+    public function updateJob($id, Request $request)
+    {
+        $job = jobvacancy::find($id);
+        $job->title = $request->title;
+        $job->location = $request->location;
+        $job->divisi = $request->divisi;
+        $job->part = $request->partof;
+        $job->description = $request->desc;
+        $job->save();
+        return response()->json($job, 201);
     }
 }
