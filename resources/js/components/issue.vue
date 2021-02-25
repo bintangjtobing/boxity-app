@@ -82,7 +82,7 @@
                                                         <h6 v-if="issue.title.length>=35">
                                                             {{issue.title.substring(0,34)+"..."}}</h6>
                                                         <p>{{issue.comments_count}}
-                                                            <i class="fas fa-comment"></i> · Created
+                                                            <i class="far fa-comment-dots"></i> · Created
                                                             {{issue.created_at}} by
                                                             {{issue.user.name}}
                                                         </p>
@@ -127,7 +127,7 @@
                                             <div v-if="issue.status=='2'">
                                                 <span class="bg-opacity-success color-success rounded-pill
                                                     userDatatable-content-status active"><span><i
-                                                            class="fas fa-clock"></i> </span>&nbsp;Done</span>
+                                                            class="far fa-history"></i> </span>&nbsp;Done</span>
                                             </div>
                                         </div>
                                     </td>
@@ -181,7 +181,7 @@
                                                         <h6 v-if="fromYous.title.length>=35">
                                                             {{fromYous.title.substring(0,34)+"..."}}</h6>
                                                         <p>{{fromYous.comments_count}}
-                                                            <i class="fas fa-comment"></i> · Created by
+                                                            <i class="far fa-comment-dots"></i> · Created by
                                                             {{fromYous.user.name}}
                                                         </p>
                                                     </router-link>

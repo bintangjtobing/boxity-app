@@ -24058,6 +24058,10 @@ figcaption .explainCareers .descCareer {
     border: .5px solid #5a5f7d;
 }
 
+.cp-img__main {
+    border-radius: 50%;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}

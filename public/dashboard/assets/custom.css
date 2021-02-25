@@ -184,3 +184,7 @@ figcaption .explainCareers .descCareer {
     border-radius: .25rem;
     border: .5px solid #5a5f7d;
 }
+
+.cp-img__main {
+    border-radius: 50%;
+}

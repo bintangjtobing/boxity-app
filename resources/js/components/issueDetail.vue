@@ -11,7 +11,7 @@
                             <i class="fas fa-info-circle"></i>&nbsp;Unapproved
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            <i class="fas fa-comment"></i></span>
+                            <i class="far fa-comment-dots"></i></span>
                     </div>
                 </div>
                 <div v-if="issues.status=='1'">
@@ -20,16 +20,16 @@
                             <i class="fas fa-info-circle"></i>&nbsp;Open
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            <i class="fas fa-comment"></i></span>
+                            <i class="far fa-comment-dots"></i></span>
                     </div>
                 </div>
                 <div v-if="issues.status=='2'">
                     <div class="mb-4 descIssue">
                         <span class="badge badge-round badge-outline-closed badge-lg" style="margin-right:0px;">
-                            <i class="fas fa-info-circle"></i>&nbsp;Closed
+                            <i class="fas fa-history"></i>&nbsp;Closed
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
-                            <i class="fas fa-comment"></i></span>
+                            <i class="far fa-comment-dots"></i></span>
                     </div>
                 </div>
             </div>

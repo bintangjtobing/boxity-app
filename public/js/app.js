@@ -2708,6 +2708,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   title: function title() {
     return 'Contact list';
@@ -52929,14 +53010,186 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row contact-card-group" }, [
+      _c("div", { staticClass: "col-xl-3 mb-25" }, [
+        _c("div", { staticClass: "card contact-card" }, [
+          _c("div", { staticClass: "card-body text-center pt-30 px-25 pb-0" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "contact-profile-card text-center" }, [
+              _c(
+                "div",
+                { staticClass: "cp-img d-flex justify-content-center" },
+                [
+                  _c("img", {
+                    staticClass: "cp-img__main",
+                    attrs: {
+                      src: "/dashboard/img/author/profile/3.jpg",
+                      alt: ""
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(2)
+            ]),
+            _vm._v(" "),
+            _vm._m(3)
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Hello world! This is contact list.")])])
+    return _c("div", { staticClass: "row mt-4" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "contact-breadcrumb" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "breadcrumb-main add-contact justify-content-sm-between "
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    " d-flex flex-wrap justify-content-center breadcrumb-main__wrapper"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex align-items-center add-contact__title justify-content-center mr-sm-25"
+                    },
+                    [
+                      _c(
+                        "h4",
+                        {
+                          staticClass: "text-capitalize fw-500 breadcrumb-title"
+                        },
+                        [_vm._v("Contacts")]
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "sub-title ml-sm-25 pl-sm-25" })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      staticClass:
+                        "d-flex align-items-center add-contact__form my-sm-0 my-2",
+                      attrs: { action: "/" }
+                    },
+                    [
+                      _c("input", {
+                        staticClass:
+                          "form-control mr-sm-2 border-0 box-shadow-none",
+                        attrs: {
+                          type: "search",
+                          placeholder: "Search by Name",
+                          "aria-label": "Search"
+                        }
+                      })
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "card__more-action dropdown dropdown-click" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn-link border-0 bg-transparent p-0",
+            attrs: {
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }
+          },
+          [_c("span", { attrs: { "data-feather": "more-horizontal" } })]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cp-info" }, [
+      _c("h6", { staticClass: "cp-info__title" }, [_vm._v("Grant Marshall")]),
+      _vm._v(" "),
+      _c("span", { staticClass: "cp-info__designation" }, [
+        _vm._v("User Interface Designer")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer mt-20 pt-20 pb-20 px-0" }, [
+      _c("ul", { staticClass: "c-info-list" }, [
+        _c("li", { staticClass: "c-info-list__item d-flex" }, [
+          _c("div", { staticClass: "c-info-item-icon" }, [
+            _c("i", { staticClass: "fas fa-phone" })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "c-info-item-text" }, [
+            _vm._v(
+              "\n                                    +1 (861) 550-2796\n                                "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "c-info-list__item d-flex" }, [
+          _c("div", { staticClass: "c-info-item-icon" }, [
+            _c("i", { staticClass: "far fa-envelope" })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "c-info-item-text" }, [
+            _vm._v(
+              "\n                                    marshall@yahoo.com\n                                "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "c-info-list__item d-flex" }, [
+          _c("div", { staticClass: "c-info-item-icon" }, [
+            _c("i", { staticClass: "fas fa-location-arrow" })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "c-info-item-text" }, [
+            _vm._v(
+              "\n                                    225 Bills Place\n                                "
+            )
+          ])
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -54681,7 +54934,7 @@ var render = function() {
                                               "\n                                                        "
                                           ),
                                           _c("i", {
-                                            staticClass: "fas fa-comment"
+                                            staticClass: "far fa-comment-dots"
                                           }),
                                           _vm._v(
                                             " · Created\n                                                        " +
@@ -54853,7 +55106,7 @@ var render = function() {
                                                 "\n                                                        "
                                             ),
                                             _c("i", {
-                                              staticClass: "fas fa-comment"
+                                              staticClass: "far fa-comment-dots"
                                             }),
                                             _vm._v(
                                               " · Created by\n                                                        " +
@@ -55058,7 +55311,10 @@ var staticRenderFns = [
         staticClass:
           "bg-opacity-success color-success rounded-pill\n                                                userDatatable-content-status active"
       },
-      [_c("span", [_c("i", { staticClass: "fas fa-clock" })]), _vm._v(" Done")]
+      [
+        _c("span", [_c("i", { staticClass: "far fa-history" })]),
+        _vm._v(" Done")
+      ]
     )
   },
   function() {
@@ -55178,7 +55434,7 @@ var render = function() {
                       _vm._s(_vm.countComment) +
                       "\n                        "
                   ),
-                  _c("i", { staticClass: "fas fa-comment" })
+                  _c("i", { staticClass: "far fa-comment-dots" })
                 ])
               ])
             ])
@@ -55198,7 +55454,7 @@ var render = function() {
                       _vm._s(_vm.countComment) +
                       "\n                        "
                   ),
-                  _c("i", { staticClass: "fas fa-comment" })
+                  _c("i", { staticClass: "far fa-comment-dots" })
                 ])
               ])
             ])
@@ -55218,7 +55474,7 @@ var render = function() {
                       _vm._s(_vm.countComment) +
                       "\n                        "
                   ),
-                  _c("i", { staticClass: "fas fa-comment" })
+                  _c("i", { staticClass: "far fa-comment-dots" })
                 ])
               ])
             ])
@@ -55629,7 +55885,7 @@ var staticRenderFns = [
         staticStyle: { "margin-right": "0px" }
       },
       [
-        _c("i", { staticClass: "fas fa-info-circle" }),
+        _c("i", { staticClass: "fas fa-history" }),
         _vm._v(" Closed\n                    ")
       ]
     )
