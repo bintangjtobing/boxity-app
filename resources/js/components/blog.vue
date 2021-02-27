@@ -5,11 +5,11 @@
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Blog management</h4>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#new-member">
+                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
                             <i class="las la-plus fs-16"></i>Add new blog</a>
 
                         <!-- Modal -->
-                        <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1"
+                        <div class="modal fade new-member" id="newMember" role="dialog" tabindex="-1"
                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content modal-lg radius-xl">
@@ -21,26 +21,28 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form>
+                                            <form @submit.prevent="handleSubmit">
                                                 <div class="form-group mb-20">
-                                                    <input type="text" name="title" class="form-control"
+                                                    <input type="text" v-model="blog.title" class="form-control"
                                                         placeholder="Blog title">
                                                 </div>
                                                 <div class="form-group mb-20">
-                                                    <textarea name="description" class="form-control" id="" cols="30"
-                                                        rows="10" placeholder="Blog descriptions..."></textarea>
+                                                    <textarea v-model="blog.description" class="form-control" id=""
+                                                        cols="30" rows="10"
+                                                        placeholder="Blog descriptions..."></textarea>
                                                 </div>
                                                 <div class="form-group mb-20">
-                                                    <select name="categories" class="form-control custom-select px-15"
+                                                    <select v-model="blog.category"
+                                                        class="form-control custom-select px-15"
                                                         id="exampleFormControlSelect1">
-                                                        <option>Select category:</option>
+                                                        <option value="" disabled>Select category:</option>
                                                         <option value="Ekspor">Ekspor</option>
                                                         <option value="Impor">Impor</option>
                                                         <option value="Umum">Umum</option>
                                                     </select>
                                                 </div>
                                                 <div class="button-group d-flex pt-25">
-                                                    <button
+                                                    <button type="submit"
                                                         class="btn btn-primary btn-default btn-squared text-capitalize">submit
                                                     </button>
                                                     <button class="btn btn-light btn-default btn-squared fw-400
@@ -80,79 +82,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6>Per 1 Feb 2021 pemerintah masih bebaskan pajak PPH 22 Import
-                                                    </h6>
-                                                    <p>Created by Bintang | 2021-02-17</p>
-                                                </a>
+                                <tr v-if="!blogs.length">
+                                    <td colspan="4">
+                                        <div class="atbd-empty text-center">
+                                            <div class="atbd-empty__image">
+                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
+                                            </div>
+                                            <div class="atbd-empty__text">
+                                                <p class="">No blog.</p>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            Export
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-inline-block">
-                                            73 views
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            <li>
-                                                <a href="#" class="view">
-                                                    <i class="fas fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="edit">
-                                                    <i class="fas fa-pen"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </li>
-                                        </ul>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr v-for="blog in blogs" :key="blog.id">
                                     <td>
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
                                                 <a href="#" class="text-dark fw-500">
-                                                    <h6>Materai 3000 dan 6000 masih berlaku selama 2021
+                                                    <h6 v-if="blog.title.length < 45">{{blog.title}}
                                                     </h6>
-                                                    <p>Created by Bintang | 2021-02-16</p>
+                                                    <h6 v-if="blog.title.length >= 45">
+                                                        {{blog.title.substring(0,44)+"..."}}
+                                                    </h6>
+                                                    <p>Created by {{blog.user.name}} | {{blog.created_at}}</p>
                                                 </a>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            Berita
+                                            {{blog.category}}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content d-inline-block">
-                                            53 views
+                                            {{blog.views}} views
                                         </div>
                                     </td>
                                     <td>
                                         <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                             <li>
-                                                <a href="#" class="view">
-                                                    <i class="fas fa-eye"></i></a>
+                                                <router-link :to="`/detail/blogs/${blog.id}`" class="view">
+                                                    <i class="fas fa-eye"></i></router-link>
                                             </li>
                                             <li>
-                                                <a href="#" class="edit">
-                                                    <i class="fas fa-pen"></i></a>
+                                                <router-link :to="`/edit/blog/${blog.id}`" class="edit">
+                                                    <i class="fas fa-pen"></i></router-link>
                                             </li>
                                             <li>
-                                                <a href="#" class="remove">
+                                                <a @click="deleteBlog(blog.id)" class="remove">
                                                     <i class="fas fa-trash"></i></a>
                                             </li>
                                         </ul>
@@ -167,9 +145,54 @@
     </div>
 </template>
 <script>
+    import Swal from 'sweetalert2';
     export default {
         title() {
             return 'Blog';
+        },
+        data() {
+            return {
+                blog: {
+                    category: '',
+                },
+                blogs: {},
+            }
+        },
+        created() {
+            this.loadBlogs();
+        },
+        methods: {
+            async loadBlogs() {
+                const resp = await axios.get('/api/blogs');
+                this.blogs = resp.data;
+            },
+            async deleteBlog(id) {
+                const result = await Swal.fire({
+                    title: 'Delete blog?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.delete('api/blogs/' + id);
+                    this.loadBlogs();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Deleted',
+                        text: 'Success deleted blog'
+                    });
+                }
+            },
+            async handleSubmit() {
+                await axios.post('/api/blogs', this.blog);
+                this.loadBlogs();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congratulations',
+                    text: 'Success add new blog',
+                });
+                $('#newMember').modal('hide');
+            }
         },
     }
 

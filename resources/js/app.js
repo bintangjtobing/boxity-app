@@ -33,6 +33,8 @@ import issueDetail from './components/issueDetail.vue';
 import careerForm from './components/careerForm.vue';
 import careerFormEdit from './components/careerFormEdit.vue';
 import careerView from './components/careerView.vue';
+import blogView from './components/blogView.vue';
+import blogEdit from './components/blogEdit.vue';
 
 // membuat router
 const routes = [{
@@ -104,6 +106,14 @@ const routes = [{
         name: 'career-edit',
         path: '/edit/career/:id',
         component: careerFormEdit,
+    }, {
+        name: 'blog-view',
+        path: '/detail/blogs/:id',
+        component: blogView,
+    }, {
+        name: 'blog-edit',
+        path: '/edit/blog/:id',
+        component: blogEdit,
     }
 ]
 

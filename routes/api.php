@@ -44,3 +44,10 @@ Route::post('/career', 'apiController@addJob');
 Route::get('/career', 'apiController@getJob');
 Route::delete('/career/{id}', 'apiController@deleteJob');
 Route::patch('/career/{id}', 'apiController@updateJob');
+
+// Blog API
+Route::get('/blogs', 'apiController@getBlog');
+Route::get('/blogs/{id}', 'apiController@getBlogById');
+Route::patch('/blogs/{id}', 'apiController@patchBlogById');
+Route::delete('/blogs/{id}', 'apiController@deleteBlogById');
+Route::post('/blogs', 'apiController@addNewBlog');

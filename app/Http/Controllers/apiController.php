@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\album_photos;
 use App\albums;
+use App\blog;
 use App\changeLog;
 use App\commentIssue;
 use App\id_agamas;
@@ -256,5 +257,43 @@ class apiController extends Controller
         $job->description = $request->desc;
         $job->save();
         return response()->json($job, 201);
+    }
+    public function getBlog()
+    {
+        return response()->json(blog::with('user')->orderBy('created_at', 'DESC')->get());
+    }
+    public function getBlogById($id)
+    {
+        return response()->json(blog::find($id));
+    }
+    public function patchBlogById($id, Request $request)
+    {
+        $blog = blog::find($id);
+        foreach (['title', 'description', 'category'] as $field) {
+            if (isset($request->{$field})) {
+                $blog->{$field} = $request->{$field};
+            }
+        }
+        $blog->save();
+        return response()->json($blog);
+    }
+    public function deleteBlogById($id)
+    {
+        $blog = blog::find($id);
+        $blog->delete();
+        return response()->json([], 204);
+    }
+    public function addNewBlog(Request $request)
+    {
+        $blog = new blog();
+        foreach (['title', 'description', 'category'] as $field) {
+            if (isset($request->{$field})) {
+                $blog->{$field} = $request->{$field};
+            }
+        }
+        $blog->views = 0;
+        $blog->userid = Auth::id();
+        $blog->save();
+        return response()->json($blog);
     }
 }
