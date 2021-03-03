@@ -19,7 +19,6 @@ class CreateAddAditionalFieldsTable extends Migration
             $table->string('divisi')->after('department');
             $table->string('logip')->after('updated_at');
             $table->string('lastLogin')->after('logip');
-            $table->string('username')->after('id');
         });
     }
 

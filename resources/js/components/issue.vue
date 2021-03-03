@@ -166,7 +166,7 @@
                                                 <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
                                             </div>
                                             <div class="atbd-empty__text">
-                                                <p class="">No issue assigned to you.</p>
+                                                <p class="">No issue from you.</p>
                                             </div>
                                         </div>
                                     </td>

@@ -246,7 +246,7 @@
                                 <div class="nav-author__options">
                                     <ul>
                                         <li>
-                                            <a href="">
+                                            <a href="/{{auth()->user()->username}}/edit">
                                                 <i data-feather="user"></i> Profile</a>
                                         </li>
                                         <li>

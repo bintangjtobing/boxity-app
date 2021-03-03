@@ -188,3 +188,25 @@ figcaption .explainCareers .descCareer {
 .cp-img__main {
     border-radius: 50%;
 }
+
+.form-group span {
+    font-size: 12px;
+}
+
+.ap-button a {
+    font-size: 13px;
+    border-radius: 6px;
+    align-items: center;
+    line-height: 2.84615;
+    font-weight: 500;
+    margin: 5px;
+    padding: 2px 18px;
+}
+
+.bg-gradient-primary {
+    background-color: #282562 !important;
+    background: -webkit-linear-gradient(left, #282562, #3e3996) !important;
+    background: -o-linear-gradient(left, #282562, #3e3996) !important;
+    background: -moz-linear-gradient(left, #282562, #3e3996) !important;
+    background: linear-gradient(left, #282562, #3e3996) !important;
+}

@@ -9,7 +9,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Users API
 Route::get('/users', 'apiController@getUsers');
-Route::get('/user/{id}', 'apiController@getUserbyId');
+Route::get('/users/{id}', 'apiController@getUserbyId');
 Route::delete('/users/{id}', 'apiController@deleteUser');
 Route::post('/users', 'apiController@addUser');
 Route::get('/count-users', 'apiController@countUsers');
@@ -51,3 +51,10 @@ Route::get('/blogs/{id}', 'apiController@getBlogById');
 Route::patch('/blogs/{id}', 'apiController@patchBlogById');
 Route::delete('/blogs/{id}', 'apiController@deleteBlogById');
 Route::post('/blogs', 'apiController@addNewBlog');
+
+// User Profile API
+Route::get('/{username}', 'apiController@getProfile');
+Route::patch('/profile/{id}', 'apiController@updateProfile');
+
+// Contact API
+Route::get('/contacts', 'apiController@getContact');

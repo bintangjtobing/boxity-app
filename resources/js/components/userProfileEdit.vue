@@ -1,0 +1,220 @@
+<template>
+    <div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
+                    <div class="ap-tab-wrapper border-bottom ">
+                        <ul class="nav px-30 ap-tab-main text-capitalize" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                                    role="tab" aria-controls="v-pills-home" aria-selected="true"><span
+                                        data-feather="user"></span>basic info</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form @submit.prevent="handleSubmit">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
+                                aria-labelledby="v-pills-home-tab">
+                                <div class="row justify-content-center ml-4">
+                                    <div class="col-xl-10 col-sm-6 col-10">
+                                        <div class="mt-40 mb-50">
+                                            <div class="account-profile d-flex justify-content-center mb-4 ">
+                                                <div class="ap-img pro_img_wrapper">
+                                                    <input id="file-upload" type="file" name="fileUpload" class="d-none"
+                                                        @change="fileUpload">
+                                                    <label for="file-upload">
+                                                        <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
+                                                            :src="`/dashboard/img/author/profile/`+user.avatar"
+                                                            alt="profile img" v-if="!imagePreview">
+                                                        <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
+                                                            :src="imagePreview" alt="profile img" v-if="imagePreview">
+                                                        <span class="cross" id="remove_pro_pic">
+                                                            <i class="fas fa-camera"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="edit-profile__body">
+                                                <div class="form-row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="name1">name</label>
+                                                            <input type="text" class="form-control" id="name1"
+                                                                v-model="user.name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="name1">username</label>
+                                                            <input type="text" class="form-control"
+                                                                v-model="user.username">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label for="name2">Email</label>
+                                                            <input type="email" class="form-control" id="name2"
+                                                                v-model="user.email" readonly>
+                                                            <span><i>Request to IT for changes an email
+                                                                    address.</i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label for="name2">Mobile phone</label>
+                                                            <input type="number" class="form-control"
+                                                                v-model="user.phone">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group">
+                                                            <label for="">Gender</label>
+                                                            <select v-model="user.gender" id=""
+                                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light px-15 fa-select">
+                                                                <option :value="`M`">Male</option>
+                                                                <option :value="`F`">Female</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <div class="cityOption">
+                                                                <label>
+                                                                    Birth
+                                                                </label>
+                                                                <input type="date" class="form-control"
+                                                                    v-model="user.birth">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Bio</label>
+                                                    <textarea v-model="user.bio" id="" cols="30" rows="4"
+                                                        class="form-control"
+                                                        placeholder="Tell about yourself. Or you can add bio like your instagram account..."></textarea>
+                                                </div>
+                                                <hr class="my-3">
+                                                <div class="my-3">
+                                                    <h3>Social profile</h3>
+                                                    <div class="form-row">
+                                                        <div class="col-lg-6">
+                                                            <div class="my-30">
+                                                                <div class="input-group flex-nowrap">
+                                                                    <div class="input-group-prepend">
+                                                                        <span
+                                                                            class="input-group-text bg-facebook border-facebook text-white wh-44 radius-xs justify-content-center"
+                                                                            id="addon-wrapping1">
+                                                                            <i class="lab la-facebook-f fs-18"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="url"
+                                                                        class="form-control form-control--social"
+                                                                        placeholder="https://facebook.com/username"
+                                                                        aria-label="Username"
+                                                                        aria-describedby="addon-wrapping1"
+                                                                        id="socialUrl" v-model="user.facebook">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="my-30">
+                                                                <div class="input-group flex-nowrap">
+                                                                    <div class="input-group-prepend">
+                                                                        <span
+                                                                            class="input-group-text bg-instagram border-instagram text-white wh-44 radius-xs justify-content-center"
+                                                                            id="addon-wrapping1">
+                                                                            <i class="lab la-instagram fs-18"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="url"
+                                                                        class="form-control form-control--social"
+                                                                        placeholder="https://instagram.com/username"
+                                                                        aria-label="Username"
+                                                                        aria-describedby="addon-wrapping1"
+                                                                        id="socialUrl" v-model="user.instagram">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="button-group d-flex pt-25 justify-content-start">
+                                                    <button
+                                                        class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2"
+                                                        type="submit">Update
+                                                        details
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import Swal from 'sweetalert2';
+    export default {
+        title() {
+            return 'Profile';
+        },
+        data() {
+            return {
+                user: {
+                    facebook: '',
+                    instagram: '',
+                },
+                imagePreview: '',
+                imageLocation: '',
+            }
+        },
+        created() {
+            this.loadDataUser();
+        },
+        methods: {
+            async loadDataUser() {
+                const resp = await axios.get('/api/' + this.$route.params.username);
+                this.user = resp.data;
+            },
+            fileUpload(e) {
+                this.imageLocation = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(this.imageLocation)
+                reader.onload = e => {
+                    this.imagePreview = e.target.result;
+                }
+            },
+            async handleSubmit() {
+                await axios.patch('/api/profile/' + this.user.id, {
+                    name: this.user.name,
+                    username: this.user.username,
+                    email: this.user.email,
+                    phone: this.user.phone,
+                    gender: this.user.gender,
+                    birth: this.user.birth,
+                    bio: this.user.bio,
+                    facebook: this.user.facebook,
+                    instagram: this.user.instagram,
+                });
+                this.loadDataUser();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congratulations',
+                    text: 'Update your data succced.',
+                });
+            },
+        }
+    }
+
+</script>

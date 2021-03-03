@@ -17,6 +17,7 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\userdetails;
 
 class apiController extends Controller
 {
@@ -64,18 +65,19 @@ class apiController extends Controller
             shuffle($arr);
             $randVal = $arr[0];
             $user->avatar = $randVal . '.jpg';
+            $user->cover = $randVal . '.jpg';
         } else {
             $arr = array(2, 4, 6);
             shuffle($arr);
             $randVal = $arr[0];
             $user->avatar = $randVal . '.jpg';
+            $user->cover = $randVal . '.jpg';
         }
         $user->password = Hash::make($request->password);
         $user->createdBy = Auth::id();
         $user->logip = $request->ip();
         $user->lastLogin = '0';
         $user->save();
-
         return response()->json($user, 201);
     }
     public function countUsers()
@@ -295,5 +297,32 @@ class apiController extends Controller
         $blog->userid = Auth::id();
         $blog->save();
         return response()->json($blog);
+    }
+    public function getProfile($username)
+    {
+        return response()->json(User::where('username', $username)->first());
+    }
+    public function updateProfile($id, Request $request)
+    {
+        $profile = User::find($id);
+        $profile->name = $request->name;
+        $profile->username = $request->username;
+        $profile->email = $request->email;
+        $profile->phone = $request->phone;
+        $profile->gender = $request->gender;
+        $profile->birth = $request->birth;
+        $profile->bio = $request->bio;
+        if (!$request->instagram) {
+            $request->instagram = '-';
+        } else {
+            $profile->instagram = $request->instagram;
+        }
+        if (!$request->facebook) {
+            $request->facebook = '-';
+        } else {
+            $profile->facebook = $request->facebook;
+        }
+        $profile->save();
+        return response()->json($profile, 201);
     }
 }

@@ -123,7 +123,7 @@
         },
         methods: {
             async loadDataUser() {
-                const response = await axios.get('/api/user/' + this.$route.params.id);
+                const response = await axios.get('/api/users/' + this.$route.params.id);
                 this.user = response.data;
             },
             async handleSubmit() {
