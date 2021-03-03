@@ -17,6 +17,7 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\quotes;
 use App\userdetails;
 
 class apiController extends Controller
@@ -223,6 +224,7 @@ class apiController extends Controller
     {
         return response()->json(commentIssue::where('issueId', $id)->get()->count());
     }
+
     // API FOR JOB
     public function getJob()
     {
@@ -260,6 +262,8 @@ class apiController extends Controller
         $job->save();
         return response()->json($job, 201);
     }
+
+    // BLOG API
     public function getBlog()
     {
         return response()->json(blog::with('user')->orderBy('created_at', 'DESC')->get());
@@ -298,6 +302,8 @@ class apiController extends Controller
         $blog->save();
         return response()->json($blog);
     }
+
+    // PROFILE API
     public function getProfile($username)
     {
         return response()->json(User::where('username', $username)->first());
@@ -324,5 +330,52 @@ class apiController extends Controller
         }
         $profile->save();
         return response()->json($profile, 201);
+    }
+
+    // QUOTE API
+    public function getQuoteAll()
+    {
+        if (auth()->user()->role != 'it') {
+            return response()->json(quotes::with('createdBy')->where('createdId', Auth::id())->get());
+        } else {
+            return response()->json(quotes::with('createdBy')->get());
+        }
+    }
+    public function addQuote(Request $request)
+    {
+        $quotes = new quotes();
+        $quotes->quoteid = $request->quoteid;
+        $quotes->quoteen = $request->quoteen;
+        $quotes->createdId = Auth::id();
+        $quotes->finishId = 0;
+        $quotes->status = 0;
+        $quotes->save();
+        return response()->json($quotes, 201);
+    }
+    public function deleteQuote($id)
+    {
+        $career = quotes::find($id);
+        $career->delete();
+        return response()->json([], 204);
+    }
+    public function getQuotebyId($id)
+    {
+        return response()->json(quotes::with('createdBy')->where('id', $id)->get());
+    }
+    public function updateQuote($id, Request $request)
+    {
+        $quotes = quotes::find($id);
+        $quotes->quoteid = $request->quoteid;
+        $quotes->quoteen = $request->quoteen;
+        $quotes->save();
+        return response()->json($quotes, 201);
+    }
+    public function approvedQuote($id, Request $request)
+    {
+        $quote = quotes::find($id);
+        $quote->finishId = Auth::id();
+        $quote->status = 1;
+        $quote->save();
+        return response()->json($quote, 201);
     }
 }

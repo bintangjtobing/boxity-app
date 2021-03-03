@@ -58,3 +58,11 @@ Route::patch('/profile/{id}', 'apiController@updateProfile');
 
 // Contact API
 Route::get('/contacts', 'apiController@getContact');
+
+// Quote API
+Route::get('/quote/get', 'apiController@getQuoteAll');
+Route::get('/quote/{id}', 'apiController@getQuotebyId');
+Route::post('/quote', 'apiController@addQuote');
+Route::delete('/quote/{id}', 'apiController@deleteQuote');
+Route::patch('/quote/{id}', 'apiController@updateQuote');
+Route::patch('/quote/approved/{id}', 'apiController@approvedQuote');

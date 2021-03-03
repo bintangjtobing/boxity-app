@@ -6,7 +6,6 @@
                     <!-- Profile Acoount -->
                     <div class="card mb-25">
                         <div class="card-body text-center pt-sm-30 pb-sm-0  px-25 pb-0">
-
                             <div class="account-profile">
                                 <div class="ap-img w-100 d-flex justify-content-center">
                                     <!-- Profile picture image-->

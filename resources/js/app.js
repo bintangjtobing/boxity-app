@@ -37,6 +37,9 @@ import blogView from './components/blogView.vue';
 import blogEdit from './components/blogEdit.vue';
 import userProfileEdit from './components/userProfileEdit.vue';
 import userProfile from './components/userProfile.vue';
+import quoteForm from './components/quoteForm.vue';
+import quoteFormEdit from './components/quoteFormEdit.vue';
+import quoteView from './components/quoteView.vue';
 
 // membuat router
 const routes = [{
@@ -124,6 +127,18 @@ const routes = [{
         name: 'user-profile',
         path: '/:username',
         component: userProfile,
+    }, {
+        name: 'new-quote',
+        path: '/quote/new',
+        component: quoteForm,
+    }, {
+        name: 'quote-details',
+        path: '/quote/:id',
+        component: quoteView,
+    }, {
+        name: 'quote-edit',
+        path: '/edit/quote/:id',
+        component: quoteFormEdit,
     }
 ]
 
