@@ -5,118 +5,8 @@
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Track delivery system management</h4>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#new-member">
-                            <i class="las la-plus fs-16"></i>Add new track</a>
-
-                        <!-- Modal -->
-                        <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1"
-                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content modal-lg radius-xl">
-                                    <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new order track</h6>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="new-member-modal">
-                                            <form>
-                                                <div class="form-group mb-20">
-                                                    <input type="text" name="order_id" placeholder="Order track ID"
-                                                        class="form-control" value="" readonly>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="sender"
-                                                                placeholder="Sender name..." class="form-control"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="sender_address"
-                                                                placeholder="Sender address..." class="form-control"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="receiver"
-                                                                placeholder="Receiver name..." class="form-control"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="receiver_address"
-                                                                placeholder="Receiver address..." class="form-control"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <select name="sender_city" id="sender_city" class="
-                                form-control custom-select" required>
-                                                                <option>Choose sender city...</option>
-                                                                <option value="Medan">Medan</option>
-                                                                <option value="Pekanbaru">Pekanbaru</option>
-                                                                <option value="Palembang">Palembang</option>
-                                                                <option value="Jakarta">Jakarta</option>
-                                                                <option value="Semarang">Semarang</option>
-                                                                <option value="Surabaya">Surabaya</option>
-                                                                <option value="Bali">Bali</option>
-                                                                <option value="Lombok">Lombok</option>
-                                                                <option value="Makassar">Makassar</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="receiver_city"
-                                                                placeholder="Receiver city..." class="form-control"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <select name="payload" id=""
-                                                                class="form-control custom-select" required>
-                                                                <option>Payload</option>
-                                                                <option value="Weight (Kg)">Weight (Kg)</option>
-                                                                <option value="Volume (M)">Volume (M)</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="text" name="payload_value" class="form-control"
-                                                                placeholder="Payload value ex: 25" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <textarea name="description" id="" cols="30" rows="10"
-                                                        class="form-control" required
-                                                        placeholder="Order description"></textarea>
-                                                </div>
-                                                <div class="button-group d-flex pt-25">
-                                                    <button
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize">submit
-                                                    </button>
-                                                    <button class="btn btn-light btn-default btn-squared fw-400
-                                                        text-capitalize b-light color-light" data-dismiss="modal"
-                                                        aria-label="Close">cancel
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal -->
-
-
+                        <router-link :to="`/track-delivery/new`" class="btn px-15 btn-primary">
+                            <i class="las la-plus fs-16"></i>Add new track</router-link>
                     </div>
                 </div>
                 <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
@@ -129,83 +19,86 @@
                                             track id</span>
                                     </th>
                                     <th>
-                                        <span class="userDatatable-title">track created</span>
+                                        <span class="userDatatable-title">track created date</span>
                                     </th>
                                     <th>
+                                        <span class="userDatatable-title">status</span>
+                                    </th>
+                                    <th style='text-align:right;'>
                                         <span class="userDatatable-title">Actions</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6>BTSA202027811026
-                                                    </h6>
-                                                    <p>Created by Bintang <span
-                                                            class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">Order
-                                                            created</span>
-                                                    </p>
-                                                </a>
+                                <tr v-if="!tracks.length">
+                                    <td colspan="4">
+                                        <div class="atbd-empty text-center">
+                                            <div class="atbd-empty__image">
+                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
+                                            </div>
+                                            <div class="atbd-empty__text">
+                                                <p class="">No issue from you.</p>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            2020-10-26
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            <li>
-                                                <a href="#" class="view">
-                                                    <i class="fas fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="edit">
-                                                    <i class="fas fa-pen"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </li>
-                                        </ul>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr v-for="track in tracks" :key="track.id">
                                     <td>
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6>BTSA202041651025
+                                                <router-link :to="`/track-delivery/${track.id}`"
+                                                    class="text-dark fw-500">
+                                                    <h6>{{track.order_id}}
                                                     </h6>
-                                                    <p>Created by Bintang <span
-                                                            class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">Manifested</span>
+                                                    <p>Created by {{track.created_by.name}}
                                                     </p>
-                                                </a>
+                                                </router-link>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            2020-10-25
+                                            {{track.created_at}}
                                         </div>
                                     </td>
                                     <td>
+                                        <div class="userDatatable-content">
+                                            <span v-on:click="orderCreatedExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='0'">Order
+                                                created
+                                            </span>
+                                            <span v-on:click="manifestedExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='1'">Manifested
+                                            </span>
+                                            <span v-on:click="onTransitExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='2'">On Transit
+                                            </span>
+                                            <span v-on:click="onProcessExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='3'">On Process
+                                            </span>
+                                            <span v-on:click="rodExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='4'">Received On Destination
+                                            </span>
+                                            <span v-on:click="deliveredExp"
+                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='5'">Delivered
+                                            </span>
+                                            <span v-on:click="terminatedExp"
+                                                class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active"
+                                                v-if="track.order_status=='6'">Terminated
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td v-if="track.order_status!='6'">
                                         <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                             <li>
-                                                <a href="#" class="view">
-                                                    <i class="fas fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="edit">
-                                                    <i class="fas fa-pen"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
+                                                <a v-on:click="terminateTrack(track.id)" class="remove">
+                                                    <i class="fas fa-times"></i></a>
                                             </li>
                                         </ul>
                                     </td>
@@ -219,9 +112,106 @@
     </div>
 </template>
 <script>
+    import Swal from 'sweetalert2';
     export default {
         title() {
             return 'Track delivery';
+        },
+        data() {
+            return {
+                tracks: {},
+            }
+        },
+        created() {
+            this.loadDataTrack();
+        },
+        methods: {
+            async loadDataTrack() {
+                const resp = await axios.get('/api/track-delivery/get');
+                this.tracks = resp.data;
+            },
+            orderCreatedExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Order Created Explanation Status',
+                    text: 'Order telah dibuat terlebih dahulu oleh pihak BTSA LOGISTICS.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            manifestedExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Manifested Explanation Status',
+                    text: 'Order telah dibuat dan barang telah diterima dan diverifikasi pihak BTSA LOGISTICS, sudah siap dan menunggu proses pengiriman.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            onTransitExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'On Transit Explanation Status',
+                    text: 'Paket sedang dalam transit, dan akan diikutkan dengan jadwal pengiriman menuju kota tujuan.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            onProcessExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'On Process Explanation Status',
+                    text: 'Paket sedang dalam proses pengiriman, dan biasanya jika masih dalam tahap ini, untuk pembaruan update memerlukan waktu yang lama.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            rodExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Received On Destination Explanation Status',
+                    text: 'Paket telah sampai pada tim BTSA LOGISTICS kota tujuan pengiriman, dan siap untuk dikirimkan ke alamat tujuan.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            deliveredExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Delivered Explanation Status',
+                    text: 'Paket telah diterima di alamat tujuan.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            terminatedExp() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Terminated Status',
+                    html: 'Order paket telah diterminate oleh <b>sistem</b>. <br> Jika ingin membuka order kembali,<br>harap minta approve oleh atasan atau kepada admin.',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                });
+            },
+            async terminateTrack(id) {
+                const result = await Swal.fire({
+                    icon: 'error',
+                    title: 'Are you sure want to terminate track?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.patch('/api/track-deliverys/' + id);
+                    // console.log('200')
+                    this.loadDataTrack();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully terminated',
+                        text: 'Success terminated current track'
+                    });
+                }
+            }
         },
     }
 

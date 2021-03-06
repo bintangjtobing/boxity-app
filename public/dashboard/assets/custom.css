@@ -210,3 +210,24 @@ figcaption .explainCareers .descCareer {
     background: -moz-linear-gradient(left, #282562, #3e3996) !important;
     background: linear-gradient(left, #282562, #3e3996) !important;
 }
+
+.swal2-header .swal2-title {
+    font-size: 1.5rem !important;
+}
+
+.swal2-html-container {
+    font-size: 12px !important;
+}
+
+.swal2-icon {
+    width: 3rem !important;
+    height: 3rem !important;
+}
+
+.swal2-icon .swal2-icon-content {
+    font-size: 2.5rem !important;
+}
+
+.userDatatable-content .rounded-pill {
+    cursor: pointer;
+}

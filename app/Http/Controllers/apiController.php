@@ -18,6 +18,8 @@ use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
 use App\quotes;
+use App\track_orders;
+use App\track_reports;
 use App\userdetails;
 
 class apiController extends Controller
@@ -377,5 +379,179 @@ class apiController extends Controller
         $quote->status = 1;
         $quote->save();
         return response()->json($quote, 201);
+    }
+
+    // API Track Delivery
+    public function getTrack(Request $request)
+    {
+        return response()->json(track_orders::with('createdBy')->get());
+    }
+    public function newOrderTrack(Request $request)
+    {
+        $randomidreport = mt_rand(100, 999);
+        $month = Date('md');
+
+        $track = new track_orders();
+        $track->created_by = auth()->user()->id;
+        $track->updated_by = auth()->user()->id;
+
+        $track->order_id = $request->orderid;
+        $track->sender = $request->sender;
+        $track->sender_city = $request->sender_city;
+        $track->sender_address = $request->sender_address;
+        $track->receiver = $request->receiver;
+        $track->receiver_city = $request->receiver_city;
+        $track->receiver_address = $request->receiver_address;
+        $track->payload =  $request->payload_value . ' ' . $request->payload;
+        $track->stuff_desc = $request->description;
+        $track->order_status = '0';
+        $track->save();
+
+        // TRACK REPORT
+        $report = new track_reports();
+        $report->order_id = $track->order_id;
+        $report->track_id = 'BTSA' . $month . $randomidreport;
+        $report->current_location = '-';
+        $report->last_location = '-';
+        $report->status = '0';
+        $report->container_type_system = '-';
+        $report->estimated_arrival_date = '-';
+        $report->updated_by = auth()->user()->id;
+        $report->save();
+
+        return response()->json(array(
+            'track' => $track,
+            'report' => $report,
+        ));
+    }
+    public function getTrackById($id)
+    {
+        return response()->json(track_orders::with('createdBy')->get()->find($id));
+    }
+    public function postTrackById($id, Request $request)
+    {
+        $randomidreport = mt_rand(100, 999);
+        $month = Date('md');
+
+        $order = DB::table('track_orders')
+            ->where('track_orders.id', '=', $id)
+            ->update([
+                'track_orders.order_status' => '1',
+                'track_orders.updated_at' => \Carbon\Carbon::now(),
+                'track_orders.updated_by' => auth()->user()->name
+            ]);
+        $orderBy = track_orders::find($id);
+
+        $report = DB::table('track_reports')
+            ->Insert(
+                [
+                    'track_reports.track_id' => 'BTSA' . $month . $randomidreport,
+                    'track_reports.order_id' => $orderBy->order_id,
+                    'track_reports.current_location' => $request->current_location,
+                    'track_reports.last_location' => '-',
+                    'track_reports.container_type_system' => $request->container_type_system,
+                    'track_reports.estimated_arrival_date' => $request->estimated_arrival_date,
+                    'track_reports.status' => '1',
+                    'track_reports.created_at' => \Carbon\Carbon::now(),
+                    'track_reports.updated_at' => \Carbon\Carbon::now(),
+                    'track_reports.updated_by' => auth()->user()->name,
+
+                    'track_reports.activity' => $request->activity,
+                ]
+            );
+
+        return response()->json(array(
+            'order' => $order,
+            'report' => $report,
+        ));
+    }
+    public function patchTrackById($id, Request $request)
+    {
+        $randomidreport = mt_rand(100, 999);
+        $month = Date('md');
+
+        $order = track_orders::find($id);
+        if ($order->order_status == '1') {
+            $order->order_status = '2';
+        } else if ($order->order_status = '2') {
+            $order->order_status = '3';
+        } else if ($order->order_status = '3') {
+            $order->order_status = '4';
+        } else if ($order->order_status = '4') {
+            $order->order_status = '5';
+        } else {
+            $order->order_status = '1';
+        }
+        $order->updated_at = \Carbon\Carbon::now();
+        $order->updated_by = auth()->user()->name;
+
+        $getreport = DB::table('track_reports')
+            ->where('track_reports.order_id', '=', $order->order_id)
+            ->orderBy('track_reports.updated_at', 'DESC')
+            ->first();
+
+        $report = new track_reports();
+        $report->track_id = 'BTSA' . $month . $randomidreport;
+        $report->order_id = $order->order_id;
+        $report->current_location = $request->current_location;
+        $report->last_location = $request->last_location;
+        $report->container_type_system = $getreport->container_type_system;
+        $report->estimated_arrival_date = $getreport->estimated_arrival_date;
+        if ($order->order_status == '1') {
+            $report->status = '2';
+        } else if ($order->order_status = '2') {
+            $report->status = '3';
+        } else if ($order->order_status = '3') {
+            $report->status = '4';
+        } else if ($order->order_status = '4') {
+            $report->status = '5';
+        } else {
+            $report->status = '1';
+        }
+        $report->created_at = \Carbon\Carbon::now();
+        $report->updated_at = \Carbon\Carbon::now();
+        $report->activity = $request->activity;
+        $report->save();
+        $order->save();
+
+        return response()->json(array(
+            'order' => $order,
+            'report' => $report,
+        ));
+    }
+    public function terminateTrack($id)
+    {
+        $randomidreport = mt_rand(100, 999);
+        $month = Date('md');
+
+        $order = track_orders::find($id);
+        $order->order_status = '6';
+        $order->updated_at = \Carbon\Carbon::now();
+        $order->updated_by = auth()->user()->name;
+
+        $getreport = DB::table('track_reports')
+            ->where('track_reports.order_id', '=', $order->order_id)
+            ->orderBy('track_reports.updated_at', 'DESC')
+            ->first();
+
+        $report = new track_reports();
+        $report->track_id = 'BTSA' . $month . $randomidreport;
+        $report->order_id = $order->order_id;
+        $report->current_location = $getreport->current_location;
+        $report->last_location = $getreport->last_location;
+        $report->container_type_system = $getreport->container_type_system;
+        $report->estimated_arrival_date = $getreport->estimated_arrival_date;
+        $report->status = '6';
+        $report->created_at = \Carbon\Carbon::now();
+        $report->updated_at = \Carbon\Carbon::now();
+        $report->updated_by = auth()->user()->name;
+        $report->activity = $getreport->activity;
+        $report->save();
+        $order->save();
+
+        return response()->json(array(
+            'order' => $order,
+            'report' => $report,
+        ));
     }
 }

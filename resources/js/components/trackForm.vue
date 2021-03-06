@@ -1,0 +1,145 @@
+<template>
+    <div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="breadcrumb-main">
+                    <h4 class="text-capitalize breadcrumb-title">new order - <span>#{{order.orderid}}</span></h4>
+                </div>
+            </div>
+        </div>
+        <form @submit.prevent="handleSubmit">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="card card-Vertical card-default card-md mb-4">
+                        <div class="card-body pb-md-30">
+                            <div class="Vertical-form">
+                                <div class="form-group mb-20">
+                                    <input type="text" v-model="order.orderid" placeholder="Order track ID"
+                                        class="form-control" readonly>
+                                </div>
+                                <div class="form-group mb-20">
+                                    <div class="form-row">
+                                        <div class="col-lg-6">
+                                            <input type="text" v-model="order.sender" placeholder="Sender name"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" v-model="order.sender_address"
+                                                placeholder="Sender address" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-20">
+                                    <div class="form-row">
+                                        <div class="col-lg-6">
+                                            <input type="text" v-model="order.receiver" placeholder="Receiver name"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" v-model="order.receiver_address"
+                                                placeholder="Receiver address" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-20">
+                                    <div class="form-row">
+                                        <div class="col-lg-6">
+                                            <select v-model="order.sender_city" id="sender_city"
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                required>
+                                                <option value="" disabled>Choose sender city</option>
+                                                <option value="Medan">Medan</option>
+                                                <option value="Pekanbaru">Pekanbaru</option>
+                                                <option value="Palembang">Palembang</option>
+                                                <option value="Jakarta">Jakarta</option>
+                                                <option value="Semarang">Semarang</option>
+                                                <option value="Surabaya">Surabaya</option>
+                                                <option value="Bali">Bali</option>
+                                                <option value="Lombok">Lombok</option>
+                                                <option value="Makassar">Makassar</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" v-model="order.receiver_city" placeholder="Receiver city"
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-20">
+                                    <div class="form-row">
+                                        <div class="col-lg-4">
+                                            <select v-model="order.payload" id=""
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                required>
+                                                <option value="" disabled>Choose payload:</option>
+                                                <option value="Kg">Weight (Kg)</option>
+                                                <option value="M">Volume (M)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <input type="text" v-model="order.payload_value" class="form-control"
+                                                placeholder="Payload value ex: 25" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea v-model="order.description" id="" cols="30" rows="5" class="form-control"
+                                        required placeholder="Order description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row justify-content-end">
+                                        <div class="layout-button mt-25">
+                                            <button type="submit"
+                                                class="btn btn-success btn-default btn-squared px-30">submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>
+<script>
+    import Swal from 'sweetalert2';
+
+    export default {
+        title() {
+            return 'New track delivery';
+        },
+        data() {
+            return {
+                order: {
+                    sender_city: '',
+                    payload: '',
+                },
+            }
+        },
+        created() {
+            this.loadOrderId();
+        },
+        methods: {
+            async handleSubmit() {
+                await axios.post('/api/track-delivery', this.order);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congratulations',
+                    text: 'Success add new order track.',
+                });
+                this.$router.push('/track-delivery');
+            },
+            loadOrderId() {
+                var currentTime = new Date();
+                let btsa = 'BTSA';
+                let year = currentTime.getFullYear();
+                let randomid = Math.floor(Math.random() * 999999);
+                let month = currentTime.getMonth();
+                let compact = btsa + year + month + randomid;
+                this.order.orderid = compact;
+            }
+        },
+    }
+
+</script>

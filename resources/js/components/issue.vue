@@ -11,7 +11,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="row align-items-center">
-                        <div class="col-md-6">
+                        <div class="col-md-6 p-5">
                             <div class="card-body d-inline-block">
                                 <h1 class="d-flex">Hello, We are here to help</h1>
                                 <p>Anything we can help? Take it easy, we will help you as much as possible.
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-7">
+            <div class="col-12 col-sm-12 col-lg-7">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
                         <h4 class="text-capitalize breadcrumb-title">Issue lists</h4>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5" style="background-color: #272b411a; border-radius: .45rem;">
+            <div class="col-12 col-sm-12 col-lg-5" style="background-color: #272b411a; border-radius: .45rem;">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
                         <h4 class="text-capitalize breadcrumb-title">From you.</h4>

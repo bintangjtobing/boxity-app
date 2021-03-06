@@ -269,9 +269,6 @@
         <aside class="sidebar">
             <div class="sidebar__menu-group">
                 <ul class="sidebar_nav">
-                    <li class="menu-title">
-                        <span>Main menu</span>
-                    </li>
                     <li>
                         <a href="/tools" active-class="mm-active">
                             <i data-feather="home" class="nav-icon"></i>
@@ -286,7 +283,22 @@
                         </a>
                     </li>
                     <li class="menu-title m-top-30">
-                        <span>Applications</span>
+                        <span>Web config needs</span>
+                    </li>
+                    <li>
+                        <a href="/gallery" active-class="mm-active">
+                            <i data-feather="image" class="nav-icon"></i>
+                            <span class="menu-text">Gallery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/blog-management" active-class="mm-active">
+                            <i data-feather="package" class="nav-icon"></i>
+                            <span class="menu-text">Blog</span>
+                        </a>
+                    </li>
+                    <li class="menu-title m-top-30">
+                        <span>Role Applications</span>
                     </li>
                     @if(auth()->user()->role=='admin')
                     <li>
@@ -296,6 +308,12 @@
                         </a>
                     </li>
                     @endif
+                    <li>
+                        <a href="/issues" active-class="mm-active">
+                            <i data-feather="headphones" class="nav-icon"></i>
+                            <span class="menu-text">Issue center</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="/contact-list" active-class="mm-active">
                             <i data-feather="list" class="nav-icon"></i>
@@ -318,27 +336,15 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/issues" active-class="mm-active">
-                            <i data-feather="headphones" class="nav-icon"></i>
-                            <span class="menu-text">Issue center</span>
+                        <a href="/goods-receipt" active-class="mm-active">
+                            <i data-feather="shopping-bag" class="nav-icon"></i>
+                            <span class="menu-text">Goods receipt</span>
                         </a>
                     </li>
                     <li>
                         <a href="/quote" active-class="mm-active">
                             <i data-feather="star" class="nav-icon"></i>
                             <span class="menu-text">Quote report</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/gallery" active-class="mm-active">
-                            <i data-feather="image" class="nav-icon"></i>
-                            <span class="menu-text">Gallery</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/blog-management" active-class="mm-active">
-                            <i data-feather="package" class="nav-icon"></i>
-                            <span class="menu-text">Blog</span>
                         </a>
                     </li>
                     <li>
@@ -448,6 +454,11 @@
             var darkMode = document.body;
             darkMode.classList.toggle('layout-dark');
         }
+        jQuery(document).ready(function ($) {
+            $('*[data-href]').on('click', function () {
+                window.location = $(this).data("href");
+            });
+        });
 
     </script>
 </body>

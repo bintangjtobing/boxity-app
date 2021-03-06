@@ -40,6 +40,9 @@ import userProfile from './components/userProfile.vue';
 import quoteForm from './components/quoteForm.vue';
 import quoteFormEdit from './components/quoteFormEdit.vue';
 import quoteView from './components/quoteView.vue';
+import galleryForm from './components/galleryForm.vue';
+import trackForm from './components/trackForm.vue';
+import trackView from './components/trackView.vue';
 
 // membuat router
 const routes = [{
@@ -139,6 +142,18 @@ const routes = [{
         name: 'quote-edit',
         path: '/edit/quote/:id',
         component: quoteFormEdit,
+    }, {
+        name: 'gallery-form',
+        path: '/gallery/new',
+        component: galleryForm
+    }, {
+        name: 'track-form',
+        path: '/track-delivery/new',
+        component: trackForm,
+    }, {
+        name: 'track-view',
+        path: '/track-delivery/:id',
+        component: trackView,
     }
 ]
 

@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row my-4">
             <div class="col-lg-9">
                 <div class="card card-Vertical card-default card-md mb-4">
                     <div class="card-body pb-md-30">

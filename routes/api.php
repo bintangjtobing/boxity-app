@@ -66,3 +66,11 @@ Route::post('/quote', 'apiController@addQuote');
 Route::delete('/quote/{id}', 'apiController@deleteQuote');
 Route::patch('/quote/{id}', 'apiController@updateQuote');
 Route::patch('/quote/approved/{id}', 'apiController@approvedQuote');
+
+// Order track delivery
+Route::get('/track-delivery/get', 'apiController@getTrack');
+Route::post('/track-delivery', 'apiController@newOrderTrack');
+Route::get('/track-delivery/{id}', 'apiController@getTrackById');
+Route::post('/track-delivery/{id}', 'apiController@postTrackById');
+Route::patch('/track-delivery/{id}', 'apiController@patchTrackById');
+Route::patch('/track-deliverys/{id}', 'apiController@terminateTrack');
