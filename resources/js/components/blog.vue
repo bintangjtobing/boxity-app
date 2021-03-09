@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form @submit.prevent="handleSubmit">
+                                            <form>
                                                 <div class="form-group mb-20">
                                                     <input type="text" v-model="blog.title" class="form-control"
                                                         placeholder="Blog title">
@@ -42,8 +42,9 @@
                                                     </select>
                                                 </div>
                                                 <div class="button-group d-flex pt-25">
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize">submit
+                                                    <button v-on:click="handleSubmit"
+                                                        class="btn btn-primary btn-default btn-squared text-capitalize"
+                                                        data-dismiss="modal">submit
                                                     </button>
                                                     <button class="btn btn-light btn-default btn-squared fw-400
                                                         text-capitalize b-light color-light" data-dismiss="modal"
@@ -191,7 +192,11 @@
                     title: 'Congratulations',
                     text: 'Success add new blog',
                 });
-                $('#newMember').modal('hide');
+                this.blog = {
+                    title: '',
+                    description: '',
+                    category: '',
+                }
             }
         },
     }

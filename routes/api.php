@@ -53,7 +53,7 @@ Route::delete('/blogs/{id}', 'apiController@deleteBlogById');
 Route::post('/blogs', 'apiController@addNewBlog');
 
 // User Profile API
-Route::get('/{username}', 'apiController@getProfile');
+Route::get('/u/{username}', 'apiController@getProfile');
 Route::patch('/profile/{id}', 'apiController@updateProfile');
 
 // Contact API
@@ -67,10 +67,27 @@ Route::delete('/quote/{id}', 'apiController@deleteQuote');
 Route::patch('/quote/{id}', 'apiController@updateQuote');
 Route::patch('/quote/approved/{id}', 'apiController@approvedQuote');
 
-// Order track delivery
+// Order track delivery API
 Route::get('/track-delivery/get', 'apiController@getTrack');
 Route::post('/track-delivery', 'apiController@newOrderTrack');
 Route::get('/track-delivery/{id}', 'apiController@getTrackById');
 Route::post('/track-delivery/{id}', 'apiController@postTrackById');
 Route::patch('/track-delivery/{id}', 'apiController@patchTrackById');
 Route::patch('/track-deliverys/{id}', 'apiController@terminateTrack');
+
+// notepad API
+Route::get('/notepad', 'apiController@getNotes');
+Route::post('/notepad', 'apiController@postNotes');
+Route::delete('/notepad/{id}', 'apiController@deleteNote');
+Route::patch('/notepad/favorite/{id}', 'apiController@favoriteNote');
+Route::patch('/notepad/unfavorite/{id}', 'apiController@unfavoriteNote');
+Route::get('/notepad/favorite', 'apiController@favoriteDataNotepad');
+Route::get('/notepad/personal', 'apiController@personalDataNotepad');
+Route::get('/notepad/work', 'apiController@workDataNotepad');
+Route::get('/notepad/social', 'apiController@socialDataNotepad');
+Route::get('/notepad/important', 'apiController@importantDataNotepad');
+
+// goods receipt API
+Route::get('/goods-receipt', 'apiController@getGoods');
+Route::post('/goods-receipt', 'apiController@postGoods');
+Route::patch('/goods-receipt/{id}', 'apiController@getGoodsById');

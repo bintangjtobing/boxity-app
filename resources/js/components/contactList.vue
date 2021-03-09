@@ -41,7 +41,7 @@
                             </div>
                             <div
                                 class="ap-button account-profile-cards__button button-group d-flex justify-content-center flex-wrap m-n1">
-                                <router-link :to="`/`+contact.username" type="button"
+                                <router-link :to="`/u/`+contact.username" type="button"
                                     class="border text-capitalize px-30 color-gray transparent shadow2 follow">
                                     view profile</router-link>
                             </div>

@@ -43,6 +43,8 @@ import quoteView from './components/quoteView.vue';
 import galleryForm from './components/galleryForm.vue';
 import trackForm from './components/trackForm.vue';
 import trackView from './components/trackView.vue';
+import notePad from './components/notePad.vue';
+import goodsReceipt from './components/goodsReceipt.vue';
 
 // membuat router
 const routes = [{
@@ -124,11 +126,11 @@ const routes = [{
         component: blogEdit,
     }, {
         name: 'user-profile-edit',
-        path: '/:username/edit',
+        path: '/u/:username/edit',
         component: userProfileEdit,
     }, {
         name: 'user-profile',
-        path: '/:username',
+        path: '/u/:username',
         component: userProfile,
     }, {
         name: 'new-quote',
@@ -154,6 +156,14 @@ const routes = [{
         name: 'track-view',
         path: '/track-delivery/:id',
         component: trackView,
+    }, {
+        name: 'notepad',
+        path: '/notepad',
+        component: notePad
+    }, {
+        name: 'goods-receipt',
+        path: '/goods-receipt',
+        component: goodsReceipt
     }
 ]
 
@@ -166,7 +176,7 @@ const router = new VueRouter({
             y: 0
         }
     },
-    linkActiveClass: 'mm-active'
+    linkActiveClass: 'active'
 });
 new Vue(Vue.util.extend({
     router,

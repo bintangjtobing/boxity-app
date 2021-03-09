@@ -37,9 +37,9 @@
                     <li class="nav-message">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle">
-                                <i data-feather="mail"></i></a>
+                                <i data-feather="send"></i></a>
                             <div class="dropdown-wrapper">
-                                <h2 class="dropdown-wrapper__title">Messages <span
+                                <h2 class="dropdown-wrapper__title">Direct Messages<span
                                         class="badge-circle badge-success ml-1">2</span></h2>
                                 <ul>
                                     <li class="author-online has-new-message">
@@ -246,7 +246,7 @@
                                 <div class="nav-author__options">
                                     <ul>
                                         <li>
-                                            <a href="/{{auth()->user()->username}}/edit">
+                                            <a href="/u/{{auth()->user()->username}}/edit">
                                                 <i data-feather="user"></i> Profile</a>
                                         </li>
                                         <li>
@@ -263,6 +263,11 @@
                     </li>
                     <!-- ends: .nav-author -->
                 </ul>
+                <div class="navbar-right__mobileAction d-md-none">
+                    <a href="#" class="btn-author-action">
+                        <span data-feather="more-vertical"></span></a>
+                </div>
+            </div>
         </nav>
     </header>
     <main class="main-content">
@@ -270,29 +275,50 @@
             <div class="sidebar__menu-group">
                 <ul class="sidebar_nav">
                     <li>
-                        <a href="/tools" active-class="mm-active">
+                        <a href="/tools">
                             <i data-feather="home" class="nav-icon"></i>
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/version-control" active-class="mm-active">
+                        <a href="/version-control">
                             <i data-feather="activity" class="nav-icon"></i>
                             <span class="menu-text">Version control</span>
                             <span class="badge badge-danger menuItem">3.0.0</span>
                         </a>
                     </li>
                     <li class="menu-title m-top-30">
+                        <span>Public Applications</span>
+                    </li>
+                    <li>
+                        <a href="/issues">
+                            <i data-feather="headphones" class="nav-icon"></i>
+                            <span class="menu-text">Issue center</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/contact-list">
+                            <i data-feather="list" class="nav-icon"></i>
+                            <span class="menu-text">Contact lists</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/notepad">
+                            <i data-feather="file-text" class="nav-icon"></i>
+                            <span class="menu-text">Notepad</span>
+                        </a>
+                    </li>
+                    <li class="menu-title m-top-30">
                         <span>Web config needs</span>
                     </li>
                     <li>
-                        <a href="/gallery" active-class="mm-active">
+                        <a href="/gallery">
                             <i data-feather="image" class="nav-icon"></i>
                             <span class="menu-text">Gallery</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/blog-management" active-class="mm-active">
+                        <a href="/blog-management">
                             <i data-feather="package" class="nav-icon"></i>
                             <span class="menu-text">Blog</span>
                         </a>
@@ -302,24 +328,12 @@
                     </li>
                     @if(auth()->user()->role=='admin')
                     <li>
-                        <a href="/users-management" active-class="mm-active">
+                        <a href="/users-management">
                             <i data-feather="users" class="nav-icon"></i>
                             <span class="menu-text">Users management</span>
                         </a>
                     </li>
                     @endif
-                    <li>
-                        <a href="/issues" active-class="mm-active">
-                            <i data-feather="headphones" class="nav-icon"></i>
-                            <span class="menu-text">Issue center</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/contact-list" active-class="mm-active">
-                            <i data-feather="list" class="nav-icon"></i>
-                            <span class="menu-text">Contact lists</span>
-                        </a>
-                    </li>
                     <li class="has-child">
                         <a href="#" class="">
                             <i data-feather="rss" class="nav-icon"></i>
@@ -328,29 +342,35 @@
                         </a>
                         <ul>
                             <li>
-                                <a active-class="mm-active" href="/career">Career</a>
+                                <a href="/career">Career</a>
                             </li>
                             <li>
-                                <a active-class="mm-active" href="/candidate">Candidate</a>
+                                <a href="/candidate">Candidate</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/goods-receipt" active-class="mm-active">
+                        <a href="/goods-receipt">
                             <i data-feather="shopping-bag" class="nav-icon"></i>
                             <span class="menu-text">Goods receipt</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/quote" active-class="mm-active">
+                        <a href="/quote">
                             <i data-feather="star" class="nav-icon"></i>
                             <span class="menu-text">Quote report</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/track-delivery" active-class="mm-active">
+                        <a href="/track-delivery">
                             <i data-feather="map" class="nav-icon"></i>
                             <span class="menu-text">Track delivery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/sign-out" class="text-danger">
+                            <i data-feather="log-out" class="nav-icon text-danger"></i>
+                            <span class="menu-text">Sign out</span>
                         </a>
                     </li>
                 </ul>

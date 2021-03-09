@@ -13,10 +13,12 @@ use App\albums;
 use App\blog;
 use App\changeLog;
 use App\commentIssue;
+use App\goodsReceip;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\notepad;
 use App\quotes;
 use App\track_orders;
 use App\track_reports;
@@ -553,5 +555,96 @@ class apiController extends Controller
             'order' => $order,
             'report' => $report,
         ));
+    }
+
+    // NOTEPAD CONTROLLER
+    public function getNotes()
+    {
+        return response()->json(notepad::where('userid', Auth::id())->get());
+    }
+    public function postNotes(Request $req)
+    {
+        $note = new notepad();
+        $note->title = $req->title;
+        $note->desc = $req->description;
+        $note->label = $req->label;
+        $note->favorite = 0;
+        $note->userid = Auth::id();
+        $note->save();
+        return response()->json($note, 201);
+    }
+    public function deleteNote($id)
+    {
+        $note = notepad::find($id);
+        $note->delete();
+        return response()->json($note);
+    }
+    public function favoriteNote($id)
+    {
+        $note = notepad::find($id);
+        $note->favorite = 1;
+        $note->save();
+        return response()->json($note);
+    }
+    public function unfavoriteNote($id)
+    {
+        $note = notepad::find($id);
+        $note->favorite = 0;
+        $note->save();
+        return response()->json($note);
+    }
+    public function favoriteDataNotepad()
+    {
+        return response()->json(notepad::where('favorite', 1)
+            ->where('userid', Auth::id())->get());
+    }
+    public function personalDataNotepad()
+    {
+        return response()->json(notepad::where('label', 3)
+            ->where('userid', Auth::id())->get());
+    }
+    public function workDataNotepad()
+    {
+        return response()->json(notepad::where('label', 2)
+            ->where('userid', Auth::id())->get());
+    }
+    public function socialDataNotepad()
+    {
+        return response()->json(notepad::where('label', 1)
+            ->where('userid', Auth::id())->get());
+    }
+    public function importantDataNotepad()
+    {
+        return response()->json(notepad::where('label', 4)
+            ->where('userid', Auth::id())->get());
+    }
+    public function getGoods()
+    {
+        if (auth()->user()->role == 'hrdga' || auth()->user()->role == 'admin') {
+            return response()->json(goodsReceip::with('receiver')->where('status', '!=', '1')->get());
+        } else {
+            return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->get());
+        }
+    }
+    public function postGoods(Request $request)
+    {
+        $newGoods = new goodsReceip();
+        $newGoods->userid = Auth::id();
+        $newGoods->receiverid = $request->receiverid;
+        $newGoods->typeOfGoods = $request->typeOfGoods;
+        $newGoods->courier = $request->courier;
+        $newGoods->receiptNumber = $request->receiptNumber;
+        $newGoods->description = $request->description;
+        $newGoods->status = 0;
+        $newGoods->save();
+        return response()->json($newGoods, 201);
+    }
+    public function getGoodsById($id, Request $req)
+    {
+        $goods = goodsReceip::find($id);
+        $goods->status = 1;
+        $goods->created_at = \Carbon\Carbon::now();
+        $goods->save();
+        return response()->json($goods, 201);
     }
 }

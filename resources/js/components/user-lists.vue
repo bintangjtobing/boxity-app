@@ -25,7 +25,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form @submit.prevent="handleSubmit">
+                                            <form>
                                                 <div class="form-group mb-20">
                                                     <div class="form-row">
                                                         <div class="col-lg-9">
@@ -109,8 +109,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="button-group d-flex pt-25">
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize">Submit
+                                                    <button v-on:click="handleSubmit"
+                                                        class="btn btn-primary btn-default btn-squared text-capitalize"
+                                                        data-dismiss="modal">Submit
                                                     </button>
                                                     <button class="btn btn-light btn-default btn-squared fw-400
                                                         text-capitalize b-light color-light" aria-label="Close"
@@ -370,7 +371,16 @@
                     title: 'Congratulations',
                     text: 'Success add new user',
                 });
-                $('#newMember').modal('hide');
+                this.user = {
+                    gender: '',
+                    role: '',
+                    department: '',
+                    divisi: '',
+                    name: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                };
             },
             async countUsers() {
                 const data = await axios.get('/api/count-users');
