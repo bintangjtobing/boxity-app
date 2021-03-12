@@ -91,3 +91,8 @@ Route::get('/notepad/important', 'apiController@importantDataNotepad');
 Route::get('/goods-receipt', 'apiController@getGoods');
 Route::post('/goods-receipt', 'apiController@postGoods');
 Route::patch('/goods-receipt/{id}', 'apiController@getGoodsById');
+
+// Login activity API
+Route::get('/login-activities', 'apiController@getLoginAct');
+Route::delete('/login-activities/removeAll', 'apiController@removeAllActivities');
+Route::delete('/login-activities/{id}', 'apiController@removeThisActivities');

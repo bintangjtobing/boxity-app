@@ -175,7 +175,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    await axios.delete('api/blogs/' + id);
+                    await axios.delete('/api/blogs/' + id);
                     this.loadBlogs();
                     await Swal.fire({
                         icon: 'success',

@@ -647,4 +647,30 @@ class apiController extends Controller
         $goods->save();
         return response()->json($goods, 201);
     }
+
+    // Login activity Controller
+    public function getLoginAct()
+    {
+        $devices = DB::table('sessions')
+            ->where('user_id', Auth::id())
+            ->get()->reverse();
+        return response()->json($devices);
+    }
+    public function removeAllActivities(Request $request)
+    {
+        $devices = DB::table('sessions')
+            ->where('user_id', Auth::id())
+            ->where('id', '!=', \Session::getId())
+            ->delete();
+
+        return response()->json($devices);
+    }
+    public function removeThisActivities(Request $request, $id)
+    {
+
+        $devices = DB::table('sessions')
+            ->where('id', $id)->delete();
+
+        return response()->json($devices);
+    }
 }

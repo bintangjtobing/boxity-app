@@ -367,6 +367,14 @@
                             <span class="menu-text">Track delivery</span>
                         </a>
                     </li>
+                    @if(auth()->user()->role=='admin')
+                    <li>
+                        <a href="/login-activity">
+                            <i data-feather="info" class="nav-icon"></i>
+                            <span class="menu-text">Login activity</span>
+                        </a>
+                    </li>
+                    @endif
                     <li>
                         <a href="/sign-out" class="text-danger">
                             <i data-feather="log-out" class="nav-icon text-danger"></i>
