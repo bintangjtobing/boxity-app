@@ -55,10 +55,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                        <ul class="mb-0 d-flex flex-wrap">
                                             <li>
-                                                <a @click="removeAct(act.id)" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
+                                                <a href="#" @click="removeAct(act.id)" class="remove btn btn-danger">
+                                                    <i class="fas fa-trash"></i>&nbsp; Remove device</a>
                                             </li>
                                         </ul>
                                     </td>
