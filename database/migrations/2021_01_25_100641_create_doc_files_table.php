@@ -15,7 +15,7 @@ class CreateDocFilesTable extends Migration
     {
         Schema::create('doc_files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('userId')->index('userId');
+            $table->bigInteger('userId')->default('1');
             $table->bigInteger('summaryFileId')->index('summaryFileId');
             $table->string('file');
             $table->timestamps();

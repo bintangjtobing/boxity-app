@@ -15,10 +15,6 @@ Route::post('/users', 'apiController@addUser');
 Route::get('/count-users', 'apiController@countUsers');
 Route::patch('/users/{id}', 'apiController@updateUser');
 
-// Documents
-Route::post('/documents', 'DocumentController@fileStore')->name('dropzone');
-Route::get('/documents/{id}', 'DocumentController@getDocument');
-
 // Check user data first
 Route::post('/users/check-user-data', 'apiController@checkUserData');
 
@@ -91,3 +87,9 @@ Route::get('/notepad/important', 'apiController@importantDataNotepad');
 Route::get('/goods-receipt', 'apiController@getGoods');
 Route::post('/goods-receipt', 'apiController@postGoods');
 Route::patch('/goods-receipt/{id}', 'apiController@getGoodsById');
+
+// Document gallery
+Route::post('/documents', 'apiController@fileStore')->name('dropzone');
+Route::get('/documents/{id}', 'apiController@getDocument');
+Route::post('/album', 'apiController@addGallery');
+Route::get('/album', 'apiController@getAlbum');

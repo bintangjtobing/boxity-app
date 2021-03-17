@@ -9,7 +9,7 @@
         </div>
         <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
@@ -20,10 +20,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
-                                            :options="dropzoneOptions" class="dropzone"
-                                            v-on:vdropzone-success="handleFileUploadCompleted"
-                                            v-on:vdropzone-queue-complete="handleFileUploaded"
-                                            v-on:vdropzone-removed-file="handleFileRemoved">
+                                            :options="dropzoneOptions" class="dropzone">
                                             <div class="dropzone-custom-content">
                                                 <h3 class="dropzone-custom-title">Drag and drop to upload
                                                     attachment!</h3>
@@ -66,40 +63,25 @@
                 // TODO: callback to save the ids of the uploaded file
                 dropzoneOptions: {
                     url: '/api/documents',
-                    thumbnailWidth: 400,
+                    thumbnailWidth: 150,
                     addRemoveLinks: true,
                     autoDiscover: false,
                     parallelUploads: 10,
                     autoProcessQueue: false,
                     dictRemoveFile: 'REMOVE'
                 },
-                isUploading: false,
-                documents: {},
             }
         },
         methods: {
-            handleFileUploaded() {
-                this.isUploading = false;
-            },
-
-            handleFileUploadCompleted(file, response) {
-                this.documents[response.id] = response;
-            },
-
-            handleFileRemoved(file) {
-                // delete if previously uploaded file
-                if (file.id) {
-                    delete this.documents[file.id];
-                }
-            },
             async handleSubmit() {
-                await axios.post('/api/quote', this.quote);
+                this.$refs['document-upload'].processQueue();
+                await axios.post('/api/album', this.album);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
-                    text: 'Success add new quote.',
+                    text: 'Success add new album.',
                 });
-                this.$router.push('/quote');
+                this.$router.push('/gallery');
             }
         },
     }

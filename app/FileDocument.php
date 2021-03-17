@@ -13,4 +13,8 @@ class FileDocument extends Model
         'fileId',
         'file',
     ];
+    public function gallery()
+    {
+        return $this->belongsTo(albums::class, 'fileId');
+    }
 }

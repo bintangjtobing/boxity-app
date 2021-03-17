@@ -13,6 +13,7 @@ use App\albums;
 use App\blog;
 use App\changeLog;
 use App\commentIssue;
+use App\FileDocument;
 use App\goodsReceip;
 use App\id_agamas;
 use App\issue;
@@ -646,5 +647,45 @@ class apiController extends Controller
         $goods->created_at = \Carbon\Carbon::now();
         $goods->save();
         return response()->json($goods, 201);
+    }
+
+
+    // Document API
+    public function fileStore(Request $request)
+    {
+        $doc = $request->file('file');
+        $imageName = time() . '.' . $request->file->getClientOriginalExtension();
+        $fileName = $request->file->getClientOriginalName();
+        $request->file->move(public_path('imagePublic'), $imageName);
+
+        $fileDocument = FileDocument::create([
+            'file' => $imageName,
+        ]);
+        return response()->json($fileDocument, 201);
+    }
+
+    // Gallery API
+    public function addGallery(Request $request)
+    {
+        $data = $request->all();
+        $album = new albums();
+        $album->nama_album = $request->title;
+        $album->save();
+
+        $file = FileDocument::where('fileId', null)->get();
+        $file->toQuery()->update([
+            'fileId' => $album->id
+        ]);
+        return response()->json($file);
+    }
+    public function getAlbum()
+    {
+        $album = DB::table('albums')
+            ->join('file_documents', 'albums.id', '=', 'file_documents.fileId')
+            ->select('albums.nama_album', 'file_documents.file', 'file_documents.fileId')
+            ->get()
+            ->groupBy('file_documents.fileId');
+        return response()->json($album, 201);
+        // return response()->json(FileDocument::with('gallery')->get());
     }
 }
