@@ -57,11 +57,8 @@
         methods: {
             async loadAlbum() {
                 const resp = await axios.get('/api/album');
-                console.log(resp.data);
-                // this.album = resp.data[0];
-                // for (let i = 0; i < resp; i++) {
-                //     this.album = resp.data[i];
-                // }
+                console.log(resp.data[""]);
+                this.album = resp.data[""];
             }
         },
     }
