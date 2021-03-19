@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{!!asset('dashboard/style.css')!!}">
     <script src="https://kit.fontawesome.com/bf3b9c3659.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 
 <body class="side-menu">
@@ -460,6 +462,20 @@
     <script src="{!!asset('dashboard/assets/theme_assets/js/main.js')!!}"></script>
     <script>
         feather.replace()
+
+    </script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            branding: false,
+            plugins: 'advlist autolink lists link charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            setup: function (editor) {
+                editor.on('change', function (e) {
+                    editor.save();
+                });
+            }
+        });
 
     </script>
     <script type="text/javascript">
