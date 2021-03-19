@@ -13,3 +13,4 @@ yarn-error.log
 .tmp/
 .DS_Store
 *.code-workspace
+public/imagePublic

@@ -656,10 +656,9 @@ class apiController extends Controller
         $doc = $request->file('file');
         $imageName = time() . '.' . $request->file->getClientOriginalExtension();
         $fileName = $request->file->getClientOriginalName();
-        $request->file->move(public_path('imagePublic'), $imageName);
-
+        $request->file->move(public_path('imagePublic'), $fileName);
         $fileDocument = FileDocument::create([
-            'file' => $imageName,
+            'file' => $fileName,
         ]);
         return response()->json($fileDocument, 201);
     }
@@ -672,10 +671,9 @@ class apiController extends Controller
         $album->nama_album = $request->title;
         $album->save();
 
-        $file = FileDocument::where('fileId', null)->get();
-        $file->toQuery()->update([
-            'fileId' => $album->id
-        ]);
+        $file = DB::table('file_documents')
+            ->whereNull('fileId')
+            ->update(array('fileId' => $album->id));
         return response()->json($file);
     }
     public function getAlbum()
@@ -685,6 +683,7 @@ class apiController extends Controller
             ->select('albums.nama_album', 'file_documents.file', 'file_documents.fileId')
             ->get()
             ->groupBy('file_documents.fileId');
+        // $album = FileDocument::whereNull('fileId')->get();
         return response()->json($album, 201);
         // return response()->json(FileDocument::with('gallery')->get());
     }
