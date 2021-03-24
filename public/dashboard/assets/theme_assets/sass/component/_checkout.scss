@@ -501,6 +501,9 @@
 
   .checkout-shipping-form {
     margin-top: 64px;
+    @include sm{
+      margin-top: 8px;
+    }
   }
 
   .payment-method-area--top {
@@ -540,7 +543,7 @@
 }
 
 .card.checkout-shipping-form .card-header h4 {
-  @include ofs(20px, lh(20px, 22px), 500);
+  @include ofs(20px, lh(20px, 30px), 500);
   white-space: normal;
 }
 
@@ -896,6 +899,7 @@
 
 .payment-invoice-qr {
   border-radius: 20px;
+  flex-wrap: wrap;
   @extend .bg-normal;
 
   @include e(number) {

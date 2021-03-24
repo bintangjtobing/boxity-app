@@ -10,4 +10,7 @@ class changeLog extends Model
     protected $fillable = [
         'version', 'description'
     ];
+    protected $casts = [
+        'created_at' => 'datetime:d M, Y',
+    ];
 }

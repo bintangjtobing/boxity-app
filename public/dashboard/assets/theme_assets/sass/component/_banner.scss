@@ -327,6 +327,9 @@
 
         .card-body {
             padding: 0;
+            @include sm{
+                padding: 1rem;
+            }
         }
     }
 
@@ -371,6 +374,9 @@
 
     &--17 {
         margin-top: 85px;
+        @include xs {
+            margin-top: 30px;
+        }
 
         .card-header {
             h4 {

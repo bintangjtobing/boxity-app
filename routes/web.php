@@ -54,6 +54,12 @@ Route::get('/login', function () {
 Route::get('/login/{tokens}', 'authController@index');
 Route::post('/login/{tokens}', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
+Route::get('/forgot-password', function () {
+    return view('auth.forgot');
+});
+Route::get('/reset-password', function () {
+    return view('auth.reset');
+});
 
 // Homepage Data
 Route::get('/', 'webpageController@index');

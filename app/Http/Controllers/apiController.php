@@ -340,7 +340,7 @@ class apiController extends Controller
     // QUOTE API
     public function getQuoteAll()
     {
-        if (auth()->user()->role != 'it') {
+        if (Auth::user()->role != 'it') {
             return response()->json(quotes::with('createdBy')->where('createdId', Auth::id())->get());
         } else {
             return response()->json(quotes::with('createdBy')->get());
@@ -621,7 +621,7 @@ class apiController extends Controller
     }
     public function getGoods()
     {
-        if (auth()->user()->role == 'hrdga' || auth()->user()->role == 'admin') {
+        if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
             return response()->json(goodsReceip::with('receiver')->where('status', '!=', '1')->get());
         } else {
             return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->get());
@@ -683,8 +683,25 @@ class apiController extends Controller
             ->select('albums.nama_album', 'file_documents.file', 'file_documents.fileId')
             ->get()
             ->groupBy('file_documents.fileId');
-        // $album = FileDocument::whereNull('fileId')->get();
         return response()->json($album, 201);
-        // return response()->json(FileDocument::with('gallery')->get());
+    }
+
+
+    // Version Control API
+    public function getVersionControl()
+    {
+        return changeLog::orderBy('created_at', 'DESC')->get();
+    }
+    public function newVersion(Request $request)
+    {
+        $version = new changeLog();
+        $version->version = $request->title;
+        $version->description = $request->description;
+        $version->save();
+        return response()->json($version, 201);
+    }
+    public function getVersionData($version)
+    {
+        return response()->json(changeLog::where('version', $version)->get());
     }
 }

@@ -83,8 +83,8 @@ const customTooltips = function (tooltip) {
 function chartjsLineChartOne(
   selector,
   label = "Data",
-  bgColor = "#23863610",
-  bColor = "#238636",
+  bgColor = "#20C99710",
+  bColor = "#20C997",
   data = [5, 10, 20, 25, 20, 30, 15, 25, 15, 10]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -199,8 +199,8 @@ function fOverviewWeek() {
   chartjsLineChartOne(
     "#lineChartFive",
     (label = "label"),
-    (bgColor = "#23863610"),
-    (bColor = "#238636"),
+    (bgColor = "#20C99710"),
+    (bColor = "#20C997"),
     (data = [1000, 5000, 1500, 10000, 14000, 24000, 20000])
   );
   chartjsLineChartOne(
@@ -214,7 +214,7 @@ function fOverviewWeek() {
     "#lineChartSeven",
     (label = "Label"),
     (bgColor = "#0D79DF10"),
-    (bColor = "#292663"),
+    (bColor = "#5F63F2"),
     (data = [100, 300, 150, 200, 250, 500, 300])
   );
   chartjsLineChartOne(
@@ -230,8 +230,8 @@ function fOverviewMonth() {
   chartjsLineChartOne(
     "#lineChartNine",
     (label = "label"),
-    (bgColor = "#23863610"),
-    (bColor = "#238636"),
+    (bgColor = "#20C99710"),
+    (bColor = "#20C997"),
     (data = [15000, 50000, 15000, 15000, 40000, 24000, 20000])
   );
   chartjsLineChartOne(
@@ -245,7 +245,7 @@ function fOverviewMonth() {
     "#lineChartEleven",
     (label = "Label"),
     (bgColor = "#0D79DF10"),
-    (bColor = "#292663"),
+    (bColor = "#5F63F2"),
     (data = [5000, 4000, 16000, 10000, 20000, 13000, 10000, 6000])
   );
   chartjsLineChartOne(
@@ -261,8 +261,8 @@ function fOverviewYear() {
   chartjsLineChartOne(
     "#lineChartThirteen",
     (label = "label"),
-    (bgColor = "#23863610"),
-    (bColor = "#238636"),
+    (bgColor = "#20C99710"),
+    (bColor = "#20C997"),
     (data = [95000, 19000, 55000, 90000, 240000, 95000, 55000, 19000, 55000, 66000, 90000, 240000])
   );
   chartjsLineChartOne(
@@ -276,7 +276,7 @@ function fOverviewYear() {
     "#lineChartFifteen",
     (label = "Label"),
     (bgColor = "#0D79DF10"),
-    (bColor = "#292663"),
+    (bColor = "#5F63F2"),
     (data = [9500, 1900, 5500, 9000, 24000, 9500, 5500, 1900, 5500, 9000, 10000, 24000])
   );
   chartjsLineChartOne(
@@ -291,8 +291,8 @@ function fOverviewYear() {
 chartjsLineChartOne(
   "#lineChartOne",
   (label = "label"),
-  (bgColor = "#23863610"),
-  (bColor = "#238636"),
+  (bgColor = "#20C99710"),
+  (bColor = "#20C997"),
   (data = [150, 100, 200, 250, 200, 300, 150])
 );
 chartjsLineChartOne(
@@ -306,7 +306,7 @@ chartjsLineChartOne(
   "#lineChartThree",
   (label = "Label"),
   (bgColor = "#0D79DF10"),
-  (bColor = "#292663"),
+  (bColor = "#5F63F2"),
   (data = [150, 100, 200, 250, 200, 300, 150])
 );
 chartjsLineChartOne(
@@ -329,9 +329,9 @@ const chartLinearGradient = (canvas, height, color) => {
 function chartjsLineChartForcast(
   selector,
   label = "",
-  startGradient = "#29266312",
-  endGradient = "#29266302",
-  bColor = "#238636",
+  startGradient = "#5F63F212",
+  endGradient = "#5F63F202",
+  bColor = "#20C997",
   data = [30, 10, 20, 25, 20, 30, 15, 25, 15, 10]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -358,7 +358,7 @@ function chartjsLineChartForcast(
             label: label,
             // backgroundColor: bgColor,
             borderColor: bColor,
-            pointHoverBackgroundColor: "#292663",
+            pointHoverBackgroundColor: "#5F63F2",
             pointHoverBorderWidth: 0,
             pointHoverBorderColor: "transparent",
             data: data,
@@ -449,17 +449,17 @@ function chartjsLineChartForcast(
 chartjsLineChartForcast(
   "#lineChartforcastOne",
   (label = "Line Chart dataset"),
-  (startGradient = "#29266312"),
-  (endGradient = "#29266302"),
-  (bColor = "#292663"),
+  (startGradient = "#5F63F212"),
+  (endGradient = "#5F63F202"),
+  (bColor = "#5F63F2"),
   (data = [30, 10, 20, 25, 20, 30, 15, 25, 15, 10])
 );
 chartjsLineChartForcast(
   "#lineChartforcastTwo",
   (label = "Line Chart dataset"),
-  (startGradient = "#23863612"),
-  (endGradient = "#23863603"),
-  (bColor = "#238636"),
+  (startGradient = "#20C99712"),
+  (endGradient = "#20C99703"),
+  (bColor = "#20C997"),
   (data = [5, 15, 15, 10, 15, 25, 15, 25, 20, 10])
 );
 
@@ -467,8 +467,8 @@ chartjsLineChartForcast(
 function chartjsLineChartSmall(
   selector,
   label = "Line Chart dataset",
-  bgColor = "#23863600",
-  bColor = "#238636",
+  bgColor = "#20C99700",
+  bColor = "#20C997",
   data = [5, 10, 20, 25, 20, 30]
 ) {
   var ctx = document.querySelectorAll(selector);
@@ -547,28 +547,28 @@ chartjsLineChartSmall("#lineChartSm1");
 chartjsLineChartSmall(
   "#lineChartSm2",
   (label = "Line Chart dataset"),
-  (bgColor = "#23863600"),
+  (bgColor = "#20C99700"),
   (bColor = "#FF69A5"),
   (data = [0, 10, 8, 14, 7, 10])
 );
 chartjsLineChartSmall(
   "#lineChartSm3",
   (label = "Line Chart dataset"),
-  (bgColor = "#23863600"),
-  (bColor = "#292663"),
+  (bgColor = "#20C99700"),
+  (bColor = "#5F63F2"),
   (data = [5, 15, 5, 11, 17, 11])
 );
 chartjsLineChartSmall(
   "#lineChartSm4",
   (label = "Line Chart dataset"),
-  (bgColor = "#23863600"),
+  (bgColor = "#20C99700"),
   (bColor = "#2C99FF"),
   (data = [4, 16, 9, 24, 8, 16])
 );
 chartjsLineChartSmall(
   "#lineChartSm5",
   (label = "Line Chart dataset"),
-  (bgColor = "#23863600"),
+  (bgColor = "#20C99700"),
   (bColor = "#FA8B0C"),
   (data = [0, 10, 8, 14, 7, 10])
 );
@@ -616,9 +616,9 @@ function chartjsLineChartTwo(
             "transparent",
             "transparent",
             "transparent",
-            "#238636",
+            "#20C997",
           ],
-          pointHoverBackgroundColor: "#238636",
+          pointHoverBackgroundColor: "#20C997",
           pointHoverRadius: 6,
           pointBorderColor: "transparent",
         }, ],
@@ -634,7 +634,7 @@ function chartjsLineChartTwo(
           callbacks: {
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#238636",
+                backgroundColor: "#20C997",
                 borderColor: "transparent",
               };
             },
@@ -1005,12 +1005,12 @@ function chartjsLineChartFour(selector, bcolor = "#FA8B0C", height = "95", dataC
         labels: labels,
         datasets: [{
             data: dataCur,
-            borderColor: "#292663",
+            borderColor: "#5F63F2",
             borderWidth: 4,
             fill: true,
             backgroundColor: () =>
               chartLinearGradient(ctxs, 300, {
-                start: "#29266330",
+                start: "#5F63F230",
                 end: "#ffffff05",
               }),
             label: "Current period",
@@ -1018,7 +1018,7 @@ function chartjsLineChartFour(selector, bcolor = "#FA8B0C", height = "95", dataC
             pointRadius: "0",
             hoverRadius: "9",
             pointBorderColor: "#fff",
-            pointBackgroundColor: "#292663",
+            pointBackgroundColor: "#5F63F2",
             hoverBorderWidth: 5,
           },
           {
@@ -1115,12 +1115,12 @@ function chartjsLineChartFourExtra(selector, bcolor = "#FA8B0C", height = "95", 
         labels: labels,
         datasets: [{
             data: dataCur,
-            borderColor: "#292663",
+            borderColor: "#5f63f2",
             borderWidth: 4,
             fill: true,
             backgroundColor: () =>
               chartLinearGradient(ctxs, 400, {
-                start: "#2926631a",
+                start: "#5f63f21a",
                 end: "#ffffff05",
               }),
             label: "Current period",
@@ -1128,7 +1128,7 @@ function chartjsLineChartFourExtra(selector, bcolor = "#FA8B0C", height = "95", 
             pointRadius: "0",
             hoverRadius: "9",
             pointBorderColor: "#fff",
-            pointBackgroundColor: "#292663",
+            pointBackgroundColor: "#5f63f2",
             hoverBorderWidth: 5,
           },
           {
@@ -1618,16 +1618,16 @@ function chartjsLineChartBasic(selector, bcolor = "#FA8B0C") {
         ],
         datasets: [{
           data: [45, 25, 60, 38, 70, 60, 38, 40, 25, 50, 45, 75],
-          borderColor: "#292663",
+          borderColor: "#5F63F2",
           borderWidth: 3,
           fill: false,
-          backgroundColor: "#29266310",
+          backgroundColor: "#5F63F210",
           label: "Current period",
           pointStyle: "circle",
           pointRadius: "0",
           hoverRadius: "6",
           pointBorderColor: "#fff",
-          pointBackgroundColor: "#292663",
+          pointBackgroundColor: "#5F63F2",
           hoverBorderWidth: 3,
         }, ],
       },
@@ -1822,8 +1822,8 @@ function salesLineChartTwo(selector, dataG, dataL, labels, label = "Bar chart on
         labels: labels,
         datasets: [{
             data: dataG,
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Gained",
           },
           // {
@@ -1845,7 +1845,7 @@ function salesLineChartTwo(selector, dataG, dataL, labels, label = "Bar chart on
           callbacks: {
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#292663",
+                backgroundColor: "#5F63F2",
                 borderColor: "transparent",
               };
             },
@@ -1935,8 +1935,8 @@ function chartjsBarChartOne(selector, dataG, dataL, labels, label = "Bar chart o
         labels: labels,
         datasets: [{
             data: dataG,
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Gained",
           },
           {
@@ -1958,7 +1958,7 @@ function chartjsBarChartOne(selector, dataG, dataL, labels, label = "Bar chart o
           callbacks: {
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#292663",
+                backgroundColor: "#5F63F2",
                 borderColor: "transparent",
               };
             },
@@ -2162,14 +2162,14 @@ function chartjsBarChartCashflowExtra(selector, dataCIn, DataCOut, labels, label
         labels: labels,
         datasets: [{
             data: dataCIn,
-            backgroundColor: "#23863670",
-            hoverBackgroundColor: "#238636",
+            backgroundColor: "#20C99770",
+            hoverBackgroundColor: "#20C997",
             label: "Won",
           },
           {
             data: DataCOut,
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5f63f280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Amount",
           },
         ],
@@ -2193,7 +2193,7 @@ function chartjsBarChartCashflowExtra(selector, dataCIn, DataCOut, labels, label
             },
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#238636",
+                backgroundColor: "#20C997",
                 borderColor: "transparent",
               };
             },
@@ -2330,8 +2330,8 @@ function chartjsBarChartCashflow(selector, dataCIn, DataCOut, labels, label = "B
         labels: labels,
         datasets: [{
             data: dataCIn,
-            backgroundColor: "#23863670",
-            hoverBackgroundColor: "#238636",
+            backgroundColor: "#20C99770",
+            hoverBackgroundColor: "#20C997",
             label: "Cash in",
           },
           {
@@ -2361,7 +2361,7 @@ function chartjsBarChartCashflow(selector, dataCIn, DataCOut, labels, label = "B
             },
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#238636",
+                backgroundColor: "#20C997",
                 borderColor: "transparent",
               };
             },
@@ -2493,8 +2493,8 @@ function chartjsBarChartInEx(selector, data1, data2, data3, data4, labels, label
         labels: labels,
         datasets: [{
             data: data1,
-            backgroundColor: "#29266350",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F250",
+            hoverBackgroundColor: "#5F63F2",
             label: "Total Income",
           },
           {
@@ -2511,8 +2511,8 @@ function chartjsBarChartInEx(selector, data1, data2, data3, data4, labels, label
           },
           {
             data: data4,
-            backgroundColor: "#23863650",
-            hoverBackgroundColor: "#238636",
+            backgroundColor: "#20C99750",
+            hoverBackgroundColor: "#20C997",
             label: "Net profit",
           },
         ],
@@ -2535,7 +2535,7 @@ function chartjsBarChartInEx(selector, data1, data2, data3, data4, labels, label
             },
             labelColor(tooltipItem, chart) {
               return {
-                backgroundColor: "#292663",
+                backgroundColor: "#5F63F2",
                 borderColor: "transparent",
               };
             },
@@ -2737,8 +2737,8 @@ chartjsBarChartTwo("myChart4");
 /* Bar chart three */
 function chartJsBarChartThree(
   selector,
-  bgColor = "#29266310",
-  hBgColor = "#292663",
+  bgColor = "#5F63F210",
+  hBgColor = "#5F63F2",
   label = "chart label"
 ) {
   var ctx = document.getElementById(selector);
@@ -2820,8 +2820,8 @@ function chartJsBarChartThree(
 /* Bar chart three */
 function chartJsBarChartFour(
   selector,
-  bgColor = "#29266310",
-  hBgColor = "#292663",
+  bgColor = "#5F63F210",
+  hBgColor = "#5F63F2",
   label = "chart label"
 ) {
   var ctx = document.getElementById(selector);
@@ -2924,8 +2924,8 @@ function chartjsBarChartHorizontal(selector, label = "Bar chart horizontal") {
         ],
         datasets: [{
             data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Profit",
           },
           {
@@ -3010,8 +3010,8 @@ function chartjsBarChartVertical(selector, label = "Bar chart vertical") {
         ],
         datasets: [{
             data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Profit",
           },
           {
@@ -3096,8 +3096,8 @@ function chartjsBarChartStacked(selector, label = "Bar chart stacked") {
         ],
         datasets: [{
             data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
-            backgroundColor: "#29266380",
-            hoverBackgroundColor: "#292663",
+            backgroundColor: "#5F63F280",
+            hoverBackgroundColor: "#5F63F2",
             label: "Profit",
           },
           {
@@ -3163,15 +3163,15 @@ function chartjsBarChartStacked(selector, label = "Bar chart stacked") {
 chartjsBarChartHorizontal("barChartHorizontal");
 chartjsBarChartVertical("barChartVertical");
 chartjsBarChartStacked("barChartstacked");
-chartJsBarChartThree("mychart8", "#29266320", "#292663", "Order");
+chartJsBarChartThree("mychart8", "#5F63F220", "#5F63F2", "Order");
 chartJsBarChartThree("mychart9", "#FF69A520", "#FF69A5", "Revenue");
-chartJsBarChartThree("mychart10", "#23863620", "#238636", "Avg. Order");
+chartJsBarChartThree("mychart10", "#20C99720", "#20C997", "Avg. Order");
 chartJsBarChartThree("mychart11", "#2C99FF20", "#2C99FF", "Visitors");
 
 
 chartJsBarChartFour("mychart12", "#FF69A520", "#FF69A5", "New Contact");
-chartJsBarChartFour("mychart13", "#29266320", "#292663", "New Deals");
-chartJsBarChartFour("mychart14", "#23863620", "#238636", "New Leads");
+chartJsBarChartFour("mychart13", "#5F63F220", "#5F63F2", "New Deals");
+chartJsBarChartFour("mychart14", "#20C99720", "#20C997", "New Leads");
 chartJsBarChartFour("mychart15", "#2C99FF20", "#2C99FF", "Revenue");
 // Area Chart
 function chartjsAreaChartBasic(selector, label = "Bar chart Basic") {
@@ -3311,7 +3311,7 @@ function chartjsDoughnut(selector, cHeight, data) {
         labels: ["Desktop", "Mobile", "Tablets"],
         datasets: [{
           data: data,
-          backgroundColor: ["#238636", "#292663", "#FA8B0C"],
+          backgroundColor: ["#20C997", "#5F63F2", "#FA8B0C"],
           total: "9,283",
         }, ],
       },
@@ -3396,7 +3396,7 @@ function chartjsDoughnutExtra(selector, cHeight, data) {
         labels: ["Total Send", "Open", "Not Open"],
         datasets: [{
           data: data,
-          backgroundColor: ["#238636", "#292663", "#FA8B0C"],
+          backgroundColor: ["#20C997", "#5F63F2", "#FA8B0C"],
           total: "9,283",
         }, ],
       },

@@ -130,9 +130,12 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable adv-table-table global-shadow border p-30 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
+                        <div id="filter-form-container"></div>
+                        <table class="table mb-0 table-borderless adv-table" data-sorting="true"
+                            data-filter-container="#filter-form-container" data-paging-current="1"
+                            data-paging-position="right" data-paging-size="10">
                             <thead>
                                 <tr class="userDatatable-header">
                                     <th>

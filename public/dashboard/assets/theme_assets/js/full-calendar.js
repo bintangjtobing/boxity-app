@@ -10,7 +10,7 @@
     $(this).draggable({
       zIndex: 999,
       revert: true, // will cause the event to go back to its
-      revertDuration: 0, //  original position after the drag
+      revertDuration: 0, //  original position after the drag 
     });
   });
 
@@ -19,7 +19,7 @@
   let familyEvents = {
     id: 1,
     events: [
-
+      
       {
         id: "1",
         start: moment().format('YYYY-MM-17') + "T08:30:00",
@@ -33,7 +33,7 @@
       },
     ],
     className: "primary",
-    textColor: "#292663",
+    textColor: "#5F63F2",
   };
 
   let productLaunch = {
@@ -59,7 +59,7 @@
       },
     ],
     className: "success",
-    textColor: "#238636",
+    textColor: "#20C997",
   };
 
   let projectUpdate = {
@@ -128,5 +128,5 @@
       $('.fc-button-group .fc-listMonth-button').prepend( '<i class="las la-list"></i>' );
     }
   });
-
+  
 })(jQuery);

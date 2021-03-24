@@ -176,6 +176,7 @@
         }
 
         input {
+            padding: 8px 15px;
             &::placeholder {
                 color: #ADB4D2;
                 @include ofs(14px, lh(14px, 25px), 400);

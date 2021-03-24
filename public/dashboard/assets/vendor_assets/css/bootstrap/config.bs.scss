@@ -17,9 +17,9 @@ $border-radius-md: 6px;
 
 // theme color
 $light-gray: #9299b8;
-$primary: #292663;
+$primary: #5f63f2;
 $secondary: #ff69a5;
-$success: #238636;
+$success: #20c997;
 $info: #2c99ff;
 $warning: #fa8b0c;
 $danger: #ff4d4f;
@@ -120,6 +120,16 @@ $spacers: map-merge(
   $spacers
 );
 
+
+// Grid points
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl:1600px
+);
 //social colors
 $facebook: #2366b8;
 $twitter: #00abe4;
@@ -339,8 +349,8 @@ $badge-font-size: 10px;
 $badge-font-weight: 600;
 $badge-border-radius: 10px;
 $badge-pill-padding-x: 6.6px;
-$input-focus-border-color:$primary;
-$input-focus-box-shadow:0px 5px 20px #2926631A;
+$input-focus-border-color:$primary; 
+$input-focus-box-shadow:0px 5px 20px #5F63F21A;
 
 // Progressbar
 $progress-height: 8px;

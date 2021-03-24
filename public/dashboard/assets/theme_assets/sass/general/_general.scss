@@ -57,6 +57,9 @@ ul {
   @extend .bg-lighter;
 
   @media (max-width: 1150px) {
+    padding: 73px 15px 72px 16px;
+  }
+  @include md{
     padding: 73px 15px 64px 16px;
   }
 
@@ -71,6 +74,7 @@ ul {
     @media (max-width: 1150px) {
       padding-left: 16px;
     }
+    
 
     @include sm {
       padding-left: 0px;
@@ -194,6 +198,12 @@ ul {
     visibility: visible;
     z-index: 9998;
   }
+}
+
+
+// Editor
+.trumbowyg-modal-box label input{
+  line-height: 19px;
 }
 
 // Navbar Type

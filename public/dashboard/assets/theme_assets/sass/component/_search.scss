@@ -3,7 +3,7 @@
     height: 48px;
 
     .form-control {
-        padding: 24px 13px;
+        padding: 8px 13px;
 
         &::placeholder {
             @include ofs(14px, lh(14px, 25px), 400);

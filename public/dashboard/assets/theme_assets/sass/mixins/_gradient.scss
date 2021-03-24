@@ -8,13 +8,13 @@
 }
 
 .gradient1 {
-  @include linear-gradient(#292663, #ff69a5);
+  @include linear-gradient(#5f63f2, #ff69a5);
 }
 .gradient2 {
   @include linear-gradient(#ff69a5, #fa8b0c);
 }
 .gradient3 {
-  @include linear-gradient(#2cb7ff, #292663);
+  @include linear-gradient(#2cb7ff, #5f63f2);
 }
 .gradient4 {
   @include linear-gradient(#009646, #62de04);

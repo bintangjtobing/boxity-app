@@ -28,7 +28,7 @@ $.getJSON("json/icons.json", function (data) {
     (icon) =>
       `
                 <div class="col-sm-6 col-md-4 col-lg-3">
-                    <i data-feather="${icon}"></i>
+                    <span data-feather="${icon}"></span>
                     <span class="icon-text">${icon}</span>
                 </div>
             `

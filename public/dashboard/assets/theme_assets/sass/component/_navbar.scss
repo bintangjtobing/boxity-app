@@ -10,7 +10,8 @@
 
 // Dark Header
 .layout-dark {
-  .header-top {
+  .header-top ,
+  .mobile-author-actions.show{
     background-color: #22253a;
   }
 }
@@ -138,6 +139,9 @@
 
   >li {
     padding: 20px 12px;
+    @include md{
+      padding: 20px 9px;
+    }
 
     @include sm {
       padding: 0;

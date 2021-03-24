@@ -1,6 +1,12 @@
 /* eslint-disable */
 (function ($) {
   jQuery(function ($) {
+
+    //preloader
+    $(window).on('load',function() {
+      $("#overlayer").hide();
+    });
+
     // wait until the DOM is ready
     $("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7").datepicker({
       dateFormat: "d MM yy",
@@ -391,8 +397,16 @@
     },
     layout: "sameSize",
   };
+  const option = {
+    gridItemsSelector: ".filtr-item--style2",
+    gutterPixels: 25, // Items spacing in pixels
+    layout: "sameHeight",
+  };
   if (document.querySelector(".filtr-container") !== null) {
     const filterizr = new Filterizr(".filtr-container", options);
+  }
+  if (document.querySelector(".filtr-container2") !== null) {
+    const filterizr = new Filterizr(".filtr-container2", option);
   }
   const simpleFilters = document.querySelectorAll(".simplefilter li");
   Array.from(simpleFilters).forEach((node) =>
@@ -401,6 +415,8 @@
       node.classList.add("active");
     })
   );
+
+
 
   /* Tab Multiple Trigger */
   $("#ueberTab a").on("click", function (e) {
@@ -495,7 +511,7 @@
 
     $('.kb__select-wrapper select,.tagSelect-rtl select').select2({
     dir: "rtl",
-    dropdownAutoWidth: true,	
+    dropdownAutoWidth: true,
     dropdownParent: $('.kb__select-wrapper .select2,.tagSelect-rtl .select2')
   });
 
@@ -779,6 +795,12 @@
     minimumResultsForSearch: Infinity,
   });
 
+  $("#id_label_single").select2({
+    placeholder: "All",
+    dropdownCssClass: "category-member",
+    allowClear: true,
+  });
+
   $("#select-search,.kb__select").select2({
     placeholder: "Search a person",
     dropdownCssClass: "category-member",
@@ -802,18 +824,68 @@
     allowClear: true,
   });
 
-  /* Mail Compose Rich-text*/
-  $("#mail-message, #mail-reply-message").trumbowyg({
+//  $('#mail-message, #mail-reply-message')
+// .trumbowyg({
+//     btnsDef: {
+//         // Create a new dropdown
+//         image: {
+//             dropdown: ['insertImage', 'upload'],
+//             ico: 'insertImage'
+//         }
+//     },
+//     // Redefine the button pane
+//     btns: [
+//         ['viewHTML'],
+//         ['formatting'],
+//         ['strong', 'em', 'del'],
+//         ['superscript', 'subscript'],
+//         ['link'],
+//         ['image'], // Our fresh created dropdown
+//         ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+//         ['unorderedList', 'orderedList'],
+//         ['horizontalRule'],
+//         ['removeformat'],
+//         ['fullscreen']
+//     ],
+//     plugins: {
+//         // Add imagur parameters to upload plugin for demo purposes
+//         upload: {
+//             serverPath: 'https://api.imgur.com/3/image',
+//             fileFieldName: 'image',
+//             headers: {
+//                 'Authorization': 'Client-ID xxxxxxxxxxxx'
+//             },
+//             urlPropertyName: 'data.link'
+//         }
+//     }
+// });
+
+
+$('#mail-message, #mail-reply-message')
+.trumbowyg({
+    btnsDef: {
+        // Create a new dropdown
+        image: {
+            dropdown: ['insertImage', 'base64'],
+            ico: 'insertImage'
+        }
+    },
+    // Redefine the button pane
     btns: [
-      ["formatting"],
-      ["strong", "em"],
-      ["superscript", "subscript"],
-      ["link"],
-      ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
-      ["viewHTML"],
-      ["unorderedList", "orderedList"],
-    ],
-  });
+        ['viewHTML'],
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['superscript', 'subscript'],
+        ['link'],
+        ['image'], // Our fresh created dropdown
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen']
+    ]
+});
+
   /* Mail Compose Rich-text*/
   $("#mail-reply-message2,#mail-reply-message3").trumbowyg({
     btns: [
@@ -1418,7 +1490,7 @@
       myDateRangeTarget.wrap("<div class=\"dateRangeWrapper\"></div>");
     });
   };
-
+   /* Range */
   $(document).ready(function(){
     $("#txtDateRange").dateRangePicker({
       showOn: "focus",
@@ -1428,6 +1500,15 @@
       constrainInput: true
     });
   });
+
+  /* Preloader */
+  $(window).on('load',function() {
+    $(".loader-overlay").delay(500).fadeOut("slow");
+    $("#overlayer").fadeOut(500, function() {
+      $('body').removeClass('overlayScroll');
+    });
+  })
+
 
 
 

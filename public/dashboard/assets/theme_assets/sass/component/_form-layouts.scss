@@ -82,7 +82,7 @@
         text-transform: capitalize;
         margin: 7px;
         &.btn-primary{
-            box-shadow: 0 3px 5px rgba(#238636, .05);
+            box-shadow: 0 3px 5px rgba(#20C997, .05);
         }
     }
 }
@@ -142,7 +142,7 @@
     }
 
     .custom-checkbox.disabled input[type="checkbox"]:checked + label:after {
-        background-color: #292663;
+        background-color: #5f63f2;
     }
     .custom-radio.disabled input[type="radio"] + label{
         @extend .color-gray;

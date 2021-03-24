@@ -597,12 +597,13 @@
 
             input {
                 border: none;
-                padding: 0 25px;
+                padding: 16px 25px;
                 border-top-left-radius: 30px;
                 border-bottom-left-radius: 30px;
                 height: 54px;
                 box-shadow: none;
                 min-width: 160px;
+                
 
                 @include ssm {
                     border-radius: 4px !important;

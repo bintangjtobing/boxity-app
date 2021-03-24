@@ -165,10 +165,10 @@
       padding: 10px;
     }
 
-    @include lg {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
+    // @include lg {
+    //   flex: 0 0 50%;
+    //   max-width: 50%;
+    // }
 
     @include xxs {
       flex: 0 0 100%;
@@ -272,16 +272,6 @@
       @include ssm {
         font-size: 20px;
       }
-    }
-  }
-}
-
-.device-chart-box {
-  .card {
-    min-height: 455px;
-
-    @include md {
-      min-height: 402px;
     }
   }
 }

@@ -48,7 +48,7 @@
     border-radius: 23px;
 
     .form-control {
-      padding: 0 13px;
+      padding: 10px 13px;
       line-height: 25px;
       height: 46px;
 
@@ -268,7 +268,7 @@
       white-space: nowrap;
     }
 
-    thead tr {
+    thead tr:not(.footable-filtering) {
       border-radius: 10px;
 
       th {

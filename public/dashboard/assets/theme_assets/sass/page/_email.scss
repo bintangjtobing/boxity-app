@@ -97,7 +97,7 @@
     border-radius: 22px;
 
     &.btn-shadow-primary {
-      box-shadow: 0 10px 15px rgba(#292663, 0.1);
+      box-shadow: 0 10px 15px rgba(#5f63f2, 0.1);
     }
 
     svg {
@@ -664,15 +664,23 @@
 
 // Mailbox Compose
 .atbd-mailCompose {
-  position: fixed;
-  right: 30px;
-  bottom: 60px;
-  width: 600px;
+
   border-radius: 10px;
   box-shadow: 0 10px 50px rgba($light, 0.3);
-  z-index: 12;
-  display: none;
   @extend .bg-white;
+
+  &--position {
+    position: fixed;
+    right: 30px;
+    bottom: 60px;
+    width: 600px;
+    display: none;
+    z-index: 12;
+    @media (max-width: 650px) {
+      right: 15px;
+      width: calc(100% - 30px);
+    }
+  }
 
   &.show {
     display: block;
@@ -749,10 +757,7 @@
     }
   }
 
-  @media (max-width: 650px) {
-    right: 15px;
-    width: calc(100% - 30px);
-  }
+  
 }
 
 // Mail Form
@@ -763,6 +768,12 @@
     height: 3.44rem;
     width: 100%;
     border-bottom: 1px solid $border-normal;
+    &:focus{
+      box-shadow: none;
+    }
+  }
+  input:focus{
+    box-shadow: none;
   }
 
   .form-group {
@@ -1336,14 +1347,16 @@
     align-items: center;
     justify-content: space-between;
     background: rgb(39, 43, 65);
-    p{
+
+    p {
       margin-bottom: 0;
     }
 
     .icon-right svg {
       cursor: pointer;
       opacity: 0.7;
-      &:hover{
+
+      &:hover {
         opacity: 1;
       }
 
@@ -1417,7 +1430,7 @@
 
 .mailbox-list__single:hover {
   .mail-content__top .mail-title .badge {
-    background-color: rgba(#292663, 0.1);
+    background-color: rgba(#5f63f2, 0.1);
     @extend .color-primary;
   }
 }

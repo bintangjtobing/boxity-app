@@ -164,7 +164,7 @@
 
       &.btn-primary {
         color: white;
-        box-shadow: 0px 3px 5px #2386360D;
+        box-shadow: 0px 3px 5px #20C9970D;
       }
     }
   }
@@ -576,7 +576,7 @@
     cursor: default;
     touch-action: none;
     background: white;
-    border: 2px solid #292663;
+    border: 2px solid #5F63F2;
   }
 
   .ui-slider-range {
@@ -856,7 +856,7 @@
     @extend .color-dark;
     -webkit-appearance: none;
     -moz-appearance:textfield;
-
+    
   }
 
   .bttn {

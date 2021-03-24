@@ -166,6 +166,7 @@
 .v-history-list li .version-name {
     @include ofs(14px, null, 500);
     color: rgb(39, 43, 65);
+    margin-right: 10px;
 }
 
 .v-history-list li .version-date {
@@ -175,14 +176,24 @@
 
 .v-history-list li {
     display: flex;
-    -webkit-box-pack: justify;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .v-history-list li:not(:last-child) {
     margin-bottom: 24px;
 }
+@media (min-width: 768px) {
+    .changelog-19 {
+        flex: 0 0 66.66666667%;
+        max-width: 66.66666667%;
+    }
 
+    .changelog-5 {
+        flex: 0 0 33.33333333%;
+        max-width: 33.33333333%;
+    }
+}
 @media (min-width: 1600px) {
     .changelog-19 {
         flex: 0 0 79.16666667%;
@@ -195,14 +206,3 @@
     }
 }
 
-@media (min-width: 768px) {
-    .changelog-19 {
-        flex: 0 0 66.66666667%;
-        max-width: 66.66666667%;
-    }
-
-    .changelog-5 {
-        flex: 0 0 33.33333333%;
-        max-width: 33.33333333%;
-    }
-}

@@ -17,14 +17,14 @@ $('#sb_location-month-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -55,14 +55,14 @@ $('#sb_location-week-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -93,14 +93,14 @@ $('#sb_location-year-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -132,14 +132,14 @@ if(s_regionMapT){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -159,7 +159,7 @@ if(s_regionMapT){
     },
   });
 }
-
+ 
 $('#se_region-week-tab').on("shown.bs.tab",function(){
   $(s_regionMapW).vectorMap({
     map: "world_mill_en",
@@ -169,14 +169,14 @@ $('#se_region-week-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -206,14 +206,14 @@ $('#se_region-month-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -243,14 +243,14 @@ $('#se_region-year-tab').on("shown.bs.tab",function(){
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -281,14 +281,14 @@ if (regionMap) {
     regionStyle: {
       initial: { fill: "#E3E6EF" },
       hover: {
-        fill: "#292663",
+        fill: "#5F63F2",
         "fill-opacity": 1,
       },
     },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
@@ -318,8 +318,8 @@ if (worldMap) {
     regionStyle: { initial: { fill: "#E3E6EF" } },
     markerStyle: {
       initial: {
-        fill: "#29266315",
-        stroke: "#292663",
+        fill: "#5F63F215",
+        stroke: "#5F63F2",
         "stroke-width": 4,
       },
     },
