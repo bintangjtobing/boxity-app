@@ -41,8 +41,12 @@
 </template>
 <script>
     import Swal from 'sweetalert2';
+    import Editor from '@tinymce/tinymce-vue';
 
     export default {
+        components: {
+            'editor': Editor
+        },
         title() {
             return 'New quote';
         },

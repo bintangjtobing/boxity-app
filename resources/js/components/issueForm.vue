@@ -24,23 +24,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea v-model="issue.description" class="form-control"
-                                        placeholder="Leave an issue explanation..." id="" cols="30" rows="10"
-                                        required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
-                                        :options="dropzoneOptions" class="dropzone"
-                                        v-on:vdropzone-success="handleFileUploadCompleted"
-                                        v-on:vdropzone-queue-complete="handleFileUploaded"
-                                        v-on:vdropzone-removed-file="handleFileRemoved">
-                                        <div class="dropzone-custom-content">
-                                            <h3 class="dropzone-custom-title">Drag and drop to upload
-                                                attachment!</h3>
-                                            <div class="subtitle">...or click to select a file from your
-                                                computer</div>
-                                        </div>
-                                    </vue-dropzone>
+                                    <editor placeholder="Leave an issue explanation..." v-model="issue.description"
+                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
+                                                                height: 300,
+                                                                menubar: false,
+                                                                branding: false,
+                                                                toolbar:
+                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    alignleft aligncenter alignright alignjustify | \
+                                                                    bullist numlist outdent indent | removeformat'
+                                                        }" />
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row justify-content-end">
@@ -104,6 +97,7 @@
 <script>
     import Swal from 'sweetalert2';
     import vue2Dropzone from 'vue2-dropzone';
+    import Editor from '@tinymce/tinymce-vue';
 
     export default {
         title() {
@@ -111,6 +105,7 @@
         },
         components: {
             vueDropzone: vue2Dropzone,
+            'editor': Editor
         },
         data() {
             return {
@@ -123,18 +118,6 @@
                     priority: '',
                     description: '',
                 },
-                // TODO: callback to save the ids of the uploaded file
-                dropzoneOptions: {
-                    url: '/api/documents',
-                    thumbnailWidth: 400,
-                    addRemoveLinks: true,
-                    autoDiscover: false,
-                    parallelUploads: 10,
-                    autoProcessQueue: false,
-                    dictRemoveFile: 'REMOVE'
-                },
-                isUploading: false,
-                documents: {},
             }
         },
         created() {
@@ -151,20 +134,6 @@
                 const res = await axios.get('/api/users');
                 this.users = res.data;
             },
-            handleFileUploaded() {
-                this.isUploading = false;
-            },
-
-            handleFileUploadCompleted(file, response) {
-                this.documents[response.id] = response;
-            },
-
-            handleFileRemoved(file) {
-                // delete if previously uploaded file
-                if (file.id) {
-                    delete this.documents[file.id];
-                }
-            },
             async handleSubmit(event) {
                 event.preventDefault();
 
@@ -174,20 +143,6 @@
                         payload[field] = this.issue[field];
                     }
                 });
-                if (!_.isEmpty(this.$refs['document-upload'].getAcceptedFiles())) {
-                    this.isUploading = true;
-                    this.$refs['document-upload'].processQueue();
-
-                    // wait for all files uploaded
-                    await new Promise(function (resolve) {
-                        const interval = setInterval(function () {
-                            if (!this.isUploading) {
-                                clearTimeout(interval);
-                                resolve();
-                            }
-                        }.bind(this), 100);
-                    }.bind(this));
-                }
                 await axios.post('/api/issue', payload);
                 Swal.fire({
                     icon: 'success',

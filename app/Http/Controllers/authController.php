@@ -25,5 +25,6 @@ class authController extends Controller
             return redirect('/tool');
         }
         return back()->with('gagal', ' Please check your auth status or your input!');
+        // return 200;
     }
 }

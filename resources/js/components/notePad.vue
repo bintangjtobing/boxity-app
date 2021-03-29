@@ -181,8 +181,17 @@
                                         id="text">
                                 </div>
                                 <div class="form-group mb-25">
-                                    <textarea id="textarea" v-model="note.description" class="form-control" rows="10"
-                                        cols="5" placeholder="Notepad Description"></textarea>
+                                    <editor placeholder="Write your note here..." v-model="note.description"
+                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
+                                                                height: 300,
+                                                                menubar: false,
+                                                                branding: false,
+                                                                toolbar:
+                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    alignleft aligncenter alignright alignjustify | \
+                                                                    bullist numlist outdent indent | removeformat'
+                                                        }" />
+
                                 </div>
                                 <div class="form-group">
                                     <select
@@ -213,9 +222,14 @@
 </template>
 <script>
     import Swal from 'sweetalert2';
+    import Editor from '@tinymce/tinymce-vue';
+
     export default {
         title() {
             return 'Notepad';
+        },
+        components: {
+            'editor': Editor
         },
         data() {
             return {

@@ -373,3 +373,7 @@ a:hover h6,
 a {
     cursor: pointer;
 }
+
+.breadcrumb-main p a {
+    text-decoration: underline !important;
+}

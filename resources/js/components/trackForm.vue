@@ -83,8 +83,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea v-model="order.description" id="" cols="30" rows="5" class="form-control"
-                                        required placeholder="Order description"></textarea>
+                                    <editor placeholder="Order description..." v-model="order.description"
+                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
+                                                                height: 300,
+                                                                menubar: false,
+                                                                branding: false,
+                                                                toolbar:
+                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    alignleft aligncenter alignright alignjustify | \
+                                                                    bullist numlist outdent indent | removeformat'
+                                                        }" />
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row justify-content-end">
@@ -104,8 +112,12 @@
 </template>
 <script>
     import Swal from 'sweetalert2';
+    import Editor from '@tinymce/tinymce-vue';
 
     export default {
+        components: {
+            'editor': Editor
+        },
         title() {
             return 'New track delivery';
         },

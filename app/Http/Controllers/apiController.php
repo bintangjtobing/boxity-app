@@ -133,7 +133,8 @@ class apiController extends Controller
     }
     public function getIssues()
     {
-        if (auth()->user()->role != 'head') {
+        $role = Auth::user()->role;
+        if ($role != 'head') {
             return issue::with('user')
                 ->withCount('comments')
                 ->where('assignee', Auth::id())
@@ -213,7 +214,7 @@ class apiController extends Controller
     public function approveIssue($id)
     {
         $issue = issue::find($id);
-        $issue->approved_by = Auth::id();
+        $issue->approved_by = auth()->user()->id;
         $issue->status = '1';
         $issue->save();
         return response()->json($issue, 201);

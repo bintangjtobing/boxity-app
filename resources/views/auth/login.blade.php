@@ -36,8 +36,8 @@
                                 </button>
                             </div>
                             @endif
-                            <form method="POST" action="/login">
-                                {{ csrf_field() }}
+                            <form method="POST" action="/login/{{csrf_token()}}">
+                                @csrf
                                 <div class="form-group">
                                     <label for="email">E-Mail Address</label>
                                     <input id="email" type="email" class="form-control" name="email" value="" required

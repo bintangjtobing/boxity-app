@@ -37,7 +37,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <editor v-model="version.description"
+                                                        <editor placeholder="Version control description here..."
+                                                            v-model="version.description"
                                                             api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
                                                             :init="{
                                                                 height: 300,

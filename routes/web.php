@@ -48,11 +48,11 @@ Route::get('/wikipedia', function () {
 
 // Auth url
 Route::get('/login', function () {
-    $tokens = bin2hex(openssl_random_pseudo_bytes(64));
-    return Redirect::to('/login/' . $tokens);
+    session()->regenerate();
+    return Redirect::to('/login/' . csrf_token());
 })->name('login');
 Route::get('/login/{tokens}', 'authController@index');
-Route::post('/login', 'authController@loginProcess');
+Route::post('/login/{csrf_token}', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
 Route::get('/forgot-password', function () {
     return view('auth.forgot');
