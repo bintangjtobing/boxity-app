@@ -52,7 +52,7 @@ Route::get('/login', function () {
     return Redirect::to('/login/' . $tokens);
 })->name('login');
 Route::get('/login/{tokens}', 'authController@index');
-Route::post('/login/{tokens}', 'authController@loginProcess');
+Route::post('/login', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
 Route::get('/forgot-password', function () {
     return view('auth.forgot');

@@ -28,7 +28,6 @@
                     <div class="card fat">
                         <div class="card-body">
                             <h4 class="card-title">Login</h4>
-                            <?php $tokens=bin2hex(openssl_random_pseudo_bytes(64));?>
                             @if(session('gagal'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 {{session('gagal')}}
@@ -37,8 +36,8 @@
                                 </button>
                             </div>
                             @endif
-                            <form method="POST" action="/login/{{$tokens}}">
-                                @csrf
+                            <form method="POST" action="/login">
+                                {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="email">E-Mail Address</label>
                                     <input id="email" type="email" class="form-control" name="email" value="" required
