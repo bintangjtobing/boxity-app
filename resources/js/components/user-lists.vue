@@ -367,23 +367,37 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
-                await axios.post('/api/users', payload);
-                this.loadUsers();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new user',
+                await axios.post('/api/users', payload).then(response => {
+                    this.loadUsers();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new user',
+                    });
+                    this.user = {
+                        gender: '',
+                        role: '',
+                        department: '',
+                        divisi: '',
+                        name: '',
+                        email: '',
+                        password: '',
+                        confirmPassword: '',
+                    };
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.user = {
-                    gender: '',
-                    role: '',
-                    department: '',
-                    divisi: '',
-                    name: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
-                };
             },
             async countUsers() {
                 const data = await axios.get('/api/count-users');

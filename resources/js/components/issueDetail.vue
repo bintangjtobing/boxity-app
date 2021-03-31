@@ -243,11 +243,25 @@
                 await axios.post('/api/issue/add-comment', {
                     comment: this.comment.desc,
                     issueid: this.issues.id
+                }).then(response => {
+                    this.loadComments();
+                    this.loadDataIssue();
+                    this.comment = {};
+                    this.Hidden = false;
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.loadComments();
-                this.loadDataIssue();
-                this.comment = {};
-                this.Hidden = false;
             },
             async loadComments() {
                 const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);

@@ -143,13 +143,27 @@
                         payload[field] = this.issue[field];
                     }
                 });
-                await axios.post('/api/issue', payload);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new issue.',
+                await axios.post('/api/issue', payload).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new issue.',
+                    });
+                    this.$router.push('/issues');
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.$router.push('/issues');
             },
         },
     }

@@ -203,7 +203,7 @@
                         icon: 'error',
                         title: 'Something wrong.',
                         confirmButtonText: `Ok`,
-                        html: `There is something wrong on my side. Please refresh and see what is going on. If still like this, you can contact our developer. <br><br>Error message: ` +
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If it still exist, you can contact our developer. <br><br>Error message: ` +
                             error,
                     }).then((result) => {
                         if (result.isConfirmed) {

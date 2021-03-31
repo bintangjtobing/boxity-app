@@ -134,13 +134,27 @@
         },
         methods: {
             async handleSubmit() {
-                await axios.post('/api/track-delivery', this.order);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new order track.',
+                await axios.post('/api/track-delivery', this.order).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new order track.',
+                    });
+                    this.$router.push('/track-delivery');
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.$router.push('/track-delivery');
             },
             loadOrderId() {
                 var currentTime = new Date();

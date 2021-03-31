@@ -129,16 +129,30 @@
                 }
             },
             async handleSubmit() {
-                await axios.post('/api/version-control', this.version);
-                this.version = {
-                    title: '',
-                    description: '',
-                };
-                this.loadVerControl();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new change log.',
+                await axios.post('/api/version-control', this.version).then(response => {
+                    this.version = {
+                        title: '',
+                        description: '',
+                    };
+                    this.loadVerControl();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new change log.',
+                    });
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
             }
         },

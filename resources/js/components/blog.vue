@@ -199,18 +199,32 @@
                 }
             },
             async handleSubmit() {
-                await axios.post('/api/blogs', this.blog);
-                this.loadBlogs();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new blog',
+                await axios.post('/api/blogs', this.blog).then(response => {
+                    this.loadBlogs();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new blog',
+                    });
+                    this.blog = {
+                        title: '',
+                        description: '',
+                        category: '',
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.blog = {
-                    title: '',
-                    description: '',
-                    category: '',
-                }
             }
         },
     }

@@ -275,12 +275,26 @@
                 this.title = '- important data';
             },
             async submitHandle() {
-                await axios.post('/api/notepad', this.note);
-                this.loadNote();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new notepad',
+                await axios.post('/api/notepad', this.note).then(response => {
+                    this.loadNote();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new notepad',
+                    });
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
             },
             async deleteNotepad(id) {

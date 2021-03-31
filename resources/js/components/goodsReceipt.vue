@@ -246,20 +246,34 @@
                 this.user = resp.data;
             },
             async submitHandle() {
-                await axios.post('/api/goods-receipt', this.goods);
-                this.loadGoods();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success add new good receipt',
+                await axios.post('/api/goods-receipt', this.goods).then(response => {
+                    this.loadGoods();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add new good receipt',
+                    });
+                    this.goods = {
+                        courier: '',
+                        typeOfGoods: '',
+                        receiverid: '',
+                        receiptNumber: '',
+                        description: '',
+                    };
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
-                this.goods = {
-                    courier: '',
-                    typeOfGoods: '',
-                    receiverid: '',
-                    receiptNumber: '',
-                    description: '',
-                };
             },
             async receivedAction(id) {
                 await axios.patch('/api/goods-receipt/' + id);
