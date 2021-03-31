@@ -53,6 +53,10 @@ class apiController extends Controller
             'existingName' => isset($sameNameUser) && $sameNameUser->id != $userId,
         ]);
     }
+    public function getUsernameData($username)
+    {
+        return response()->json(User::where('username', $username)->get());
+    }
     public function addUser(Request $request)
     {
         $user = new User();
@@ -133,7 +137,7 @@ class apiController extends Controller
     }
     public function getIssues()
     {
-        $role = Auth::user()->role;
+        $role = $this->getLoggedUser()->role;
         if ($role != 'head') {
             return issue::with('user')
                 ->withCount('comments')
@@ -341,7 +345,7 @@ class apiController extends Controller
     // QUOTE API
     public function getQuoteAll()
     {
-        if (Auth::user()->role != 'it') {
+        if ($this->getLoggedUser()->role != 'it') {
             return response()->json(quotes::with('createdBy')->where('createdId', Auth::id())->get());
         } else {
             return response()->json(quotes::with('createdBy')->get());
@@ -352,7 +356,7 @@ class apiController extends Controller
         $quotes = new quotes();
         $quotes->quoteid = $request->quoteid;
         $quotes->quoteen = $request->quoteen;
-        $quotes->createdId = Auth::id();
+        $quotes->createdId = $this->getLoggedUser()->id;
         $quotes->finishId = 0;
         $quotes->status = 0;
         $quotes->save();
@@ -388,7 +392,7 @@ class apiController extends Controller
     // API Track Delivery
     public function getTrack(Request $request)
     {
-        return response()->json(track_orders::with('createdBy')->get());
+        return response()->json(track_orders::with('createdBy')->orderBy('created_at', 'desc')->get());
     }
     public function newOrderTrack(Request $request)
     {
@@ -396,8 +400,8 @@ class apiController extends Controller
         $month = Date('md');
 
         $track = new track_orders();
-        $track->created_by = auth()->user()->id;
-        $track->updated_by = auth()->user()->id;
+        $track->created_by = $this->getLoggedUser()->id;
+        $track->updated_by = $this->getLoggedUser()->id;
 
         $track->order_id = $request->orderid;
         $track->sender = $request->sender;
@@ -420,7 +424,7 @@ class apiController extends Controller
         $report->status = '0';
         $report->container_type_system = '-';
         $report->estimated_arrival_date = '-';
-        $report->updated_by = auth()->user()->id;
+        $report->updated_by = $this->getLoggedUser()->id;
         $report->save();
 
         return response()->json(array(
@@ -442,7 +446,7 @@ class apiController extends Controller
             ->update([
                 'track_orders.order_status' => '1',
                 'track_orders.updated_at' => \Carbon\Carbon::now(),
-                'track_orders.updated_by' => auth()->user()->name
+                'track_orders.updated_by' => $this->getLoggedUser()->name
             ]);
         $orderBy = track_orders::find($id);
 
@@ -458,7 +462,7 @@ class apiController extends Controller
                     'track_reports.status' => '1',
                     'track_reports.created_at' => \Carbon\Carbon::now(),
                     'track_reports.updated_at' => \Carbon\Carbon::now(),
-                    'track_reports.updated_by' => auth()->user()->name,
+                    'track_reports.updated_by' => $this->getLoggedUser()->name,
 
                     'track_reports.activity' => $request->activity,
                 ]
@@ -487,7 +491,7 @@ class apiController extends Controller
             $order->order_status = '1';
         }
         $order->updated_at = \Carbon\Carbon::now();
-        $order->updated_by = auth()->user()->name;
+        $order->updated_by = $this->getLoggedUser()->username;
 
         $getreport = DB::table('track_reports')
             ->where('track_reports.order_id', '=', $order->order_id)
@@ -514,6 +518,7 @@ class apiController extends Controller
         }
         $report->created_at = \Carbon\Carbon::now();
         $report->updated_at = \Carbon\Carbon::now();
+        $report->updated_by = $this->getLoggedUser()->username;
         $report->activity = $request->activity;
         $report->save();
         $order->save();
@@ -531,7 +536,7 @@ class apiController extends Controller
         $order = track_orders::find($id);
         $order->order_status = '6';
         $order->updated_at = \Carbon\Carbon::now();
-        $order->updated_by = auth()->user()->name;
+        $order->updated_by = $this->getLoggedUser()->username;
 
         $getreport = DB::table('track_reports')
             ->where('track_reports.order_id', '=', $order->order_id)
@@ -548,7 +553,7 @@ class apiController extends Controller
         $report->status = '6';
         $report->created_at = \Carbon\Carbon::now();
         $report->updated_at = \Carbon\Carbon::now();
-        $report->updated_by = auth()->user()->name;
+        $report->updated_by = $this->getLoggedUser()->username;
         $report->activity = $getreport->activity;
         $report->save();
         $order->save();
@@ -571,7 +576,7 @@ class apiController extends Controller
         $note->desc = $req->description;
         $note->label = $req->label;
         $note->favorite = 0;
-        $note->userid = Auth::id();
+        $note->userid = $this->getLoggedUser()->id;
         $note->save();
         return response()->json($note, 201);
     }

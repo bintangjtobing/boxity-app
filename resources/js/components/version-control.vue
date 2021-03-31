@@ -116,12 +116,12 @@
                 vControl: {},
             }
         },
-        created() {
+        mounted() {
             this.loadVerControl();
         },
         methods: {
-            async loadVerControl() {
-                const resp = await axios.get('/api/version-control');
+            loadVerControl() {
+                const resp = axios.get('/api/version-control');
                 if (resp.length < 1) {
                     this.version.title = '1.0.0';
                 } else {

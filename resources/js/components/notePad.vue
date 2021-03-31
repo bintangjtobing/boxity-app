@@ -51,7 +51,7 @@
                     <div class="note-grid-wrapper mb-30">
                         <div class="notes-wrapper">
                             <div class="note-grid align-content-center">
-                                <div class="note-single" v-if="!notes.length">
+                                <div class="note-single" v-if="notes.length < 1">
                                     <div class="note-card note-default">
                                         <div class="card border-0">
                                             <div class="card-body">
@@ -70,7 +70,7 @@
                                             <div class="card-body">
                                                 <h4 class="note-title">{{pad.title}} <span class="note-status"></span>
                                                 </h4>
-                                                <p class="note-excerpt">{{pad.desc}}
+                                                <p class="note-excerpt" v-html="pad.desc">
                                                 </p>
                                                 <div class="note-action">
                                                     <div class="note-action__left">
@@ -94,7 +94,7 @@
                                             <div class="card-body">
                                                 <h4 class="note-title">{{pad.title}} <span class="note-status"></span>
                                                 </h4>
-                                                <p class="note-excerpt">{{pad.desc}}
+                                                <p class="note-excerpt" v-html="pad.desc">
                                                 </p>
                                                 <div class="note-action">
                                                     <div class="note-action__left">
@@ -118,7 +118,7 @@
                                             <div class="card-body">
                                                 <h4 class="note-title">{{pad.title}} <span class="note-status"></span>
                                                 </h4>
-                                                <p class="note-excerpt">{{pad.desc}}
+                                                <p class="note-excerpt" v-html="pad.desc">
                                                 </p>
                                                 <div class="note-action">
                                                     <div class="note-action__left">
@@ -142,7 +142,7 @@
                                             <div class="card-body">
                                                 <h4 class="note-title">{{pad.title}} <span class="note-status"></span>
                                                 </h4>
-                                                <p class="note-excerpt">{{pad.desc}}
+                                                <p class="note-excerpt" v-html="pad.desc">
                                                 </p>
                                                 <div class="note-action">
                                                     <div class="note-action__left">

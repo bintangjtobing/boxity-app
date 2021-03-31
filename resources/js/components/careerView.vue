@@ -18,7 +18,7 @@
                                     Lokasi: <span>{{careers.location}}</span>
                                     Departemen pekerjaan: <span>{{careers.divisi}} - {{careers.part}}</span>
                                     <div class="descCareer">
-                                        Dekripsi pekerjaan: <br>{{careers.description}}
+                                        Dekripsi pekerjaan: <br><span v-html="careers.description"></span>
                                     </div>
                                 </p>
                                 <router-link :to="`/edit/career/${careers.id}`" class="

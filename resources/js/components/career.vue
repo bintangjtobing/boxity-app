@@ -41,8 +41,9 @@
                             <router-link :to="`/career/${career.id}`">
                                 <h4>{{career.title}}</h4>
                             </router-link>
-                            <p v-if="career.description.length < 125">{{career.description}}</p>
-                            <p v-if="career.description.length >= 125">{{career.description.substring(0,125)+"..."}}
+                            <p v-if="career.description.length < 125" v-html="career.description"></p>
+                            <p v-if="career.description.length >= 125" v-html="career.description.substring(0,125)+`
+                                ...`">
                             </p>
                             <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
                                 <button @click="deleteCareer(career.id)" class="btn btn-icon btn-squared btn-light">

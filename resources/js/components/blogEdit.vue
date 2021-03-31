@@ -38,9 +38,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea v-model="blog.description" class="form-control"
-                                        placeholder="Requirements / Decriptions / Qualification / blog descriptions. Press `CTRL + ENTER` to send the comment."
-                                        id="" cols="30" rows="10" required @keydown.enter="handleSubmit"></textarea>
+                                    <editor v-model="blog.description"
+                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
+                                        @keydown.enter="handleSubmit" :init="{
+                                                                height: 300,
+                                                                menubar: false,
+                                                                branding: false,
+                                                                toolbar:
+                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    alignleft aligncenter alignright alignjustify | \
+                                                                    bullist numlist outdent indent | removeformat'
+                                                        }" />
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row justify-content-end">
@@ -60,8 +68,12 @@
 </template>
 <script>
     import Swal from 'sweetalert2';
+    import Editor from '@tinymce/tinymce-vue';
 
     export default {
+        components: {
+            'editor': Editor
+        },
         title() {
             return 'Edit blog';
         },

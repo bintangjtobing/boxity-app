@@ -51,7 +51,7 @@
                                         <div class="atbd-comment-box__content media-body">
                                             <div class="comment-content-inner cci">
                                                 <span class="cci__author-info">{{issues.name}}</span>
-                                                <p class="cci__comment-text">{{issues.issue}}</p>
+                                                <span class="cci__comment-text" v-html="issues.issue"></span>
                                                 <div class="cci__comment-actions">
                                                     <a v-on:click="Hidden=true" v-if="issues.status!=0"
                                                         class="btn-reply">
@@ -77,7 +77,8 @@
                                         <div class="atbd-comment-box__content media-body">
                                             <div class="comment-content-inner cci">
                                                 <span class="cci__author-info">{{comment.name}}</span>
-                                                <p class="cci__comment-text">{{comment.comment}}</p>
+                                                <span class="cci__comment-text" v-html="
+                                                comment.comment"></span>
                                                 <div class="cci__comment-actions">
                                                     <a class="btn-reply">
                                                         <span>Commented on {{commentAt}}</span>

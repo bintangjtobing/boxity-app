@@ -18,7 +18,7 @@
                                     Category: <span>{{blogs.category}}</span><br>
                                     Views: <span>{{blogs.views}}</span>
                                     <div class="descCareer">
-                                        <br>{{blogs.description}}
+                                        <br><span v-html="blogs.description"></span>
                                     </div>
                                 </p>
                                 <router-link :to="`/edit/blog/${blogs.id}`" class="

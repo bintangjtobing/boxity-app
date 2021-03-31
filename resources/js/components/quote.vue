@@ -60,7 +60,7 @@
                                             {{quote.quoteid}}
                                         </div>
                                         <div class="userDatatable-content" v-if="quote.quoteid.length >= 125">
-                                            {{quote.quoteid.substring(0,125)+"..."}}
+                                            {{quote.quoteid.substring(0,20)+"..."}}
                                         </div>
                                     </td>
                                     <td style='text-align:center;'>
@@ -123,10 +123,6 @@
             async loadQuotes() {
                 const resp = await axios.get('/api/quote/get');
                 this.quotes = resp.data;
-                if (resp.data.quoteid > 20) {
-                    let desc = resp.data.quoteid.substring(0, 17) + '...';
-                    this.quotes.quoteid = desc;
-                }
             },
             async deletequote(id) {
                 const result = await Swal.fire({

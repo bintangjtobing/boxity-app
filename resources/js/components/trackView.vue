@@ -191,12 +191,25 @@
                 this.$router.push('/track-delivery');
             },
             async updateTrack() {
-                await axios.patch('/api/track-delivery/' + this.$route.params.id, this.track);
-                this.$router.push('/track-delivery');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Update track delivery.',
+                await axios.patch('/api/track-delivery/' + this.$route.params.id, this.track).then(response => {
+                    this.$router.push('/track-delivery');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Update track delivery.',
+                    });
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please refresh and see what is going on. If still like this, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
             }
         }

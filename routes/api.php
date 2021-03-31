@@ -14,6 +14,7 @@ Route::delete('/users/{id}', 'apiController@deleteUser');
 Route::post('/users', 'apiController@addUser');
 Route::get('/count-users', 'apiController@countUsers');
 Route::patch('/users/{id}', 'apiController@updateUser');
+Route::get('/u/{username}', 'apiController@getUsernameData');
 
 // Check user data first
 Route::post('/users/check-user-data', 'apiController@checkUserData');
