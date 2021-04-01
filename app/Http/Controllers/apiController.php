@@ -24,6 +24,7 @@ use App\quotes;
 use App\track_orders;
 use App\track_reports;
 use App\userdetails;
+use App\userGuide;
 
 class apiController extends Controller
 {
@@ -709,5 +710,20 @@ class apiController extends Controller
     public function getVersionData($version)
     {
         return response()->json(changeLog::where('version', $version)->get());
+    }
+
+    // User Guide API
+    public function userGuideGet()
+    {
+        return response()->json(userGuide::orderBy('created_at', 'DESC')->get());
+    }
+    public function newGuide(Request $request)
+    {
+        $guide = new userGuide();
+        $guide->title = $request->title;
+        $guide->description = $request->description;
+        $guide->save();
+
+        return response()->json($guide, 200);
     }
 }

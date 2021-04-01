@@ -46,6 +46,7 @@ import trackView from './components/trackView.vue';
 import notePad from './components/notePad.vue';
 import goodsReceipt from './components/goodsReceipt.vue';
 import versionView from './components/versionView.vue';
+import userGuide from './components/userGuide.vue';
 
 // membuat router
 const routes = [{
@@ -169,6 +170,10 @@ const routes = [{
         name: 'version-view',
         path: '/v/:version',
         component: versionView
+    }, {
+        name: 'user-guide',
+        path: '/user-guide',
+        component: userGuide
     }
 ]
 

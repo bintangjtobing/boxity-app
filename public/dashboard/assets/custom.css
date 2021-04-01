@@ -377,3 +377,9 @@ a {
 .breadcrumb-main p a {
     text-decoration: underline !important;
 }
+
+.knowledgebase-details {
+    padding: 20px 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 35px !important;
+}

@@ -99,3 +99,7 @@ Route::get('/album', 'apiController@getAlbum');
 Route::get('/version-control', 'apiController@getVersionControl');
 Route::post('/version-control', 'apiController@newVersion');
 Route::get('/version-control/{version}', 'apiController@getVersionData');
+
+// User Guide API
+Route::get('/user-guide', 'apiController@userGuideGet');
+Route::post('/user-guide', 'apiController@newGuide');

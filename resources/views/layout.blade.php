@@ -366,6 +366,15 @@
                             <span class="menu-text">Track delivery</span>
                         </a>
                     </li>
+                    <li class="menu-title m-top-30">
+                        <span>General</span>
+                    </li>
+                    <li>
+                        <a href="/user-guide">
+                            <i data-feather="book-open" class="nav-icon"></i>
+                            <span class="menu-text">User Guide</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="/sign-out" class="text-danger">
                             <i data-feather="log-out" class="nav-icon text-danger"></i>

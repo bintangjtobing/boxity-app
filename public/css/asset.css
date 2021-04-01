@@ -26003,6 +26003,12 @@ a {
     text-decoration: underline !important;
 }
 
+.knowledgebase-details {
+    padding: 20px 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 35px !important;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}
