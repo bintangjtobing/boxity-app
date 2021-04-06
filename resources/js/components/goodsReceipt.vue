@@ -5,6 +5,9 @@
 
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Goods Receipt</h4>
+                    <p>If data was not shown,
+                        you can <a @click="refreshPage">refresh</a>this page for a several times. If still happens,
+                        you can contact the developer to fix this bugs.</p>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#goodsReceiptModal"
@@ -23,91 +26,47 @@
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr class="userDatatable-header">
-                                            <th>
-                                                <span class="projectDatatable-title">Goods Type</span>
-                                            </th>
-                                            <th>
-                                                <span class="projectDatatable-title">Received at</span>
-                                            </th>
-                                            <th>
-                                                <span class="projectDatatable-title">Receiver</span>
-                                            </th>
-                                            <th>
-                                                <span class="projectDatatable-title">Status</span>
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-if="!goodsData.length">
-                                            <td colspan="5">
-                                                <div class="atbd-empty text-center">
-                                                    <div class="atbd-empty__image">
-                                                        <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                                    </div>
-                                                    <div class="atbd-empty__text">
-                                                        <p class="">No Data</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr v-for="good in goodsData" :key="good.id">
-                                            <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable-inline-title">
-                                                        <a href="#" class="text-dark fw-500">
-                                                            <h6 v-if="good.typeOfGoods == 1">Document
-                                                                #{{good.receiptNumber}}</h6>
-                                                            <h6 v-if="good.typeOfGoods == 2">Packet
-                                                                #{{good.receiptNumber}}</h6>
-                                                        </a>
-                                                        <p class="pt-1 d-block mb-0">
-                                                            <i class="fas fa-dolly"></i> via {{good.courier}}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    {{good.created_at}}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <ul class="d-flex user-group-people__parent align-content-center">
-                                                        <li>
-                                                            <img class="rounded-circle wh-34"
-                                                                :src="`/dashboard/img/author/profile/`+good.receiver.avatar"
-                                                                alt="author">&nbsp; {{good.receiver.name}}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-
-                                                <div class="d-inline-block">
-                                                    <span class="media-badge color-white bg-primary"
-                                                        v-if="good.status==0">Received on
-                                                        receiptionist</span>
-                                                    <span class="media-badge color-white bg-success"
-                                                        v-if="good.status==1">Taken by receiver</span>
-                                                    <span class="media-badge color-white bg-danger"
-                                                        v-if="good.status==2">Terminated</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#" v-on:click="receivedAction(good.id)"
-                                                    v-if="good.status==0"><span><i
-                                                            class="far fa-check-circle fa-2x"></i></span></a>
-                                                <a v-if="good.status==1"><span><i
-                                                            class="fas fa-check-circle fa-2x"></i></span></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <v-card-title>
+                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
+                                        single-line hide-details></v-text-field>
+                                </v-card-title>
+                                <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
+                                    :items="goodsData" :items-per-page="10" class="elevation-1" :search="search">
+                                    <template v-slot:item.typeOfGoods="{ item }">
+                                        <div class="userDatatable-inline-title my-3">
+                                            <a href="#" class="text-dark fw-500">
+                                                <h6 v-if="item.typeOfGoods == 1">Document
+                                                    #{{item.receiptNumber}}</h6>
+                                                <h6 v-if="item.typeOfGoods == 2">Packet
+                                                    #{{item.receiptNumber}}</h6>
+                                            </a>
+                                            <p class="pt-1 d-block mb-0">
+                                                <i class="fas fa-dolly"></i> via {{item.courier}}
+                                            </p>
+                                        </div>
+                                    </template>
+                                    <template v-slot:item.receiver="{ item }">
+                                        <img class="rounded-circle wh-34"
+                                            :src="`/dashboard/img/author/profile/`+item.receiver.avatar"
+                                            alt="author">&nbsp;
+                                        {{item.receiver.name}}
+                                    </template>
+                                    <template v-slot:item.status="{ item }">
+                                        <span class="media-badge color-white bg-primary" v-if="item.status==0">Received
+                                            on
+                                            receiptionist</span>
+                                        <span class="media-badge color-white bg-success" v-if="item.status==1">Taken by
+                                            receiver</span>
+                                        <span class="media-badge color-white bg-danger"
+                                            v-if="item.status==2">Terminated</span>
+                                    </template>
+                                    <template v-slot:item.actions="{item}">
+                                        <a href="#" v-on:click="receivedAction(item.id)" v-if="item.status==0"><span><i
+                                                    class="far fa-check-circle fa-2x"></i></span></a>
+                                        <a v-if="item.status==1"><span><i
+                                                    class="fas fa-check-circle fa-2x"></i></span></a>
+                                    </template>
+                                </v-data-table>
                             </div>
                         </div>
                     </div>
@@ -228,7 +187,32 @@
                     typeOfGoods: '',
                     receiverid: '',
                 },
-                goodsData: {},
+                // datatable
+                goodsData: [],
+                search: '',
+                key: 1,
+                headers: [{
+                    text: 'Goods Type',
+                    value: 'typeOfGoods'
+                }, {
+                    text: 'Received At',
+                    filterable: false,
+                    value: 'created_at'
+                }, {
+                    text: 'Receiver',
+                    filterable: false,
+                    value: 'receiver'
+                }, {
+                    text: 'Status',
+                    filterable: false,
+                    value: 'status'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
+                // end datatable
                 user: {},
             }
         },
@@ -283,6 +267,9 @@
                     text: 'Enjoy your packet/document!',
                 });
                 this.loadGoods();
+            },
+            refreshPage() {
+                location.reload();
             }
         },
     }

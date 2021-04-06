@@ -5,6 +5,9 @@
 
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">gallery</h4>
+                    <p>If data was not shown,
+                        you can <a @click="refreshPage">refresh</a>this page for a several times. If still happens,
+                        you can contact the developer to fix this bugs.</p>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link :to="`/gallery/new`" class="btn btn-sm btn-primary btn-add">
@@ -59,6 +62,9 @@
                 const resp = await axios.get('/api/album');
                 console.log(resp.data[""]);
                 this.album = resp.data[""];
+            },
+            refreshPage() {
+                location.reload();
             }
         },
     }

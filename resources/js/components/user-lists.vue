@@ -132,97 +132,36 @@
             <div class="col-lg-12">
                 <div class="userDatatable adv-table-table global-shadow border p-30 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
-                        <div id="filter-form-container"></div>
-                        <table class="table mb-0 table-borderless adv-table" data-sorting="true"
-                            data-filter-container="#filter-form-container" data-paging-current="1"
-                            data-paging-position="right" data-paging-size="10">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title">Name</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">email</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">division</span>
-                                    </th>
-                                    <th style='text-align:center;'>
-                                        <span class="userDatatable-title">status</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title float-right">action</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="!members.length">
-                                    <td colspan="5">
-                                        <div class="atbd-empty text-center">
-                                            <div class="atbd-empty__image">
-                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                            </div>
-                                            <div class="atbd-empty__text">
-                                                <p class="">No Data</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="member in members" :key="member.id">
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6>{{member.name}}</h6>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{member.email}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{member.divisi}}
-                                        </div>
-                                    </td>
-                                    <td style='text-align:center;'>
-                                        <div class="userDatatable-content d-inline-block">
-                                            <div v-if="member.status==1">
-                                                <span class="rounded-pill userDatatable-content-status color-success
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
+                                hide-details></v-text-field>
+                        </v-card-title>
+                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
+                            :items-per-page="10" class="elevation-1" :search="search">
+                            <template v-slot:item.status="{ item }">
+                                <div v-if="item.status==1">
+                                    <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active"><i class="fas fa-check"></i>
-                                                    &nbsp;Active</span>
-                                            </div>
-                                            <div v-if="member.status==0">
-                                                <span class="rounded-pill userDatatable-content-status color-warning
+                                        &nbsp;Active</span>
+                                </div>
+                                <div v-if="item.status==0">
+                                    <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active"><i class="fas fa-exclamation"></i>
-                                                    &nbsp;Locked</span>
-                                            </div>
-                                            <div v-if="member.status==2">
-                                                <span class="rounded-pill userDatatable-content-status color-danger
+                                        &nbsp;Locked</span>
+                                </div>
+                                <div v-if="item.status==2">
+                                    <span class="rounded-pill userDatatable-content-status color-danger
                                                 bg-opacity-danger active"><i class="fas fa-lock"></i>
-                                                    &nbsp;Terminated</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            <li>
-                                                <router-link :to="`/detail/user/${member.id}`" class="edit">
-                                                    <i class="fas fa-pen"></i></router-link>
-                                            </li>
-                                            <li>
-                                                <a v-on:click="deleteData(member.id)" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
+                                        &nbsp;Terminated</span>
+                                </div>
+                            </template>
+                            <template v-slot:item.actions="{item}">
+                                <router-link :to="`/detail/user/${item.id}`" class="edit">
+                                    <i class="fas fa-pen"></i></router-link>
+                                <a v-on:click="deleteData(item.id)" class="remove">
+                                    <i class="fas fa-trash"></i></a>
+                            </template>
+                        </v-data-table>
                     </div>
                 </div>
             </div>
@@ -239,6 +178,27 @@
         data() {
             return {
                 members: [],
+                search: '',
+                key: 1,
+                headers: [{
+                    text: 'Name',
+                    value: 'name'
+                }, {
+                    text: 'Email',
+                    value: 'email'
+                }, {
+                    text: 'Division',
+                    value: 'divisi'
+                }, {
+                    text: 'Status',
+                    filterable: false,
+                    value: 'status'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
                 count: 0,
                 user: {
                     gender: '',

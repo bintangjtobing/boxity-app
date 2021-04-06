@@ -46,9 +46,9 @@
                                 ...`">
                             </p>
                             <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                                <button @click="deleteCareer(career.id)" class="btn btn-icon btn-squared btn-light">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <a @click="deleteCareer(career.id)" class="remove">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             </div>
                         </figcaption>
                     </figure>

@@ -4,6 +4,9 @@
             <div class="col-12">
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Blog management</h4>
+                    <p>If data was not shown,
+                        you can <a @click="refreshPage">refresh</a>this page for a several times. If still happens,
+                        you can contact the developer to fix this bugs.</p>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
                             <i class="las la-plus fs-16"></i>Add new blog</a>
@@ -71,83 +74,35 @@
 
                     </div>
                 </div>
-                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title">
-                                            Title</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Categories</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Views</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Actions</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="!blogs.length">
-                                    <td colspan="4">
-                                        <div class="atbd-empty text-center">
-                                            <div class="atbd-empty__image">
-                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                            </div>
-                                            <div class="atbd-empty__text">
-                                                <p class="">No blog.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="blog in blogs" :key="blog.id">
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <h6 v-if="blog.title.length < 45">{{blog.title}}
-                                                    </h6>
-                                                    <h6 v-if="blog.title.length >= 45">
-                                                        {{blog.title.substring(0,44)+"..."}}
-                                                    </h6>
-                                                    <p>Created by {{blog.user.name}} | {{blog.created_at}}</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{blog.category}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-inline-block">
-                                            {{blog.views}} views
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            <li>
-                                                <router-link :to="`/detail/blogs/${blog.id}`" class="view">
-                                                    <i class="fas fa-eye"></i></router-link>
-                                            </li>
-                                            <li>
-                                                <router-link :to="`/edit/blog/${blog.id}`" class="edit">
-                                                    <i class="fas fa-pen"></i></router-link>
-                                            </li>
-                                            <li>
-                                                <a @click="deleteBlog(blog.id)" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
+                                hide-details></v-text-field>
+                        </v-card-title>
+                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="blogs"
+                            :items-per-page="10" class="elevation-1" :search="search">
+                            <template v-slot:item.title="{ item }">
+                                <div class="userDatatable-inline-title my-3">
+                                    <a href="#" class="text-dark fw-500">
+                                        <h6 v-if="item.title.length < 45">{{item.title}}
+                                        </h6>
+                                        <h6 v-if="item.title.length >= 45">
+                                            {{item.title.substring(0,44)+"..."}}
+                                        </h6>
+                                        <p>Created by {{item.user.name}} | {{item.created_at}}</p>
+                                    </a>
+                                </div>
+                            </template>
+                            <template v-slot:item.actions="{item}">
+                                <router-link :to="`/detail/blogs/${item.id}`" class="view">
+                                    <i class="fas fa-eye"></i></router-link>
+                                <router-link :to="`/edit/blog/${item.id}`" class="edit">
+                                    <i class="fas fa-pen"></i></router-link>
+                                <a @click="deleteBlog(item.id)" class="remove">
+                                    <i class="fas fa-trash"></i></a>
+                            </template>
+                        </v-data-table>
                     </div>
                 </div>
             </div>
@@ -170,7 +125,26 @@
                 blog: {
                     category: '',
                 },
-                blogs: {},
+                // datatable
+                blogs: [],
+                search: '',
+                key: 1,
+                headers: [{
+                    text: 'Title',
+                    value: 'title'
+                }, {
+                    text: 'Category',
+                    value: 'category'
+                }, {
+                    text: 'Views',
+                    value: 'views'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
+                // end datatable
             }
         },
         created() {
@@ -225,6 +199,9 @@
                         }
                     });
                 });
+            },
+            refreshPage() {
+                location.reload();
             }
         },
     }

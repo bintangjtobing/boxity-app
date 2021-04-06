@@ -45,7 +45,7 @@
                     </div>
                     <span>The information displayed here is only the information assigned <u>to you</u>.</span>
                 </div>
-                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
                         <table class="table mb-0 table-borderless">
                             <thead>
@@ -147,7 +147,7 @@
                     </div>
                     <span>The information displayed here is only the information assigned <u>from you</u>.</span>
                 </div>
-                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
                         <table class="table mb-0 table-borderless">
                             <thead>

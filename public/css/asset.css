@@ -26004,9 +26004,52 @@ a {
 }
 
 .knowledgebase-details {
-    padding: 20px 0 !important;
+    padding: 0 0 !important;
     margin-top: 0 !important;
     margin-bottom: 35px !important;
+}
+
+.btn-primary,
+.btn-success,
+.bg-gradient-primary {
+    color: #fff !important;
+}
+
+.v-card__title {
+    padding-top: 0 !important;
+}
+
+.view,
+.edit,
+.remove {
+    margin: 8px 0px !important;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, .2);
+    color: #222;
+}
+
+.text-dark p {
+    margin-bottom: 0 !important;
+}
+
+.view:hover,
+.edit:hover,
+.remove:hover {
+    color: #fff;
+}
+
+.view:hover {
+    background-color: #3498db;
+}
+
+.edit:hover {
+    background-color: #f1c40f;
+}
+
+.remove:hover {
+    background-color: #c0392b;
+    color: #fff !important;
 }
 
 .marker-cluster-small {

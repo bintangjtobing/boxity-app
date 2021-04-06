@@ -4,107 +4,70 @@
             <div class="col-12">
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Track delivery system management</h4>
+                    <p>If data was not shown,
+                        you can <a @click="refreshPage">refresh</a>this page for a several times. If still happens,
+                        you can contact the developer to fix this bugs.</p>
                     <div class="action-btn">
                         <router-link :to="`/track-delivery/new`" class="btn px-15 btn-primary">
                             <i class="las la-plus fs-16"></i>Add new track</router-link>
                     </div>
                 </div>
-                <div class="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title">
-                                            track id</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">track created date</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">status</span>
-                                    </th>
-                                    <th style='text-align:right;'>
-                                        <span class="userDatatable-title">Actions</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="!tracks.length">
-                                    <td colspan="4">
-                                        <div class="atbd-empty text-center">
-                                            <div class="atbd-empty__image">
-                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                            </div>
-                                            <div class="atbd-empty__text">
-                                                <p class="">No issue from you.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="track in tracks" :key="track.id">
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <router-link :to="`/track-delivery/${track.id}`"
-                                                    class="text-dark fw-500">
-                                                    <h6>{{track.order_id}}
-                                                    </h6>
-                                                    <p>Created by {{track.created_by.name}}
-                                                    </p>
-                                                </router-link>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{track.created_at}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            <span v-on:click="orderCreatedExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='0'">Order
-                                                created
-                                            </span>
-                                            <span v-on:click="manifestedExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='1'">Manifested
-                                            </span>
-                                            <span v-on:click="onTransitExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='2'">On Transit
-                                            </span>
-                                            <span v-on:click="onProcessExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='3'">On Process
-                                            </span>
-                                            <span v-on:click="rodExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='4'">Received On Destination
-                                            </span>
-                                            <span v-on:click="deliveredExp"
-                                                class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='5'">Delivered
-                                            </span>
-                                            <span v-on:click="terminatedExp"
-                                                class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active"
-                                                v-if="track.order_status=='6'">Terminated
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td v-if="track.order_status!='6'">
-                                        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
-                                            <li>
-                                                <a v-on:click="terminateTrack(track.id)" class="remove">
-                                                    <i class="fas fa-times"></i></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
+                                hide-details></v-text-field>
+                        </v-card-title>
+                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="tracks"
+                            :items-per-page="10" class="elevation-1" :search="search">
+                            <template v-slot:item.order_id="{ item }">
+                                <div class="userDatatable-inline-title my-3">
+                                    <router-link :to="`/track-delivery/${item.id}`" class="text-dark fw-500">
+                                        <h6>{{item.order_id}}
+                                        </h6>
+                                        <p>Created by {{item.created_by.name}}
+                                        </p>
+                                    </router-link>
+                                </div>
+                            </template>
+                            <template v-slot:item.order_status="{ item }">
+                                <div class="userDatatable-content">
+                                    <span v-on:click="orderCreatedExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='0'">Order
+                                        created
+                                    </span>
+                                    <span v-on:click="manifestedExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='1'">Manifested
+                                    </span>
+                                    <span v-on:click="onTransitExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='2'">On Transit
+                                    </span>
+                                    <span v-on:click="onProcessExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='3'">On Process
+                                    </span>
+                                    <span v-on:click="rodExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='4'">Received On Destination
+                                    </span>
+                                    <span v-on:click="deliveredExp"
+                                        class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='5'">Delivered
+                                    </span>
+                                    <span v-on:click="terminatedExp"
+                                        class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active"
+                                        v-if="item.order_status=='6'">Terminated
+                                    </span>
+                                </div>
+                            </template>
+                            <template v-slot:item.actions="{item}">
+                                <a v-on:click="terminateTrack(item.id)" v-if="item.order_status!='6'" class="remove">
+                                    <i class="fas fa-times"></i></a>
+                            </template>
+                        </v-data-table>
                     </div>
                 </div>
             </div>
@@ -119,7 +82,26 @@
         },
         data() {
             return {
-                tracks: {},
+                tracks: [],
+                search: '',
+                key: 1,
+                headers: [{
+                    text: 'Track ID',
+                    value: 'order_id'
+                }, {
+                    text: 'Created Date',
+                    filterable: false,
+                    value: 'created_at'
+                }, {
+                    text: 'Status',
+                    filterable: false,
+                    value: 'order_status'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
             }
         },
         created() {
@@ -211,6 +193,9 @@
                         text: 'Success terminated current track'
                     });
                 }
+            },
+            refreshPage() {
+                location.reload();
             }
         },
     }

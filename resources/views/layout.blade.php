@@ -14,7 +14,7 @@
     <script src="https://kit.fontawesome.com/bf3b9c3659.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="side-menu">
+<body class="side-menu" data-app>
     <div class="mobile-search"></div>
     <div class="mobile-author-actions"></div>
     <header class="header-top">
