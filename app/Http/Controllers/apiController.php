@@ -11,6 +11,7 @@ use App\User;
 use App\album_photos;
 use App\albums;
 use App\blog;
+use App\candidates;
 use App\changeLog;
 use App\commentIssue;
 use App\FileDocument;
@@ -725,5 +726,21 @@ class apiController extends Controller
         $guide->save();
 
         return response()->json($guide, 200);
+    }
+
+    // Candidate API
+    public function getCandidate()
+    {
+        return response()->json(candidates::with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
+    }
+    public function deleteCandidate($id)
+    {
+        $getUser = candidates::find($id);
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function getCandidateById($id)
+    {
+        return response()->json(candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
     }
 }

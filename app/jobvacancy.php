@@ -14,4 +14,7 @@ class jobvacancy extends Model
         'part',
         'description',
     ];
+    protected $casts = [
+        'created_at' => 'datetime:d M, Y',
+    ];
 }

@@ -11,7 +11,7 @@ import titleMixin from './mixins/titleMixins.js';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 Vue.mixin(titleMixin);
 Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);
@@ -20,6 +20,7 @@ import Index from './components/index.vue';
 import UserLists from './components/user-lists.vue';
 import Career from './components/career.vue';
 import Candidate from './components/candidate.vue';
+import candidateDetail from './components/candidateDetail.vue';
 import Issue from './components/issue.vue';
 import Quote from './components/quote.vue';
 import Gallery from './components/gallery.vue';
@@ -47,6 +48,7 @@ import notePad from './components/notePad.vue';
 import goodsReceipt from './components/goodsReceipt.vue';
 import versionView from './components/versionView.vue';
 import userGuide from './components/userGuide.vue';
+import notFoundPage from './components/notFoundPage.vue';
 
 // membuat router
 const routes = [{
@@ -70,6 +72,10 @@ const routes = [{
         name: 'candidate',
         path: '/candidate',
         component: Candidate
+    }, {
+        name: 'candidate-detal',
+        path: '/candidate/detail/:id',
+        component: candidateDetail
     }, {
         name: 'issues',
         path: '/issues',
@@ -174,6 +180,9 @@ const routes = [{
         name: 'user-guide',
         path: '/user-guide',
         component: userGuide
+    }, {
+        path: '*',
+        component: notFoundPage
     }
 ]
 

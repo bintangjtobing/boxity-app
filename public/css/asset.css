@@ -26052,6 +26052,10 @@ a {
     color: #fff !important;
 }
 
+.pasfoto {
+    width: 150px;
+}
+
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
 	}

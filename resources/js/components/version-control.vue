@@ -2,13 +2,11 @@
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
-
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Version control</h4>
                 </div>
-
             </div>
-            <div class="col-12 changelog-19 d-block">
+            <div class="col-8 changelog-19 d-block">
                 <div class="changelog mb-30">
                     <div class="card">
                         <div class="card-header">
@@ -69,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 changelog-5 d-block">
+            <div class="col-4 changelog-5 d-block">
                 <div class="changeLog-history mb-30">
                     <div class="card">
                         <div class="card-header py-20 px-20">
@@ -88,6 +86,8 @@
                                             {{version.version}}</span><span
                                             class="version-date">{{version.created_at}}</span></router-link>
                                 </li>
+                                <!-- <li><span class="version-name">1.0.5</span><span class="version-date">2010/01/01</span>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -120,13 +120,9 @@
             this.loadVerControl();
         },
         methods: {
-            loadVerControl() {
-                const resp = axios.get('/api/version-control');
-                if (resp.length < 1) {
-                    this.version.title = '1.0.0';
-                } else {
-                    this.vControl = resp.data;
-                }
+            async loadVerControl() {
+                const resp = await axios.get('/api/version-control');
+                this.vControl = resp.data;
             },
             async handleSubmit() {
                 await axios.post('/api/version-control', this.version).then(response => {

@@ -103,3 +103,8 @@ Route::get('/version-control/{version}', 'apiController@getVersionData');
 // User Guide API
 Route::get('/user-guide', 'apiController@userGuideGet');
 Route::post('/user-guide', 'apiController@newGuide');
+
+// Candidate API
+Route::get('/candidates', 'apiController@getCandidate');
+Route::get('/candidates/{id}', 'apiController@getCandidateById');
+Route::delete('/candidates/{id}', 'apiController@deleteCandidate');

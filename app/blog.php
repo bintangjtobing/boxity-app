@@ -18,4 +18,7 @@ class blog extends Model
     {
         return $this->belongsTo(User::class, 'userid');
     }
+    protected $casts = [
+        'created_at' => 'datetime:d M, Y',
+    ];
 }
