@@ -6,7 +6,7 @@
     <div class="container clearfix">
         <h1>Tentang Kami</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
             <li class="breadcrumb-item active" aria-current="page">Tentang Kami</li>
         </ol>
     </div>

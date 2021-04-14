@@ -46,6 +46,14 @@ Route::get('/wikipedia', function () {
     return Redirect::to('https://id.wikipedia.org/wiki/Pengguna:Btsalogistics');
 });
 
+// Candidate proses
+Route::prefix('candidate')->group(function () {
+    Route::get('/get-provinsi', 'webpageController@getprovinsi');
+    Route::get('/get-domisili/{province_id}', 'webpageController@getdomisili');
+    Route::get('/get-kecamatan/{id}', 'webpageController@getkecamatan');
+    Route::get('/get-kelurahan/{id}', 'webpageController@getkelurahan');
+});
+
 // Auth url
 Route::get('/login', function () {
     session()->regenerate();
@@ -67,6 +75,12 @@ Route::get('/tentang-kami', 'webpageController@tentangkami');
 Route::get('/blog', 'webpageController@blog');
 Route::get('/galeri', 'webpageController@galeri');
 Route::get('/karir', 'webpageController@karir');
+Route::get('/karir/detail/{title}', 'webpageController@getKarirDetail');
+Route::get('/karir/daftar/{title}/{csrf_token}', 'webpageController@formRegisterKarir');
+Route::post('/karir/daftar/{title}/apply', 'webpageController@applyKarir');
+
+// View details blog
+Route::get('/blog/v/{title}', 'webpageController@viewBlog');
 
 // Dashboard data url
 Route::get('/tool', function () {

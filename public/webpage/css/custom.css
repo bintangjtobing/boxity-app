@@ -26,6 +26,10 @@ html,
     height: auto;
 }
 
+.entry-content p {
+    margin-bottom: 0;
+}
+
 .searchtrack h1 {
     color: #292562;
 }
@@ -63,4 +67,55 @@ html,
 
 .toggle-custom .table-responsive {
     background-color: rgba(176, 175, 183, .15);
+}
+
+.entry {
+    border-radius: .75rem;
+    border: 1px solid #222;
+    padding: 1rem;
+    position: relative;
+    margin: 0px 6px;
+    -webkit-box-shadow: -1px 28px 12px -21px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: -1px 28px 12px -21px rgba(0, 0, 0, 0.15);
+    box-shadow: -1px 28px 12px -21px rgba(0, 0, 0, 0.15);
+}
+
+.about-title {
+    font-size: 1.5rem;
+}
+
+.career .card {
+    border-radius: 1rem;
+}
+
+.career h2 {
+    font-size: 1.6rem;
+}
+
+.btn-gradient-blue-btsa {
+    padding: 1rem;
+    color: #fff;
+    background: #292562;
+    background: -webkit-linear-gradient(to right, #363180, #292562);
+    background: linear-gradient(to right, #363180, #292562);
+    border: 0 !important;
+    border-radius: 40px !important;
+}
+
+.btn-gradient-blue-btsa:hover {
+    color: #fff;
+    background: #292562;
+    transition: 2s ease !important;
+    background: -webkit-linear-gradient(to left, #363180, #292562);
+    background: linear-gradient(to left, #363180, #292562);
+    cursor: pointer;
+}
+
+.supportfile small {
+    background-color: #ccff00;
+    color: #000 !important;
+}
+
+.imgserved-done {
+    width: 200px;
 }

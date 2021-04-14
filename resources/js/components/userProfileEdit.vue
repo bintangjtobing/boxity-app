@@ -19,7 +19,7 @@
                             <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
                                 aria-labelledby="v-pills-home-tab">
                                 <div class="row justify-content-center ml-4">
-                                    <div class="col-xl-10 col-sm-6 col-10">
+                                    <div class="col-xl-10 col-sm-9 col-10">
                                         <div class="mt-40 mb-50">
                                             <div class="account-profile d-flex justify-content-center mb-4 ">
                                                 <div class="ap-img pro_img_wrapper">

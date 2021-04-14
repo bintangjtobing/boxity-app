@@ -27,6 +27,7 @@
     <!-- Theme Color -->
     <link rel="stylesheet" href="{!!asset('webpage/demos/btsa/css/fonts.css')!!}" type="text/css" />
     <link rel="stylesheet" href="{!!asset('webpage/demos/btsa/nonprofit.css')!!}" type="text/css" />
+    <link rel="stylesheet" href="{!!asset('webpage/css/themify-icons.css')!!}">
     <script src="https://kit.fontawesome.com/bf3b9c3659.js" crossorigin="anonymous"></script>
     <!-- / -->
 
@@ -360,7 +361,21 @@
         };
 
     </script>
+    <script src="https://cdn.tiny.cloud/1/8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            branding: false,
+            menubar: false,
+            setup: function (editor) {
+                editor.on('change', function (e) {
+                    editor.save();
+                });
+            }
+        });
 
+    </script>
 
 </body>
 
