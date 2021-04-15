@@ -35,6 +35,12 @@
                                     </b><br><br>
                                     No. NIK <br>
                                     <b>{{candidates.noktp}}</b> <br><br>
+                                    No. NPWP <br>
+                                    <b v-if="candidates.nonpwp=='NULL'">-</b>
+                                    <b>{{candidates.nonpwp}}</b> <br><br>
+                                    No. BPJS <br>
+                                    <b v-if="candidates.nobpjs=='NULL'">-</b>
+                                    <b>{{candidates.nobpjs}}</b> <br><br>
                                     Tempat, Tanggil Lahir <br>
                                     <b>{{candidates.tempat_lahir}},
                                         {{candidates.tanggal_lahir}}</b><br><br>
