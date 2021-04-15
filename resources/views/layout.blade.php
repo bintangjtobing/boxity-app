@@ -36,10 +36,10 @@
                     </li>
                     <li class="nav-message">
                         <div class="dropdown-custom">
-                            <a href="javascript:;" class="nav-item-toggle">
+                            <a href="/direct-message" class="nav-item-toggle">
                                 <i data-feather="send"></i></a>
                             <div class="dropdown-wrapper">
-                                <h2 class="dropdown-wrapper__title">Direct Messages<span
+                                <h2 class="dropdown-wrapper__title">Direct Message<span
                                         class="badge-circle badge-success ml-1">2</span></h2>
                                 <ul>
                                     <li class="author-online has-new-message">
@@ -131,7 +131,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="" class="dropdown-wrapper__more">See All Message</a>
+                                <a href="/direct-message" class="dropdown-wrapper__more">See All Message</a>
                             </div>
                         </div>
                     </li>

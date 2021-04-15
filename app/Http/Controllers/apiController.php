@@ -14,12 +14,14 @@ use App\blog;
 use App\candidates;
 use App\changeLog;
 use App\commentIssue;
+use App\Events\newMessage;
 use App\FileDocument;
 use App\goodsReceip;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\messages;
 use App\notepad;
 use App\quotes;
 use App\track_orders;
@@ -742,5 +744,60 @@ class apiController extends Controller
     public function getCandidateById($id)
     {
         return response()->json(candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
+    }
+
+    // Chat API
+    public function getChatFor($id)
+    {
+        messages::where('from', $id)->where('to', Auth::id())->update(['read' => true]);
+
+        $chat = messages::where('from', $id)->orWhere('to', $id)->orderBy('created_at', 'ASC')->get();
+
+        $messages = messages::where(function ($q) use ($id) {
+            $q->where('from', Auth::id());
+            $q->where('to', $id);
+        })->orWhere(function ($q) use ($id) {
+            $q->where('from', $id);
+            $q->where('to', Auth::id());
+        })
+            ->get();
+
+        return response()->json($messages);
+    }
+    public function getListContact()
+    {
+        // get all user exc auth user
+        $user = User::where('id', '!=', Auth::id())->orderBy('name', 'asc')->get();
+
+        $unreadIds = messages::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
+            ->where('to', Auth::id())
+            ->where('read', false)
+            ->groupBy('from')
+            ->get();
+
+        $user = $user->map(function ($user) use ($unreadIds) {
+            $contactUnread = $unreadIds->where('sender_id', $user->id)->first();
+
+            $user->unread = $contactUnread ? $contactUnread->messages_count : 0;
+
+            return $user;
+        });
+        return response()->json($user);
+    }
+    public function getListContactById($id)
+    {
+        return response()->json(User::find($id));
+    }
+    public function sendChat(Request $request)
+    {
+        $id = Auth::id();
+        $message = new messages();
+        $message->from = $id;
+        $message->to = $request->contact_id;
+        $message->text = $request->text;
+        $message->save();
+
+        broadcast(new newMessage($message));
+        return response()->json($message);
     }
 }

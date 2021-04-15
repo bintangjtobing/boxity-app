@@ -430,3 +430,11 @@ a {
 .pasfoto {
     width: 150px;
 }
+
+.selected {
+    background-color: #fff;
+}
+
+.circleImgProfile {
+    border-radius: 50%;
+}

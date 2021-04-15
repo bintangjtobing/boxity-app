@@ -108,3 +108,9 @@ Route::post('/user-guide', 'apiController@newGuide');
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
+
+// CHAT API
+Route::get('/chat/{id}', 'apiController@getChatFor');
+Route::get('/list-contact', 'apiController@getListContact');
+Route::get('/list-contact/{id}', 'apiController@getListContactById');
+Route::post('/chat/send', 'apiController@sendChat');
