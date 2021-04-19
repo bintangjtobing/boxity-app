@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{!!asset('dashboard/style.css')!!}">
     <script src="https://kit.fontawesome.com/bf3b9c3659.js" crossorigin="anonymous"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="side-menu" data-app>
@@ -22,9 +23,9 @@
             <div class="navbar-left">
                 <a href="" class="sidebar-toggle">
                     <img class="svg" src="{!!asset('dashboard/img/svg/bars.svg')!!}" alt="img"></a>
-                <a class="navbar-brand" href="#"><img class="svg dark" src="{!!asset('dashboard/img/logo_Dark.png')!!}"
-                        alt="logo BTSA Logistics"><img class="light" src="{!!asset('dashboard/img/Logo_white.png')!!}"
-                        alt="logo BTSA Logistics"></a>
+                <a class="navbar-brand" href="/tools"><img class="svg dark"
+                        src="{!!asset('dashboard/img/logo_Dark.png')!!}" alt="logo BTSA Logistics"><img class="light"
+                        src="{!!asset('dashboard/img/Logo_white.png')!!}" alt="logo BTSA Logistics"></a>
             </div>
             <!-- ends: navbar-left -->
             <div class="navbar-right">
@@ -38,101 +39,6 @@
                         <div class="dropdown-custom">
                             <a href="/direct-message" class="nav-item-toggle">
                                 <i data-feather="send"></i></a>
-                            <div class="dropdown-wrapper">
-                                <h2 class="dropdown-wrapper__title">Direct Message<span
-                                        class="badge-circle badge-success ml-1">2</span></h2>
-                                <ul>
-                                    <li class="author-online has-new-message">
-                                        <div class="user-avater">
-                                            <img src="{!!asset('dashboard/img/author/profile/1.jpg')!!}" alt="">
-                                        </div>
-                                        <div class="user-message">
-                                            <p>
-                                                <a href="" class="subject stretched-link text-truncate"
-                                                    style="max-width: 180px;">Web Design</a>
-                                                <span class="time-posted">3 hrs ago</span>
-                                            </p>
-                                            <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
-                                                    ipsum
-                                                    dolor amet cosec Lorem ipsum</span>
-                                                <span class="msg-count badge-circle badge-success badge-sm">1</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="author-offline has-new-message">
-                                        <div class="user-avater">
-                                            <img src="{!!asset('dashboard/img/author/profile/2.jpg')!!}" alt="">
-                                        </div>
-                                        <div class="user-message">
-                                            <p>
-                                                <a href="" class="subject stretched-link text-truncate"
-                                                    style="max-width: 180px;">Web Design</a>
-                                                <span class="time-posted">3 hrs ago</span>
-                                            </p>
-                                            <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
-                                                    ipsum
-                                                    dolor amet cosec Lorem ipsum</span>
-                                                <span class="msg-count badge-circle badge-success badge-sm">1</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="author-online has-new-message">
-                                        <div class="user-avater">
-                                            <img src="{!!asset('dashboard/img/author/profile/3.jpg')!!}" alt="">
-                                        </div>
-                                        <div class="user-message">
-                                            <p>
-                                                <a href="" class="subject stretched-link text-truncate"
-                                                    style="max-width: 180px;">Web Design</a>
-                                                <span class="time-posted">3 hrs ago</span>
-                                            </p>
-                                            <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
-                                                    ipsum
-                                                    dolor amet cosec Lorem ipsum</span>
-                                                <span class="msg-count badge-circle badge-success badge-sm">1</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="author-offline">
-                                        <div class="user-avater">
-                                            <img src="{!!asset('dashboard/img/author/profile/4.jpg')!!}" alt="">
-                                        </div>
-                                        <div class="user-message">
-                                            <p>
-                                                <a href="" class="subject stretched-link text-truncate"
-                                                    style="max-width: 180px;">Web Design</a>
-                                                <span class="time-posted">3 hrs ago</span>
-                                            </p>
-                                            <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
-                                                    ipsum
-                                                    dolor amet cosec Lorem ipsum</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li class="author-offline">
-                                        <div class="user-avater">
-                                            <img src="{!!asset('dashboard/img/author/profile/5.jpg')!!}" alt="">
-                                        </div>
-                                        <div class="user-message">
-                                            <p>
-                                                <a href="" class="subject stretched-link text-truncate"
-                                                    style="max-width: 180px;">Web Design</a>
-                                                <span class="time-posted">3 hrs ago</span>
-                                            </p>
-                                            <p>
-                                                <span class="desc text-truncate" style="max-width: 215px;">Lorem
-                                                    ipsum
-                                                    dolor amet cosec Lorem ipsum</span>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="/direct-message" class="dropdown-wrapper__more">See All Message</a>
-                            </div>
                         </div>
                     </li>
                     <!-- ends: nav-message -->
@@ -231,7 +137,7 @@
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle"><img
                                     src="{!!asset('dashboard/img/author/profile/'.auth()->user()->avatar)!!}"
-                                    alt="User avatar" class="rounded-circle"></a>
+                                    alt="User avatar" class="rounded-circle"> {{auth()->user()->name}}</a>
                             <div class="dropdown-wrapper">
                                 <div class="nav-author__info">
                                     <div class="author-img">
@@ -369,12 +275,14 @@
                     <li class="menu-title m-top-30">
                         <span>General</span>
                     </li>
+                    @if (auth()->user()->divisi=='developer')
                     <li>
                         <a href="/user-guide">
                             <i data-feather="book-open" class="nav-icon"></i>
                             <span class="menu-text">User Guide</span>
                         </a>
                     </li>
+                    @endif
                     <li>
                         <a href="/sign-out" class="text-danger">
                             <i data-feather="log-out" class="nav-icon text-danger"></i>
@@ -394,23 +302,24 @@
         <footer class="footer-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="footer-copyright">
                             <?php $y = Date('Y'); ?>
-                            <p>&copy; Copyright {{$y}} -<a href="/" target="_blank">BTSA LOGISTICS</a> | All
+                            <p>&copy; Copyright {{$y}} -<a href="/" target="_blank"><abbr
+                                        title="PT BERLIAN TRANSTAR ABADI">BTSA
+                                        LOGISTICS</abbr></a> | All
                                 reserved
-                                by<a href="https://infinitysolutions.co.id">Infinity Solutions</a>
+                                by<a href="#">Boxity App</a> | Partner with <abbr title="PT BENUA SOLUSI TEKNOLOGI"><a
+                                        href="https://infinitysolutions.co.id" target="_blank">Infinity
+                                        Solutions</a></abbr>
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="footer-menu text-right">
                             <ul>
                                 <li>
                                     <a href="/v/1.0.2">App version 1.0.2</a>
-                                </li>
-                                <li>
-                                    <a href="mailto:support@btsa.co.id">Contact support</a>
                                 </li>
                             </ul>
                         </div>

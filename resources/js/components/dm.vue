@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="row mt-2 justify-content-md-center">
-            <div class="col-xs-12 col-sm-6 col-lg-8">
+        <div class="row mt-2">
+            <div class="col-md-12 col-lg-12">
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Direct Message</h4>
                 </div>
@@ -16,11 +16,13 @@
 <script>
     import Conversation from './dm-conversation.vue';
     import ContactList from './dm-contactList.vue';
+    import Swal from 'sweetalert2';
+    import Push from 'push.js';
 
     export default {
         components: {
             Conversation,
-            ContactList
+            ContactList,
         },
         title() {
             return 'Direct Message';
@@ -35,14 +37,78 @@
             }
         },
         mounted() {
-            Echo.private(`messages.${this.user.id}`)
-                .listen('newMessage', (e) => {
-                    this.handleIncoming(e.message);
-                })
+            this.loadEcho();
             this.loadContacts();
             this.loadUserLoggedIn();
+            this.notifyMe();
         },
         methods: {
+            notifyMe() {
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support desktop notification");
+                }
+
+                // Let's check whether notification permissions have alredy been granted
+                else if (Notification.permission === "granted") {
+                    // If it's okay let's create a notification
+                    console.log("This browser does support desktop notification");
+                }
+
+                // Otherwise, we need to ask the user for permission
+                else if (Notification.permission !== 'denied' || Notification.permission === "default") {
+                    Notification.requestPermission(function (permission) {
+                        // If the user accepts, let's create a notification
+                        if (permission === "granted") {
+                            var notification = new Notification("Hi there!");
+                            console.log("This browser does support desktop notification");
+                        }
+                    });
+                }
+            },
+            async loadEcho() {
+                const res = await axios.get('/getUserLoggedIn');
+                const idGet = res.data.id;
+                Echo.private('messages.' + idGet).notification((notification) => {
+                        console.log('test' + notification.type); //This never logs
+                    })
+                    .listen('newMessage', (e) => {
+                        this.handleIncoming(e.message);
+                        if (Notification.permission === "granted") {
+                            console.log('This browser does support desktop notification' + status);
+                            Push.create("New message here!", {
+                                body: 'Click to see the new message.',
+                                link: '/direct-message',
+                                icon: 'https://bintangtobing.com/icon.png',
+                                timeout: 5000,
+                                onClick: function () {
+                                    window.focus();
+                                    this.close();
+                                }
+                            });
+                        }
+                        // Otherwise, we need to ask the user for permission
+                        else if (Notification.permission !== 'denied' || Notification.permission ===
+                            "default") {
+                            Notification.requestPermission(function (permission) {
+                                // If the user accepts, let's create a notification
+                                if (permission === "granted") {
+                                    console.log('This browser does support desktop notification' +
+                                        status);
+                                    Push.create("New message here!", {
+                                        body: 'Click to see the new message.',
+                                        link: '/direct-message',
+                                        icon: 'https://bintangtobing.com/icon.png',
+                                        timeout: 5000,
+                                        onClick: function () {
+                                            window.focus();
+                                            this.close();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+            },
             async loadUserLoggedIn() {
                 const res = await axios.get('/getUserLoggedIn');
                 this.user = res.data;

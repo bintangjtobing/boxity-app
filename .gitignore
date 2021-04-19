@@ -10,8 +10,11 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 **/.DS_Store
+public/.DS_Store
 .tmp/
 .DS_Store
 *.code-workspace
 public/imagePublic
 public/storage/file
+public/js/
+public/css/

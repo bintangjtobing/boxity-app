@@ -14,7 +14,6 @@ use Illuminate\Queue\SerializesModels;
 class newMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $message;
 
     /**

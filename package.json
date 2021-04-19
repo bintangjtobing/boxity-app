@@ -13,6 +13,7 @@
     "@tinymce/tinymce-vue": "^3.2.8",
     "laravel-echo": "^1.10.0",
     "moment": "^2.29.1",
+    "push.js": "^1.0.12",
     "pusher-js": "^7.0.3",
     "sweetalert2": "^10.15.5",
     "timeago.js": "^4.0.2",
