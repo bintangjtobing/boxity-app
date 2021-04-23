@@ -16,7 +16,6 @@
 <script>
     import Conversation from './dm-conversation.vue';
     import ContactList from './dm-contactList.vue';
-    import Swal from 'sweetalert2';
     import Push from 'push.js';
 
     export default {
@@ -40,31 +39,8 @@
             this.loadEcho();
             this.loadContacts();
             this.loadUserLoggedIn();
-            this.notifyMe();
         },
         methods: {
-            notifyMe() {
-                if (!("Notification" in window)) {
-                    console.log("This browser does not support desktop notification");
-                }
-
-                // Let's check whether notification permissions have alredy been granted
-                else if (Notification.permission === "granted") {
-                    // If it's okay let's create a notification
-                    console.log("This browser does support desktop notification");
-                }
-
-                // Otherwise, we need to ask the user for permission
-                else if (Notification.permission !== 'denied' || Notification.permission === "default") {
-                    Notification.requestPermission(function (permission) {
-                        // If the user accepts, let's create a notification
-                        if (permission === "granted") {
-                            var notification = new Notification("Hi there!");
-                            console.log("This browser does support desktop notification");
-                        }
-                    });
-                }
-            },
             async loadEcho() {
                 const res = await axios.get('/getUserLoggedIn');
                 const idGet = res.data.id;
