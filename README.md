@@ -1,7 +1,7 @@
 ### Installation
 1. Clone the repository first
    ```sh
-   git clone https://github.com/The-Boring-Organizations/btsa-frontend-2021
+   git clone https://github.com/The-Boring-Organizations/boxity-app
    ```
 2. Install composer by run 
     ```sh
