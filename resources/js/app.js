@@ -50,6 +50,7 @@ import versionView from './components/versionView.vue';
 import userGuide from './components/userGuide.vue';
 import notFoundPage from './components/notFoundPage.vue';
 import directMessage from './components/dm.vue';
+import settings from './components/settings.vue';
 
 // membuat router
 const routes = [{
@@ -185,9 +186,13 @@ const routes = [{
         path: '*',
         component: notFoundPage
     }, {
-        path: 'direct-message',
+        name: 'direct-message',
         path: '/direct-message',
         component: directMessage
+    }, {
+        name: 'settings',
+        path: '/settings',
+        component: settings
     }
 ]
 

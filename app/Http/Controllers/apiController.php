@@ -14,6 +14,7 @@ use App\blog;
 use App\candidates;
 use App\changeLog;
 use App\commentIssue;
+use App\company_details;
 use App\Events\newMessage;
 use App\FileDocument;
 use App\goodsReceip;
@@ -799,5 +800,27 @@ class apiController extends Controller
 
         broadcast(new newMessage($message));
         return response()->json($message);
+    }
+
+    // Company API
+    public function getCompanyDetails()
+    {
+        return response()->json(company_details::get());
+    }
+    public function saveCompanyDetails(Request $request)
+    {
+        $comp = new company_details();
+        $comp->company_id = $request->company_id;
+        $comp->company_name = $request->company_name;
+        $comp->address = $request->address;
+        $comp->city = $request->city;
+        $comp->state = $request->state;
+        $comp->country = $request->country;
+        $comp->taxNumber = $request->taxNumber;
+        $comp->phone = $request->phone;
+        $comp->email = $request->email;
+        $comp->site = $request->site;
+        $comp->save();
+        return response()->json($comp, 201);
     }
 }

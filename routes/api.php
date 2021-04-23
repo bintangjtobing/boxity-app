@@ -114,3 +114,7 @@ Route::get('/chat/{id}', 'apiController@getChatFor');
 Route::get('/list-contact', 'apiController@getListContact');
 Route::get('/list-contact/{id}', 'apiController@getListContactById');
 Route::post('/chat/send', 'apiController@sendChat');
+
+// Company Details
+Route::get('/company-details', 'apiController@getCompanyDetails');
+Route::post('/company-details', 'apiController@saveCompanyDetails');
