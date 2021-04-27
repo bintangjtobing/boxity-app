@@ -194,7 +194,7 @@
                         </a>
                     </li>
                     <li class="menu-title m-top-30">
-                        <span>Public Applications</span>
+                        <span>General Applications</span>
                     </li>
                     <li>
                         <a href="/issues">
@@ -213,24 +213,6 @@
                             <i data-feather="file-text" class="nav-icon"></i>
                             <span class="menu-text">Notepad</span>
                         </a>
-                    </li>
-                    <li class="menu-title m-top-30">
-                        <span>Web config needs</span>
-                    </li>
-                    <li>
-                        <a href="/gallery">
-                            <i data-feather="image" class="nav-icon"></i>
-                            <span class="menu-text">Gallery</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/blog-management">
-                            <i data-feather="package" class="nav-icon"></i>
-                            <span class="menu-text">Blog</span>
-                        </a>
-                    </li>
-                    <li class="menu-title m-top-30">
-                        <span>Role Applications</span>
                     </li>
                     @if(auth()->user()->role=='admin')
                     <li>
@@ -274,7 +256,19 @@
                         </a>
                     </li>
                     <li class="menu-title m-top-30">
-                        <span>General</span>
+                        <span>Main Web Config</span>
+                    </li>
+                    <li>
+                        <a href="/gallery">
+                            <i data-feather="image" class="nav-icon"></i>
+                            <span class="menu-text">Gallery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/blog-management">
+                            <i data-feather="package" class="nav-icon"></i>
+                            <span class="menu-text">Blog</span>
+                        </a>
                     </li>
                     @if (auth()->user()->divisi=='developer')
                     <li>

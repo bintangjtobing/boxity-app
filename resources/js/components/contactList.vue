@@ -11,11 +11,11 @@
                                 <span class="sub-title ml-sm-25 pl-sm-25"></span>
                             </div>
 
-                            <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                            <!-- <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
                                 <i class="fas fa-search"></i>
                                 <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search"
                                     placeholder="Search by Name" aria-label="Search">
-                            </form>
+                            </form> -->
 
                         </div>
                     </div>

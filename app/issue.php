@@ -39,6 +39,10 @@ class issue extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function assigne()
+    {
+        return $this->belongsTo(User::class, 'assignee');
+    }
     public function comments()
     {
         return $this->belongsTo(commentIssue::class, 'id', 'issueId');

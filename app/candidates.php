@@ -32,6 +32,7 @@ class candidates extends Model
         'pendidikan_akhir',
         'about',
         'supported_file',
+        'expected_sallary'
     ];
     public function provinsi()
     {

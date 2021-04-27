@@ -20,10 +20,8 @@
                                     <span data-feather="user"></span>Company Information</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                <!-- Profile Acoount End -->
             </div>
             <div class="col-xxl-9 col-lg-8 col-sm-7">
                 <div class="mb-50">
@@ -42,6 +40,16 @@
                                             <div class="col-xxl-6 col-lg-12 col-sm-12">
                                                 <div class="edit-profile__body mx-lg-20">
                                                     <form>
+                                                        <!-- <div class="form-group mb-20">
+                                                            <label for="">Company Logo</label>
+                                                            <input id="file-upload" type="file" name="fileUpload"
+                                                                class="" @change="fileUpload">
+                                                            <label for="file-upload">
+                                                                <img class="ap-img__main bg-lighter d-flex"
+                                                                    :src="imagePreview" alt="profile img"
+                                                                    v-if="imagePreview">
+                                                            </label>
+                                                        </div> -->
                                                         <div class="form-group mb-20">
                                                             <label for="names">Company ID</label>
                                                             <input type="text" class="form-control"
@@ -128,6 +136,8 @@
                 company: {},
                 user: {},
                 isReadOnly: true,
+                imagePreview: '',
+                imageLocation: '',
             }
         },
         mounted() {
@@ -148,6 +158,14 @@
                     this.company = resp.data[0];
                     this.isReadOnly = true;
                     console.log(resp.data[0]);
+                }
+            },
+            fileUpload(e) {
+                this.imageLocation = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(this.imageLocation)
+                reader.onload = e => {
+                    this.imagePreview = e.target.result;
                 }
             },
             async saveCompany(event) {

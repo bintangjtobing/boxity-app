@@ -58,12 +58,15 @@
                                     <b>{{candidates.sumber_informasi}}</b><br><br>
                                     Status Perkawinan <br>
                                     <b>{{candidates.status_perkawinan}}</b> <br><br>
+                                    Gaji yang diharapkan <br>
+                                    <b>{{candidates.expected_sallary}}</b> <br><br>
                                 </p>
                                 <h3>Tentang saya</h3> <br><span v-html="candidates.about"></span>
                             </div>
                             <div class="col-lg-3 text-left">
                                 <a href="" target="_blank"><img class="pasfoto"
-                                        :src="`/storage/file/`+candidates.nama_lengkap+`/`+candidates.picture"></a>
+                                        :src="`/storage/file/`+candidates.nama_lengkap+`/`+candidates.picture"
+                                        style="width: 113.3px; height: 151.1px; object-fit:cover;"></a>
                                 <br><br>
                                 <p>
                                     Email <br>
@@ -74,6 +77,10 @@
                                         download class="rounded-pill userDatatable-content-status color-primary
                                                 bg-opacity-primary active">
                                         <i class="fas fa-paperclip"></i> &nbsp;Supported Document
+                                    </a>
+                                    <a :href="`/generatePDF/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active mt-1">
+                                        <i class="fas fa-print"></i> &nbsp;Print/Export to PDF
                                     </a>
                                 </p>
                             </div>
@@ -87,7 +94,7 @@
 <script>
     export default {
         title() {
-            return `Detail candidate` + candidates.nama_lengkap;
+            return `Detail candidate`;
         },
         data() {
             return {
@@ -101,7 +108,7 @@
             async loadCandidate() {
                 const resp = await axios.get('/api/candidates/' + this.$route.params.id);
                 this.candidates = resp.data[0];
-            },
+            }
         },
     }
 

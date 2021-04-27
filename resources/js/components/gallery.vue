@@ -31,12 +31,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-25" v-for="gal in album" :key="gal.id">
+            <div class="col-xl-3 col-lg-4 col-md-4 mb-25" v-for="gal in album" :key="gal.id">
                 <div class="feature-cards">
                     <figure class="feather-cards__figure">
                         <img :src="`/imagePublic/`+gal.file" alt="">
                         <figcaption>
                             <h4>{{gal.nama_album}}</h4>
+                            <span>Total photo in this album: {{gal.totalFile}}</span>
                         </figcaption>
                     </figure>
                 </div>
@@ -60,8 +61,8 @@
         methods: {
             async loadAlbum() {
                 const resp = await axios.get('/api/album');
-                console.log(resp.data[""]);
-                this.album = resp.data[""];
+                console.log(resp.data);
+                this.album = resp.data;
             },
             refreshPage() {
                 location.reload();

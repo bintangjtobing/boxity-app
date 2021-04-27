@@ -88,6 +88,7 @@ class webpageController extends Controller
         $candidate->nohp = $request->nohp;
         $candidate->status_perkawinan = $request->status_perkawinan;
         $candidate->pendidikan_akhir = $request->pendidikan_akhir;
+        $candidate->expected_sallary = $request->expected_sallary;
         $candidate->about = $request->about;
         if ($request->hasFile('supported_file') && $request->hasFile('picture')) {
             $request->file('supported_file')->move('storage/file/' . $request->nama_lengkap, $request->file('supported_file')->getClientOriginalName());

@@ -19,6 +19,9 @@ Route::get('/u/{username}', 'apiController@getUsernameData');
 // Check user data first
 Route::post('/users/check-user-data', 'apiController@checkUserData');
 
+// get user list without user logged in
+Route::get('/userGetWithOutLoggedIn', 'apiController@userGetWithOutLoggedIn');
+
 // Issue API
 Route::post('/issue', 'apiController@addNewIssue');
 Route::get('/issue', 'apiController@getIssues');

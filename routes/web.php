@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\candidates;
+
 Route::get('/clear-cache', function () {
     $exitCode = Artisan::call('cache:clear');
     return redirect('/');
@@ -78,6 +81,10 @@ Route::get('/karir', 'webpageController@karir');
 Route::get('/karir/detail/{title}', 'webpageController@getKarirDetail');
 Route::get('/karir/daftar/{title}/{csrf_token}', 'webpageController@formRegisterKarir');
 Route::post('/karir/daftar/{title}/apply', 'webpageController@applyKarir');
+Route::get('/generatePDF/{id}', function ($id) {
+    $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
+    return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
+});
 
 // View details blog
 Route::get('/blog/v/{title}', 'webpageController@viewBlog');

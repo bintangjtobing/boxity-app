@@ -131,7 +131,7 @@
                 this.username = res.data.name;
             },
             async assigneeGet() {
-                const res = await axios.get('/api/users');
+                const res = await axios.get('/api/userGetWithOutLoggedIn');
                 this.users = res.data;
             },
             async handleSubmit(event) {

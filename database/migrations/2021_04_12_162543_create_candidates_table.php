@@ -38,6 +38,7 @@ class CreateCandidatesTable extends Migration
             $table->string('pendidikan_akhir');
             $table->longText('about');
             $table->string('supported_file');
+            $table->string('expected_sallary');
             $table->timestamps();
         });
     }

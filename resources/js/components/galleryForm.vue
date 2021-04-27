@@ -66,15 +66,12 @@
                     thumbnailWidth: 150,
                     addRemoveLinks: true,
                     autoDiscover: false,
-                    parallelUploads: 10,
-                    autoProcessQueue: false,
                     dictRemoveFile: 'REMOVE'
                 },
             }
         },
         methods: {
             async handleSubmit() {
-                this.$refs['document-upload'].processQueue();
                 await axios.post('/api/album', this.album).then(response => {
                     Swal.fire({
                         icon: 'success',

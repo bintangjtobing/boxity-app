@@ -22,6 +22,8 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\Mail\closedIssue;
+use App\Mail\makeNewIssue;
 use App\messages;
 use App\notepad;
 use App\quotes;
@@ -29,6 +31,7 @@ use App\track_orders;
 use App\track_reports;
 use App\userdetails;
 use App\userGuide;
+use Mail;
 
 class apiController extends Controller
 {
@@ -223,17 +226,25 @@ class apiController extends Controller
     public function approveIssue($id)
     {
         $issue = issue::find($id);
-        $issue->approved_by = auth()->user()->id;
+        $issue->approved_by = Auth::id();
         $issue->status = '1';
         $issue->save();
-        return response()->json($issue, 201);
+        $issues = issue::with('user')->with('assigne')->get()->find($id);
+        Mail::to('support@btsa.co.id')->send(new makeNewIssue($issues));
+
+        return response()->json($issues, 201);
+        // return new makeNewIssue($issues);
     }
     public function closedIssue($id, Request $req)
     {
         $issue = issue::find($id);
         $issue->status = '2';
         $issue->save();
-        return response()->json($issue, 201);
+        $issues = issue::with('user')->with('assigne')->get()->find($id);
+        $sendTo = $issues->user->email;
+        Mail::to($sendTo)->send(new closedIssue($issues));
+        return response()->json($issues, 201);
+        // return new closedIssue($issues);
     }
     public function countCommentDB($id)
     {
@@ -665,11 +676,11 @@ class apiController extends Controller
     public function fileStore(Request $request)
     {
         $doc = $request->file('file');
-        $imageName = time() . '.' . $request->file->getClientOriginalExtension();
+        $imageName = time() . '-' .  $request->file->getClientOriginalName();
         $fileName = $request->file->getClientOriginalName();
-        $request->file->move(public_path('imagePublic'), $fileName);
+        $request->file->move(public_path('imagePublic'), $imageName);
         $fileDocument = FileDocument::create([
-            'file' => $fileName,
+            'file' => $imageName,
         ]);
         return response()->json($fileDocument, 201);
     }
@@ -691,9 +702,15 @@ class apiController extends Controller
     {
         $album = DB::table('albums')
             ->join('file_documents', 'albums.id', '=', 'file_documents.fileId')
-            ->select('albums.nama_album', 'file_documents.file', 'file_documents.fileId')
-            ->get()
-            ->groupBy('file_documents.fileId');
+            ->orderBy('file_documents.created_at', 'DESC')
+            ->select(
+                DB::raw('COUNT(*) as totalFile'),
+                'file_documents.fileId',
+                'albums.nama_album',
+                'file_documents.file'
+            )
+            ->groupBy('fileId')
+            ->get();
         return response()->json($album, 201);
     }
 
@@ -822,5 +839,9 @@ class apiController extends Controller
         $comp->site = $request->site;
         $comp->save();
         return response()->json($comp, 201);
+    }
+    public function userGetWithOutLoggedIn()
+    {
+        return response()->json(User::where('id', '!=', Auth::id())->orderBy('name', 'asc')->get());
     }
 }
