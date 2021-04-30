@@ -16,5 +16,5 @@ public/.DS_Store
 *.code-workspace
 public/imagePublic
 public/storage/file
-public/js/app.js
-public/css/asset.css
+public/js/
+public/css/
