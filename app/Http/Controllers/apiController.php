@@ -336,26 +336,33 @@ class apiController extends Controller
     }
     public function updateProfile($id, Request $request)
     {
-        $profile = User::find($id);
-        $profile->name = $request->name;
-        $profile->username = $request->username;
-        $profile->email = $request->email;
-        $profile->phone = $request->phone;
-        $profile->gender = $request->gender;
-        $profile->birth = $request->birth;
-        $profile->bio = $request->bio;
-        if (!$request->instagram) {
-            $request->instagram = '-';
-        } else {
-            $profile->instagram = $request->instagram;
-        }
-        if (!$request->facebook) {
-            $request->facebook = '-';
-        } else {
-            $profile->facebook = $request->facebook;
-        }
-        $profile->save();
-        return response()->json($profile, 201);
+
+        // $lamp = $request->file('image');
+        // $filename =
+        //     time() . '-' .  $request->file->getClientOriginalName();
+        // $request->file->move('dashboard/img/author/profile/', $filename);
+        // $profile = User::find($id);
+        // $profile->avatar = $filename;
+        // $profile->name = $request->name;
+        // $profile->username = $request->username;
+        // $profile->email = $request->email;
+        // $profile->phone = $request->phone;
+        // $profile->gender = $request->gender;
+        // $profile->birth = $request->birth;
+        // $profile->bio = $request->bio;
+        // if (!$request->instagram) {
+        //     $request->instagram = '-';
+        // } else {
+        //     $profile->instagram = $request->instagram;
+        // }
+        // if (!$request->facebook) {
+        //     $request->facebook = '-';
+        // } else {
+        //     $profile->facebook = $request->facebook;
+        // }
+        // $profile->save();
+        // return response()->json($profile, 201);
+        return response()->json($request->all());
     }
 
     // QUOTE API

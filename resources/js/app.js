@@ -10,12 +10,14 @@ import Axios from 'axios';
 import titleMixin from './mixins/titleMixins.js';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
+import 'feather-icons';
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 Vue.mixin(titleMixin);
 Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);
 
+import App from './components/App.vue';
 import Index from './components/index.vue';
 import UserLists from './components/user-lists.vue';
 import Career from './components/career.vue';
@@ -209,5 +211,8 @@ const router = new VueRouter({
 });
 new Vue(Vue.util.extend({
     router,
-    vuetify
-})).$mount("#App");
+    vuetify,
+    render: function (h) {
+        return h(App)
+    }
+})).$mount("#app");

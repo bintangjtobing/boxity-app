@@ -10,7 +10,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
                                     role="tab" aria-controls="v-pills-home" aria-selected="true"><span
-                                        data-feather="user"></span>basic info</a>
+                                        data-feather="user"></span>edit profile</a>
                             </li>
                         </ul>
                     </div>
@@ -167,7 +167,7 @@
     import Swal from 'sweetalert2';
     export default {
         title() {
-            return 'Profile';
+            return `Profile ${this.user.name}`;
         },
         data() {
             return {
@@ -189,31 +189,44 @@
             },
             fileUpload(e) {
                 this.imageLocation = e.target.files[0];
+                console.log(this.imageLocation);
                 let reader = new FileReader();
                 reader.readAsDataURL(this.imageLocation)
                 reader.onload = e => {
                     this.imagePreview = e.target.result;
                 }
             },
-            async handleSubmit() {
-                await axios.patch('/api/profile/' + this.user.id, {
-                    name: this.user.name,
-                    username: this.user.username,
-                    email: this.user.email,
-                    phone: this.user.phone,
-                    gender: this.user.gender,
-                    birth: this.user.birth,
-                    bio: this.user.bio,
-                    facebook: this.user.facebook,
-                    instagram: this.user.instagram,
-                });
-                this.loadDataUser();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Update your data succced.',
-                });
+            handleSubmit(e) {
+                e.preventDefault();
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                };
+                const data = new FormData();
+                data.append('image', this.imageLocation);
+                data.append('name', this.user.name);
+                data.append('username', this.user.username);
+                data.append('email', this.user.email);
+                data.append('phone', this.user.phone);
+                data.append('gender', this.user.gender);
+                data.append('birth', this.user.birth);
+                data.append('bio', this.user.bio);
+                data.append('facebook', this.user.facebook);
+                data.append('instagram', this.user.instagram);
+                console.log(data);
+                axios.patch('/api/profile/' + this.user.id, data, config);
+                // this.loadDataUser();
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Congratulations',
+                //     text: 'Update your data succced.',
+                // });
             },
+            gatherFormData() {
+
+                return data;
+            }
         }
     }
 
