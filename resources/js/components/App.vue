@@ -11,7 +11,6 @@
                             alt="logo BTSA Logistics"><img class="light" :src="'./dashboard/img/Logo_white.png'"
                             alt="logo BTSA Logistics"></a>
                 </div>
-                <!-- ends: navbar-left -->
                 <div class="navbar-right">
                     <ul class="navbar-right__menu">
                         <li>
@@ -28,23 +27,24 @@
                         <li class="nav-author">
                             <div class="dropdown-custom">
                                 <a href="javascript:;" class="nav-item-toggle"><img
-                                        :src="'./dashboard/img/author/profile/1.jpg'" alt="User avatar"
-                                        class="rounded-circle"> Bintang</a>
+                                        :src="'./dashboard/img/author/profile/'+user.avatar" alt="User avatar"
+                                        class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
                                     <div class="nav-author__info">
                                         <div class="author-img">
-                                            <img :src="'./dashboard/img/author/profile/1.jpg'" alt="User avatar"
+                                            <img :src="'./dashboard/img/author/profile/'+user.avatar" alt="User avatar"
                                                 class="rounded-circle">
                                         </div>
                                         <div>
-                                            <h6>Bintang</h6>
-                                            <span>Developer</span>
+                                            <h6>{{user.name}}</h6>
+                                            <span>{{user.divisi}}</span>
                                         </div>
                                     </div>
                                     <div class="nav-author__options">
                                         <ul>
                                             <li>
-                                                <router-link to="/u/bintangjtobing/edit">
+                                                <router-link
+                                                    :to="{ name: 'userProfileEdit', params: { username:user.username } }">
                                                     <i data-feather="user"></i> Profile</router-link>
                                             </li>
                                             <li>
@@ -213,9 +213,21 @@
 <script>
     import feather from 'feather-icons'
     export default {
+        data() {
+            return {
+                user: {},
+            }
+        },
         mounted() {
             feather.replace();
-        }
+            this.userGet();
+        },
+        methods: {
+            async userGet() {
+                const resp = await axios.get('/getUserLoggedIn');
+                this.user = resp.data;
+            }
+        },
     }
 
 </script>

@@ -11,14 +11,26 @@
    ```sh
    npm install
    ```
-4. Dont forget to set the connection on .env file, change on DB_Connection section
+4. Dont forget to set the .env file,
     ```sh
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1 <- Your site IP
     DB_PORT=3306 <- Dont forget the port of your hosting databases
-    DB_DATABASE=btsa
-    DB_USERNAME=root
-    DB_PASSWORD=
+    DB_DATABASE= (Your database name)
+    DB_USERNAME= (Your database username connection)
+    DB_PASSWORD= (Your database password if exist)
+    
+    SET MAILER CONFIG
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io <- Your email host
+    MAIL_PORT=2525
+    MAIL_USERNAME=de6b1c11b67b43 <- Your mail username / email
+    MAIL_PASSWORD=7badd9a3876f36 <- Your mail password
+    MAIL_ENCRYPTION=tls
+    ```
+5. Run the app key
+    ```
+    php artisan key:generate
     ```
 
 ## Instructions how to run the code
