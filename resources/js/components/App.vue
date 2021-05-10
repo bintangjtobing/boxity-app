@@ -44,7 +44,7 @@
                                         <ul>
                                             <li>
                                                 <router-link
-                                                    :to="{ name: 'userProfileEdit', params: { username:user.username } }">
+                                                    :to="{ name: 'userProfileEdit', params: { username:user.username }}">
                                                     <i data-feather="user"></i> Profile</router-link>
                                             </li>
                                             <li>
@@ -77,7 +77,7 @@
                                 <span class="menu-text">Dashboard</span>
                             </router-link>
                         </li>
-                        <li>
+                        <li v-if="user.divisi == 'developer'">
                             <router-link to="/version-control">
                                 <i data-feather="activity" class="nav-icon"></i>
                                 <span class="menu-text">Version control</span>
@@ -104,18 +104,18 @@
                                 <span class="menu-text">Notepad</span>
                             </router-link>
                         </li>
-                        <li>
+                        <li v-if="user.role == 'it' || user.role=='admin'">
                             <router-link to="/users-management">
                                 <i data-feather="users" class="nav-icon"></i>
                                 <span class="menu-text">Users management</span>
                             </router-link>
                         </li>
-                        <li class="has-child">
-                            <router-link to="#" class="">
-                                <i data-feather="rss" class="nav-icon"></i>
+                        <li class="has-child" v-if="user.role == 'it' || user.role=='admin'">
+                            <a href="#" class="">
+                                <i data-feather="archive" class="nav-icon"></i>
                                 <span class="menu-text">Human resources</span>
                                 <span class="toggle-icon"></span>
-                            </router-link>
+                            </a>
                             <ul>
                                 <li>
                                     <router-link to="/career">Career</router-link>
@@ -143,27 +143,29 @@
                                 <span class="menu-text">Track delivery</span>
                             </router-link>
                         </li>
-                        <li class="menu-title m-top-30">
-                            <span>Main Web Config</span>
-                        </li>
-                        <li>
-                            <router-link to="/gallery">
-                                <i data-feather="image" class="nav-icon"></i>
-                                <span class="menu-text">Gallery</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/blog-management">
-                                <i data-feather="package" class="nav-icon"></i>
-                                <span class="menu-text">Blog</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/user-guide">
-                                <i data-feather="book-open" class="nav-icon"></i>
-                                <span class="menu-text">User Guide</span>
-                            </router-link>
-                        </li>
+                        <div v-if="user.role == 'it' || user.role=='admin'">
+                            <li class="menu-title m-top-30">
+                                <span>Main Web Config</span>
+                            </li>
+                            <li>
+                                <router-link to="/gallery">
+                                    <i data-feather="image" class="nav-icon"></i>
+                                    <span class="menu-text">Gallery</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/blog-management">
+                                    <i data-feather="package" class="nav-icon"></i>
+                                    <span class="menu-text">Blog</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/user-guide">
+                                    <i data-feather="book-open" class="nav-icon"></i>
+                                    <span class="menu-text">User Guide</span>
+                                </router-link>
+                            </li>
+                        </div>
                         <li>
                             <a href="/sign-out" class="text-danger">
                                 <i data-feather="log-out" class="nav-icon text-danger"></i>
@@ -185,9 +187,7 @@
                             <div class="footer-copyright">
                                 <p>&copy; Copyright -<a href="/" target="_blank"><abbr
                                             title="PT BERLIAN TRANSTAR ABADI">BTSA
-                                            LOGISTICS</abbr></a> | All
-                                    reserved
-                                    by<a href="#">Boxity App</a> | Partner with <abbr
+                                            LOGISTICS</abbr></a> | Partner with <abbr
                                         title="PT BENUA SOLUSI TEKNOLOGI"><a href="https://infinitysolutions.co.id"
                                             target="_blank">Infinity
                                             Solutions</a></abbr>
@@ -198,7 +198,9 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <a href="/v/1.0.2">App version 1.0.2</a>
+                                        <router-link :to="{ name: 'versionView', params: { version:version.version }}">
+                                            App
+                                            version {{version.version}}</router-link>
                                     </li>
                                 </ul>
                             </div>
@@ -216,16 +218,22 @@
         data() {
             return {
                 user: {},
+                version: {},
             }
         },
         mounted() {
             feather.replace();
             this.userGet();
+            this.versionGet();
         },
         methods: {
             async userGet() {
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
+            },
+            async versionGet() {
+                const resp = await axios.get('/api/version-control');
+                this.version = resp.data[0];
             }
         },
     }

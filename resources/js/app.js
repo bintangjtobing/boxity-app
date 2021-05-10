@@ -137,7 +137,7 @@ const routes = [{
         path: '/edit/blog/:id',
         component: blogEdit,
     }, {
-        name: 'user-profile-edit',
+        name: 'userProfileEdit',
         path: '/u/:username/edit',
         component: userProfileEdit,
     }, {
@@ -177,7 +177,7 @@ const routes = [{
         path: '/goods-receipt',
         component: goodsReceipt
     }, {
-        name: 'version-view',
+        name: 'versionView',
         path: '/v/:version',
         component: versionView
     }, {
