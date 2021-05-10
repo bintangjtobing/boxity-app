@@ -52,8 +52,8 @@
                                                     <i data-feather="settings"></i> Settings</router-link>
                                             </li>
                                         </ul>
-                                        <router-link to="/sign-out" class="nav-author__signout">
-                                            <i data-feather="log-out"></i> Sign Out</router-link>
+                                        <a href="/sign-out" class="nav-author__signout">
+                                            <i data-feather="log-out"></i> Sign Out</a>
                                     </div>
                                 </div>
                                 <!-- ends: .dropdown-wrapper -->
