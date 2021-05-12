@@ -13,6 +13,7 @@
     "@tinymce/tinymce-vue": "^3.2.8",
     "feather-icons": "^4.28.0",
     "laravel-echo": "^1.10.0",
+    "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
     "push.js": "^1.0.12",
     "pusher-js": "^7.0.3",

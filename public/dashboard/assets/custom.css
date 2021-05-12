@@ -453,6 +453,23 @@ a {
     color: #fff !important;
 }
 
+.sidebar__menu-group ul.sidebar_nav li>a {
+    font-size: 12px !important;
+    padding: 6.05px 30px !important;
+}
+
+.sidebar__menu-group ul.sidebar_nav li>a .nav-icon {
+    width: 14px !important;
+}
+
+.material-icons-outlined {
+    font-size: 18px !important;
+}
+
+.footer-copyright p {
+    font-size: 12px !important;
+}
+
 /* Responsive Design */
 /*
   ##Device = Desktops
