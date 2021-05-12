@@ -73,13 +73,17 @@
                     <ul class="sidebar_nav">
                         <li>
                             <router-link to="/tools">
-                                <i data-feather="home" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    home
+                                </span>
                                 <span class="menu-text">Dashboard</span>
                             </router-link>
                         </li>
                         <li v-if="user.divisi == 'developer'">
                             <router-link to="/version-control">
-                                <i data-feather="activity" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    build_circle
+                                </span>
                                 <span class="menu-text">Version control</span>
                             </router-link>
                         </li>
@@ -88,31 +92,41 @@
                         </li>
                         <li>
                             <router-link to="/issues">
-                                <i data-feather="headphones" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    home
+                                </span>
                                 <span class="menu-text">Issue center</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link to="/contact-list">
-                                <i data-feather="list" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    contact_page
+                                </span>
                                 <span class="menu-text">Contact lists</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link to="/notepad">
-                                <i data-feather="file-text" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    sticky_note_2
+                                </span>
                                 <span class="menu-text">Notepad</span>
                             </router-link>
                         </li>
                         <li v-if="user.role == 'it' || user.role=='admin'">
                             <router-link to="/users-management">
-                                <i data-feather="users" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    manage_accounts
+                                </span>
                                 <span class="menu-text">Users management</span>
                             </router-link>
                         </li>
                         <li class="has-child" v-if="user.role == 'it' || user.role=='admin'">
                             <a href="#" class="">
-                                <i data-feather="archive" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    people_outline
+                                </span>
                                 <span class="menu-text">Human resources</span>
                                 <span class="toggle-icon"></span>
                             </a>
@@ -127,19 +141,25 @@
                         </li>
                         <li>
                             <router-link to="/goods-receipt">
-                                <i data-feather="shopping-bag" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    feed
+                                </span>
                                 <span class="menu-text">Goods receipt</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link to="/quote">
-                                <i data-feather="star" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    book
+                                </span>
                                 <span class="menu-text">Quote report</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link to="/track-delivery">
-                                <i data-feather="map" class="nav-icon"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    where_to_vote
+                                </span>
                                 <span class="menu-text">Track delivery</span>
                             </router-link>
                         </li>
@@ -149,26 +169,34 @@
                             </li>
                             <li>
                                 <router-link to="/gallery">
-                                    <i data-feather="image" class="nav-icon"></i>
+                                    <span class="material-icons-outlined nav-icon">
+                                        photo_library
+                                    </span>
                                     <span class="menu-text">Gallery</span>
                                 </router-link>
                             </li>
                             <li>
                                 <router-link to="/blog-management">
-                                    <i data-feather="package" class="nav-icon"></i>
+                                    <span class="material-icons-outlined nav-icon">
+                                        article
+                                    </span>
                                     <span class="menu-text">Blog</span>
                                 </router-link>
                             </li>
                             <li>
                                 <router-link to="/user-guide">
-                                    <i data-feather="book-open" class="nav-icon"></i>
+                                    <span class="material-icons-outlined nav-icon">
+                                        help
+                                    </span>
                                     <span class="menu-text">User Guide</span>
                                 </router-link>
                             </li>
                         </div>
                         <li>
                             <a href="/sign-out" class="text-danger">
-                                <i data-feather="log-out" class="nav-icon text-danger"></i>
+                                <span class="material-icons-outlined nav-icon">
+                                    logout
+                                </span>
                                 <span class="menu-text">Sign out</span>
                             </a>
                         </li>
