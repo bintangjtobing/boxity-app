@@ -38,8 +38,16 @@ class User extends Authenticatable
         'birth',
         'bio',
         'instagram',
-        'facebook', 'cover'
-    ];
+        'facebook', 'cover',
+        'customerCode',
+        'customerName',
+        'customerAddress',
+        'customerCity',
+        'customerPhone',
+        'customerEmail',
+        'customerWebsite',
+        'customerNPWP',
+        ];
 
     protected $hidden = ['password'];
 

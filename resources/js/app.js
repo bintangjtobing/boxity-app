@@ -53,6 +53,12 @@ import userGuide from './components/userGuide.vue';
 import notFoundPage from './components/notFoundPage.vue';
 import directMessage from './components/dm.vue';
 import settings from './components/settings.vue';
+import customers from './components/customers.vue';
+import customerForm from './components/customersForm.vue';
+import suppliers from './components/suppliers.vue';
+import supplierForm from './components/supplierForm.vue';
+import warehouseMgmt from './components/warehouseMgmt.vue';
+import assetMgmt from './components/assetMgmt.vue';
 
 // membuat router
 const routes = [{
@@ -195,6 +201,31 @@ const routes = [{
         name: 'settings',
         path: '/settings',
         component: settings
+    }, {
+        name: 'suppliers',
+        path: '/suppliers',
+        component: suppliers
+    }, {
+        name: 'update-supplier',
+        path: '/detail/supplier/:id',
+        component: supplierForm,
+    }, {
+        name: 'customers',
+        path: '/customers',
+        component: customers
+    },
+    {
+        name: 'update-customer',
+        path: '/detail/customer/:id',
+        component: customerForm,
+    }, {
+        name: 'warehouse-management',
+        path: '/warehouse-management',
+        component: warehouseMgmt
+    }, {
+        name: 'asset-management',
+        path: '/asset-management',
+        component: assetMgmt
     }
 ]
 

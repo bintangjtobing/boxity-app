@@ -121,3 +121,19 @@ Route::post('/chat/send', 'apiController@sendChat');
 // Company Details
 Route::get('/company-details', 'apiController@getCompanyDetails');
 Route::post('/company-details', 'apiController@saveCompanyDetails');
+
+// Customers API
+Route::get('/customers', 'apiController@getCustomers');
+Route::get('/customers/{id}', 'apiController@getCustomerbyId');
+Route::delete('/customers/{id}', 'apiController@deleteCustomer');
+Route::post('/customers', 'apiController@addCustomer');
+Route::get('/count-customers', 'apiController@countCustomers');
+Route::patch('/customers/{id}', 'apiController@updateCustomer');
+
+// Suppliers API
+Route::get('/suppliers', 'apiController@getSuppliers');
+Route::get('/suppliers/{id}', 'apiController@getSuppliersbyId');
+Route::delete('/suppliers/{id}', 'apiController@deleteCustomer');
+Route::post('/suppliers', 'apiController@addSuppliers');
+Route::get('/count-suppliers', 'apiController@countSuppliers');
+Route::patch('/suppliers/{id}', 'apiController@updateSuppliers');

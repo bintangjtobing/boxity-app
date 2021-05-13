@@ -851,4 +851,154 @@ class apiController extends Controller
     {
         return response()->json(User::where('id', '!=', Auth::id())->orderBy('name', 'asc')->get());
     }
+
+    // CUSTOMERS API CONTROLLER
+    public function getCustomers()
+    {
+        return response()->json(User::where('role', 'customer')->orderBy('name', 'asc')->get());
+    }
+    public function getCustomerbyId($id)
+    {
+        return response()->json(User::find($id));
+    }
+    public function deleteCustomer($id)
+    {
+        $getUser = User::find($id);
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function addCustomer(Request $request)
+    {
+        $customer = new User();
+        // User Section
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->username = strtolower($request->name);
+        $customer->role = 'customer';
+        $customer->department = '-';
+        $customer->status = '1';
+        $customer->divisi = '-';
+        $customer->gender = '-';
+        $customer->organisation = '-';
+        $customer->phone = '-';
+        $customer->avatar = '-';
+        $customer->cover = '-';
+        $customer->password = Hash::make($request->password);
+        $customer->createdBy = Auth::id();
+        $customer->logip = $request->ip();
+        $customer->lastLogin = '0';
+
+        // Customer Section
+        $customer->customerCode = $request->customerCode;
+        $customer->customerName = $request->customerName;
+        $customer->customerAddress = $request->customerAddress;
+        $customer->customerCity = $request->customerCity;
+        $customer->customerPhone = $request->customerPhone;
+        $customer->customerEmail = $request->email;
+        $customer->customerWebsite = $request->customerWebsite;
+        $customer->customerNPWP = $request->customerNPWP;
+
+        $customer->save();
+        return response()->json($customer, 201);
+    }
+    public function countCustomers()
+    {
+        $userCount = DB::table('users')
+            ->where('role', '=', 'customer')
+            ->get()
+            ->count();
+        return response()->json($userCount);
+    }
+    public function updateCustomer($id, Request $request)
+    {
+        $user = User::find($id);
+        foreach ([
+            'name', 'email', 'customerCode', 'customerName', 'customerAddress',
+            'customerCity', 'customerPhone', 'customerEmail', 'customerWebsite', 'customerNPWP'
+        ] as $field) {
+            if (isset($request->{$field})) {
+                $user->{$field} = $request->{$field};
+            }
+        }
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return response()->json($user);
+    }
+
+    // SUPPLIERS API CONTROLLER
+    public function getSuppliers()
+    {
+        return response()->json(User::where('role', 'supplier')->orderBy('name', 'asc')->get());
+    }
+    public function getSuppliersbyId($id)
+    {
+        return response()->json(User::find($id));
+    }
+    public function deleteSuppliers($id)
+    {
+        $getUser = User::find($id);
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function addSuppliers(Request $request)
+    {
+        $customer = new User();
+        // User Section
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->username = strtolower($request->name);
+        $customer->role = 'supplier';
+        $customer->department = '-';
+        $customer->status = '1';
+        $customer->divisi = '-';
+        $customer->gender = '-';
+        $customer->organisation = '-';
+        $customer->phone = '-';
+        $customer->avatar = '-';
+        $customer->cover = '-';
+        $customer->password = Hash::make($request->password);
+        $customer->createdBy = Auth::id();
+        $customer->logip = $request->ip();
+        $customer->lastLogin = '0';
+
+        // Customer Section
+        $customer->customerCode = $request->customerCode;
+        $customer->customerName = $request->customerName;
+        $customer->customerAddress = $request->customerAddress;
+        $customer->customerCity = $request->customerCity;
+        $customer->customerPhone = $request->customerPhone;
+        $customer->customerEmail = $request->email;
+        $customer->customerWebsite = $request->customerWebsite;
+        $customer->customerNPWP = $request->customerNPWP;
+
+        $customer->save();
+        return response()->json($customer, 201);
+    }
+    public function countSuppliers()
+    {
+        $userCount = DB::table('users')
+            ->where('role', '=', 'supplier')
+            ->get()
+            ->count();
+        return response()->json($userCount);
+    }
+    public function updateSuppliers($id, Request $request)
+    {
+        $user = User::find($id);
+        foreach ([
+            'name', 'email', 'customerCode', 'customerName', 'customerAddress',
+            'customerCity', 'customerPhone', 'customerEmail', 'customerWebsite', 'customerNPWP'
+        ] as $field) {
+            if (isset($request->{$field})) {
+                $user->{$field} = $request->{$field};
+            }
+        }
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return response()->json($user);
+    }
 }

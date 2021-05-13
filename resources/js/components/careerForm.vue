@@ -9,7 +9,7 @@
         </div>
         <form @submit.prevent="handleSubmit">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
@@ -77,7 +77,7 @@
                                         placeholder="Requirements / Decriptions / Qualification / Job descriptions. Press `CTRL + ENTER` to send the comment."
                                         v-model="job.description" @keydown.enter="handleSubmit"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 300,
+                                                                height: 500,
                                                                 menubar: false,
                                                                 branding: false,
                                                                 toolbar:

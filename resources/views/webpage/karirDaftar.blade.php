@@ -165,7 +165,6 @@
                                     <div class="col-lg-8">
                                         <div class="form-group">
                                             <select name="provinsi" id="provinsi" class="custom-select" required>
-
                                             </select>
                                         </div>
                                     </div>

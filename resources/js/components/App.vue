@@ -71,13 +71,8 @@
             <aside class="sidebar">
                 <div class="sidebar__menu-group">
                     <ul class="sidebar_nav">
-                        <li>
-                            <router-link to="/tools">
-                                <span class="material-icons-outlined nav-icon">
-                                    home
-                                </span>
-                                <span class="menu-text">Dashboard</span>
-                            </router-link>
+                        <li class="menu-title m-top-15">
+                            <span>General Applications</span>
                         </li>
                         <li v-if="user.divisi == 'developer'">
                             <router-link to="/version-control">
@@ -86,9 +81,6 @@
                                 </span>
                                 <span class="menu-text">Version control</span>
                             </router-link>
-                        </li>
-                        <li class="menu-title m-top-30">
-                            <span>General Applications</span>
                         </li>
                         <li>
                             <router-link to="/issues">
@@ -163,8 +155,48 @@
                                 <span class="menu-text">Track delivery</span>
                             </router-link>
                         </li>
+                        <li class="menu-title m-top-15">
+                            <span>Associate</span>
+                        </li>
+                        <li>
+                            <router-link to="/customers">
+                                <span class="material-icons-outlined nav-icon">
+                                    groups
+                                </span>
+                                <span class="menu-text">Customers</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/suppliers">
+                                <span class="material-icons-outlined nav-icon">
+                                    groups
+                                </span>
+                                <span class="menu-text">Suppliers</span>
+                            </router-link>
+                        </li>
+                        <div v-if="user.role=='customer' || user.role=='admin'">
+                            <li class="menu-title m-top-15">
+                                <span>Warehouse & Asset</span>
+                            </li>
+                            <li>
+                                <router-link to="/warehouse-management">
+                                    <span class="material-icons-outlined nav-icon">
+                                        home_work
+                                    </span>
+                                    <span class="menu-text">Warehouse Management</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/asset-management">
+                                    <span class="material-icons-outlined nav-icon">
+                                        view_day
+                                    </span>
+                                    <span class="menu-text">Asset Management</span>
+                                </router-link>
+                            </li>
+                        </div>
                         <div v-if="user.role == 'it' || user.role=='admin'">
-                            <li class="menu-title m-top-30">
+                            <li class="menu-title m-top-15">
                                 <span>Main Web Config</span>
                             </li>
                             <li>
