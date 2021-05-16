@@ -17,7 +17,7 @@
                             <img class="svg" :src="'./dashboard/img/svg/feature-cards9.svg'" alt="">
                         </div>
                         <div class="application-task-content">
-                            <h4>47</h4>
+                            <h4>{{solvedIssue}}</h4>
                             <span class="text-light fs-14 mt-1 text-capitalize">total issue resolved </span>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                             <img class="svg" :src="'./dashboard/img/svg/feature-cards10.svg'" alt="">
                         </div>
                         <div class="application-task-content">
-                            <h4>34</h4>
+                            <h4>{{pendingIssue}}</h4>
                             <span class="text-light fs-14 mt-1 text-capitalize">total issue pending</span>
                         </div>
                     </div>
@@ -150,17 +150,29 @@
         data() {
             return {
                 user: {},
+                solvedIssue: 0,
+                pendingIssue: 0,
                 moment: moment,
             }
         },
         mounted() {
             this.userGet();
+            this.svIssue();
+            this.pdIssue();
         },
         methods: {
             async userGet() {
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
             },
+            async svIssue() {
+                const resp = await axios.get('/api/count-solved-issue');
+                this.solvedIssue = resp.data;
+            },
+            async pdIssue() {
+                const resp = await axios.get('/api/count-pending-issue');
+                this.pendingIssue = resp.data;
+            }
         },
     }
 

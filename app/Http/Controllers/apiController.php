@@ -250,6 +250,26 @@ class apiController extends Controller
     {
         return response()->json(commentIssue::where('issueId', $id)->get()->count());
     }
+    public function countIssueSolvedById()
+    {
+        $issueGet = DB::table('issues')
+            ->where('issues.assignee', '=', Auth::id())
+            ->where('issues.status', '=', '2')
+            ->join('users', 'issues.created_by', '=', 'users.id')
+            ->select('issues.*', 'users.name', 'users.avatar')
+            ->count();
+        return response()->json($issueGet);
+    }
+    public function countIssuePendingById()
+    {
+        $issueGet = DB::table('issues')
+            ->where('issues.assignee', '=', Auth::id())
+            ->where('issues.status', '!=', '2')
+            ->join('users', 'issues.created_by', '=', 'users.id')
+            ->select('issues.*', 'users.name', 'users.avatar')
+            ->count();
+        return response()->json($issueGet);
+    }
 
     // API FOR JOB
     public function getJob()
