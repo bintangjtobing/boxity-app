@@ -315,8 +315,8 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        <input type="text" data-type="currency" name="expected_sallary"
-                                            pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" class="form-control">
+                                        <input type="text" data-type="currency" name="expected_sallary" value=""
+                                            class="form-control">
                                     </div>
                                 </div>
                             </div>

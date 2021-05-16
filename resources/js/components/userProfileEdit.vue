@@ -23,17 +23,17 @@
                                         <div class="mt-40 mb-50">
                                             <div class="account-profile d-flex justify-content-center mb-4 ">
                                                 <div class="ap-img pro_img_wrapper">
-                                                    <input id="file-upload" type="file" name="fileUpload" class="d-none"
-                                                        @change="fileUpload">
+                                                    <!-- <input id="file-upload" type="file" name="fileUpload" class="d-none"
+                                                        @change="fileUpload"> -->
                                                     <label for="file-upload">
                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                             :src="`/dashboard/img/author/profile/`+user.avatar"
                                                             alt="profile img" v-if="!imagePreview">
                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                             :src="imagePreview" alt="profile img" v-if="imagePreview">
-                                                        <span class="cross" id="remove_pro_pic">
+                                                        <!-- <span class="cross" id="remove_pro_pic">
                                                             <i class="fas fa-camera"></i>
-                                                        </span>
+                                                        </span> -->
                                                     </label>
                                                 </div>
                                             </div>
@@ -198,30 +198,30 @@
             },
             handleSubmit(e) {
                 e.preventDefault();
-                const config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                };
-                const data = new FormData();
-                data.append('image', this.imageLocation);
-                data.append('name', this.user.name);
-                data.append('username', this.user.username);
-                data.append('email', this.user.email);
-                data.append('phone', this.user.phone);
-                data.append('gender', this.user.gender);
-                data.append('birth', this.user.birth);
-                data.append('bio', this.user.bio);
-                data.append('facebook', this.user.facebook);
-                data.append('instagram', this.user.instagram);
-                console.log(data);
-                axios.patch('/api/profile/' + this.user.id, data, config);
-                // this.loadDataUser();
-                // Swal.fire({
-                //     icon: 'success',
-                //     title: 'Congratulations',
-                //     text: 'Update your data succced.',
-                // });
+                // const config = {
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data',
+                //     }
+                // };
+                // const data = new FormData();
+                // data.append('image', this.imageLocation);
+                // data.append('name', this.user.name);
+                // data.append('username', this.user.username);
+                // data.append('email', this.user.email);
+                // data.append('phone', this.user.phone);
+                // data.append('gender', this.user.gender);
+                // data.append('birth', this.user.birth);
+                // data.append('bio', this.user.bio);
+                // data.append('facebook', this.user.facebook);
+                // data.append('instagram', this.user.instagram);
+                // console.log(data);
+                axios.patch('/api/profile/' + this.user.id, this.user);
+                this.loadDataUser();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congratulations',
+                    text: 'Update your data succced.',
+                });
             },
             gatherFormData() {
 

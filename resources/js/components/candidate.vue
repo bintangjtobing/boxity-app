@@ -4,9 +4,6 @@
             <div class="col-12">
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title mb-2">Candidate Management</h4>
-                    <p>If data was not shown, you can <a @click="refreshPage">refresh</a> this page for a several times.
-                        If still happens,
-                        you can contact the developer to fix this bugs.</p>
                 </div>
             </div>
         </div>
@@ -99,9 +96,6 @@
             async loadCandidates() {
                 const res = await axios.get('/api/candidates');
                 this.candidates = res.data;
-            },
-            refreshPage() {
-                location.reload();
             },
             async deleteData(id) {
                 const result = await Swal.fire({

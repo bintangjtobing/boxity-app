@@ -5,9 +5,6 @@
 
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Notepad <span>{{title}}</span></h4>
-                    <p>If data was not shown, you can <a @click="refreshPage">refresh</a> this page for a several times.
-                        If still happens,
-                        you can contact the developer to fix this bugs.</p>
                 </div>
 
             </div>
@@ -323,9 +320,6 @@
                 // console.log('200')
                 this.loadNote();
             },
-            refreshPage() {
-                location.reload();
-            }
 
         },
     }

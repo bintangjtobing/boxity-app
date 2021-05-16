@@ -4,9 +4,6 @@
             <div class="col-12">
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Track delivery system management</h4>
-                    <p>If data was not shown,
-                        you can <a @click="refreshPage">refresh</a>this page for a several times. If still happens,
-                        you can contact the developer to fix this bugs.</p>
                     <div class="action-btn">
                         <router-link :to="`/track-delivery/new`" class="btn px-15 btn-primary">
                             <i class="las la-plus fs-16"></i>Add new track</router-link>
@@ -194,9 +191,6 @@
                     });
                 }
             },
-            refreshPage() {
-                location.reload();
-            }
         },
     }
 

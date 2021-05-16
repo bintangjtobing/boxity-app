@@ -11,8 +11,13 @@ import titleMixin from './mixins/titleMixins.js';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 import 'feather-icons';
+import moment from 'moment';
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+// Language MOMENT
+require('moment/locale/en-au');
+moment.locale('en-au');
 
 Vue.mixin(titleMixin);
 Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);

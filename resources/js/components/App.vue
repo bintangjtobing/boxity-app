@@ -52,7 +52,7 @@
                                                     <i data-feather="settings"></i> Settings</router-link>
                                             </li>
                                         </ul>
-                                        <a href="/sign-out" class="nav-author__signout">
+                                        <a v-on:click="signOutConfirm" class="nav-author__signout">
                                             <i data-feather="log-out"></i> Sign Out</a>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                         <li>
                             <router-link to="/issues">
                                 <span class="material-icons-outlined nav-icon">
-                                    home
+                                    contact_support
                                 </span>
                                 <span class="menu-text">Issue center</span>
                             </router-link>
@@ -155,25 +155,27 @@
                                 <span class="menu-text">Track delivery</span>
                             </router-link>
                         </li>
-                        <li class="menu-title m-top-15">
-                            <span>Associate</span>
-                        </li>
-                        <li>
-                            <router-link to="/customers">
-                                <span class="material-icons-outlined nav-icon">
-                                    groups
-                                </span>
-                                <span class="menu-text">Customers</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/suppliers">
-                                <span class="material-icons-outlined nav-icon">
-                                    groups
-                                </span>
-                                <span class="menu-text">Suppliers</span>
-                            </router-link>
-                        </li>
+                        <div v-if="user.role=='customer' || user.role=='admin'">
+                            <li class="menu-title m-top-15">
+                                <span>Associate</span>
+                            </li>
+                            <li>
+                                <router-link to="/customers">
+                                    <span class="material-icons-outlined nav-icon">
+                                        groups
+                                    </span>
+                                    <span class="menu-text">Customers</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/suppliers">
+                                    <span class="material-icons-outlined nav-icon">
+                                        groups
+                                    </span>
+                                    <span class="menu-text">Suppliers</span>
+                                </router-link>
+                            </li>
+                        </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
                             <li class="menu-title m-top-15">
                                 <span>Warehouse & Asset</span>
@@ -225,7 +227,7 @@
                             </li>
                         </div>
                         <li>
-                            <a href="/sign-out" class="text-danger">
+                            <a v-on:click="signOutConfirm" class="text-danger">
                                 <span class="material-icons-outlined nav-icon">
                                     logout
                                 </span>
@@ -273,7 +275,8 @@
     </div>
 </template>
 <script>
-    import feather from 'feather-icons'
+    import feather from 'feather-icons';
+    import Swal from 'sweetalert2';
     export default {
         data() {
             return {
@@ -294,6 +297,20 @@
             async versionGet() {
                 const resp = await axios.get('/api/version-control');
                 this.version = resp.data[0];
+            },
+            signOutConfirm() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Do you want to sign ouut?',
+                    showCancelButton: true,
+                    confirmButtonText: `Sure!`,
+                    denyButtonText: `Cancel`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = '/sign-out';
+                    }
+                })
             }
         },
     }
