@@ -3,14 +3,15 @@
    ```sh
    git clone https://github.com/The-Boring-Organizations/boxity-app
    ```
-2. Install composer by run 
-    ```sh
-    composer intall
+2. Dont forget to ```npm run prod``` before running into hosted server
+3. Copy env File to the directory
     ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
+    cp .env.example .env
+    ```
+    and then
+    ```
+    nano .env
+    ``
 4. Dont forget to set the .env file,
     ```sh
     DB_CONNECTION=mysql
@@ -28,9 +29,22 @@
     MAIL_PASSWORD=7badd9a3876f36 <- Your mail password
     MAIL_ENCRYPTION=tls
     ```
-5. Run the app key
+5. Install composer by running
+    ```sh
+    composer intall
+    ```
+5. Run the app key, migrate the database and also optimize the artisan
     ```
     php artisan key:generate
+    ```
+    ```
+    php artisan migrate
+    ```
+    ```
+    php artisan db:seed
+    ```
+    ```
+    php artisan optimize:clear
     ```
 
 ## Instructions how to run the code
@@ -46,9 +60,3 @@ And the next is:
 - You can login it with email: admin@admin.com, password: admin.
 - And then you will see the dashboards, and then you can go to Your Sites.
 - As your assignment, i've been already completed that, with you can add your website, update it and delete on Account page.
-
-## Setup
-- From your local (or inside container), run `npm run dev` to build frontend assets
-- Go into Laravel container and run `composer run-script migrate`
-- (only for first time setup) run `composer run-script seed`
-- Access the website via `http://localhost:8080`
