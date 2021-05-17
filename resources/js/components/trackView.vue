@@ -200,7 +200,7 @@
                     });
                 }).catch(error => {
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Something wrong.',
                         confirmButtonText: `Ok`,
                         html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If it still exist, you can contact our developer. <br><br>Error message: ` +

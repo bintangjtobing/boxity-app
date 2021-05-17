@@ -176,11 +176,11 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <form action="/">
-                                <div class="form-group mb-25">
+                                <div class="form-group my-2">
                                     <input type="text" v-model="note.title" class="form-control" placeholder="Title"
                                         id="text">
                                 </div>
-                                <div class="form-group mb-25">
+                                <div class="form-group my-2">
                                     <editor placeholder="Write your note here..." v-model="note.description"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 300,
@@ -193,7 +193,7 @@
                                                         }" />
 
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <select
                                         class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="note.label">
@@ -204,7 +204,7 @@
                                         <option :value="`4`">Important</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
@@ -284,7 +284,7 @@
                     });
                 }).catch(error => {
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Something wrong.',
                         confirmButtonText: `Ok`,
                         html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
@@ -299,7 +299,7 @@
             },
             async deleteNotepad(id) {
                 const result = await Swal.fire({
-                    icon: 'error',
+                    icon: 'warning',
                     title: 'Are you sure want to delete this notepad?',
                     showCancelButton: true,
                     cancelButtonColor: '#d33',

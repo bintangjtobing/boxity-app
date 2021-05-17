@@ -174,7 +174,7 @@
             },
             async terminateTrack(id) {
                 const result = await Swal.fire({
-                    icon: 'error',
+                    icon: 'warning',
                     title: 'Are you sure want to terminate track?',
                     showCancelButton: true,
                     cancelButtonColor: '#d33',
