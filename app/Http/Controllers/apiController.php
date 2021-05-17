@@ -165,8 +165,9 @@ class apiController extends Controller
         $issueGet = issue::with('user')
             ->withCount('comments')
             ->where('created_by', Auth::id())
-            ->where('status', '=', '1')
+            // ->where('status', '!=', '2')
             ->orderBy('created_at', 'DESC')
+            ->limit(5)
             ->get();
         return $issueGet;
     }
@@ -870,6 +871,10 @@ class apiController extends Controller
     public function userGetWithOutLoggedIn()
     {
         return response()->json(User::where('id', '!=', Auth::id())->orderBy('name', 'asc')->get());
+    }
+    public function getAssignee()
+    {
+        return response()->json(User::where('id', '!=', Auth::id())->where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
     }
 
     // CUSTOMERS API CONTROLLER

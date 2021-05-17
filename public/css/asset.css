@@ -25723,7 +25723,7 @@ td {
 }
 
 .sidebarInfo {
-    line-height: 10px;
+    line-height: 6px;
 }
 
 .sidebarInfo label {
@@ -25965,6 +25965,11 @@ a {
 .router-link-exact-active,
 .router-link-exact-active span {
     color: #e10c79 !important;
+}
+
+.mb-20,
+.my-20 {
+    margin-bottom: 1.25rem !important;
 }
 
 /* Responsive Design */

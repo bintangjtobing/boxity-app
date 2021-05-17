@@ -125,7 +125,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group mb-25">
+                                <div class="form-group my-2">
                                     <select
                                         class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="goods.typeOfGoods" required>
@@ -134,11 +134,11 @@
                                         <option :value="`2`">Packet</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <input type="text" v-model="goods.receiptNumber" class="form-control"
                                         placeholder="Receipt number (No resi dokumen / pengiriman)" id="text" required>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <editor placeholder="Document/packet descriptions..." v-model="goods.description"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 300,
@@ -150,7 +150,7 @@
                                                                     bullist numlist outdent indent | removeformat'
                                                         }" />
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"

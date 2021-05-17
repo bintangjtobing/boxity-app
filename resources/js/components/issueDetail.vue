@@ -130,19 +130,19 @@
                 <div class="card card-Vertical card-default card-md">
                     <div class="card-body pb-md-30">
                         <div class="Vertical-form">
-                            <div class="form-group">
+                            <div class="form-group my-3">
                                 <div class="sidebarInfo">
                                     <label>Assignee to:</label><br>
                                     <span>{{assignee.name}}</span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group my-3">
                                 <div class="sidebarInfo">
                                     <label>Approved by:</label><br>
                                     <span>{{approver.name}}</span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group my-3">
                                 <div class="sidebarInfo">
                                     <label>Priority</label><br>
                                     <div v-if="issues.priority==0">

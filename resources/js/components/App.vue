@@ -106,7 +106,7 @@
                                 <span class="menu-text">Notepad</span>
                             </router-link>
                         </li>
-                        <li v-if="user.role == 'it' || user.role=='admin'">
+                        <li v-if="user.role=='admin'">
                             <router-link to="/users-management">
                                 <span class="material-icons-outlined nav-icon">
                                     manage_accounts
@@ -114,7 +114,7 @@
                                 <span class="menu-text">Users management</span>
                             </router-link>
                         </li>
-                        <li class="has-child" v-if="user.role == 'it' || user.role=='admin'">
+                        <li class="has-child" v-if="user.role=='admin' || user.role=='hrdga'">
                             <a href="#" class="">
                                 <span class="material-icons-outlined nav-icon">
                                     people_outline
@@ -197,7 +197,7 @@
                                 </router-link>
                             </li>
                         </div>
-                        <div v-if="user.role == 'it' || user.role=='admin'">
+                        <div v-if="user.role=='admin'">
                             <li class="menu-title m-top-15">
                                 <span>Main Web Config</span>
                             </li>

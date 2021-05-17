@@ -58,7 +58,7 @@
                                         class="rounded-circle reporterImg">
                                     <span>{{username}}</span>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-2">
                                     <label for="">Assignees:</label>
                                     <select v-model="issue.assignee" id=""
                                         class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
@@ -69,7 +69,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group my-3">
                                     <label for="">Priority:</label>
                                     <select v-model="issue.priority" id=""
                                         class="form-control custom-select ih-medium ip-gray radius-xs b-light px-15 fa-select"
@@ -131,7 +131,7 @@
                 this.username = res.data.name;
             },
             async assigneeGet() {
-                const res = await axios.get('/api/userGetWithOutLoggedIn');
+                const res = await axios.get('/api/assignees');
                 this.users = res.data;
             },
             async handleSubmit(event) {
