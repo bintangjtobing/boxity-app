@@ -12,6 +12,7 @@
 */
 
 use App\candidates;
+use App\Http\Controllers\spaController;
 
 Route::get('/clear-cache', function () {
     $exitCode = Artisan::call('cache:clear');
@@ -32,7 +33,7 @@ Route::get('/clear-view', function () {
 Route::get('/sign-out', function () {
     session()->flush();
     auth()->logout();
-    return redirect('/tool');
+    return redirect('/tools');
 });
 
 // Social Media Redirect
@@ -90,11 +91,9 @@ Route::get('/generatePDF/{id}', function ($id) {
 Route::get('/blog/v/{title}', 'webpageController@viewBlog');
 
 // Dashboard data url
-Route::get('/tool', function () {
-    return Redirect::to('/tools');
-});
+// Route::get('/tool', function () {
+//     return Redirect::to('/tools');
+// });
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/{any}', function () {
-        return view('layout');
-    })->where('any', '.*');
+    Route::get('/{any}', 'spaController@index')->where('any', '.*');
 });

@@ -22,7 +22,7 @@ class authController extends Controller
         if (Auth::attempt($request->only('email', 'password', 'status'))) {
             $user = User::where(['email' => $request->email])->first();
             Auth::loginUsingId($user->id, TRUE);
-            return redirect('/tool');
+            return redirect('/tools');
         }
         return back()->with('gagal', ' Please check your auth status or your input!');
         // return 200;
