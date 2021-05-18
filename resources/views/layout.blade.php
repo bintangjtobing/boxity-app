@@ -4,7 +4,7 @@
 <head>
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ mix('css/asset.css') }}" type="text/css" rel="stylesheet" />
-    <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
+    <script src="{{ mix('js/app.js?id=1') }}" type="text/javascript" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
