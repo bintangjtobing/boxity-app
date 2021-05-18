@@ -7,7 +7,7 @@
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
                         <img class="svg" :src="'./dashboard/img/svg/bars.svg'" alt="img"></a>
-                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="'./dashboard/img/logo_Dark.png'"
+                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="'./dashboard/img/Logo_Dark.png'"
                             alt="logo BTSA Logistics"><img class="light" :src="'./dashboard/img/Logo_white.png'"
                             alt="logo BTSA Logistics"></a>
                 </div>
