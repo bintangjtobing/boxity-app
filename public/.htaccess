@@ -6,8 +6,6 @@
     RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-    RewriteCond %{REQUEST_URI} !^public
-    RewriteRule ^(.*)$ public/$1 [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -21,7 +19,7 @@
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteRule ^ public/index.php [L]
 </IfModule>
 # compress text, html, javascript, css, xml:
 AddOutputFilterByType DEFLATE text/plain
