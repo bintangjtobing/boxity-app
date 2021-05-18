@@ -135,7 +135,7 @@
             return {
                 company: {},
                 user: {},
-                isReadOnly: true,
+                isReadOnly: false,
                 imagePreview: '',
                 imageLocation: '',
             }
