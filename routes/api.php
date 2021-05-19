@@ -58,6 +58,7 @@ Route::post('/blogs', 'apiController@addNewBlog');
 // User Profile API
 Route::get('/u/{username}', 'apiController@getProfile');
 Route::patch('/profile/{id}', 'apiController@updateProfile');
+Route::patch('/profile/password-update/{id}', 'apiController@updatePassword');
 
 // Contact API
 Route::get('/contacts', 'apiController@getContact');

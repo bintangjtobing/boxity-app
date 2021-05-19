@@ -390,7 +390,14 @@ class apiController extends Controller
         }
         $profile->save();
         return response()->json($profile, 201);
-        // return response()->json($request->all());
+    }
+    public function updatePassword($id, Request $request)
+    {
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        $user->unpassword = $request->password;
+        $user->save();
+        return response()->json($user, 201);
     }
 
     // QUOTE API
