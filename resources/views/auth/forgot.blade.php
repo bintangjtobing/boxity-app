@@ -25,7 +25,7 @@
                     <div class="card fat">
                         <div class="card-body">
                             <h4 class="card-title">Forgot Password</h4>
-                            <form method="POST">
+                            <form method="GET" action="/ask-reset-password">
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">E-Mail Address</label>
@@ -38,7 +38,6 @@
                                         By clicking "Reset Password" we will send a password reset link
                                     </div>
                                 </div>
-
                                 <div class="form-group m-0">
                                     <button type="submit" class="btn btn-primary btn-block">
                                         Reset Password

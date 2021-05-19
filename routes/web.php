@@ -69,9 +69,9 @@ Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
 Route::get('/forgot-password', function () {
     return view('auth.forgot');
 });
-Route::get('/reset-password', function () {
-    return view('auth.reset');
-});
+Route::get('/ask-reset-password', 'authController@askReset');
+Route::get('/reset-password/{id}', 'authController@resetPassword');
+Route::post('/reset-password/{id}', 'authController@processResetPassword');
 
 // Homepage Data
 Route::get('/', 'webpageController@index');
