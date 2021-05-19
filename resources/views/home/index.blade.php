@@ -10,6 +10,7 @@
 	============================================= -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900|Caveat+Brush&display=swap"
         rel="stylesheet" type="text/css" />
+    <meta name="google-site-verification" content="YhWgW5c_ANgy0VrCP1ipyOQaQPul0pGpxTdkAGNxzdg" />
     <link rel="stylesheet" href="{!!asset('webpage/css/bootstrap.css')!!}" type="text/css" />
     <link rel="stylesheet" href="{!!asset('webpage/style.css')!!}" type="text/css" />
     <link rel="stylesheet" href="{!!asset('webpage/css/swiper.css')!!}" type="text/css" />
@@ -312,7 +313,7 @@
 	============================================= -->
     <script src="{!!asset('webpage/js/jquery.js')!!}"></script>
     <script src="{!!asset('webpage/js/plugins.min.js')!!}"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBPHBkHbxlsp255-WwFSBcj4Eq3WUovF00"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCCy7lGZgJPwXvksxrn8VcvjRDRekxKpcY"></script>
     {{-- <script src="{!!asset('webpage/js/jquery.calendario.js')!!}"></script> --}}
     <script src="{!!asset('webpage/demos/btsa/js/events.js')!!}"></script>
 
