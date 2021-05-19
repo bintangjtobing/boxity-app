@@ -23,10 +23,11 @@
             <div class="row justify-content-md-center align-items-center h-100">
                 <div class="card-wrapper">
                     <div class="card fat">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h4 class="card-title text-center mt-5">Yeay! You have been successfully reset your
                                 password!
                             </h4>
+                            <span><a href="/tools">Back to login</a></span>
                         </div>
                     </div>
                     <div class="footer">
