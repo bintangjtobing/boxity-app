@@ -22,6 +22,7 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\Mail\addUser;
 use App\Mail\closedIssue;
 use App\Mail\makeNewIssue;
 use App\messages;
@@ -92,10 +93,12 @@ class apiController extends Controller
             $user->cover = $randVal . '.jpg';
         }
         $user->password = Hash::make($request->password);
+        $user->unpassword = $request->password;
         $user->createdBy = Auth::id();
         $user->logip = $request->ip();
         $user->lastLogin = '0';
         $user->save();
+        Mail::to($user->email)->send(new addUser($user));
         return response()->json($user, 201);
     }
     public function countUsers()
