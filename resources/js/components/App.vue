@@ -197,7 +197,7 @@
                                 </router-link>
                             </li>
                         </div>
-                        <div v-if="user.role=='admin'">
+                        <div v-if="user.role=='it' || user.role=='admin'">
                             <li class="menu-title m-top-15">
                                 <span>Main Web Config</span>
                             </li>
