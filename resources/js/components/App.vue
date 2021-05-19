@@ -301,7 +301,7 @@
             signOutConfirm() {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Do you want to sign ouut?',
+                    title: 'Do you want to sign out?',
                     showCancelButton: true,
                     confirmButtonText: `Sure!`,
                     denyButtonText: `Cancel`,
