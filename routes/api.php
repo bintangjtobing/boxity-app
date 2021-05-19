@@ -61,6 +61,7 @@ Route::patch('/profile/{id}', 'apiController@updateProfile');
 
 // Contact API
 Route::get('/contacts', 'apiController@getContact');
+Route::get('/contact-list', 'apiController@getContactList');
 
 // Quote API
 Route::get('/quote/get', 'apiController@getQuoteAll');

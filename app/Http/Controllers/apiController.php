@@ -112,6 +112,10 @@ class apiController extends Controller
     {
         return response()->json(User::find($id));
     }
+    public function getContactList()
+    {
+        return response()->json(User::where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
+    }
     public function updateUser($id, Request $request)
     {
         $user = User::find($id);

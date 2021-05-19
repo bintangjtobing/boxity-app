@@ -77,7 +77,7 @@
         },
         methods: {
             async loadContact() {
-                const resp = await axios.get('/api/users');
+                const resp = await axios.get('/api/contact-list');
                 this.users = resp.data;
             },
         },
