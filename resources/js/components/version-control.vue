@@ -86,8 +86,6 @@
                                             {{version.version}}</span><span
                                             class="version-date">{{version.created_at}}</span></router-link>
                                 </li>
-                                <!-- <li><span class="version-name">1.0.5</span><span class="version-date">2010/01/01</span>
-                                </li> -->
                             </ul>
                         </div>
                     </div>
