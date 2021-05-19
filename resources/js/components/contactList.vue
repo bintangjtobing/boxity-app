@@ -47,9 +47,6 @@
                             </div>
                             <div
                                 class="ap-button account-profile-cards__button button-group d-flex justify-content-center flex-wrap m-n1">
-                                <button type="button"
-                                    class="border text-capitalize px-20 color-white bg-gradient-primary disabled">
-                                    <i class="far fa-paper-plane"></i>&nbsp; direct chat</button>
                                 <a :href="contact.facebook" class="border text-capitalize color-gray shadow2">
                                     <i class="fab fa-facebook-f"></i></a>
                                 <a :href="contact.instagram" class="border text-capitalize color-gray shadow2 follow">
