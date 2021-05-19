@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'status', 'createdBy', 'divisi', 'department', 'avatar', 'organisation', 'username', 'gender','unpassword',
+        'name', 'email', 'password', 'role', 'status', 'createdBy', 'divisi', 'department', 'avatar', 'organisation', 'username', 'gender', 'unpassword',
         'birth',
         'bio',
         'instagram',
@@ -44,10 +44,10 @@ class User extends Authenticatable
         'customerAddress',
         'customerCity',
         'customerPhone',
-        'customerEmail',
+        'customerEmail',
         'customerWebsite',
         'customerNPWP',
-        ];
+    ];
 
     protected $hidden = ['password'];
 

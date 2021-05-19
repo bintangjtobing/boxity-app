@@ -602,7 +602,7 @@
                     </div>
 
                     <div class="col-md-4 px-4 mb-5">
-                        <h4 class="font-weight-medium mb-4">Our Partners</h4>
+                        <h4 class="font-weight-medium mb-4">Our Group</h4>
                         <img data-toggle="modal" data-target="#plpview" class="imgpartner"
                             src="{!!asset('webpage/demos/btsa/images/partner/plp.png')!!}" alt="Partner BTSA LOGISTICS">
                         <img data-toggle="modal" data-target="#infinityview" class="imgpartner"
@@ -615,9 +615,9 @@
                         <h4 class="font-weight-medium mb-4">Hubungi Kami</h4>
                         <p>Kamu dapat mengirimi kami pesan lewat email untuk mendapatkan penawaran terbaik kami.
                         </p>
-                        <a href="mailto:support@btsa.co.id" class="mb-1 d-block"><i class="icon-envelope21 position-relative"
-                                style="top: 1px;"></i> support@btsa.co.id</a>
-                        <div class="font-weight-medium mb-2 d-block">Monday - Saturday 08:15 - 1:700</div>
+                        <a href="mailto:support@btsa.co.id" class="mb-1 d-block"><i
+                                class="icon-envelope21 position-relative" style="top: 1px;"></i> support@btsa.co.id</a>
+                        <div class="font-weight-medium mb-2 d-block">Monday - Saturday 08:15 - 17:00</div>
                         <a href="/facebook" class="social-icon si-light si-rounded si-facebook">
                             <i class="icon-facebook"></i>
                             <i class="icon-facebook"></i>

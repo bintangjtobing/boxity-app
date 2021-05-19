@@ -187,6 +187,9 @@
                     text: 'Email',
                     value: 'email'
                 }, {
+                    text: 'Department',
+                    value: 'department'
+                }, {
                     text: 'Division',
                     value: 'divisi'
                 }, {
