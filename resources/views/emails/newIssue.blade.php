@@ -172,7 +172,7 @@
                                                             Support System BTSA LOGISTICS
                                                             <br><br>
                                                             E-mail: <a
-                                                                href="mailto:support@btsa.co.id">support@btsa.co.iid</a><br>
+                                                                href="mailto:support@btsa.co.id">support@btsa.co.id</a><br>
                                                             Tel: 061 8003 2999 (ext.103)
                                                         </span></p>
                                                 </div>

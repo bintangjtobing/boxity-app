@@ -165,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="vertical-form my-3" v-if="user.role=='head' && issues.status==0">
+                <div class="vertical-form my-3" v-if="user.role=='head' || user.role=='hrdga' && issues.status==0">
                     <div class="form-group">
                         <button v-on:click="approveIssue" type="submit" class="btn btn-primary btn-default btn-squared">
                             Approve issue</button>

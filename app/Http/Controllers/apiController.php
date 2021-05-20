@@ -154,7 +154,7 @@ class apiController extends Controller
     public function getIssues()
     {
         $role = $this->getLoggedUser()->role;
-        if ($role != 'head') {
+        if ($role == 'user' || $role == 'it') {
             return issue::with('user')
                 ->withCount('comments')
                 ->where('assignee', Auth::id())
@@ -239,10 +239,10 @@ class apiController extends Controller
         $issue->status = '1';
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
-        Mail::to('support@btsa.co.id')->send(new makeNewIssue($issues));
+        Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
 
-        return response()->json($issues, 201);
-        // return new makeNewIssue($issues);
+        // return response()->json($issues->user->email, 201);
+        return new makeNewIssue($issues);
     }
     public function closedIssue($id, Request $req)
     {
