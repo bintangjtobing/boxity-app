@@ -37,7 +37,7 @@
     <!-- Document Title
 	============================================= -->
     <title>@yield('titlepage') - BTSA LOGISTICS PPJK | EMKL | EMKU</title>
-    <link rel="shortcut icon" href="{!!asset('faviconv2.ico')!!}">
+    <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description"
         content="BTSA Logistics adalah Expedisi, EMKL, EMKU & Custom Clearance dan juga termasuk daftar perusahaan custom clearance di Indonesia. Berada di Jakarta, Medan, Surabaya, Semarang, Palembang, Pekan Baru, Bali,  Makasar dan Lombok.">
