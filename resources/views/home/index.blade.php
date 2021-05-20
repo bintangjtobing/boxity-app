@@ -191,6 +191,10 @@
                             <li><a href="/wikipedia" class="si-wikipedia"><span class="ts-icon"><i
                                             class="icon-wikipedia"></i></span><span class="ts-text">Wikipedia</span></a>
                             </li>
+                            <li><a href="/tools" class="si-facebook"><span class="ts-icon"><i
+                                            class="icon-settings"></i></span><span class="ts-text">Tools
+                                        Dashboard</span></a>
+                            </li>
                         </ul><!-- #top-social end -->
 
                     </div>
@@ -201,6 +205,8 @@
 						============================================= -->
                         <div class="top-links">
                             <ul class="top-links-container">
+                                <li class="top-links-item"><a href="/tools">Tools</a>
+                                </li>
                                 <li class="top-links-item"><a>Locations</a>
                                     <ul class="top-links-sub-menu">
                                         <li class="top-links-item"><a href="#">Medan</a></li>

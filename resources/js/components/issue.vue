@@ -54,9 +54,6 @@
                                     <th>
                                         <span class="userDatatable-title">priority</span>
                                     </th>
-                                    <th>
-                                        <span class="userDatatable-title">status</span>
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,18 +70,32 @@
                                     </td>
                                 </tr>
                                 <tr v-for="issue in issues" :key="issue.id">
-                                    <td>
+                                    <td style="width:85%">
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
                                                 <a href="#" class="text-dark fw-500">
                                                     <router-link :to="`/issues/${issue.id}`">
-                                                        <h6 v-if="issue.title.length<35">{{issue.title}}</h6>
-                                                        <h6 v-if="issue.title.length>=35">
-                                                            {{issue.title.substring(0,34)+"..."}}</h6>
+                                                        <h6 v-if="issue.title.length<95">{{issue.title}}</h6>
+                                                        <h6 v-if="issue.title.length>=95">
+                                                            {{issue.title.substring(0,94)+"..."}}</h6>
                                                         <p>{{issue.comments_count}}
                                                             <i class="far fa-comment-dots"></i> · Created
                                                             {{issue.created_at}} by
                                                             {{issue.user.name}}
+                                                            <div v-if="issue.status=='0'">
+                                                                <span
+                                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
+                                                            </div>
+                                                            <div v-if="issue.status=='1'">
+                                                                <span
+                                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
+                                                            </div>
+                                                            <div v-if="issue.status=='2'">
+                                                                <span class="bg-opacity-success color-success rounded-pill
+                                                    userDatatable-content-status active"><span><i
+                                                                            class="far fa-history"></i>
+                                                                    </span>&nbsp;Done</span>
+                                                            </div>
                                                         </p>
                                                     </router-link>
                                                 </a>
@@ -111,23 +122,6 @@
                                             <div v-if="issue.priority===4">
                                                 <span class="priority-highest"><i class="fas fa-arrow-up"></i>
                                                     Highest</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-inline-block">
-                                            <div v-if="issue.status=='0'">
-                                                <span
-                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
-                                            </div>
-                                            <div v-if="issue.status=='1'">
-                                                <span
-                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
-                                            </div>
-                                            <div v-if="issue.status=='2'">
-                                                <span class="bg-opacity-success color-success rounded-pill
-                                                    userDatatable-content-status active"><span><i
-                                                            class="far fa-history"></i> </span>&nbsp;Done</span>
                                             </div>
                                         </div>
                                     </td>

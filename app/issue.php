@@ -32,7 +32,9 @@ class issue extends Model
         'priority',
         'approved_by',
     ];
-
+    protected $casts = [
+        'created_at' => 'datetime:d M, Y',
+    ];
     protected $dates = ['created_at', 'updated_at'];
 
     public function user()
