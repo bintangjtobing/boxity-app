@@ -353,9 +353,10 @@
                         divisi: '',
                         name: '',
                         email: '',
-                        password: '',
-                        confirmPassword: '',
                     };
+                    const genPass = this.rndStr(8);
+                    this.user.password = genPass;
+                    this.user.confirmPassword = genPass;
                 }).catch(error => {
                     Swal.fire({
                         icon: 'warning',
