@@ -29,7 +29,8 @@ class addUser extends Mailable
      */
     public function build()
     {
-        return $this->from('verification@btsa.co.id', 'BTSA Support System')
+        $string = base64_encode(random_bytes(10));
+        return $this->from($string . '@btsa.co.id', 'BTSA Support System')
             ->subject('You have been successfully added to system!')
             ->markdown('emails.addUser');
     }

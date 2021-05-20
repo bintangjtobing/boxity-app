@@ -7,9 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class askReset extends Mailable
+class GoodsReceive extends Mailable
 {
-    public $user;
+    public $goods;
+    public $newGoods;
     use Queueable, SerializesModels;
 
     /**
@@ -17,9 +18,10 @@ class askReset extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($goods, $newGoods)
     {
-        $this->user = $user;
+        $this->goods = $goods;
+        $this->newGoods = $newGoods;
     }
 
     /**
@@ -30,8 +32,8 @@ class askReset extends Mailable
     public function build()
     {
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@btsa.co.id', 'BTSA Support System')
-            ->subject('Password Reset for your account: ' . $this->user->name)
-            ->markdown('emails.askReset');
+        return $this->from($string . '@btsa.co.id', 'Support System BTSA')
+            ->subject('Ada paket/dokumen datang untukmu, ' . $this->goods->name . '!')
+            ->markdown('emails.goodsReceive');
     }
 }

@@ -140,21 +140,18 @@
                                                 <div style="   font-family: Helvetica, sans-serif; ">
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         <span style="">Hallo
-                                                            {{$user->name}},</span></p>
+                                                            {{$goods->name}},</span></p>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        You have been added to our system, <br>you can now use the
-                                                        system by running it on your browser <a
-                                                            href="https://btsa.co.id/tools">btsa.co.id/tools</a>
-                                                        <br><br>
-                                                        by using this credential: <br>
-                                                        email: {{$user->email}} <br>
-                                                        password: {{$user->unpassword}}
-                                                        <br><br>
-                                                        <br><br>
-                                                        Please change your password on Edit Profile section, and go to
-                                                        security tab.
-                                                        Save your credential login information, and dont let anyone
-                                                        knows your credential.
+                                                        Ada paket/dokumen yang sudah receiptionist terima. <br>
+                                                        Berikut detail paket/dokumen yang telah diterima: <br><br>
+                                                        Nama pengirim / No. Resi: {{$newGoods->receiptNumber}} <br>
+                                                        Kurir pengirim: {{$newGoods->courier}}
+                                                        <br><br><br>
+                                                        Jika kamu sudah ambil paket/dokumen kamu, jangan lupa untuk
+                                                        update penerimaan barang melalui tools yang telah disediakan ya.
+                                                        <br>
+                                                        Atau kamu bisa langsung direct ke link tersebut. <a
+                                                            href="https://btsa.co.id/goods-receipt">https://btsa.co.id/goods-receipt</a>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">

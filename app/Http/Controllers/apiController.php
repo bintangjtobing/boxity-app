@@ -24,6 +24,7 @@ use App\id_domisilis;
 use App\jobvacancy;
 use App\Mail\addUser;
 use App\Mail\closedIssue;
+use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
 use App\messages;
 use App\notepad;
@@ -702,7 +703,10 @@ class apiController extends Controller
         $newGoods->description = $request->description;
         $newGoods->status = 0;
         $newGoods->save();
-        return response()->json($newGoods, 201);
+        $goods = User::find($newGoods->receiverid);
+        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods));
+        // return response()->json($goods);
+        return response()->json($newGoods, 200);
     }
     public function getGoodsById($id, Request $req)
     {

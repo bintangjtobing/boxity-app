@@ -29,7 +29,8 @@ class doneReset extends Mailable
      */
     public function build()
     {
-        return $this->from('resetpassword@btsa.co.id', 'BTSA Support System')
+        $string = base64_encode(random_bytes(10));
+        return $this->from($string . '@btsa.co.id', 'BTSA Support System')
             ->subject('You have been successfully reset your password!')
             ->markdown('emails.doneReset');
     }

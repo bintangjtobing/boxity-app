@@ -163,27 +163,18 @@
                                                             <br>
                                                         </span>
                                                     </p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                style="font-family:Helvetica, sans-serif;padding-top:20px;padding-right:30px;padding-bottom:10px;padding-left:30px;">
-                                                <div style="   font-family: Helvetica, sans-serif; ">
+                                                    <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        <span style=""><strong>Terima kasih atas
-                                                                perhatiannya
-                                                                ya.</strong><br>
-                                                            Report Issue BTSA Logistics <br>
-                                                            report@btsa.co.id <br></span></p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                style="font-family:Helvetica, sans-serif;padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px;">
-                                                <div style="   font-family: Helvetica, sans-serif; ">
-                                                    <small class="text-muted">Anda menerima email ini sebagai
-                                                        pemberitahuan
-                                                        tentang adanya
-                                                        issue report baru
-                                                        dalam sistem IR BTSA Logistics.</small>
+                                                        <span style="">Don't reply this email. <br>
+                                                            If you have any questions or need help, please do not
+                                                            hesitate to contact us. <br><br>
+                                                            Best regards, <br>
+                                                            Support System BTSA LOGISTICS
+                                                            <br><br>
+                                                            E-mail: <a
+                                                                href="mailto:support@btsa.co.id">support@btsa.co.iid</a><br>
+                                                            Tel: 061 8003 2999 (ext.103)
+                                                        </span></p>
                                                 </div>
                                             </div>
                                         </div>

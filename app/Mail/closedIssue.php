@@ -29,7 +29,8 @@ class closedIssue extends Mailable
      */
     public function build()
     {
-        return $this->from('report@btsa.co.id', 'Issue Report BTSA Logistics.')
+        $string = base64_encode(random_bytes(10));
+        return $this->from($string . '@btsa.co.id', 'Issue Report BTSA Logistics.')
             ->subject('[Ticket#' . $this->issues->id . '] Finished: Your Issue Report has been done.')
             ->markdown('emails.closedIssue');
     }
