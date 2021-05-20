@@ -272,6 +272,18 @@
                 </div>
             </footer>
         </main>
+        <div id="overlayer">
+            <span class="loader-overlay">
+                <div class="atbd-spin-dots spin-lg">
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                    <span class="spin-dot badge-dot dot-primary"></span>
+                </div>
+            </span>
+        </div>
+        <div class="overlay-dark-sidebar"></div>
+        <div class="customizer-overlay"></div>
     </div>
 </template>
 <script>
