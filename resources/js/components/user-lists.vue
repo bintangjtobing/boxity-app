@@ -223,8 +223,6 @@
         mounted() {
             this.loadUsers();
             this.generatePassword();
-        },
-        created() {
             this.countUsers();
         },
         methods: {
@@ -341,6 +339,7 @@
                 }
                 await axios.post('/api/users', payload).then(response => {
                     this.loadUsers();
+                    this.countUsers();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
