@@ -55,14 +55,15 @@
                                                         <div class="col-lg-6">
                                                             <input type="password" required v-model="user.password"
                                                                 class="form-control" id="password"
-                                                                placeholder="Password">
+                                                                placeholder="Password" readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.password }}</span>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="password" required
                                                                 v-model="user.confirmPassword" id="verifyPassword"
-                                                                class="form-control" placeholder="Verify password">
+                                                                class="form-control" placeholder="Verify password"
+                                                                readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.confirmPassword }}
                                                             </span>
@@ -208,6 +209,8 @@
                     role: '',
                     department: '',
                     divisi: '',
+                    password: '',
+                    confirmPassword: '',
                 },
                 errors: {
                     name: '',
@@ -219,11 +222,17 @@
         },
         mounted() {
             this.loadUsers();
+            this.generatePassword();
         },
         created() {
             this.countUsers();
         },
         methods: {
+            generatePassword() {
+                const genPass = this.rndStr(8);
+                this.user.password = genPass;
+                this.user.confirmPassword = genPass;
+            },
             loadUsers() {
                 axios.get("api/users")
                     .then(res => {
@@ -365,6 +374,15 @@
             async countUsers() {
                 const data = await axios.get('/api/count-users');
                 this.count = data.data;
+            },
+            rndStr(len) {
+                let text = " "
+                let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
+
+                for (let i = 0; i < len; i++) {
+                    text += chars.charAt(Math.floor(Math.random() * chars.length))
+                }
+                return text
             }
         },
     }

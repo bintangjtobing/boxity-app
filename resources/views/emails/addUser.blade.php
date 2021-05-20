@@ -151,7 +151,10 @@
                                                         password: {{$user->unpassword}}
                                                         <br><br>
                                                         <br><br>
-                                                        Save this login credential info for your safe account.
+                                                        Please change your password on Edit Profile section, and go to
+                                                        security tab.
+                                                        Save your credential login information, and dont let anyone
+                                                        knows your credential.
                                                     </p>
                                                 </div>
                                             </div>

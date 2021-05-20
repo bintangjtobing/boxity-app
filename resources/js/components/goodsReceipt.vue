@@ -136,7 +136,8 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <input type="text" v-model="goods.receiptNumber" class="form-control"
-                                        placeholder="Receipt number (No resi dokumen / pengiriman)" id="text" required>
+                                        placeholder="Nama Pengirim (PT,DLL) and Receipt number (No resi dokumen / pengiriman)"
+                                        id="text" required>
                                 </div>
                                 <div class="form-group my-2">
                                     <editor placeholder="Document/packet descriptions..." v-model="goods.description"
@@ -223,7 +224,7 @@
                 this.goodsData = resp.data;
             },
             async loadUser() {
-                const resp = await axios.get('/api/users');
+                const resp = await axios.get('/api/contact-list');
                 this.user = resp.data;
             },
             async submitHandle() {
