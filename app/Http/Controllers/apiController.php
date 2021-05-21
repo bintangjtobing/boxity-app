@@ -149,6 +149,10 @@ class apiController extends Controller
         }
         $issue->created_by = auth()->user()->id;
         $issue->save();
+        if ($issue->status = '1') {
+            $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
+            Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
+        }
         return response()->json($issue, 201);
     }
     public function getIssues()

@@ -156,9 +156,17 @@
                                                             #{{$issues->id}} yang
                                                             berisi mengenai:
                                                             <br>
+                                                            <b>{{$issues->title}}</b>
                                                             {!!$issues->issue!!}
                                                             <br>
                                                         </span>
+                                                    </p>
+                                                    <hr>
+                                                    <p style="text-align: left;  word-break: break-word;   margin: 0;">
+                                                        Simpan lihat issue tersebut di link yang sudah
+                                                        tersedia: <br>
+                                                        <span><a href="https://btsa.co.id/issues/{{$issues->id}} "
+                                                                target="_blank">https://btsa.co.id/issues/{{$issues->id}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
