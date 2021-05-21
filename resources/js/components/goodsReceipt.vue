@@ -49,19 +49,21 @@
                                         {{item.receiver.name}}
                                     </template>
                                     <template v-slot:item.status="{ item }">
-                                        <span class="media-badge color-white bg-primary" v-if="item.status==0">Received
-                                            on
+                                        <span class="media-badge color-white bg-primary" v-if="item.status==0">Available
+                                            at
                                             receiptionist</span>
-                                        <span class="media-badge color-white bg-success" v-if="item.status==1">Taken by
-                                            receiver</span>
+                                        <span class="media-badge color-white bg-success" v-if="item.status==1">Well
+                                            received</span>
                                         <span class="media-badge color-white bg-danger"
                                             v-if="item.status==2">Terminated</span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <a href="#" v-on:click="receivedAction(item.id)" v-if="item.status==0"><span><i
-                                                    class="far fa-check-circle fa-2x"></i></span></a>
-                                        <a v-if="item.status==1"><span><i
-                                                    class="fas fa-check-circle fa-2x"></i></span></a>
+                                        <a href="#" v-on:click="receivedAction(item.id)" v-if="item.status==0"><span
+                                                style="color:blue;"><i class="far fa-check-circle"></i> Update
+                                                status</span></a>
+                                        <a v-if="item.status==1"><span style="color:green;"><i
+                                                    class="fas fa-check-circle"></i>
+                                                Done</span></a>
                                     </template>
                                 </v-data-table>
                             </div>
