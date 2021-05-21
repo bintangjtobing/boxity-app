@@ -63,7 +63,6 @@ import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
 import supplierForm from './components/supplierForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
-import assetMgmt from './components/assetMgmt.vue';
 
 // membuat router
 const routes = [{
@@ -227,10 +226,6 @@ const routes = [{
         name: 'warehouse-management',
         path: '/warehouse-management',
         component: warehouseMgmt
-    }, {
-        name: 'asset-management',
-        path: '/asset-management',
-        component: assetMgmt
     }
 ]
 

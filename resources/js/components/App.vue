@@ -106,31 +106,6 @@
                                 <span class="menu-text">Notepad</span>
                             </router-link>
                         </li>
-                        <li v-if="user.role=='admin'">
-                            <router-link to="/users-management">
-                                <span class="material-icons-outlined nav-icon">
-                                    manage_accounts
-                                </span>
-                                <span class="menu-text">Users management</span>
-                            </router-link>
-                        </li>
-                        <li class="has-child" v-if="user.role=='admin' || user.role=='hrdga'">
-                            <a href="#" class="">
-                                <span class="material-icons-outlined nav-icon">
-                                    people_outline
-                                </span>
-                                <span class="menu-text">Human resources</span>
-                                <span class="toggle-icon"></span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <router-link to="/career">Career</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/candidate">Candidate</router-link>
-                                </li>
-                            </ul>
-                        </li>
                         <li>
                             <router-link to="/goods-receipt">
                                 <span class="material-icons-outlined nav-icon">
@@ -175,26 +150,87 @@
                                     <span class="menu-text">Suppliers</span>
                                 </router-link>
                             </li>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons-outlined nav-icon">
+                                        groups
+                                    </span>
+                                    <span class="menu-text">Sales Person</span>
+                                    <span class="badge badge-primary menuItem">Soon</span>
+                                </a>
+                            </li>
+                            <li v-if="user.role=='admin'">
+                                <router-link to="/users-management">
+                                    <span class="material-icons-outlined nav-icon">
+                                        manage_accounts
+                                    </span>
+                                    <span class="menu-text">Users management</span>
+                                </router-link>
+                            </li>
+                        </div>
+                        <div v-if="user.role=='admin' || user.role=='hrdga'">
+                            <li class="menu-title m-top-15">
+                                <span>Human Resources Management</span>
+                            </li>
+                            <li>
+                                <router-link to="/career">
+                                    <span class="material-icons-outlined nav-icon">
+                                        work_outline
+                                    </span>
+                                    <span class="menu-text">Job Vacancy</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/candidate">
+                                    <span class="material-icons-outlined nav-icon">
+                                        travel_explore
+                                    </span>
+                                    <span class="menu-text">Candidate</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons-outlined nav-icon">
+                                        local_cafe
+                                    </span>
+                                    <span class="menu-text">Leave Request</span>
+                                    <span class="badge badge-primary menuItem">Soon</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons-outlined nav-icon">
+                                        credit_score
+                                    </span>
+                                    <span class="menu-text">Loan</span>
+                                    <span class="badge badge-primary menuItem">Soon</span>
+                                </a>
+                            </li>
                         </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
                             <li class="menu-title m-top-15">
-                                <span>Warehouse & Asset</span>
+                                <span>Warehouse</span>
                             </li>
-                            <li>
-                                <router-link to="/warehouse-management">
+                            <li class="has-child">
+                                <a href="#">
                                     <span class="material-icons-outlined nav-icon">
                                         home_work
                                     </span>
-                                    <span class="menu-text">Warehouse Management</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/asset-management">
-                                    <span class="material-icons-outlined nav-icon">
-                                        view_day
-                                    </span>
-                                    <span class="menu-text">Asset Management</span>
-                                </router-link>
+                                    <span class="menu-text">General Data</span>
+                                    <span class="toggle-icon"></span>
+                                    <span class="badge badge-primary menuItem">Soon</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Warehouse List</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Stock Group</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Item Group</a>
+                                    </li>
+                                </ul>
                             </li>
                         </div>
                         <div v-if="user.role=='it' || user.role=='admin'">
@@ -248,10 +284,9 @@
                         <div class="col-md-8">
                             <div class="footer-copyright">
                                 <p>&copy; Copyright -<a href="/" target="_blank"><abbr
-                                            title="PT BERLIAN TRANSTAR ABADI">BTSA
-                                            LOGISTICS</abbr></a> | Partner with <abbr
-                                        title="PT BENUA SOLUSI TEKNOLOGI"><a href="https://infinitysolutions.co.id"
-                                            target="_blank">Infinity
+                                            title="PT BERLIAN TRANSTAR ABADI">{{company.company_id}}</abbr></a> |
+                                    Partner with <abbr title="PT BENUA SOLUSI TEKNOLOGI"><a
+                                            href="https://infinitysolutions.co.id" target="_blank">Infinity
                                             Solutions</a></abbr>
                                 </p>
                             </div>
@@ -294,14 +329,20 @@
             return {
                 user: {},
                 version: {},
+                company: {},
             }
         },
         mounted() {
             feather.replace();
             this.userGet();
             this.versionGet();
+            this.companyGet();
         },
         methods: {
+            async companyGet() {
+                const resp = await axios.get('/api/company-details');
+                this.company = resp.data[0];
+            },
             async userGet() {
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
