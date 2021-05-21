@@ -38,7 +38,8 @@
                                                     #{{item.receiptNumber}}</h6>
                                             </a>
                                             <p class="pt-1 d-block mb-0">
-                                                <i class="fas fa-dolly"></i> via {{item.courier}}
+                                                <i class="fas fa-dolly"></i> via {{item.courier}} • Received at
+                                                {{item.created_at}}
                                             </p>
                                         </div>
                                     </template>
@@ -199,11 +200,7 @@
                     text: 'Goods Type',
                     value: 'typeOfGoods'
                 }, {
-                    text: 'Received At',
-                    filterable: false,
-                    value: 'created_at'
-                }, {
-                    text: 'Receiver',
+                    text: 'Recipient',
                     filterable: false,
                     value: 'receiver'
                 }, {

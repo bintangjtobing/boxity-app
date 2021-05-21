@@ -86,6 +86,7 @@
                                                             <select v-model="user.department" required id="select-tag"
                                                                 class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
                                                                 <option disabled value="">Select department:</option>
+                                                                <option v-bind:value="`finance`">Finance</option>
                                                                 <option v-bind:value="`ekspor`">Ekspor</option>
                                                                 <option v-bind:value="`impor`">Impor</option>
                                                                 <option v-bind:value="`trucking`">Trucking</option>

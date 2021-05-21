@@ -17,8 +17,8 @@ class goodsReceip extends Model
         'status'
     ];
     protected $casts = [
-        'created_at' => 'datetime:Y-m-d',
-        'updated_at' => 'datetime:Y-m-d',
+        'created_at' => 'datetime:d M, Y',
+        'updated_at' => 'datetime:d M, Y',
     ];
     public function user()
     {
