@@ -2,10 +2,10 @@
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
-
                 <div class="breadcrumb-main">
                     <h4 class="text-capitalize breadcrumb-title">Goods Receipt</h4>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="member.role == 'hrdga' || member.role=='admin'">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#goodsReceiptModal"
                                 class="btn btn-sm btn-primary btn-add">
@@ -13,7 +13,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-lg-12">
                 <div class="card">
@@ -215,13 +214,19 @@
                 }],
                 // end datatable
                 user: {},
+                member: {},
             }
         },
         created() {
             this.loadGoods();
             this.loadUser();
+            this.userGet();
         },
         methods: {
+            async userGet() {
+                const resp = await axios.get('/getUserLoggedIn');
+                this.member = resp.data;
+            },
             async loadGoods() {
                 const resp = await axios.get('/api/goods-receipt');
                 this.goodsData = resp.data;

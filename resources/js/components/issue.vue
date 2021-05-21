@@ -175,7 +175,8 @@
                                                         <h6 v-if="fromYous.title.length>=35">
                                                             {{fromYous.title.substring(0,34)+"..."}}</h6>
                                                         <p>{{fromYous.comments_count}}
-                                                            <i class="far fa-comment-dots"></i> · Created by
+                                                            <i class="far fa-comment-dots"></i> · Created
+                                                            {{fromYous.created_at}} by
                                                             {{fromYous.user.name}}
                                                         </p>
                                                     </router-link>

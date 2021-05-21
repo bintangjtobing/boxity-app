@@ -237,12 +237,14 @@ class apiController extends Controller
         $issue = issue::find($id);
         $issue->approved_by = Auth::id();
         $issue->status = '1';
+
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
 
-        // return response()->json($issues->user->email, 201);
-        return new makeNewIssue($issues);
+        return response()->json($issues, 201);
+        // return response()->json($issues);
+        // return new makeNewIssue($issues);
     }
     public function closedIssue($id, Request $req)
     {
@@ -254,6 +256,7 @@ class apiController extends Controller
         Mail::to($sendTo)->send(new closedIssue($issues));
         return response()->json($issues, 201);
         // return new closedIssue($issues);
+        // return response()->json($issues);
     }
     public function countCommentDB($id)
     {
