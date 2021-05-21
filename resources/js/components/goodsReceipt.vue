@@ -123,6 +123,10 @@
                                                     DHL</option>
                                                 <option :value="`fedex`">
                                                     FedEx</option>
+                                                <option :value="`Shopee`">
+                                                    Shopee</option>
+                                                <option :value="`Tokopedia`">
+                                                    Tokopedia</option>
                                             </select>
                                         </div>
                                     </div>
