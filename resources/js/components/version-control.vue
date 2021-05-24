@@ -82,7 +82,8 @@
                             <h4 class="history-title">VERSION HISTORY</h4>
                             <ul class="v-history-list">
                                 <li v-for="version in vControl" :key="version.id">
-                                    <router-link :to="`/v/${version.version}`"><span class="version-name">Version
+                                    <router-link :to="{ name: 'versionView', params: { version:version.version }}">
+                                        <span class="version-name">Version
                                             {{version.version}}</span><span
                                             class="version-date">{{version.created_at}}</span></router-link>
                                 </li>
