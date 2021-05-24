@@ -694,7 +694,7 @@ class apiController extends Controller
     public function getGoods()
     {
         if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
-            return response()->json(goodsReceip::with('receiver')->get());
+            return response()->json(goodsReceip::with('receiver')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->get());
         }
