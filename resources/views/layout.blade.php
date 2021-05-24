@@ -25,6 +25,8 @@
 
 <body class="side-menu layout-light overlayScroll" onload="zoom()" data-app>
     <div id="app"></div>
+    <div class="overlay-dark-sidebar"></div>
+    <div class="customizer-overlay"></div>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-3.5.1.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-ui.js')!!}"></script>
