@@ -90,10 +90,6 @@
             });
         });
 
-        function zoom() {
-            document.body.style.zoom = "70%";
-        }
-
     </script>
 </body>
 
