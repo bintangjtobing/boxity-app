@@ -6,7 +6,7 @@
     <link href="{{ mix('css/asset.css') }}" type="text/css" rel="stylesheet" />
     <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
