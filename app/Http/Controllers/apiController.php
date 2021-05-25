@@ -172,6 +172,25 @@ class apiController extends Controller
                 ->get();
         }
     }
+    public function getIssuesCount()
+    {
+        $role = $this->getLoggedUser()->role;
+        if ($role == 'user' || $role == 'it') {
+            return issue::with('user')
+            ->withCount('comments')
+            ->where('assignee', Auth::id())
+                ->where('status', '!=', '2')
+                ->orderBy('created_at', 'DESC')
+                ->get()
+                ->count();
+        } else {
+            return issue::with('user')->with('comments')
+            ->where('status', '=', '0')
+                ->orderBy('created_at', 'DESC')
+                ->get()
+                ->count();
+        }
+    }
     public function getIssuesfromMe()
     {
         $issueGet = issue::with('user')
@@ -698,6 +717,10 @@ class apiController extends Controller
         } else {
             return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->get());
         }
+    }
+    public function countGoods()
+    {
+        return response()->json(goodsReceip::where('receiverId', Auth::id())->where('status', '=', '0')->get()->count());
     }
     public function postGoods(Request $request)
     {

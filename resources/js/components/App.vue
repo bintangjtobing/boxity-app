@@ -88,6 +88,8 @@
                                     contact_support
                                 </span>
                                 <span class="menu-text">Issue center</span>
+                                <span class="badge badge-success menuItem" style="color: #fff !important;"
+                                    v-if="countIssues">{{countIssues}}</span>
                             </router-link>
                         </li>
                         <li>
@@ -112,6 +114,8 @@
                                     feed
                                 </span>
                                 <span class="menu-text">Goods receipt</span>
+                                <span class="badge badge-success menuItem" style="color: #fff !important;"
+                                    v-if="countGoods">{{countGoods}}</span>
                             </router-link>
                         </li>
                         <li>
@@ -330,6 +334,8 @@
                 user: {},
                 version: {},
                 company: {},
+                countIssues: '0',
+                countGoods: '0',
             }
         },
         mounted() {
@@ -350,6 +356,10 @@
             async versionGet() {
                 const resp = await axios.get('/api/version-control');
                 this.version = resp.data[0];
+                const count = await axios.get('/api/count-goods');
+                this.countGoods = count.data;
+                const issues = await axios.get('/api/count-issue');
+                this.countIssues = issues.data;
             },
             signOutConfirm() {
                 Swal.fire({

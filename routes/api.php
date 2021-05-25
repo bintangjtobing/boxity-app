@@ -40,6 +40,7 @@ Route::patch('/issue/closed/{id}', 'apiController@closedIssue');
 Route::get('/count-comment/{id}', 'apiController@countCommentDB');
 Route::get('/count-solved-issue', 'apiController@countIssueSolvedById');
 Route::get('/count-pending-issue', 'apiController@countIssuePendingById');
+Route::get('/count-issue', 'apiController@getIssuesCount');
 
 // Career API
 Route::get('/career/{id}', 'apiController@getJobbyId');
@@ -96,6 +97,7 @@ Route::get('/notepad/important', 'apiController@importantDataNotepad');
 Route::get('/goods-receipt', 'apiController@getGoods');
 Route::post('/goods-receipt', 'apiController@postGoods');
 Route::patch('/goods-receipt/{id}', 'apiController@getGoodsById');
+Route::get('/count-goods', 'apiController@countGoods');
 
 // Document gallery
 Route::post('/documents', 'apiController@fileStore')->name('dropzone');
