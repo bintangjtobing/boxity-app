@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Quote update</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Quote update</h2>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <div class="form-row justify-content-end">
                                     <div class="layout-button mt-25">
-                                        <button v-on:click="handleSubmit" type="submit"
+                                        <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30">update
                                             quote</button>
                                         <button v-on:click="doneQuote" type="submit"

@@ -91,6 +91,9 @@
                 window.location = $(this).data("href");
             });
         });
+        $('.modal').on('shown.bs.modal', function () {
+            $(this).find('[autofocus]').focus();
+        });
 
     </script>
 </body>

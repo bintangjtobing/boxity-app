@@ -3,20 +3,20 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Track delivery system management</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Track delivery system management</h2>
                     <div class="action-btn">
                         <router-link :to="`/track-delivery/new`" class="btn px-15 btn-primary">
-                            <i class="las la-plus fs-16"></i>Add new track</router-link>
+                            <i class="las la-plus fs-16"></i>New track</router-link>
                     </div>
                 </div>
-                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
                         <v-card-title>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="tracks"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.order_id="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <router-link :to="`/track-delivery/${item.id}`" class="text-dark fw-500">

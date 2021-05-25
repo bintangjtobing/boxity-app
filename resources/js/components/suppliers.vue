@@ -11,14 +11,14 @@
                     </div>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer">
-                            <i class="las la-plus fs-16"></i>Add new Suppliers</a>
+                            <i class="las la-plus fs-16"></i>New Suppliers</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newCustomer"
                             role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new Suppliers</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New Suppliers</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -30,7 +30,8 @@
                                                     <div class="form-row">
                                                         <div class="col-lg-6">
                                                             <input type="text" required v-model="user.customerCode"
-                                                                class="form-control" placeholder="Supplier Code ">
+                                                                class="form-control" placeholder="Supplier Code "
+                                                                autofocus>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.customerCode }}</span>
                                                         </div>
@@ -60,14 +61,15 @@
                                                         <div class="col-lg-6">
                                                             <input type="password" required v-model="user.password"
                                                                 class="form-control" id="password"
-                                                                placeholder="Password">
+                                                                placeholder="Password" readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.password }}</span>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="password" required
                                                                 v-model="user.confirmPassword" id="verifyPassword"
-                                                                class="form-control" placeholder="Verify password">
+                                                                class="form-control" placeholder="Verify password"
+                                                                readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.confirmPassword }}
                                                             </span>
@@ -197,11 +199,17 @@
         },
         mounted() {
             this.loadSuppliers();
+            this.generatePassword();
         },
         created() {
             this.countSuppliers();
         },
         methods: {
+            generatePassword() {
+                const genPass = this.rndStr(8);
+                this.user.password = genPass;
+                this.user.confirmPassword = genPass;
+            },
             loadSuppliers() {
                 this.$Progress.start();
                 axios.get("api/suppliers")
@@ -221,6 +229,7 @@
                     this.$Progress.start();
                     await axios.delete('api/suppliers/' + id);
                     this.loadSuppliers();
+                    this.countSuppliers();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
@@ -298,6 +307,7 @@
                 return !data.existingEmail && !data.existingName;
             },
             async handleSubmit(event) {
+                this.$Progress.start();
                 event.preventDefault();
 
                 const isValid = await this.validateData();
@@ -315,15 +325,13 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
-                this.$Progress.start();
                 await axios.post('/api/suppliers', payload).then(response => {
                     this.loadSuppliers();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new supplier',
+                        text: 'Success New supplier',
                     });
-                    this.$Progress.finish();
                     this.user = {
                         name: '',
                         email: '',
@@ -338,6 +346,11 @@
                         customerWebsite: '',
                         customerNPWP: '',
                     };
+                    const genPass = this.rndStr(8);
+                    this.user.password = genPass;
+                    this.user.confirmPassword = genPass;
+                    this.countSuppliers();
+                    this.$Progress.finish();
                 }).catch(error => {
                     Swal.fire({
                         icon: 'warning',
@@ -357,6 +370,15 @@
                 const data = await axios.get('/api/count-suppliers');
                 this.count = data.data;
             },
+            rndStr(len) {
+                let text = " "
+                let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
+
+                for (let i = 0; i < len; i++) {
+                    text += chars.charAt(Math.floor(Math.random() * chars.length))
+                }
+                return text
+            }
         },
     }
 

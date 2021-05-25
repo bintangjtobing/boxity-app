@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">blog edit</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">blog edit</h2>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <select v-model="blog.category"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option value="" disabled>category</option>
                                                 <option v-bind:value="`Ekspor`">Ekspor</option>
                                                 <option v-bind:value="`Impor`">Impor</option>

@@ -72,9 +72,7 @@ Route::get('/login', function () {
 Route::get('/login/{tokens}', 'authController@index');
 Route::post('/login/{csrf_token}', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
-Route::get('/forgot-password', function () {
-    return view('auth.forgot');
-});
+Route::get('/forgot-password', 'authController@forgotPassword');
 Route::get('/ask-reset-password', 'authController@askReset');
 Route::get('/reset-password/{id}', 'authController@resetPassword');
 Route::post('/reset-password/{id}', 'authController@processResetPassword');
@@ -93,6 +91,10 @@ Route::get('/generatePDF/{id}', function ($id) {
     $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
     return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
 });
+
+// REPORTING PDF
+Route::get('/report/purchase-order/{id}', 'purchasingController@reportPO');
+Route::get('/report/receiving-confirmation/{id}', 'receivingController@reportPO');
 
 // View details blog
 Route::get('/blog/v/{title}', 'webpageController@viewBlog');

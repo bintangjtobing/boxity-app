@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">User Guide</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">User Guide</h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#userguideModal"
@@ -101,7 +101,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="justify-content-end">
-                                    <button v-on:click="submitHandle" type="submit"
+                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                         class="btn btn-success btn-default btn-squared px-30"
                                         data-dismiss="modal">Submit</button>
                                 </div>
@@ -150,7 +150,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new guide',
+                        text: 'Success New guide',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

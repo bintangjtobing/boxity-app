@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Goods Receipt</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Goods Receipt</h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap"
                         v-if="member.role == 'hrdga' || member.role=='admin'">
                         <div class="action-btn">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header color-dark fw-500">
                         Goods receipt list
                     </div>
@@ -91,7 +91,7 @@
                                     <div class="col-lg-8">
                                         <div class="form-group mb-25">
                                             <select
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 id="n-labels" v-model="goods.receiverid" required>
                                                 <option value="" disabled>Select receiver:</option>
                                                 <option v-for="users in user" :key="users.id" :value="users.id">
@@ -102,7 +102,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group mb-25">
                                             <select
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 id="n-labels" v-model="goods.courier" required>
                                                 <option value="" disabled>Select courier:</option>
                                                 <option :value="`lain`">Lain lain</option>
@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <select
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="goods.typeOfGoods" required>
                                         <option value="" disabled>Select type document:</option>
                                         <option :value="`1`">Document</option>
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
@@ -241,7 +241,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new good receipt',
+                        text: 'Success New good receipt',
                     });
                     this.$Progress.finish();
                     this.goods = {

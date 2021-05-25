@@ -26,13 +26,13 @@
         content="BTSA Logistics adalah Expedisi, EMKL, EMKU & Custom Clearance di Indonesia. Berada di Jakarta, Medan, Surabaya, Semarang, Palembang, Pekan Baru, Bali,  Makasar dan Lombok.">
     <meta name="keywords"
         content="PPJK, EMKL, Expedisi, Export-Import, Custom Clearance, BTSA, BTSA LOGISTICS, Ekspedisi, Jasa Ekspedisi">
-    <meta name="author" content="Bintang Cato Jeremia L Tobing">
+
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="author" content="Bintang Jeremia Tobing">
 
-    <title>BTSA LOGISTICS ERROR 404</title>
+    <title>{{$company->company_id}} ERROR 404</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">

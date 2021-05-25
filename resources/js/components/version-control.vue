@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Version control</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Version control</h2>
                 </div>
             </div>
             <div class="col-8 changelog-19 d-block">
@@ -136,7 +136,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new change log.',
+                        text: 'Success New change log.',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

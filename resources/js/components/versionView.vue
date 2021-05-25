@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Changelog</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Changelog</h2>
                 </div>
             </div>
             <div class="col-8 changelog-24 d-block">

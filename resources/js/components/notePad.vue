@@ -4,7 +4,7 @@
             <div class="col-lg-12">
 
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Notepad <span>{{title}}</span></h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Notepad <span>{{title}}</span></h2>
                 </div>
 
             </div>
@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <select
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="note.label">
                                         <option value="" disabled>Select label:</option>
                                         <option :value="`1`">Social</option>
@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
@@ -293,7 +293,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new notepad',
+                        text: 'Success New notepad',
                     });
                     this.$Progress.finish();
                 }).catch(error => {
