@@ -21,6 +21,7 @@ use App\goodsReceip;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
+use App\itemGroup;
 use App\jobvacancy;
 use App\Mail\addUser;
 use App\Mail\closedIssue;
@@ -29,6 +30,7 @@ use App\Mail\makeNewIssue;
 use App\messages;
 use App\notepad;
 use App\quotes;
+use App\stockGroup;
 use App\track_orders;
 use App\track_reports;
 use App\userdetails;
@@ -1079,6 +1081,72 @@ class apiController extends Controller
     public function postWarehouseById($id, Request $request)
     {
         $warehouse = warehouseList::find($id);
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+
+    // Stock Group
+    public function getStockGroup()
+    {
+        return response()->json(stockGroup::with('customer')->with('user')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postStockGroup(Request $request)
+    {
+        $warehouse = new stockGroup();
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->created_by = Auth::id();
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getStockGroupById($id)
+    {
+        return response()->json(stockGroup::find($id));
+    }
+    public function postStockGroupById($id, Request $request)
+    {
+        $warehouse = stockGroup::find($id);
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+
+    // ItemGroup
+    public function getItemGroup()
+    {
+        return response()->json(itemGroup::with('stock')->with('user')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postItemGroup(Request $request)
+    {
+        $warehouse = new itemGroup();
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->created_by = Auth::id();
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getItemGroupById($id)
+    {
+        return response()->json(itemGroup::find($id));
+    }
+    public function postItemGroupById($id, Request $request)
+    {
+        $warehouse = itemGroup::find($id);
         $warehouse->warehouse_code = $request->warehouse_code;
         $warehouse->warehouse_name = $request->warehouse_name;
         $warehouse->address = $request->address;

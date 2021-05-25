@@ -225,10 +225,10 @@
                                         <router-link :to="'/warehouse-list'">Warehouse List</router-link>
                                     </li>
                                     <li>
-                                        <a href="#">Stock Group</a>
+                                        <router-link :to="'/stock-group'">Stock Group</router-link>
                                     </li>
                                     <li>
-                                        <a href="#">Item Group</a>
+                                        <router-link :to="'/item-group'">Item Group</router-link>
                                     </li>
                                 </ul>
                             </li>

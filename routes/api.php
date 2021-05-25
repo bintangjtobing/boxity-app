@@ -148,3 +148,15 @@ Route::get('/warehouse', 'apiController@getWarehouse');
 Route::post('/warehouse', 'apiController@postWarehouse');
 Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
 Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
+
+// Stock Group
+Route::get('/stock-group', 'apiController@getStockGroup');
+Route::post('/stock-group', 'apiController@postStockGroup');
+Route::get('/stock-group/{id}', 'apiController@getStockGroupById');
+Route::patch('/stock-group/{id}', 'apiController@postStockGroupById');
+
+// Item Group
+Route::get('/item-group', 'apiController@getItemGroup');
+Route::post('/item-group', 'apiController@postItemGroup');
+Route::get('/item-group/{id}', 'apiController@getItemGroupById');
+Route::patch('/item-group/{id}', 'apiController@postItemGroupById');

@@ -64,6 +64,10 @@ import suppliers from './components/suppliers.vue';
 import supplierForm from './components/supplierForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
 import warehouseForm from './components/warehouseForm.vue';
+import stockGroup from './components/stockGroup.vue';
+import stockGroupForm from './components/stockGroupForm.vue';
+import itemGroup from './components/itemGroup.vue';
+import itemGroupForm from './components/itemGroupForm.vue';
 
 // membuat router
 const routes = [{
@@ -231,6 +235,22 @@ const routes = [{
         name: 'update-warehouse',
         path: '/detail/warehouse/:id',
         component: warehouseForm,
+    }, {
+        name: 'stockGroup',
+        path: '/stock-group',
+        component: stockGroup
+    }, {
+        name: 'detailStockGroup',
+        path: '/detail/stock-group/:id',
+        component: stockGroupForm,
+    }, {
+        name: 'itemGroup',
+        path: '/item-group',
+        component: itemGroup
+    }, {
+        name: 'detailItemGroup',
+        path: '/detail/item-group/:id',
+        component: itemGroupForm,
     },
 ]
 
