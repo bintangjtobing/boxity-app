@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Popup Window</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Popup Window</h2>
                 </div>
             </div>
             <div class="col-8 changelog-19 d-block">
@@ -19,7 +19,7 @@
                                                     <div class="form-group">
                                                         <div class="form-row">
                                                             <div class="col-lg-12">
-                                                            <input type="text"
+                                                                <input type="text"
                                                                     class="form-control ih-medium ip-gray radius-xs b-light px-15 my-1"
                                                                     v-model="popup.title" id="formGroupExampleInput"
                                                                     placeholder="Title" required autofocus>
@@ -54,10 +54,11 @@
                     <div class="card">
                         <div class="card-header py-20 px-20">
                             <div class="changelog-history__title">
-                                <span style="color: red;"><i class="fas fa-circle-notch fa-spin"></i></span> Current Live Popup
+                                <span style="color: red;"><i class="fas fa-circle-notch fa-spin"></i></span> Current
+                                Live Popup
                             </div>
                         </div>
-                        <img class="card-img-top mt-2" :src="popupCurrent.url" >
+                        <img class="card-img-top mt-2" :src="popupCurrent.url">
                     </div>
                 </div>
             </div>
@@ -105,7 +106,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new popup.',
+                        text: 'Success New popup.',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

@@ -11,14 +11,14 @@
                     </div>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
-                            <i class="las la-plus fs-16"></i>Add new user</a>
+                            <i class="las la-plus fs-16"></i>New user</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newMember"
                             role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new user</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New user</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -36,7 +36,7 @@
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <select v-model="user.gender" required id="select-tag"
-                                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                                 <option disabled value="">Select gender:</option>
                                                                 <option v-bind:value="`M`">Male</option>
                                                                 <option v-bind:value="`F`">Female</option>
@@ -74,7 +74,7 @@
                                                     <div class="form-row">
                                                         <div class="col-lg-4">
                                                             <select v-model="user.role" required id="select-tag"
-                                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                                 <option disabled value="">Select role:</option>
                                                                 <option v-bind:value="`user`">User</option>
                                                                 <option v-bind:value="`head`">Head</option>
@@ -84,7 +84,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <select v-model="user.department" required id="select-tag"
-                                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                                 <option disabled value="">Select department:</option>
                                                                 <option v-bind:value="`finance`">Finance</option>
                                                                 <option v-bind:value="`ekspor`">Ekspor</option>
@@ -101,7 +101,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <select v-model="user.divisi" required id="select-tag"
-                                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                                 <option disabled value="">Select division:</option>
                                                                 <option v-bind:value="`staff`">Staff</option>
                                                                 <option v-bind:value="`supervisor`">Supervisor</option>
@@ -138,8 +138,9 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                        <v-data-table :headers="headers" multi-sort :search="search" :items="members"
+                            :items-per-page="10" loading
+                            loading-text="Loading... Please wait" class="elevation-1">
                             <template v-slot:item.status="{ item }">
                                 <div v-if="item.status==1">
                                     <span class="rounded-pill userDatatable-content-status color-success
@@ -357,11 +358,10 @@
                 await axios.post('/api/users', payload).then(response => {
                     this.loadUsers();
                     this.countUsers();
-                    this.$Progress.finish();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new user',
+                        text: 'Success New user',
                     });
                     this.user = {
                         gender: '',
@@ -374,6 +374,7 @@
                     const genPass = this.rndStr(8);
                     this.user.password = genPass;
                     this.user.confirmPassword = genPass;
+                    this.$Progress.finish();
                 }).catch(error => {
                     this.$Progress.fail();
                     Swal.fire({

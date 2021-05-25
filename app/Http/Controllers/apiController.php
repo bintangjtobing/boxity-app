@@ -17,10 +17,14 @@ use App\commentIssue;
 use App\company_details;
 use App\Events\newMessage;
 use App\FileDocument;
+use App\goodsItemTransfer;
 use App\goodsReceip;
+use App\goodsTransfer;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
+use App\inventoryItem;
+use App\itemGroup;
 use App\jobvacancy;
 use App\Mail\AddComment;
 use App\Mail\addCommentToCreator;
@@ -33,11 +37,15 @@ use App\Mail\makeNewIssue;
 use App\messages;
 use App\notepad;
 use App\quotes;
+use App\stockGroup;
 use App\track_orders;
 use App\track_reports;
 use App\userdetails;
 use App\userGuide;
+use App\warehouseList;
+use Illuminate\Support\Facades\Date;
 use App\popupWindow;
+use App\warehouseCustomer;
 use Mail;
 
 class apiController extends Controller
@@ -121,7 +129,7 @@ class apiController extends Controller
     }
     public function getContactList()
     {
-        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->orderBy('name', 'asc')->get());
+        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->where('role', '!=', 'supplier')->orderBy('name', 'asc')->get());
     }
     public function updateUser($id, Request $request)
     {
@@ -731,6 +739,8 @@ class apiController extends Controller
         return response()->json(notepad::where('label', 4)
             ->where('userid', Auth::id())->get());
     }
+
+    // Goods Receipt
     public function getGoods()
     {
         if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
@@ -846,8 +856,8 @@ class apiController extends Controller
     }
     public function getPopup()
     {
-        if(popupWindow::get()){
-            return response()->json(popupWindow::orderBy('created_at','DESC')->get());
+        if (popupWindow::get()) {
+            return response()->json(popupWindow::orderBy('created_at', 'DESC')->get());
         } else {
             return response('No data');
         }
@@ -950,6 +960,8 @@ class apiController extends Controller
         $comp->phone = $request->phone;
         $comp->email = $request->email;
         $comp->site = $request->site;
+        $comp->meta_description = $request->meta_description;
+        $comp->meta_keywords = $request->meta_keywords;
         $comp->save();
         return response()->json($comp, 201);
     }
@@ -974,8 +986,8 @@ class apiController extends Controller
     public function deleteCustomer($id)
     {
         $getUser = User::find($id);
-        $getUser->status = '2';
-        $getUser->save();
+        // $getUser->status = '2';
+        $getUser->delete();
         return response()->json([], 204);
     }
     public function addCustomer(Request $request)
@@ -992,9 +1004,10 @@ class apiController extends Controller
         $customer->gender = '-';
         $customer->organisation = '-';
         $customer->phone = '-';
-        $customer->avatar = '-';
+        $customer->avatar = '7.jpg';
         $customer->cover = '-';
         $customer->password = Hash::make($request->password);
+        $customer->unpassword = $request->password;
         $customer->createdBy = Auth::id();
         $customer->logip = $request->ip();
         $customer->lastLogin = '0';
@@ -1033,6 +1046,7 @@ class apiController extends Controller
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
+            $user->unpassword = $request->password;
         }
         $user->save();
         return response()->json($user);
@@ -1050,8 +1064,8 @@ class apiController extends Controller
     public function deleteSuppliers($id)
     {
         $getUser = User::find($id);
-        $getUser->status = '2';
-        $getUser->save();
+        // $getUser->status = '2';
+        $getUser->delete();
         return response()->json([], 204);
     }
     public function addSuppliers(Request $request)
@@ -1071,6 +1085,7 @@ class apiController extends Controller
         $customer->avatar = '-';
         $customer->cover = '-';
         $customer->password = Hash::make($request->password);
+        $customer->unpassword = $request->password;
         $customer->createdBy = Auth::id();
         $customer->logip = $request->ip();
         $customer->lastLogin = '0';
@@ -1109,8 +1124,263 @@ class apiController extends Controller
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
+            $user->unpassword = $request->password;
         }
         $user->save();
         return response()->json($user);
+    }
+
+    // Warehouse
+    public function getWarehouse()
+    {
+        if (Auth::user()->role == 'customer') {
+            // If logged user is having role as CUSTOMER
+            // then warehouse shows that having this ID CUSTOMER
+            $warehouse = DB::table('warehouse_lists')
+                ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
+                ->join('users', 'warehouse_lists.created_by', '=', 'users.id')
+                ->where('warehouse_customers.customer_id', '=', Auth::id())
+                ->orderBy('warehouse_lists.warehouse_name', 'ASC')
+                ->get();
+            return $warehouse;
+        } else {
+            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function postWarehouse(Request $request)
+    {
+        $warehouse = new warehouseList();
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->created_by = Auth::id();
+        $warehouse->save();
+
+        if (Auth::user()->role == 'customer') {
+            $warehouseCust = new warehouseCustomer();
+            $warehouseCust->warehouse_id = $warehouse->id;
+            $warehouseCust->customer_id = Auth::id();
+            $warehouseCust->save();
+        }
+        return response()->json($warehouse, 200);
+    }
+    public function getWarehouseById($id)
+    {
+        return response()->json(warehouseList::find($id));
+    }
+    public function deleteWarehouseById($id)
+    {
+        return response()->json(warehouseList::find($id)->delete());
+    }
+    public function postWarehouseById($id, Request $request)
+    {
+        $warehouse = warehouseList::find($id);
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+
+    // Warehouse Customer
+    public function getWarehouseCustomer($id)
+    {
+        return response()->json(warehouseCustomer::where('warehouse_id', $id)->with('warehouseDetail')->with('customerDetail')->orderBy('created_at', 'DESC')->get());
+        // return response($id);
+    }
+    public function postWarehouseCustomer(Request $request, $id)
+    {
+        $warehouse = new warehouseCustomer();
+        $warehouse->warehouse_id = $id;
+        $warehouse->customer_id = $request->customerId;
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getWarehouseCustomerById($id)
+    {
+        return response()->json(warehouseCustomer::find($id));
+    }
+    public function deleteWarehouseCustomerById($id)
+    {
+        return response()->json(warehouseCustomer::find($id)->delete());
+    }
+    public function postWarehouseCustomerById($id, Request $request)
+    {
+        $warehouse = warehouseCustomer::find($id);
+        $warehouse->warehouse_id = $id;
+        $warehouse->customer_id = $request->customerId;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+
+    // Stock Group
+    public function getStockGroup()
+    {
+        if (Auth::user()->role == 'customer') {
+            return response()->json(stockGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function postStockGroup(Request $request)
+    {
+        $stock = new stockGroup();
+        $stock->stockgroup_id = $request->stockgroup_id;
+        $stock->name = $request->name;
+        $stock->remarks = $request->remarks;
+        $stock->created_by = Auth::id();
+        $stock->save();
+        return response()->json($stock, 200);
+    }
+    public function countStockGroup()
+    {
+        $stockCount = DB::table('stock_groups')
+            ->get()
+            ->count();
+        return response()->json($stockCount);
+    }
+    public function getStockGroupById($id)
+    {
+        return response()->json(stockGroup::find($id));
+    }
+    public function postStockGroupById($id, Request $request)
+    {
+        $stock = stockGroup::find($id);
+        $stock->stockgroup_id = $request->stockgroup_id;
+        $stock->name = $request->name;
+        $stock->remarks = $request->remarks;
+        $stock->created_by = Auth::id();
+        $stock->save();
+        return response()->json($stock, 201);
+    }
+    public function deleteStockGroupById($id)
+    {
+        return response()->json(stockGroup::find($id)->delete());
+    }
+
+    // ItemGroup
+    public function getItemGroup()
+    {
+        if (Auth::user()->role == 'customer') {
+            return response()->json(itemGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function postItemGroup(Request $request)
+    {
+        $itemGroup = new itemGroup();
+        $itemGroup->itemgroup_id = $request->itemgroup_id;
+        $itemGroup->name = $request->name;
+        $itemGroup->remarks = $request->remarks;
+        $itemGroup->created_by = Auth::id();
+        $itemGroup->save();
+        return response()->json($itemGroup, 200);
+    }
+    public function getItemGroupById($id)
+    {
+        return response()->json(itemGroup::with('user')->find($id));
+    }
+    public function postItemGroupById($id, Request $request)
+    {
+        $itemGroup = itemGroup::find($id);
+        $itemGroup->itemgroup_id = $request->itemgroup_id;
+        $itemGroup->name = $request->name;
+        $itemGroup->remarks = $request->remarks;
+        $itemGroup->created_by = Auth::id();
+        $itemGroup->save();
+        return response()->json($itemGroup, 200);
+    }
+    public function countItemGroup()
+    {
+        $ItemCount = DB::table('item_groups')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteItemGroupById($id)
+    {
+        return response()->json(itemGroup::find($id)->delete());
+    }
+
+    // Inventory Item
+    public function getInventoryItem()
+    {
+        if (Auth::user()->role == 'customer') {
+            return response()->json(inventoryItem::where('customerId', Auth::id())->with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(inventoryItem::with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function postInventoryItem(Request $request)
+    {
+        $inventory = new inventoryItem();
+        $inventory->item_code = $request->item_code;
+        $inventory->item_name = $request->item_name;
+        $inventory->qty = 0;
+        $inventory->type = $request->type;
+        $inventory->brand = $request->brand;
+        $inventory->item_group = $request->item_group;
+        $inventory->width = $request->width;
+        $inventory->length = $request->length;
+        $inventory->thickness = $request->thickness;
+        $inventory->nt_weight = $request->nt_weight;
+        $inventory->gr_weight = $request->gr_weight;
+        $inventory->volume = $request->volume;
+        $inventory->unit = $request->unit;
+        $inventory->customerId = Auth::id();
+        $inventory->save();
+        return response()->json($inventory, 200);
+    }
+    public function getInventoryItemById($id)
+    {
+        return response()->json(inventoryItem::find($id));
+    }
+    public function postInventoryItemById($id, Request $request)
+    {
+        $inventory = inventoryItem::find($id);
+        $inventory->item_code = $request->item_code;
+        $inventory->item_name = $request->item_name;
+        $inventory->type = $request->type;
+        $inventory->brand = $request->brand;
+        $inventory->item_group = $request->item_group;
+        $inventory->width = $request->width;
+        $inventory->length = $request->length;
+        $inventory->thickness = $request->thickness;
+        $inventory->nt_weight = $request->nt_weight;
+        $inventory->gr_weight = $request->gr_weight;
+        $inventory->volume = $request->volume;
+        $inventory->unit = $request->unit;
+        $inventory->save();
+        return response()->json($inventory, 200);
+    }
+    public function countInventoryItem()
+    {
+        $ItemCount = DB::table('inventory_items')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteInventoryItemById($id)
+    {
+        return response()->json(inventoryItem::find($id)->delete());
+    }
+
+    // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
+    public function plusOneEachTen()
+    {
+        $jmlhCuti = '6';
+        $getDate = Date("d");
+
+        // Tentukan tanggal
+        if ($getDate == '10') {
+            // Tambah 1 jika tanggal diatas valid
+            $jmlhCuti += 1;
+        }
+        return response()->json($jmlhCuti);
     }
 }

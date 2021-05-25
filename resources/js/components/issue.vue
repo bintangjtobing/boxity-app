@@ -3,11 +3,11 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Issue Center</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Issue Center</h2>
                 </div>
             </div>
         </div>
-        <div class="banner-feature--14 card mb-25">
+        <div class="banner-feature--14 card my-25">
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="row align-items-center">
@@ -38,11 +38,11 @@
             <div class="col-12 col-sm-12 col-lg-7">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">Issue lists</h4>
+                        <h2 class="text-capitalize fw-700 breadcrumb-title">Issue lists</h2>
                     </div>
                     <span>The information displayed here is only the information assigned <u>to you</u>.</span>
                 </div>
-                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
                         <table class="table mb-0 table-borderless">
                             <thead>
@@ -134,11 +134,11 @@
             <div class="col-12 col-sm-12 col-lg-5" style="background-color: #272b411a; border-radius: .45rem;">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">From you.</h4>
+                        <h2 class="text-capitalize fw-700 breadcrumb-title">From you.</h2>
                     </div>
                     <span>The information displayed here is only the information assigned <u>from you</u>.</span>
                 </div>
-                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
                         <table class="table mb-0 table-borderless">
                             <thead>

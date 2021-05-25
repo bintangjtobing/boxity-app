@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title"><span>{{blogs.title}}</span></h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title"><span>{{blogs.title}}</span></h2>
                 </div>
             </div>
         </div>

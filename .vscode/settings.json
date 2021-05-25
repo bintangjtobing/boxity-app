@@ -3,5 +3,6 @@
 "editor.tabSize": 2,
 "editor.trimAutoWhitespace": false,
 "workbench.tree.indent": 2,
-"editor.formatOnSave": true
+"editor.formatOnSave": true,
+"editor.wordWrap": "on"
 }

@@ -5,16 +5,13 @@
     <meta charset="utf-8">
     <meta name="author" content="Bintang Tobing">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>BTSA LOGISTICS - Forgot Password</title>
+    <title>{{$company->company_id}} - Forgot Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{!!asset('auth/css/my-login.css')!!}">
     <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
-    <meta name="description" content="Tools BTSA Logistics yang memiliki sistem Issue Reports Managements | Applicants Candidate Managements | Legality Documents | Jadwal Kapal
-        Managements | Vessel Managements didalamnya.">
-    <meta name="keywords"
-        content="PPJK, EMKL, Expedisi, Export-Import, Custom Clearance, BTSA, BTSA LOGISTICS, Ekspedisi, Jasa Ekspedisi, applicants, job, issuereport, vessel">
-    <meta name="author" content="Bintang Cato Jeremia L Tobing">
+    <meta name="description" content="{{$company->meta_description}}">
+    <meta name="keywords" content="{{$company->meta_keywords}}">
 </head>
 
 <body class="my-login-page">
@@ -48,7 +45,8 @@
                     </div>
                     <div class="footer">
                         <?php $y = date('Y'); ?>
-                        Copyright &copy; {{$y}} &mdash; BTSA LOGISTICS
+                        &copy; 2018-{{$y}}&nbsp;{{$company->company_id}}. All Rights Reserved.<br>
+                        Web App Version {{$version->version}}
                     </div>
                 </div>
                 <div id="particles-js"></div>

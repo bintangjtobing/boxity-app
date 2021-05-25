@@ -16,6 +16,7 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('posisi');
+            $table->string('picture');
             $table->string('sumber_informasi');
             $table->string('nama_lengkap');
             $table->bigInteger('noktp')->nullable();

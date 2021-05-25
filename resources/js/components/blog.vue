@@ -3,10 +3,10 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Blog management</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Blog management</h2>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
-                            <i class="las la-plus fs-16"></i>Add new blog</a>
+                            <i class="las la-plus fs-16"></i>New blog</a>
 
                         <!-- Modal -->
                         <div class="modal fade new-member" id="newMember" role="dialog" tabindex="-1"
@@ -14,7 +14,7 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content modal-lg radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new blog</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New blog</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -42,7 +42,7 @@
                                                 </div>
                                                 <div class="form-group mb-20">
                                                     <select v-model="blog.category"
-                                                        class="form-control custom-select px-15"
+                                                        class="form-control form-control-default px-15"
                                                         id="exampleFormControlSelect1">
                                                         <option value="" disabled>Select category:</option>
                                                         <option value="Ekspor">Ekspor</option>
@@ -71,14 +71,14 @@
 
                     </div>
                 </div>
-                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
                         <v-card-title>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="blogs"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <a href="#" class="text-dark fw-500">
@@ -180,7 +180,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new blog',
+                        text: 'Success New blog',
                     });
                     this.blog = {
                         title: '',
