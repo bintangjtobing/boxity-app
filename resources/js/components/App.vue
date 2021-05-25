@@ -222,7 +222,7 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="#">Warehouse List</a>
+                                        <router-link :to="'/warehouse-list'">Warehouse List</router-link>
                                     </li>
                                     <li>
                                         <a href="#">Stock Group</a>

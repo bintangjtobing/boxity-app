@@ -63,6 +63,7 @@ import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
 import supplierForm from './components/supplierForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
+import warehouseForm from './components/warehouseForm.vue';
 
 // membuat router
 const routes = [{
@@ -223,10 +224,14 @@ const routes = [{
         path: '/detail/customer/:id',
         component: customerForm,
     }, {
-        name: 'warehouse-management',
-        path: '/warehouse-management',
+        name: 'warehouse-list',
+        path: '/warehouse-list',
         component: warehouseMgmt
-    }
+    }, {
+        name: 'update-warehouse',
+        path: '/detail/warehouse/:id',
+        component: warehouseForm,
+    },
 ]
 
 const router = new VueRouter({

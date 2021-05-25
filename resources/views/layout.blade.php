@@ -23,7 +23,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<body class="side-menu layout-light overlayScroll" onload="zoom()" data-app>
+<body class="side-menu layout-light overlayScroll" data-app>
     <div id="app"></div>
     <div class="overlay-dark-sidebar"></div>
     <div class="customizer-overlay"></div>

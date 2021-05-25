@@ -33,6 +33,7 @@ use App\track_orders;
 use App\track_reports;
 use App\userdetails;
 use App\userGuide;
+use App\warehouseList;
 use Mail;
 
 class apiController extends Controller
@@ -691,6 +692,8 @@ class apiController extends Controller
         return response()->json(notepad::where('label', 4)
             ->where('userid', Auth::id())->get());
     }
+
+    // Goods Receipt
     public function getGoods()
     {
         if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
@@ -1050,5 +1053,38 @@ class apiController extends Controller
         }
         $user->save();
         return response()->json($user);
+    }
+
+    // Warehouse
+    public function getWarehouse()
+    {
+        return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postWarehouse(Request $request)
+    {
+        $warehouse = new warehouseList();
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->created_by = Auth::id();
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getWarehouseById($id)
+    {
+        return response()->json(warehouseList::find($id));
+    }
+    public function postWarehouseById($id, Request $request)
+    {
+        $warehouse = warehouseList::find($id);
+        $warehouse->warehouse_code = $request->warehouse_code;
+        $warehouse->warehouse_name = $request->warehouse_name;
+        $warehouse->address = $request->address;
+        $warehouse->remarks = $request->remarks;
+        $warehouse->pic = $request->pic;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
     }
 }

@@ -142,3 +142,9 @@ Route::delete('/suppliers/{id}', 'apiController@deleteCustomer');
 Route::post('/suppliers', 'apiController@addSuppliers');
 Route::get('/count-suppliers', 'apiController@countSuppliers');
 Route::patch('/suppliers/{id}', 'apiController@updateSuppliers');
+
+// Warehouse
+Route::get('/warehouse', 'apiController@getWarehouse');
+Route::post('/warehouse', 'apiController@postWarehouse');
+Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
+Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
