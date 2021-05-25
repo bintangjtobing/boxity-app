@@ -153,6 +153,7 @@ Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
 Route::get('/stock-group', 'apiController@getStockGroup');
 Route::post('/stock-group', 'apiController@postStockGroup');
 Route::get('/stock-group/{id}', 'apiController@getStockGroupById');
+Route::get('/count-stock-group', 'apiController@countStockGroup');
 Route::patch('/stock-group/{id}', 'apiController@postStockGroupById');
 
 // Item Group

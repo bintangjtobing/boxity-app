@@ -3,8 +3,14 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Item Group</h4>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <h4 class="text-capitalize breadcrumb-title">Item Group<br>
+                        <span>Jumlah <router-link :to="'/stock-group'"><abbr title="Stock Group Link">stock group</abbr>
+                            </router-link> anda
+                            adalah {{countStocks}}, <abbr title="Item Group">Item
+                                Group</abbr> akan berfungsi
+                            jika
+                            anda memiliki stock group minimal sebanyak 1. </span></h4>
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countStocks">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addItemGroup"
                                 class="btn btn-sm btn-primary btn-add">
@@ -139,6 +145,7 @@
                 ],
                 // end datatable
                 stock: {},
+                countStocks: '0',
             }
         },
         created() {
@@ -149,6 +156,8 @@
             async loadItemGroup() {
                 const resp = await axios.get('/api/item-group');
                 this.itemGroupData = resp.data;
+                const count = await axios.get('/api/count-stock-group');
+                this.countStocks = count.data;
             },
             async loadUser() {
                 const resp = await axios.get('/api/stock-group');

@@ -3,8 +3,13 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Stock Group</h4>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <h4 class="text-capitalize breadcrumb-title">Stock Group <br>
+                        <span>Jumlah <router-link :to="'/customers'"><abbr title="Customer Link">customer</abbr>
+                            </router-link> anda adalah {{countCustomers}}, <abbr title="Stock Group">Stock
+                                Group</abbr> akan berfungsi
+                            jika
+                            anda memiliki customer minimal sebanyak 1. </span></h4>
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countCustomers">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addStockGroup"
                                 class="btn btn-sm btn-primary btn-add">
@@ -67,7 +72,7 @@
                                     <select v-model="stockgroup.customer_id" id="" class="form-control custom-select">
                                         <option value="" disabled>Select Customer:</option>
                                         <option v-for="users in user" :key="users.id" :value="users.id">
-                                            {{users.name}}</option>
+                                            {{users.customerName}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group my-2">
@@ -139,6 +144,7 @@
                 ],
                 // end datatable
                 user: {},
+                countCustomers: '0',
             }
         },
         created() {
@@ -153,6 +159,8 @@
             async loadUser() {
                 const resp = await axios.get('/api/customers');
                 this.user = resp.data;
+                const count = await axios.get('/api/count-customers');
+                this.countCustomers = count.data;
             },
             async submitHandle() {
                 await axios.post('/api/stock-group', this.stockgroup).then(response => {

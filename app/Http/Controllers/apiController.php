@@ -1097,15 +1097,21 @@ class apiController extends Controller
     }
     public function postStockGroup(Request $request)
     {
-        $warehouse = new stockGroup();
-        $warehouse->warehouse_code = $request->warehouse_code;
-        $warehouse->warehouse_name = $request->warehouse_name;
-        $warehouse->address = $request->address;
-        $warehouse->remarks = $request->remarks;
-        $warehouse->pic = $request->pic;
-        $warehouse->created_by = Auth::id();
-        $warehouse->save();
-        return response()->json($warehouse, 200);
+        $stock = new stockGroup();
+        $stock->stockgroup_id = $request->stockgroup_id;
+        $stock->customer_id = $request->customer_id;
+        $stock->name = $request->name;
+        $stock->remarks = $request->remarks;
+        $stock->created_by = Auth::id();
+        $stock->save();
+        return response()->json($stock, 200);
+    }
+    public function countStockGroup()
+    {
+        $stockCount = DB::table('stock_groups')
+            ->get()
+            ->count();
+        return response()->json($stockCount);
     }
     public function getStockGroupById($id)
     {
@@ -1113,14 +1119,14 @@ class apiController extends Controller
     }
     public function postStockGroupById($id, Request $request)
     {
-        $warehouse = stockGroup::find($id);
-        $warehouse->warehouse_code = $request->warehouse_code;
-        $warehouse->warehouse_name = $request->warehouse_name;
-        $warehouse->address = $request->address;
-        $warehouse->remarks = $request->remarks;
-        $warehouse->pic = $request->pic;
-        $warehouse->save();
-        return response()->json($warehouse, 201);
+        $stock = stockGroup::find($id);
+        $stock->stockgroup_id = $request->stockgroup_id;
+        $stock->customer_id = $request->customer_id;
+        $stock->name = $request->name;
+        $stock->remarks = $request->remarks;
+        $stock->created_by = Auth::id();
+        $stock->save();
+        return response()->json($stock, 201);
     }
 
     // ItemGroup
@@ -1130,15 +1136,14 @@ class apiController extends Controller
     }
     public function postItemGroup(Request $request)
     {
-        $warehouse = new itemGroup();
-        $warehouse->warehouse_code = $request->warehouse_code;
-        $warehouse->warehouse_name = $request->warehouse_name;
-        $warehouse->address = $request->address;
-        $warehouse->remarks = $request->remarks;
-        $warehouse->pic = $request->pic;
-        $warehouse->created_by = Auth::id();
-        $warehouse->save();
-        return response()->json($warehouse, 200);
+        $itemGroup = new itemGroup();
+        $itemGroup->itemgroup_id = $request->itemgroup_id;
+        $itemGroup->stock_id = $request->stock_id;
+        $itemGroup->name = $request->name;
+        $itemGroup->remarks = $request->remarks;
+        $itemGroup->created_by = Auth::id();
+        $itemGroup->save();
+        return response()->json($itemGroup, 200);
     }
     public function getItemGroupById($id)
     {
@@ -1146,13 +1151,13 @@ class apiController extends Controller
     }
     public function postItemGroupById($id, Request $request)
     {
-        $warehouse = itemGroup::find($id);
-        $warehouse->warehouse_code = $request->warehouse_code;
-        $warehouse->warehouse_name = $request->warehouse_name;
-        $warehouse->address = $request->address;
-        $warehouse->remarks = $request->remarks;
-        $warehouse->pic = $request->pic;
-        $warehouse->save();
-        return response()->json($warehouse, 201);
+        $itemGroup = itemGroup::find($id);
+        $itemGroup->itemgroup_id = $request->itemgroup_id;
+        $itemGroup->stock_id = $request->stock_id;
+        $itemGroup->name = $request->name;
+        $itemGroup->remarks = $request->remarks;
+        $itemGroup->created_by = Auth::id();
+        $itemGroup->save();
+        return response()->json($itemGroup, 200);
     }
 }

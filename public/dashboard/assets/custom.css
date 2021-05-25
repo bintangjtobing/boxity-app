@@ -352,6 +352,10 @@ a {
     height: 34px;
 }
 
+.breadcrumb-main span {
+    font-size: 14px;
+}
+
 /* Responsive Design */
 /*
   ##Device = Desktops
