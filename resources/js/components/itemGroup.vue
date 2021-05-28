@@ -36,6 +36,8 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/item-group/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
+                                        <a v-on:click="deleteItemGroup(item.id)" class="remove">
+                                            <i class="fas fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -70,7 +72,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <select v-model="itemgroup.stock_id" id="" class="form-control custom-select">
+                                    <select v-model="itemgroup.stock_id" id=""
+                                        class="form-control form-control-default">
                                         <option value="" disabled>Select stock group:</option>
                                         <option v-for="stock in stock" :key="stock.id" :value="stock.id">
                                             {{stock.name}}</option>
@@ -177,6 +180,7 @@
                         address: '',
                         remarks: '',
                         pic: '',
+                        stock_id: '',
                     };
                 }).catch(error => {
                     Swal.fire({
@@ -192,6 +196,23 @@
                         }
                     });
                 });
+            },
+            async deleteItemGroup(id) {
+                const result = await Swal.fire({
+                    title: 'Delete data item group?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.delete('/api/item-group/' + id);
+                    this.loadItemGroup();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Deleted',
+                        text: 'Success deleted current item group.'
+                    });
+                }
             },
         },
     }

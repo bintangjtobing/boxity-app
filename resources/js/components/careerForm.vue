@@ -27,7 +27,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <select v-model="job.location"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option value="" disabled>Job location</option>
                                                 <option v-bind:value="`Medan`">Medan</option>
                                                 <option v-bind:value="`Jakarta`">Jakarta</option>
@@ -45,7 +45,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <select v-model="job.divisi"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option value="" disabled>Department</option>
                                                 <option v-bind:value="`Antar-Pulau`">Antar-Pulau</option>
                                                 <option v-bind:value="`Ekspor`">Ekspor</option>
@@ -58,7 +58,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <select v-model="job.part"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option value="" disabled>Part of</option>
                                                 <option v-bind:value="`Personalia Umum`">Personalia Umum
                                                 </option>

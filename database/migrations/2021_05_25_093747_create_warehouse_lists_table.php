@@ -17,7 +17,7 @@ class CreateWarehouseListsTable extends Migration
             $table->id();
             $table->string('warehouse_code');
             $table->string('warehouse_name');
-            $table->longText('address');
+            $table->longText('address')->nullable();
             $table->longText('remarks')->nullable();
             $table->integer('pic')->nullable();
             $table->integer('created_by');

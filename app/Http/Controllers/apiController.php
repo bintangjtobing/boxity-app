@@ -17,10 +17,13 @@ use App\commentIssue;
 use App\company_details;
 use App\Events\newMessage;
 use App\FileDocument;
+use App\goodsItemTransfer;
 use App\goodsReceip;
+use App\goodsTransfer;
 use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
+use App\inventoryItem;
 use App\itemGroup;
 use App\jobvacancy;
 use App\Mail\addUser;
@@ -1078,6 +1081,10 @@ class apiController extends Controller
     {
         return response()->json(warehouseList::find($id));
     }
+    public function deleteWarehouseById($id)
+    {
+        return response()->json(warehouseList::find($id)->delete());
+    }
     public function postWarehouseById($id, Request $request)
     {
         $warehouse = warehouseList::find($id);
@@ -1128,6 +1135,10 @@ class apiController extends Controller
         $stock->save();
         return response()->json($stock, 201);
     }
+    public function deleteStockGroupById($id)
+    {
+        return response()->json(stockGroup::find($id)->delete());
+    }
 
     // ItemGroup
     public function getItemGroup()
@@ -1159,5 +1170,155 @@ class apiController extends Controller
         $itemGroup->created_by = Auth::id();
         $itemGroup->save();
         return response()->json($itemGroup, 200);
+    }
+    public function countItemGroup()
+    {
+        $ItemCount = DB::table('item_groups')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteItemGroupById($id)
+    {
+        return response()->json(itemGroup::find($id)->delete());
+    }
+
+    // Inventory Item
+    public function getInventoryItem()
+    {
+        return response()->json(inventoryItem::with('itemGroup')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postInventoryItem(Request $request)
+    {
+        $inventory = new inventoryItem();
+        $inventory->item_code = $request->item_code;
+        $inventory->item_name = $request->item_name;
+        $inventory->type = $request->type;
+        $inventory->brand = $request->brand;
+        $inventory->item_group = $request->item_group;
+        $inventory->width = $request->width;
+        $inventory->length = $request->length;
+        $inventory->thickness = $request->thickness;
+        $inventory->nt_weight = $request->nt_weight;
+        $inventory->gr_weight = $request->gr_weight;
+        $inventory->volume = $request->volume;
+        $inventory->save();
+        return response()->json($inventory, 200);
+    }
+    public function getInventoryItemById($id)
+    {
+        return response()->json(inventoryItem::find($id));
+    }
+    public function postInventoryItemById($id, Request $request)
+    {
+        $inventory = inventoryItem::find($id);
+        $inventory->item_code = $request->item_code;
+        $inventory->item_name = $request->item_name;
+        $inventory->type = $request->type;
+        $inventory->brand = $request->brand;
+        $inventory->item_group = $request->item_group;
+        $inventory->width = $request->width;
+        $inventory->length = $request->length;
+        $inventory->thickness = $request->thickness;
+        $inventory->nt_weight = $request->nt_weight;
+        $inventory->gr_weight = $request->gr_weight;
+        $inventory->volume = $request->volume;
+        $inventory->save();
+        return response()->json($inventory, 200);
+    }
+    public function countInventoryItem()
+    {
+        $ItemCount = DB::table('inventory_items')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteInventoryItemById($id)
+    {
+        return response()->json(inventoryItem::find($id)->delete());
+    }
+
+    // Goods Transfer
+    public function getGoodsTransfer()
+    {
+        return response()->json(goodsTransfer::with('fromWarehouse')->with('toWarehouse')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postGoodsTransfer(Request $request)
+    {
+        $goodsTransfer = new goodsTransfer();
+        $goodsTransfer->refNumber = $request->refNumber;
+        $goodsTransfer->mutation_date = $request->mutation_date;
+        $goodsTransfer->from = $request->from;
+        $goodsTransfer->to = $request->to;
+        $goodsTransfer->save();
+        return response()->json($goodsTransfer, 200);
+    }
+    public function getGoodsTransferById($id)
+    {
+        return response()->json(goodsTransfer::find($id));
+    }
+    public function postGoodsTransferById($id, Request $request)
+    {
+        $goodsTransfer = goodsTransfer::find($id);
+        $goodsTransfer->refNumber = $request->refNumber;
+        $goodsTransfer->mutation_date = $request->mutation_date;
+        $goodsTransfer->from = $request->from;
+        $goodsTransfer->to = $request->to;
+        $goodsTransfer->save();
+        return response()->json($goodsTransfer, 200);
+    }
+    public function countGoodsTransfer()
+    {
+        $ItemCount = DB::table('goods_transfers')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteGoodsTransferById($id)
+    {
+        return response()->json(goodsTransfer::find($id)->delete());
+    }
+
+    // Goods Item Transfer
+    public function getGoodsItemTransfer()
+    {
+        return response()->json(goodsItemTransfer::with('item')->with('goodsTfID')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postGoodsItemTransfer(Request $request)
+    {
+        $goodsTransfer = new goodsItemTransfer();
+        $goodsTransfer->itemCode = $request->itemCode;
+        $goodsTransfer->qty = $request->qty;
+        $goodsTransfer->unit = $request->unit;
+        $goodsTransfer->remarks = $request->remarks;
+        $goodsTransfer->tf_goods_id = $request->tf_goods_id;
+        $goodsTransfer->save();
+        return response()->json($goodsTransfer, 200);
+    }
+    public function getGoodsItemTransferById($id)
+    {
+        return response()->json(goodsItemTransfer::find($id));
+    }
+    public function postGoodsItemTransferById($id, Request $request)
+    {
+        $goodsTransfer = goodsItemTransfer::find($id);
+        $goodsTransfer->itemCode = $request->itemCode;
+        $goodsTransfer->qty = $request->qty;
+        $goodsTransfer->unit = $request->unit;
+        $goodsTransfer->remarks = $request->remarks;
+        $goodsTransfer->tf_goods_id = $request->tf_goods_id;
+        $goodsTransfer->save();
+        return response()->json($goodsTransfer, 200);
+    }
+    public function countGoodsItemTransfer()
+    {
+        $ItemCount = DB::table('goods_item_transfers')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function deleteGoodsItemTransferById($id)
+    {
+        return response()->json(goodsItemTransfer::find($id)->delete());
     }
 }

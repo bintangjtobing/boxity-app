@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <select
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="note.label">
                                         <option value="" disabled>Select label:</option>
                                         <option :value="`1`">Social</option>

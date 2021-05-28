@@ -48,7 +48,7 @@
                     </div>
                     <div class="footer">
                         <?php $y = date('Y'); ?>
-                        Copyright &copy; {{$y}} &mdash; BTSA LOGISTICS
+                        &copy;Copyright 2018 - {{$y}} &mdash; BTSA LOGISTICS
                     </div>
                 </div>
                 <div id="particles-js"></div>

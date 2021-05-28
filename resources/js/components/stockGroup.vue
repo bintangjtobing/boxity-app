@@ -35,6 +35,8 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/stock-group/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
+                                        <a v-on:click="deleteStockGroup(item.id)" class="remove">
+                                            <i class="fas fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -69,7 +71,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <select v-model="stockgroup.customer_id" id="" class="form-control custom-select">
+                                    <select v-model="stockgroup.customer_id" id=""
+                                        class="form-control form-control-default">
                                         <option value="" disabled>Select Customer:</option>
                                         <option v-for="users in user" :key="users.id" :value="users.id">
                                             {{users.customerName}}</option>
@@ -176,6 +179,7 @@
                         address: '',
                         remarks: '',
                         pic: '',
+                        customer_id: '',
                     };
                 }).catch(error => {
                     Swal.fire({
@@ -191,6 +195,23 @@
                         }
                     });
                 });
+            },
+            async deleteStockGroup(id) {
+                const result = await Swal.fire({
+                    title: 'Delete data stock group?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.delete('/api/stock-group/' + id);
+                    this.loadStockGroup();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Deleted',
+                        text: 'Success deleted current stock group.'
+                    });
+                }
             },
         },
     }

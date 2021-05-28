@@ -25953,8 +25953,8 @@ a {
 }
 
 .sidebar__menu-group ul.sidebar_nav li.menu-title span {
-    font-weight: 700 !important;
-    color: #696e83 !important;
+    font-weight: 900 !important;
+    color: #3e3e3e !important;
 }
 
 .router-link-exact-active,
@@ -25979,6 +25979,10 @@ a {
 
 .breadcrumb-main span {
     font-size: 14px;
+}
+
+.navbar-left .navbar-brand {
+    margin-right: 5rem;
 }
 
 /* Responsive Design */

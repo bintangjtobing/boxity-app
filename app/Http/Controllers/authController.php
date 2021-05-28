@@ -21,8 +21,9 @@ class authController extends Controller
     }
     public function loginProcess(Request $request)
     {
+        $remember_me = $request->has('remember') ? true : false;
         $request->merge(['status' => '1']);
-        if (Auth::attempt($request->only('email', 'password', 'status'))) {
+        if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
             $user = User::where(['email' => $request->email])->first();
             Auth::loginUsingId($user->id, TRUE);
             return redirect('/tools');

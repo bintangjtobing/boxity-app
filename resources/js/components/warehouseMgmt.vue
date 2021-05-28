@@ -30,6 +30,8 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/warehouse/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
+                                        <a v-on:click="deleteWarehouse(item.id)" class="remove">
+                                            <i class="fas fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -88,7 +90,7 @@
                                                         }" />
                                 </div>
                                 <div class="form-group my-2">
-                                    <select v-model="warehouse.pic" id="" class="form-control custom-select">
+                                    <select v-model="warehouse.pic" id="" class="form-control form-control-default">
                                         <option value="" disabled>Select supervisor:</option>
                                         <option v-for="users in user" :key="users.id" :value="users.id">
                                             {{users.name}}</option>
@@ -196,6 +198,23 @@
                         }
                     });
                 });
+            },
+            async deleteWarehouse(id) {
+                const result = await Swal.fire({
+                    title: 'Delete data warehouse?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.delete('/api/warehouse/' + id);
+                    this.loadWarehouse();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Deleted',
+                        text: 'Success deleted current warehouse.'
+                    });
+                }
             },
         },
     }

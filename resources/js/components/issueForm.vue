@@ -61,7 +61,7 @@
                                 <div class="form-group my-2">
                                     <label for="">Assignees:</label>
                                     <select v-model="issue.assignee" id=""
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         required>
                                         <option disabled value="">Choose user</option>
                                         <option v-for="assignee in users" :key="assignee.id" :value="assignee.id">
@@ -72,7 +72,7 @@
                                 <div class="form-group my-3">
                                     <label for="">Priority:</label>
                                     <select v-model="issue.priority" id=""
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
                                         required>
                                         <option value="" disabled>Set priority</option>
                                         <option v-bind:value="`4`" class="priority-highest">Highest

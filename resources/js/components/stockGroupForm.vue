@@ -56,7 +56,7 @@
                                                         }" />
                                 </div>
                                 <div class="form-group my-2">
-                                    <select v-model="warehouse.pic" id="" class="form-control custom-select">
+                                    <select v-model="warehouse.pic" id="" class="form-control form-control-default">
                                         <option value="" disabled>Select supervisor:</option>
                                         <option v-for="users in user" :key="users.id" v-bind:value="users.id">
                                             {{users.name}}</option>
