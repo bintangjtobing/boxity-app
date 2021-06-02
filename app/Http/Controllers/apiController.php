@@ -24,6 +24,8 @@ use App\id_domisilis;
 use App\jobvacancy;
 use App\Mail\addUser;
 use App\Mail\closedIssue;
+use App\Mail\confirmUpdateIssue;
+use App\Mail\confirmUpdateProfile;
 use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
 use App\messages;
@@ -115,12 +117,12 @@ class apiController extends Controller
     }
     public function getContactList()
     {
-        return response()->json(User::where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
+        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->orderBy('name', 'asc')->get());
     }
     public function updateUser($id, Request $request)
     {
         $user = User::find($id);
-        foreach (['name', 'role', 'department', 'divisi', 'gender', 'email'] as $field) {
+        foreach (['name', 'role', 'department', 'divisi', 'gender', 'email', 'status'] as $field) {
             if (isset($request->{$field})) {
                 $user->{$field} = $request->{$field};
             }
@@ -129,6 +131,7 @@ class apiController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->save();
+        Mail::to($user->email)->send(new confirmUpdateIssue($user));
         return response()->json($user);
     }
     //
@@ -177,15 +180,15 @@ class apiController extends Controller
         $role = $this->getLoggedUser()->role;
         if ($role == 'user' || $role == 'it') {
             return issue::with('user')
-            ->withCount('comments')
-            ->where('assignee', Auth::id())
+                ->withCount('comments')
+                ->where('assignee', Auth::id())
                 ->where('status', '!=', '2')
                 ->orderBy('created_at', 'DESC')
                 ->get()
                 ->count();
         } else {
             return issue::with('user')->with('comments')
-            ->where('status', '=', '0')
+                ->where('status', '=', '0')
                 ->orderBy('created_at', 'DESC')
                 ->get()
                 ->count();
@@ -416,6 +419,7 @@ class apiController extends Controller
             $profile->facebook = $request->facebook;
         }
         $profile->save();
+        Mail::to($profile->email)->send(new confirmUpdateProfile($profile));
         return response()->json($profile, 201);
     }
     public function updatePassword($id, Request $request)
@@ -861,7 +865,7 @@ class apiController extends Controller
     public function getListContact()
     {
         // get all user exc auth user
-        $user = User::where('id', '!=', Auth::id())->orderBy('name', 'asc')->get();
+        $user = User::where('id', '!=', Auth::id())->where('role', '!=', 'customer')->orderBy('name', 'asc')->get();
 
         $unreadIds = messages::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
             ->where('to', Auth::id())

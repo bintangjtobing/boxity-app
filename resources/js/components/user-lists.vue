@@ -157,6 +157,11 @@
                                         &nbsp;Terminated</span>
                                 </div>
                             </template>
+                            <template v-slot:item.role="{ item }">
+                                <span class="rounded-pill userDatatable-content-status color-primary
+                                                bg-opacity-primary active text-capitalize">
+                                    &nbsp;{{item.role}}</span>
+                            </template>
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/user/${item.id}`" class="edit">
                                     <i class="fas fa-pen"></i></router-link>
@@ -183,27 +188,32 @@
                 search: '',
                 key: 1,
                 headers: [{
-                    text: 'Name',
-                    value: 'name'
-                }, {
-                    text: 'Email',
-                    value: 'email'
-                }, {
-                    text: 'Department',
-                    value: 'department'
-                }, {
-                    text: 'Division',
-                    value: 'divisi'
-                }, {
-                    text: 'Status',
-                    filterable: false,
-                    value: 'status'
-                }, {
-                    text: 'Actions',
-                    value: 'actions',
-                    filterable: false,
-                    sortable: false
-                }],
+                        text: 'Name',
+                        value: 'name'
+                    }, {
+                        text: 'Email',
+                        value: 'email'
+                    }, {
+                        text: 'Department',
+                        value: 'department'
+                    }, {
+                        text: 'Division',
+                        value: 'divisi'
+                    }, {
+                        text: 'Role',
+                        value: 'role'
+                    },
+                    {
+                        text: 'Status',
+                        filterable: false,
+                        value: 'status'
+                    }, {
+                        text: 'Actions',
+                        value: 'actions',
+                        filterable: false,
+                        sortable: false
+                    }
+                ],
                 count: 0,
                 user: {
                     gender: '',

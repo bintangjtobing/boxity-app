@@ -19,7 +19,7 @@
                             <form @submit.prevent="handleSubmit">
                                 <div class="form-group mb-20">
                                     <div class="form-row">
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-6">
                                             <input type="text" required v-model="user.name" class="form-control"
                                                 placeholder="Fullname">
                                         </div>
@@ -29,6 +29,14 @@
                                                 <option disabled value="">Select gender:</option>
                                                 <option v-bind:value="`M`">Male</option>
                                                 <option v-bind:value="`F`">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <select v-model="user.status" required id="select-tag"
+                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                <option disabled value="">Status:</option>
+                                                <option v-bind:value="`0`">Terminated</option>
+                                                <option v-bind:value="`1`">Active</option>
                                             </select>
                                         </div>
                                     </div>
@@ -130,7 +138,7 @@
             },
             async handleSubmit() {
                 const payload = {};
-                _.forEach(['name', 'role', 'department', 'divisi', 'gender', 'email'], (field) => {
+                _.forEach(['name', 'role', 'department', 'divisi', 'gender', 'email', 'status'], (field) => {
                     if (this.user[field]) {
                         payload[field] = this.user[field];
                     }
