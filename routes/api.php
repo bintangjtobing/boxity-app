@@ -189,3 +189,6 @@ Route::get('/goods-item-transfer/{id}', 'apiController@getGoodsItemTransferById'
 Route::patch('/goods-item-transfer/{id}', 'apiController@postGoodsItemTransferById');
 Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransferById');
 Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
+
+// Leave Request
+Route::get('/generate-one-lr', 'apiController@plusOneEachTen');

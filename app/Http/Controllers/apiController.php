@@ -39,6 +39,7 @@ use App\track_reports;
 use App\userdetails;
 use App\userGuide;
 use App\warehouseList;
+use Illuminate\Support\Facades\Date;
 use Mail;
 
 class apiController extends Controller
@@ -1320,5 +1321,19 @@ class apiController extends Controller
     public function deleteGoodsItemTransferById($id)
     {
         return response()->json(goodsItemTransfer::find($id)->delete());
+    }
+
+    // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
+    public function plusOneEachTen()
+    {
+        $jmlhCuti = '6';
+        $getDate = Date("d");
+
+        // Tentukan tanggal
+        if ($getDate == '10') {
+            // Tambah 1 jika tanggal diatas valid
+            $jmlhCuti += 1;
+        }
+        return response()->json($jmlhCuti);
     }
 }
