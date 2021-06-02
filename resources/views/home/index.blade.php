@@ -46,18 +46,6 @@
 </head>
 
 <body class="stretched">
-    <div class="modal-on-load" data-target="#popupModal"></div>
-
-    <!-- Modal -->
-    <div class="modal1 mfp-hide" id="popupModal">
-        <div class="block mx-auto" style="background-color: #FFF; max-width: 700px;">
-            <div class="center" style="padding: 50px;">
-                <h3>New division on May 2021!</h3>
-                <img src="https://res.cloudinary.com/bintangtobing-com/image/upload/v1620448968/popup.jpg"
-                    alt="New divison on may 2021">
-            </div>
-        </div>
-    </div>
     {{-- MODAL ATTACH STARTED --}}
     {{-- PLPESTINDO --}}
     <div class="modal fade bs-example-modal-lg" id="plpview" tabindex="-1" role="dialog"
