@@ -12,4 +12,12 @@ class commentIssue extends Model
         'issueId',
         'comment',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'fromId');
+    }
+    public function issue()
+    {
+        return $this->belongsTo(issue::class, 'issueId');
+    }
 }

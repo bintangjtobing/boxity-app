@@ -22,6 +22,8 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\jobvacancy;
+use App\Mail\AddComment;
+use App\Mail\addCommentToCreator;
 use App\Mail\addUser;
 use App\Mail\closedIssue;
 use App\Mail\confirmUpdateIssue;
@@ -247,16 +249,24 @@ class apiController extends Controller
         $newComment->issueId = $request->issueid;
         $newComment->comment = $request->comment;
         $newComment->save();
-        return response()->json($newComment, 201);
+
+        $issueGet = issue::where('id', $newComment->issueId)->get();
+        $userfind = commentIssue::with('user')->where('issueId', '=', $newComment->issueId)->get();
+        $issuefind = issue::with('user')->where('id', $newComment->issueId)->get();
+
+        // if user signed not same as created by issue
+        if (Auth::id() != $issueGet[0]->created_by) {
+            Mail::to($issuefind[0]->user->email)->send(new AddComment($userfind[0], $issuefind[0]));
+            return response()->json(200);
+        } else {
+            Mail::to($userfind[0]->user->email)->send(new addCommentToCreator($userfind[0], $issuefind[0]));
+            return response()->json(200);
+        }
+        return response()->json(201);
     }
     public function getCommentbyId($id)
     {
-        $getComment = DB::table('comment_issues')
-            ->where('comment_issues.issueId', '=', $id)
-            ->join('users', 'comment_issues.fromId', '=', 'users.id')
-            ->select('comment_issues.*', 'users.name')
-            ->get();
-        return response()->json($getComment);
+        return response()->json(commentIssue::with('user')->where('issueId', $id)->get());
     }
     public function approveIssue($id)
     {

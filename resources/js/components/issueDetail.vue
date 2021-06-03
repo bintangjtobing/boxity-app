@@ -70,7 +70,7 @@
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
                                             <figure>
-                                                <img :src="`/dashboard/img/author/profile/`+issues.avatar"
+                                                <img :src="`/dashboard/img/author/profile/`+comment.user.avatar"
                                                     class="bg-opacity-primary d-flex" alt="Reporter avatar">
                                             </figure>
                                         </div>
@@ -81,7 +81,11 @@
                                                 comment.comment"></span>
                                                 <div class="cci__comment-actions">
                                                     <a class="btn-reply">
-                                                        <span>Commented on {{commentAt}}</span>
+                                                        <span>Commented on {{commentAt}} &#183; <a
+                                                                v-on:click="Hidden=true" v-if="issues.status!=0"
+                                                                class="btn-reply">
+                                                                <span>Reply</span>
+                                                            </a></span>
                                                     </a>
                                                 </div>
                                             </div>
