@@ -55,7 +55,7 @@
                                                 <div class="cci__comment-actions">
                                                     <a v-on:click="Hidden=true" v-if="issues.status!=0"
                                                         class="btn-reply">
-                                                        <span>Reply</span>
+                                                        <span><i class="fas fa-reply"></i> Reply</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -82,10 +82,13 @@
                                                 <div class="cci__comment-actions">
                                                     <a class="btn-reply">
                                                         <span>Commented on {{commentAt}} &#183; <a
-                                                                v-on:click="Hidden=true" v-if="issues.status!=0"
+                                                                v-on:click="Hidden=true"
+                                                                v-if="issues.status!=0 && comment.fromId != user.id"
                                                                 class="btn-reply">
-                                                                <span>Reply</span>
-                                                            </a></span>
+                                                                <span><i class="fas fa-reply"></i> Reply</span>
+                                                            </a> <a v-on:click="deleteData(comment.id)"
+                                                                class="btn-reply" v-if="comment.fromId == user.id">
+                                                                <i class="fas fa-trash"></i></a></span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -240,6 +243,16 @@
                 } else {
                     this.approver.name = response.data[0].name;
                 }
+            },
+            async deleteData(id) {
+                await axios.delete('/api/issue/delete-comment/' + id);
+                this.loadComments();
+                this.loadDataIssue();
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Deleted',
+                    text: 'Success deleted comment'
+                });
             },
             async handleComment(event) {
                 event.preventDefault();

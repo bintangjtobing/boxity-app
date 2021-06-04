@@ -264,6 +264,10 @@ class apiController extends Controller
         }
         return response()->json(201);
     }
+    public function deleteComment($id)
+    {
+        return response()->json(commentIssue::find($id)->delete());
+    }
     public function getCommentbyId($id)
     {
         return response()->json(commentIssue::with('user')->where('issueId', $id)->get());

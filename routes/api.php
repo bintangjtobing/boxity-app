@@ -34,6 +34,7 @@ Route::get('/issue/assignee/{id}', 'apiController@getAssigneebyId');
 Route::get('/issue/approver/{id}', 'apiController@getApprovedbyId');
 // Post comment on issue id
 Route::post('/issue/add-comment', 'apiController@postComment');
+Route::delete('/issue/delete-comment/{id}', 'apiController@deleteComment');
 Route::get('/issue/comment/{id}', 'apiController@getCommentbyId');
 Route::patch('/issue/approved/{id}', 'apiController@approveIssue');
 Route::patch('/issue/closed/{id}', 'apiController@closedIssue');
