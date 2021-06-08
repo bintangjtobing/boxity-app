@@ -3,6 +3,6 @@ windows:
     root: ~/Volumes/StorageX/GitHub/boxity-app/
     layout: main-vertical-flipped
     panes:
-      - npm run watch
-      - php artisan optimize:clear
+      - cd ../../Volumes/StorageX/GitHub/boxity-app
+      - cd ../../Volumes/StorageX/GitHub/boxity-app
       - ssh k1305893@207.180.206.103

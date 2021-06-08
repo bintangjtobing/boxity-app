@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label for="password">Password
                                         <a href="/forgot-password" class="float-right">
-                                            Forgot Password?
+                                            Forgot/Reset Password?
                                         </a>
                                     </label>
                                     <input id="password" type="password" class="form-control" name="password" required
