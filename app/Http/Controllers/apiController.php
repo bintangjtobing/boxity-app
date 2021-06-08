@@ -131,6 +131,7 @@ class apiController extends Controller
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
+            $user->unpassword = $request->password;
         }
         $user->save();
         Mail::to($user->email)->send(new confirmUpdateIssue($user));
