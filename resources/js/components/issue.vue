@@ -226,7 +226,7 @@
         },
         mounted() {
             this.$Progress.start();
-            this.loadIssues();x
+            this.loadIssues();
             this.$Progress.finish();
         },
         methods: {
