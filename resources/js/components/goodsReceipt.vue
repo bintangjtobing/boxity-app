@@ -88,7 +88,7 @@
                                     <div class="col-lg-8">
                                         <div class="form-group mb-25">
                                             <select
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 id="n-labels" v-model="goods.receiverid" required>
                                                 <option value="" disabled>Select receiver:</option>
                                                 <option v-for="users in user" :key="users.id" :value="users.id">
@@ -99,7 +99,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group mb-25">
                                             <select
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 id="n-labels" v-model="goods.courier" required>
                                                 <option value="" disabled>Select courier:</option>
                                                 <option :value="`lain`">Lain lain</option>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <select
-                                        class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="goods.typeOfGoods" required>
                                         <option value="" disabled>Select type document:</option>
                                         <option :value="`1`">Document</option>

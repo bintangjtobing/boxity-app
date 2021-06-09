@@ -27,7 +27,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <select v-model="blog.category"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option value="" disabled>category</option>
                                                 <option v-bind:value="`Ekspor`">Ekspor</option>
                                                 <option v-bind:value="`Impor`">Impor</option>

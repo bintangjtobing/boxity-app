@@ -46,7 +46,10 @@
 </head>
 
 <body class="stretched">
+<<<<<<< HEAD
     {{-- MODAL ATTACH STARTED --}}
+=======
+>>>>>>> ed67e169380288f8cc5d56b1831babf3950b0640
     {{-- PLPESTINDO --}}
     <div class="modal fade bs-example-modal-lg" id="plpview" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">

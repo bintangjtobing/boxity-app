@@ -16,6 +16,10 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+{{-- MODAL ATTACH STARTED --}}
+>>>>>>> ed67e169380288f8cc5d56b1831babf3950b0640
 <section id="slider" class="slider-element dark swiper_wrapper slider-parallax min-vh-75" style="overflow: visible">
     <div class="slider-inner">
         <div class="swiper-container swiper-parent">

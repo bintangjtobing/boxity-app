@@ -45,7 +45,7 @@
                                     <div class="form-row">
                                         <div class="col-lg-6">
                                             <select v-model="order.sender_city" id="sender_city"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 required>
                                                 <option value="" disabled>Choose sender city</option>
                                                 <option value="Medan">Medan</option>
@@ -69,7 +69,7 @@
                                     <div class="form-row">
                                         <div class="col-lg-4">
                                             <select v-model="order.payload" id=""
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select"
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 required>
                                                 <option value="" disabled>Choose payload:</option>
                                                 <option value="Kg">Weight (Kg)</option>

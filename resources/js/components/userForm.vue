@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <select v-model="user.gender" required id="select-tag"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option disabled value="">Select gender:</option>
                                                 <option v-bind:value="`M`">Male</option>
                                                 <option v-bind:value="`F`">Female</option>
@@ -66,7 +66,7 @@
                                     <div class="form-row">
                                         <div class="col-lg-4">
                                             <select v-model="user.role" required id="select-tag"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option disabled value="">Select role:</option>
                                                 <option v-bind:value="`user`">User</option>
                                                 <option v-bind:value="`head`">Head</option>
@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <select v-model="user.department" required id="select-tag"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option disabled value="">Select department:</option>
                                                 <option v-bind:value="`finance`">Finance
                                                 </option>
@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <select v-model="user.divisi" required id="select-tag"
-                                                class="form-control custom-select ih-medium ip-gray radius-xs b-light fa-select">
+                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
                                                 <option disabled value="">Select division:</option>
                                                 <option v-bind:value="`staff`">Staff</option>
                                                 <option v-bind:value="`supervisor`">Supervisor</option>

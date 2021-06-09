@@ -145,3 +145,53 @@ Route::delete('/suppliers/{id}', 'apiController@deleteCustomer');
 Route::post('/suppliers', 'apiController@addSuppliers');
 Route::get('/count-suppliers', 'apiController@countSuppliers');
 Route::patch('/suppliers/{id}', 'apiController@updateSuppliers');
+
+// Warehouse
+Route::get('/warehouse', 'apiController@getWarehouse');
+Route::post('/warehouse', 'apiController@postWarehouse');
+Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
+Route::delete('/warehouse/{id}', 'apiController@deleteWarehouseById');
+Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
+
+// Stock Group
+Route::get('/stock-group', 'apiController@getStockGroup');
+Route::post('/stock-group', 'apiController@postStockGroup');
+Route::get('/stock-group/{id}', 'apiController@getStockGroupById');
+Route::get('/count-stock-group', 'apiController@countStockGroup');
+Route::patch('/stock-group/{id}', 'apiController@postStockGroupById');
+Route::delete('/stock-group/{id}', 'apiController@deleteStockGroupById');
+
+// Item Group
+Route::get('/item-group', 'apiController@getItemGroup');
+Route::post('/item-group', 'apiController@postItemGroup');
+Route::get('/item-group/{id}', 'apiController@getItemGroupById');
+Route::patch('/item-group/{id}', 'apiController@postItemGroupById');
+Route::get('/count-item-group', 'apiController@countItemGroup');
+Route::delete('/item-group/{id}', 'apiController@deleteItemGroupById');
+
+// Inventory Item
+Route::get('/inventory-item', 'apiController@getInventoryItem');
+Route::post('/inventory-item', 'apiController@postInventoryItem');
+Route::get('/inventory-item/{id}', 'apiController@getInventoryItemById');
+Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
+Route::get('/count-inventory-item', 'apiController@countInventoryItem');
+Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
+
+// Goods Transfer
+Route::get('/goods-transfer', 'apiController@getGoodsTransfer');
+Route::post('/goods-transfer', 'apiController@postGoodsTransfer');
+Route::get('/goods-transfer/{id}', 'apiController@getGoodsTransferById');
+Route::patch('/goods-transfer/{id}', 'apiController@postGoodsTransferById');
+Route::delete('/goods-transfer/{id}', 'apiController@deleteGoodsTransferById');
+Route::get('/count-goods-transfer', 'apiController@countGoodsTransfer');
+
+// Goods Item Transfer
+Route::get('/goods-item-transfer', 'apiController@getGoodsItemTransfer');
+Route::post('/goods-item-transfer', 'apiController@postGoodsItemTransfer');
+Route::get('/goods-item-transfer/{id}', 'apiController@getGoodsItemTransferById');
+Route::patch('/goods-item-transfer/{id}', 'apiController@postGoodsItemTransferById');
+Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransferById');
+Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
+
+// Leave Request
+Route::get('/generate-one-lr', 'apiController@plusOneEachTen');

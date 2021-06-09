@@ -42,7 +42,7 @@
                                                 </div>
                                                 <div class="form-group mb-20">
                                                     <select v-model="blog.category"
-                                                        class="form-control custom-select px-15"
+                                                        class="form-control form-control-default px-15"
                                                         id="exampleFormControlSelect1">
                                                         <option value="" disabled>Select category:</option>
                                                         <option value="Ekspor">Ekspor</option>

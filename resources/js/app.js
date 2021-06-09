@@ -73,6 +73,15 @@ import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
 import supplierForm from './components/supplierForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
+import warehouseForm from './components/warehouseForm.vue';
+import stockGroup from './components/stockGroup.vue';
+import stockGroupForm from './components/stockGroupForm.vue';
+import itemGroup from './components/itemGroup.vue';
+import itemGroupForm from './components/itemGroupForm.vue';
+import inventoryItem from './components/inventoryItem.vue';
+import inventoryItemForm from './components/inventoryItemForm.vue';
+import goodsTransfer from './components/goodsTransfer.vue';
+import goodsTransferForm from './components/goodsTransferForm.vue';
 
 // membuat router
 const routes = [{
@@ -233,10 +242,46 @@ const routes = [{
         path: '/detail/customer/:id',
         component: customerForm,
     }, {
-        name: 'warehouse-management',
-        path: '/warehouse-management',
+        name: 'warehouse-list',
+        path: '/warehouse-list',
         component: warehouseMgmt
-    }
+    }, {
+        name: 'update-warehouse',
+        path: '/detail/warehouse/:id',
+        component: warehouseForm,
+    }, {
+        name: 'stockGroup',
+        path: '/stock-group',
+        component: stockGroup
+    }, {
+        name: 'detailStockGroup',
+        path: '/detail/stock-group/:id',
+        component: stockGroupForm,
+    }, {
+        name: 'itemGroup',
+        path: '/item-group',
+        component: itemGroup
+    }, {
+        name: 'detailItemGroup',
+        path: '/detail/item-group/:id',
+        component: itemGroupForm,
+    }, {
+        name: 'inventoryItem',
+        path: '/inventory-item',
+        component: inventoryItem
+    }, {
+        name: 'detailInventoryItem',
+        path: '/detail/inventory-item/:id',
+        component: inventoryItemForm,
+    }, {
+        name: 'goodsTransfer',
+        path: '/goods-transfer',
+        component: goodsTransfer
+    }, {
+        name: 'detailgoodsTransfer',
+        path: '/detail/goods-transfer/:id',
+        component: goodsTransferForm,
+    },
 ]
 
 const router = new VueRouter({
