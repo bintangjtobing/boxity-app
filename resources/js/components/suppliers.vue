@@ -196,7 +196,9 @@
             };
         },
         mounted() {
+            this.$Progress.start();
             this.loadSuppliers();
+            this.$Progress.finish();
         },
         created() {
             this.countSuppliers();
@@ -216,6 +218,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/suppliers/' + id);
                     this.loadSuppliers();
                     await Swal.fire({
@@ -223,6 +226,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current suppliers'
                     });
+                    this.$Progress.finish();
                 }
             },
             validatePassword() {
@@ -311,6 +315,7 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
+                this.$Progress.start();
                 await axios.post('/api/suppliers', payload).then(response => {
                     this.loadSuppliers();
                     Swal.fire({
@@ -318,6 +323,7 @@
                         title: 'Congratulations',
                         text: 'Success add new supplier',
                     });
+                    this.$Progress.finish();
                     this.user = {
                         name: '',
                         email: '',

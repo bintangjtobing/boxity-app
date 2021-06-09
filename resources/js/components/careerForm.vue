@@ -124,6 +124,7 @@
         },
         methods: {
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/career', {
                     title: this.job.title,
                     location: this.job.location,
@@ -136,8 +137,10 @@
                         title: 'Congratulations',
                         text: 'Success add new job vacancy.',
                     });
+                    this.$Progress.finish();
                     this.$router.push('/career');
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

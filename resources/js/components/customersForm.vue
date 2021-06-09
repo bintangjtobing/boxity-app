@@ -122,7 +122,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataUser() {
@@ -141,12 +143,14 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
+                this.$Progress.start();
                 await axios.patch('/api/customers/' + this.$route.params.id, payload);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update customer data',
                 });
+                this.$Progress.finish();
                 this.$router.push('/customers');
             },
         },

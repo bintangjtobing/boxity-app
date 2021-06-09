@@ -43,7 +43,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadJob();
+            this.$Progress.finish();
         },
         methods: {
             async loadJob() {

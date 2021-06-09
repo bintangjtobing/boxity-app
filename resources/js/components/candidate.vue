@@ -83,8 +83,10 @@
             }
         },
         mounted() {
+            this.$Progress.start();
             this.loadUsers();
             this.loadCandidates();
+            this.$Progress.finish();
         },
         methods: {
             loadUsers() {
@@ -105,6 +107,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('/api/candidates/' + id);
                     this.loadCandidates();
                     await Swal.fire({
@@ -112,6 +115,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current candidates'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

@@ -174,7 +174,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataTrack();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataTrack() {
@@ -182,16 +184,20 @@
                 this.tracks = resp.data;
             },
             async createTrack() {
+                this.$Progress.start();
                 await axios.post('/api/track-delivery/' + this.$route.params.id, this.track);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success create new track delivery.',
                 });
+                this.$Progress.finish();
                 this.$router.push('/track-delivery');
             },
             async updateTrack() {
+                this.$Progress.start();
                 await axios.patch('/api/track-delivery/' + this.$route.params.id, this.track).then(response => {
+                    this.$Progress.finish();
                     this.$router.push('/track-delivery');
                     Swal.fire({
                         icon: 'success',
@@ -199,6 +205,7 @@
                         text: 'Update track delivery.',
                     });
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

@@ -225,7 +225,9 @@
             }
         },
         mounted() {
-            this.loadIssues();
+            this.$Progress.start();
+            this.loadIssues();x
+            this.$Progress.finish();
         },
         methods: {
             async loadIssues() {

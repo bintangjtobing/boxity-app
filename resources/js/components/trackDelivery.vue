@@ -102,7 +102,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataTrack();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataTrack() {
@@ -181,6 +183,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.patch('/api/track-deliverys/' + id);
                     // console.log('200')
                     this.loadDataTrack();
@@ -189,6 +192,7 @@
                         title: 'Successfully terminated',
                         text: 'Success terminated current track'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

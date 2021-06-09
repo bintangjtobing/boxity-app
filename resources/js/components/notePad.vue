@@ -241,7 +241,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadNote();
+            this.$Progress.finish();
         },
         methods: {
             async loadNote() {
@@ -250,31 +252,42 @@
                 this.title = '- all data';
             },
             async favoriteData() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad/favorite');
                 this.notes = resp.data;
+                this.$Progress.finish();
                 this.title = '- favorite data';
             },
             async personalData() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad/personal');
                 this.notes = resp.data;
+                this.$Progress.finish();
                 this.title = '- personal data';
             },
             async workData() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad/work');
                 this.notes = resp.data;
+                this.$Progress.finish();
                 this.title = '- work data';
             },
             async socialData() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad/social');
                 this.notes = resp.data;
+                this.$Progress.finish();
                 this.title = '- social data';
             },
             async importantData() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad/important');
                 this.notes = resp.data;
+                this.$Progress.finish();
                 this.title = '- important data';
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/notepad', this.note).then(response => {
                     this.loadNote();
                     Swal.fire({
@@ -282,7 +295,9 @@
                         title: 'Congratulations',
                         text: 'Success add new notepad',
                     });
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -306,17 +321,23 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('/api/notepad/' + id);
+                    this.$Progress.finish();
                     this.loadNote();
                 }
             },
             async favoriteNotepad(id) {
+                this.$Progress.start();
                 await axios.patch('/api/notepad/favorite/' + id);
+                this.$Progress.finish();
                 // console.log('200')
                 this.loadNote();
             },
             async unFavoriteNotepad(id) {
+                this.$Progress.start();
                 await axios.patch('/api/notepad/unfavorite/' + id);
+                this.$Progress.finish();
                 // console.log('200')
                 this.loadNote();
             },

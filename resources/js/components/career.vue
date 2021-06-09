@@ -70,7 +70,9 @@
             }
         },
         mounted() {
+            this.$Progress.start();
             this.loadCareers();
+            this.$Progress.finish();
         },
         methods: {
             async loadCareers() {
@@ -89,6 +91,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/career/' + id);
                     this.loadCareers();
                     await Swal.fire({
@@ -96,6 +99,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current job vacancy'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

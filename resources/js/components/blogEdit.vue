@@ -83,7 +83,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataBlog();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataBlog() {
@@ -91,12 +93,14 @@
                 this.blog = resp.data;
             },
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.patch('/api/blogs/' + this.$route.params.id, this.blog);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update blog.',
                 });
+                this.$Progress.finish();
                 this.$router.push('/blog-management');
             }
         },

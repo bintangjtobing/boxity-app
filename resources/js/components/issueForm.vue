@@ -121,8 +121,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadUserLoggedIn();
             this.assigneeGet();
+            this.$Progress.finish();
         },
         methods: {
             async loadUserLoggedIn() {
@@ -136,21 +138,23 @@
             },
             async handleSubmit(event) {
                 event.preventDefault();
-
                 const payload = {};
                 _.forEach(['title', 'description', 'assignee', 'priority'], (field) => {
                     if (this.issue[field]) {
                         payload[field] = this.issue[field];
                     }
                 });
+                this.$Progress.start();
                 await axios.post('/api/issue', payload).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success add new issue.',
                     });
+                    this.$Progress.finish();
                     this.$router.push('/issues');
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

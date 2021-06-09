@@ -61,8 +61,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataVersion();
             this.loadVerControl();
+            this.$Progress.finish();
         },
         methods: {
             async loadVerControl() {
@@ -70,8 +72,10 @@
                 this.vControl = resp.data;
             },
             async loadDataVersion() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/version-control/' + this.$route.params.version);
                 this.version = resp.data[0];
+                this.$Progress.finish();
             }
         },
     }

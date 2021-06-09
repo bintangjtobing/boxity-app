@@ -141,8 +141,10 @@
             }
         },
         mounted() {
+            this.$Progress.start();
             this.loadCompany();
             this.loggedUser();
+            this.$Progress.finish();
         },
         methods: {
             async loggedUser() {
@@ -170,14 +172,17 @@
             },
             async saveCompany(event) {
                 event.preventDefault();
+                this.$Progress.start();
                 await axios.post('/api/company-details', this.company).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success save the company details',
                     });
+                    this.$Progress.finish();
                     this.loadCompany();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

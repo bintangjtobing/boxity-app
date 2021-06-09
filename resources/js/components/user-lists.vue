@@ -232,9 +232,11 @@
             };
         },
         mounted() {
+            this.$Progress.start();
             this.loadUsers();
             this.generatePassword();
             this.countUsers();
+            this.$Progress.finish();
         },
         methods: {
             generatePassword() {
@@ -256,6 +258,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/users/' + id);
                     this.loadUsers();
                     await Swal.fire({
@@ -263,6 +266,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current user'
                     });
+                    this.$Progress.finish();
                 }
             },
             validatePassword() {
@@ -348,9 +352,11 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
+                this.$Progress.start();
                 await axios.post('/api/users', payload).then(response => {
                     this.loadUsers();
                     this.countUsers();
+                    this.$Progress.finish();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -368,6 +374,7 @@
                     this.user.password = genPass;
                     this.user.confirmPassword = genPass;
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

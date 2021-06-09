@@ -218,9 +218,11 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadGoods();
             this.loadUser();
             this.userGet();
+            this.$Progress.finish();
         },
         methods: {
             async userGet() {
@@ -236,6 +238,7 @@
                 this.user = resp.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/goods-receipt', this.goods).then(response => {
                     this.loadGoods();
                     Swal.fire({
@@ -243,6 +246,7 @@
                         title: 'Congratulations',
                         text: 'Success add new good receipt',
                     });
+                    this.$Progress.finish();
                     this.goods = {
                         courier: '',
                         typeOfGoods: '',
@@ -251,6 +255,7 @@
                         description: '',
                     };
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -266,12 +271,14 @@
                 });
             },
             async receivedAction(id) {
+                this.$Progress.start();
                 await axios.patch('/api/goods-receipt/' + id);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Enjoy your packet/document!',
                 });
+                this.$Progress.finish();
                 this.loadGoods();
             },
         },

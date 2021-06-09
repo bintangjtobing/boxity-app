@@ -123,7 +123,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataCareer();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataCareer() {
@@ -131,6 +133,7 @@
                 this.job = resp.data;
             },
             async handleSubmit() {
+                this.$Progress.finish();
                 await axios.patch('/api/career/' + this.$route.params.id, {
                     title: this.job.title,
                     location: this.job.location,
@@ -143,6 +146,7 @@
                     title: 'Congratulations',
                     text: 'Success update job vacancy.',
                 });
+                this.$Progress.finish();
                 this.$router.push('/career/' + this.$route.params.id);
             }
         },

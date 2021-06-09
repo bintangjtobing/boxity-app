@@ -58,8 +58,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadUserLoggedIn();
             this.loadDataQuote();
+            this.$Progress.finish();
         },
         methods: {
             async loadUserLoggedIn() {
@@ -71,16 +73,20 @@
                 this.quotes = resp.data[0];
             },
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.patch('/api/quote/' + this.$route.params.id, this.quotes);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update job vacancy.',
                 });
+                this.$Progress.finish();
                 this.$router.push('/quote');
             },
             async doneQuote() {
+                this.$Progress.start();
                 await axios.patch('/api/quote/approved/' + this.$route.params.id);
+                this.$Progress.finish();
                 this.$router.push('/quote');
                 Swal.fire({
                     icon: 'success',

@@ -226,7 +226,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataUser() {
@@ -261,6 +263,7 @@
                 // data.append('facebook', this.user.facebook);
                 // data.append('instagram', this.user.instagram);
                 // console.log(data);
+                this.$Progress.start();
                 axios.patch('/api/profile/' + this.user.id, this.user);
                 this.loadDataUser();
                 Swal.fire({
@@ -268,6 +271,7 @@
                     title: 'Congratulations',
                     text: 'Update your data succced.',
                 });
+                this.$Progress.finish();
             },
             gatherFormData() {
                 return data;
@@ -314,8 +318,10 @@
                 const isPasswordValid = this.validatePassword();
                 if (!isPasswordValid) return false;
                 // const pass = this.user.password;
+                this.$Progress.start();
                 axios.patch('/api/profile/password-update/' + this.user.id, this.user);
                 this.loadDataUser();
+                this.$Progress.finish();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

@@ -116,7 +116,9 @@
             }
         },
         mounted() {
+            this.$Progress.start();
             this.loadVerControl();
+            this.$Progress.finish();
         },
         methods: {
             async loadVerControl() {
@@ -124,6 +126,7 @@
                 this.vControl = resp.data;
             },
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/version-control', this.version).then(response => {
                     this.version = {
                         title: '',
@@ -135,7 +138,9 @@
                         title: 'Congratulations',
                         text: 'Success add new change log.',
                     });
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

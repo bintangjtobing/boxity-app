@@ -98,14 +98,15 @@
             return '' + this.title.name;
         },
         created() {
+            this.$Progress.start();
             this.loadDataUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataUser() {
                 const resp = await axios.get('/api/u/' + this.$route.params.username);
                 this.title.name = resp.data.name;
                 this.users = resp.data;
-                console.log(this.title.name);
             }
         },
     }

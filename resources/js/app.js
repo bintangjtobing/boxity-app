@@ -12,6 +12,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 import 'feather-icons';
 import moment from 'moment';
+import VueProgressBar from 'vue-progressbar'
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -21,6 +22,15 @@ moment.locale('en-au');
 
 Vue.mixin(titleMixin);
 Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);
+const options = {
+    color: '#2788d6',
+    failedColor: '#874b4b',
+    thickness: '5px',
+    height: '4px',
+    autoRevert: true,
+    inverse: false
+};
+Vue.use(VueProgressBar, options);
 
 import App from './components/App.vue';
 import Index from './components/index.vue';

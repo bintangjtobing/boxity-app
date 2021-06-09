@@ -72,14 +72,17 @@
         },
         methods: {
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/album', this.album).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success add new album.',
                     });
+                    this.$Progress.finish();
                     this.$router.push('/gallery');
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

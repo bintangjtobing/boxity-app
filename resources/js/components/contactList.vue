@@ -70,7 +70,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadContact();
+            this.$Progress.finish();
         },
         methods: {
             async loadContact() {

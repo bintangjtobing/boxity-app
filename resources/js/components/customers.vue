@@ -196,7 +196,9 @@
             };
         },
         mounted() {
+            this.$Progress.start();
             this.loadCustomers();
+            this.$Progress.finish();
         },
         created() {
             this.countCustomers();
@@ -216,6 +218,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/customers/' + id);
                     this.loadCustomers();
                     await Swal.fire({
@@ -223,6 +226,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current customers'
                     });
+                    this.$Progress.finish();
                 }
             },
             validatePassword() {
@@ -311,6 +315,7 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
+                this.$Progress.start();
                 await axios.post('/api/customers', payload).then(response => {
                     this.loadCustomers();
                     Swal.fire({
@@ -318,6 +323,7 @@
                         title: 'Congratulations',
                         text: 'Success add new customer',
                     });
+                    this.$Progress.finish();
                     this.user = {
                         name: '',
                         email: '',
@@ -333,6 +339,7 @@
                         customerNPWP: '',
                     };
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

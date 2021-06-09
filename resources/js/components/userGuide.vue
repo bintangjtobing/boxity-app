@@ -134,7 +134,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadGuide();
+            this.$Progress.finish();
         },
         methods: {
             async loadGuide() {
@@ -142,6 +144,7 @@
                 this.base = resp.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/user-guide', this.guide).then(response => {
                     this.loadGuide();
                     Swal.fire({
@@ -149,7 +152,9 @@
                         title: 'Congratulations',
                         text: 'Success add new guide',
                     });
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

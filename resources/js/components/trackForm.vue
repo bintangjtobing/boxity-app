@@ -134,14 +134,17 @@
         },
         methods: {
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/track-delivery', this.order).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success add new order track.',
                     });
+                    this.$Progress.finish();
                     this.$router.push('/track-delivery');
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

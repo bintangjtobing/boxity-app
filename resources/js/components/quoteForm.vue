@@ -57,7 +57,9 @@
         },
         methods: {
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/quote', this.quote).then(response => {
+                    this.$Progress.finish();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -65,6 +67,7 @@
                     });
                     this.$router.push('/quote');
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

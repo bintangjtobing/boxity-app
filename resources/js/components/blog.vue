@@ -145,7 +145,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadBlogs();
+            this.$Progress.finish();
         },
         methods: {
             async loadBlogs() {
@@ -160,6 +162,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/blogs/' + id);
                     this.loadBlogs();
                     await Swal.fire({
@@ -167,9 +170,11 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted blog'
                     });
+                    this.$Progress.finish();
                 }
             },
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.post('/api/blogs', this.blog).then(response => {
                     this.loadBlogs();
                     Swal.fire({
@@ -182,7 +187,9 @@
                         description: '',
                         category: '',
                     }
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

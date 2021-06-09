@@ -102,7 +102,9 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadCandidate();
+            this.$Progress.finish();
         },
         methods: {
             async loadCandidate() {

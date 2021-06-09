@@ -117,7 +117,9 @@
             }
         },
         mounted() {
+            this.$Progress.start();
             this.loadQuotes();
+            this.$Progress.finish();
         },
         methods: {
             async loadQuotes() {
@@ -132,6 +134,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('api/quote/' + id);
                     this.loadQuotes();
                     await Swal.fire({
@@ -139,6 +142,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current quote'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

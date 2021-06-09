@@ -213,11 +213,13 @@
             },
         },
         created() {
+            this.$Progress.start();
             this.loadDataIssue();
             this.loadUserLoggedIn();
             this.loadAssignee();
             this.loadComments();
             this.loadApprover();
+            this.$Progress.finish();
         },
         methods: {
             async loadUserLoggedIn() {
@@ -245,6 +247,7 @@
                 }
             },
             async deleteData(id) {
+                this.$Progress.start();
                 await axios.delete('/api/issue/delete-comment/' + id);
                 this.loadComments();
                 this.loadDataIssue();
@@ -253,10 +256,11 @@
                     title: 'Successfully Deleted',
                     text: 'Success deleted comment'
                 });
+                this.$Progress.finish();
             },
             async handleComment(event) {
                 event.preventDefault();
-
+                this.$Progress.start();
                 await axios.post('/api/issue/add-comment', {
                     comment: this.comment.desc,
                     issueid: this.issues.id
@@ -265,7 +269,9 @@
                     this.loadDataIssue();
                     this.comment = {};
                     this.Hidden = false;
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -285,6 +291,7 @@
                 this.comments = resp.data;
             },
             async approveIssue() {
+                this.$Progress.start();
                 await axios.patch('/api/issue/approved/' + this.$route.params.id);
                 this.loadApprover();
                 this.loadDataIssue();
@@ -293,15 +300,18 @@
                     title: 'Congratulations',
                     text: 'Success approve and open this issue.',
                 });
+                this.$Progress.finish();
                 this.$router.push('/issues');
             },
             async closeIssue() {
+                this.$Progress.start();
                 await axios.patch('/api/issue/closed/' + this.$route.params.id);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Issue done and closed!',
                 });
+                this.$Progress.finish();
                 this.$router.push('/issues');
             }
         },
