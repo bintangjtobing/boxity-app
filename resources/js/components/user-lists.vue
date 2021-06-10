@@ -138,8 +138,8 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                        <v-data-table :headers="headers" multi-sort :items="members" :items-per-page="10" loading
+                            loading-text="Loading... Please wait" class="elevation-1">
                             <template v-slot:item.status="{ item }">
                                 <div v-if="item.status==1">
                                     <span class="rounded-pill userDatatable-content-status color-success

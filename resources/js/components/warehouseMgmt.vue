@@ -22,8 +22,8 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :items="warehouseData" :items-per-page="10"
-                                    class="elevation-1" :search="search">
+                                <v-data-table :headers="headers" multi-sort :items="warehouseData" :items-per-page="10"
+                                    class="elevation-1">
                                     <template v-slot:item.address="{ item }">
                                         <span v-html="item.address"></span>
                                     </template>
@@ -157,8 +157,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadWarehouse();
             this.loadUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadWarehouse() {
@@ -170,6 +172,7 @@
                 this.user = resp.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/warehouse', this.warehouse).then(response => {
                     this.loadWarehouse();
                     Swal.fire({
@@ -184,7 +187,9 @@
                         remarks: '',
                         pic: '',
                     };
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -207,6 +212,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('/api/warehouse/' + id);
                     this.loadWarehouse();
                     await Swal.fire({
@@ -214,6 +220,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current warehouse.'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

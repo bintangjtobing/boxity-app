@@ -138,7 +138,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/supplier/${item.id}`" class="edit">
                                     <i class="fas fa-pen"></i></router-link>
@@ -323,7 +323,6 @@
                         title: 'Congratulations',
                         text: 'Success add new supplier',
                     });
-                    this.$Progress.finish();
                     this.user = {
                         name: '',
                         email: '',
@@ -338,6 +337,7 @@
                         customerWebsite: '',
                         customerNPWP: '',
                     };
+                    this.$Progress.finish();
                 }).catch(error => {
                     Swal.fire({
                         icon: 'warning',

@@ -138,7 +138,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/customer/${item.id}`" class="edit">
                                     <i class="fas fa-pen"></i></router-link>
@@ -298,8 +298,8 @@
                 return !data.existingEmail && !data.existingName;
             },
             async handleSubmit(event) {
+                this.$Progress.start();
                 event.preventDefault();
-
                 const isValid = await this.validateData();
                 if (!isValid) return false;
 
@@ -315,7 +315,6 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
-                this.$Progress.start();
                 await axios.post('/api/customers', payload).then(response => {
                     this.loadCustomers();
                     Swal.fire({
@@ -323,7 +322,6 @@
                         title: 'Congratulations',
                         text: 'Success add new customer',
                     });
-                    this.$Progress.finish();
                     this.user = {
                         name: '',
                         email: '',
@@ -338,6 +336,7 @@
                         customerWebsite: '',
                         customerNPWP: '',
                     };
+                    this.$Progress.finish();
                 }).catch(error => {
                     this.$Progress.fail();
                     Swal.fire({

@@ -28,8 +28,9 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :items="itemGroupData" :items-per-page="10"
-                                    class="elevation-1" :search="search">
+                                <v-data-table loading loading-text="Loading... Please wait..." :headers="headers"
+                                    multi-sort :items="itemGroupData" :items-per-page="10" class="elevation-1"
+                                    :search="search" group-by="stock.name">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks"></span>
                                     </template>
@@ -152,8 +153,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadItemGroup();
             this.loadUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadItemGroup() {
@@ -167,6 +170,7 @@
                 this.stock = resp.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/item-group', this.itemgroup).then(response => {
                     this.loadItemGroup();
                     Swal.fire({
@@ -183,6 +187,7 @@
                         stock_id: '',
                     };
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -196,6 +201,7 @@
                         }
                     });
                 });
+                this.$Progress.finish();
             },
             async deleteItemGroup(id) {
                 const result = await Swal.fire({
@@ -205,6 +211,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
+                    this.$Progress.start();
                     await axios.delete('/api/item-group/' + id);
                     this.loadItemGroup();
                     await Swal.fire({
@@ -212,6 +219,7 @@
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item group.'
                     });
+                    this.$Progress.finish();
                 }
             },
         },

@@ -16,7 +16,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="tracks"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.order_id="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <router-link :to="`/track-delivery/${item.id}`" class="text-dark fw-500">

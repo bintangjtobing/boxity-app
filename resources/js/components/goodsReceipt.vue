@@ -27,7 +27,7 @@
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
                                 <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
-                                    :items="goodsData" :items-per-page="10" class="elevation-1" :search="search">
+                                    :items="goodsData" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.typeOfGoods="{ item }">
                                         <div class="userDatatable-inline-title my-3">
                                             <a href="#" class="text-dark fw-500">

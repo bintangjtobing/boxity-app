@@ -27,8 +27,8 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :items="inventoryItem" :items-per-page="10"
-                                    class="elevation-1" :search="search" group-by="item_group.name">
+                                <v-data-table :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
+                                    class="elevation-1" group-by="item_group.name">
                                     <template v-slot:item.type="{ item }">
                                         <span v-if="item.type=='1'">Stock</span>
                                         <span v-if="item.type=='2'">Non Stock</span>
@@ -222,8 +222,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadItem();
             this.loadItemGroup();
+            this.$Progress.finish();
         },
         methods: {
             async loadItem() {
@@ -237,6 +239,7 @@
                 this.inventoryOpt = resp.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/inventory-item', this.inventorydata).then(response => {
                     this.loadItem();
                     Swal.fire({
@@ -244,14 +247,22 @@
                         title: 'Congratulations',
                         text: 'Success add Inventory Item',
                     });
-                    this.itemgroup = {
-                        warehouse_code: '',
-                        warehouse_name: '',
-                        address: '',
-                        remarks: '',
-                        pic: '',
+                    this.inventorydata = {
+                        item_code: '',
+                        item_name: '',
+                        type: '',
+                        item_group: '',
+                        brand: '',
+                        width: '',
+                        length: '',
+                        thickness: '',
+                        nt_weight: '',
+                        gr_weight: '',
+                        volume: '',
                     };
+                    this.$Progress.finish();
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

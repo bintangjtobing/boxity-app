@@ -27,8 +27,8 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :items="itemGroupData" :items-per-page="10"
-                                    class="elevation-1" :search="search">
+                                <v-data-table :headers="headers" multi-sort :items="itemGroupData" :items-per-page="10"
+                                    class="elevation-1">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks"></span>
                                     </template>

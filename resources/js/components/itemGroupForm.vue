@@ -92,8 +92,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadDataWarehouse();
             this.loadUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadDataWarehouse() {
@@ -105,12 +107,14 @@
                 this.user = resp.data;
             },
             async handleSubmit() {
+                this.$Progress.start();
                 await axios.patch('/api/warehouse/' + this.$route.params.id, this.warehouse);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update warehouse data',
                 });
+                this.$Progress.finish();
                 this.$router.push('/warehouse-list');
             },
         },

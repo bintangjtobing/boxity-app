@@ -27,14 +27,14 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :items="stockGroupData" :items-per-page="10"
-                                    class="elevation-1" :search="search">
+                                <v-data-table :headers="headers" multi-sort :items="stockGroupData" :items-per-page="10"
+                                    class="elevation-1">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks"></span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/stock-group/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fas fa-eye"></i></router-link>
                                         <a v-on:click="deleteStockGroup(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>
@@ -134,7 +134,7 @@
                     },
                     {
                         text: 'Customer',
-                        value: 'customer.name'
+                        value: 'customer.customerName'
                     }, {
                         text: 'Remarks',
                         value: 'remarks'
@@ -151,8 +151,10 @@
             }
         },
         created() {
+            this.$Progress.start();
             this.loadStockGroup();
             this.loadUser();
+            this.$Progress.finish();
         },
         methods: {
             async loadStockGroup() {
@@ -166,6 +168,7 @@
                 this.countCustomers = count.data;
             },
             async submitHandle() {
+                this.$Progress.start();
                 await axios.post('/api/stock-group', this.stockgroup).then(response => {
                     this.loadStockGroup();
                     Swal.fire({
@@ -182,6 +185,7 @@
                         customer_id: '',
                     };
                 }).catch(error => {
+                    this.$Progress.fail();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -195,6 +199,7 @@
                         }
                     });
                 });
+                this.$Progress.finish();
             },
             async deleteStockGroup(id) {
                 const result = await Swal.fire({

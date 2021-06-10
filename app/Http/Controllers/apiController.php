@@ -1165,7 +1165,7 @@ class apiController extends Controller
     }
     public function getStockGroupById($id)
     {
-        return response()->json(stockGroup::find($id));
+        return response()->json(stockGroup::with('customer')->find($id));
     }
     public function postStockGroupById($id, Request $request)
     {

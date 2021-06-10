@@ -78,7 +78,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="blogs"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                            :items-per-page="10" class="elevation-1">
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <a href="#" class="text-dark fw-500">
