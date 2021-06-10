@@ -15,9 +15,12 @@
                         <div class="ps-tab p-20 pb-25">
                             <div class="nav flex-column text-left" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-                                    role="tab" aria-controls="v-pills-home" aria-selected="true">
-                                    <span data-feather="user"></span>Company Information</a>
+                                <a class="nav-link active mt-1" id="v-pills-home-tab" data-toggle="pill"
+                                    href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                    Company Information</a>
+                                <a class="nav-link mt-1" id="v-pills-meta-tab" data-toggle="pill" href="#v-pills-meta"
+                                    role="tab" aria-controls="v-pills-meta" aria-selected="true">
+                                    Meta Information</a>
                             </div>
                         </div>
                     </div>
@@ -103,6 +106,47 @@
                                                             <label for="names">Site</label>
                                                             <input type="text" class="form-control"
                                                                 v-model="company.site" :readonly="isReadOnly" required>
+                                                        </div>
+                                                        <div class="button-group d-flex flex-wrap pt-30 mb-15"
+                                                            v-if="user.divisi == 'developer'">
+                                                            <button @click="saveCompany"
+                                                                class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
+                                                                information
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade  show active" id="v-pills-meta" role="tabpanel"
+                            aria-labelledby="v-pills-meta-tab">
+                            <div class="edit-profile">
+                                <div class="card">
+                                    <div class="card-header px-sm-25 px-3 py-4">
+                                        <div class="edit-profile__title">
+                                            <h6>Meta Information</h6>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <div class="col-xxl-6 col-lg-12 col-sm-12">
+                                                <div class="edit-profile__body mx-lg-20">
+                                                    <form>
+                                                        <div class="form-group mb-20">
+                                                            <label for="names">Company Description</label>
+                                                            <textarea v-model="company.meta_description"
+                                                                class="form-control" :readonly="isReadOnly" cols="30"
+                                                                rows="10"></textarea>
+                                                        </div>
+                                                        <div class="form-group mb-20">
+                                                            <label for="names">Company keywords</label>
+                                                            <input type="text" class="form-control"
+                                                                v-model="company.meta_keywords" :readonly="isReadOnly"
+                                                                required>
                                                         </div>
                                                         <div class="button-group d-flex flex-wrap pt-30 mb-15"
                                                             v-if="user.divisi == 'developer'">

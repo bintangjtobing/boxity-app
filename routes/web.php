@@ -66,9 +66,7 @@ Route::get('/login', function () {
 Route::get('/login/{tokens}', 'authController@index');
 Route::post('/login/{csrf_token}', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
-Route::get('/forgot-password', function () {
-    return view('auth.forgot');
-});
+Route::get('/forgot-password', 'authController@forgotPassword');
 Route::get('/ask-reset-password', 'authController@askReset');
 Route::get('/reset-password/{id}', 'authController@resetPassword');
 Route::post('/reset-password/{id}', 'authController@processResetPassword');

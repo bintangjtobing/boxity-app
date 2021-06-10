@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPSTORM_META\map;
+
 class company_details extends Model
 {
     protected $table = 'company_details';
@@ -18,5 +20,7 @@ class company_details extends Model
         'phone',
         'email',
         'site',
+        'meta_description',
+        'meta_keywords',
     ];
 }

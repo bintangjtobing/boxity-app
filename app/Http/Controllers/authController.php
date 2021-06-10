@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\changeLog;
+use App\company_details;
 use App\Mail\askReset;
 use App\Mail\doneReset;
 use App\User;
@@ -17,7 +19,46 @@ class authController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        $version = changeLog::orderBy('created_at', 'DESC')->get();
+        $company = company_details::get();
+        return view('auth.login', ['version' => $version[0], 'company' => $company[0]]);
+    }
+    public function forgotPassword()
+    {
+        $version = changeLog::orderBy('created_at', 'DESC')->get();
+        $company = company_details::get();
+        return view('auth.forgot', ['version' => $version[0], 'company' => $company[0]]);
+    }
+    public function askReset(Request $request)
+    {
+        $version = changeLog::orderBy('created_at', 'DESC')->get();
+        $company = company_details::get();
+
+        $email = $request->email;
+        $users = User::where('email', '=', $email)->get();
+        $user = $users[0];
+        Mail::to($email)->send(new askReset($user));
+        return view('auth.doneForgot');
+    }
+    public function resetPassword($id)
+    {
+        $version = changeLog::orderBy('created_at', 'DESC')->get();
+        $company = company_details::get();
+
+        $user = User::where('id', $id)->get();
+        return view('auth.reset', ['user' => $user[0]]);
+    }
+    public function processResetPassword($id, Request $request)
+    {
+        $version = changeLog::orderBy('created_at', 'DESC')->get();
+        $company = company_details::get();
+        
+        $users = User::where('id', $id)->get();
+        $user = $users[0];
+        $user->password = Hash::make($request->password);
+        $user->save();
+        Mail::to($user->email)->send(new doneReset($user));
+        return view('auth.doneReset');
     }
     public function loginProcess(Request $request)
     {
@@ -30,27 +71,5 @@ class authController extends Controller
         }
         return back()->with('gagal', ' Please check your auth status or your input!');
         // return 200;
-    }
-    public function askReset(Request $request)
-    {
-        $email = $request->email;
-        $users = User::where('email', '=', $email)->get();
-        $user = $users[0];
-        Mail::to($email)->send(new askReset($user));
-        return view('auth.doneForgot');
-    }
-    public function resetPassword($id)
-    {
-        $user = User::where('id', $id)->get();
-        return view('auth.reset', ['user' => $user[0]]);
-    }
-    public function processResetPassword($id, Request $request)
-    {
-        $users = User::where('id', $id)->get();
-        $user = $users[0];
-        $user->password = Hash::make($request->password);
-        $user->save();
-        Mail::to($user->email)->send(new doneReset($user));
-        return view('auth.doneReset');
     }
 }

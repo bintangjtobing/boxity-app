@@ -942,6 +942,8 @@ class apiController extends Controller
         $comp->phone = $request->phone;
         $comp->email = $request->email;
         $comp->site = $request->site;
+        $comp->meta_description = $request->meta_description;
+        $comp->meta_keywords = $request->meta_keywords;
         $comp->save();
         return response()->json($comp, 201);
     }
