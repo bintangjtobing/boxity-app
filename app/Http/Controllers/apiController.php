@@ -52,7 +52,8 @@ class apiController extends Controller
     public function deleteUser($id)
     {
         $getUser = User::find($id);
-        $getUser->delete();
+        $getUser->status = '2';
+        $getUser->save();
         return response()->json([], 204);
     }
     public function checkUserData(Request $req)
@@ -956,7 +957,8 @@ class apiController extends Controller
     public function deleteCustomer($id)
     {
         $getUser = User::find($id);
-        $getUser->delete();
+        $getUser->status = '2';
+        $getUser->save();
         return response()->json([], 204);
     }
     public function addCustomer(Request $request)
@@ -1031,7 +1033,8 @@ class apiController extends Controller
     public function deleteSuppliers($id)
     {
         $getUser = User::find($id);
-        $getUser->delete();
+        $getUser->status = '2';
+        $getUser->save();
         return response()->json([], 204);
     }
     public function addSuppliers(Request $request)
