@@ -253,7 +253,7 @@
             },
             async deleteData(id) {
                 const result = await Swal.fire({
-                    title: 'Delete user?',
+                    title: 'Terminate user?',
                     showCancelButton: true,
                     cancelButtonColor: '#d33',
                     confirmButtonText: `Delete`,
@@ -264,8 +264,8 @@
                     this.loadUsers();
                     await Swal.fire({
                         icon: 'success',
-                        title: 'Successfully Deleted',
-                        text: 'Success deleted current user'
+                        title: 'Successfully Terminated',
+                        text: 'Success terminate current user.'
                     });
                     this.$Progress.finish();
                 }
