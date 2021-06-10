@@ -102,14 +102,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataTrack();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataTrack() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/track-delivery/get');
                 this.tracks = resp.data;
+                this.$Progress.finish();
             },
             orderCreatedExp() {
                 Swal.fire({

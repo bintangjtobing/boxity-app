@@ -145,14 +145,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadBlogs();
-            this.$Progress.finish();
         },
         methods: {
             async loadBlogs() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/blogs');
                 this.blogs = resp.data;
+                this.$Progress.finish();
             },
             async deleteBlog(id) {
                 const result = await Swal.fire({

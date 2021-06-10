@@ -117,14 +117,14 @@
             }
         },
         mounted() {
-            this.$Progress.start();
             this.loadQuotes();
-            this.$Progress.finish();
         },
         methods: {
             async loadQuotes() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/quote/get');
                 this.quotes = resp.data;
+                this.$Progress.finish();
             },
             async deletequote(id) {
                 const result = await Swal.fire({

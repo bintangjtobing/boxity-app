@@ -43,15 +43,15 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadJob();
-            this.$Progress.finish();
         },
         methods: {
             async loadJob() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/career/' + this.$route.params.id);
                 this.careers = resp.data;
                 this.titles = resp.data.title;
+                this.$Progress.finish();
             },
         },
     }

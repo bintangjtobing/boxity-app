@@ -102,14 +102,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadCandidate();
-            this.$Progress.finish();
         },
         methods: {
             async loadCandidate() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/candidates/' + this.$route.params.id);
                 this.candidates = resp.data[0];
+                this.$Progress.finish();
             }
         },
     }

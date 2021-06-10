@@ -134,14 +134,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadGuide();
-            this.$Progress.finish();
         },
         methods: {
             async loadGuide() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/user-guide');
                 this.base = resp.data;
+                this.$Progress.finish();
             },
             async submitHandle() {
                 this.$Progress.start();

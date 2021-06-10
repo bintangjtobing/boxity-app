@@ -256,23 +256,23 @@
             }
         },
         mounted() {
-            this.userGet();
             this.svIssue();
-            this.pdIssue();
         },
         methods: {
-            async userGet() {
-                const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;
-            },
             async svIssue() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/count-solved-issue');
                 this.solvedIssue = resp.data;
+
+                // Get user logged in
+                const userLogged = await axios.get('/getUserLoggedIn');
+                this.user = userLogged.data;
+
+                // Pending Issue
+                const pending = await axios.get('/api/count-pending-issue');
+                this.pendingIssue = pending.data;
+                this.$Progress.finish();
             },
-            async pdIssue() {
-                const resp = await axios.get('/api/count-pending-issue');
-                this.pendingIssue = resp.data;
-            }
         },
     }
 

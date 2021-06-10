@@ -58,19 +58,18 @@
             }
         },
         created() {
-            this.$Progress.start();
-            this.loadUserLoggedIn();
             this.loadDataQuote();
-            this.$Progress.finish();
         },
         methods: {
-            async loadUserLoggedIn() {
-                const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;
-            },
             async loadDataQuote() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/quote/' + this.$route.params.id);
                 this.quotes = resp.data[0];
+
+                // Load user logged in
+                const respUser = await axios.get('/getUserLoggedIn');
+                this.user = respUser.data;
+                this.$Progress.finish();
             },
             async handleSubmit() {
                 this.$Progress.start();

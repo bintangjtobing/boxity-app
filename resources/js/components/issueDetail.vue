@@ -213,43 +213,43 @@
             },
         },
         created() {
-            this.$Progress.start();
             this.loadDataIssue();
-            this.loadUserLoggedIn();
-            this.loadAssignee();
-            this.loadComments();
-            this.loadApprover();
-            this.$Progress.finish();
         },
         methods: {
-            async loadUserLoggedIn() {
-                const res = await axios.get('/getUserLoggedIn');
-                this.user = res.data;
-                this.imageUser = res.data.avatar;
-                this.username = res.data.name;
-            },
             async loadDataIssue() {
+                this.$Progress.start();
                 const response = await axios.get('/api/issue/' + this.$route.params.id);
                 const countComment = await axios.get('/api/count-comment/' + this.$route.params.id);
                 this.issues = response.data[0];
                 this.countComment = countComment.data;
-            },
-            async loadAssignee() {
-                const response = await axios.get('/api/issue/assignee/' + this.$route.params.id);
-                this.assignee = response.data[0];
-            },
-            async loadApprover() {
-                const response = await axios.get('/api/issue/approver/' + this.$route.params.id);
-                if (!response) {
+
+                // Load data assignee
+                const assigneeProc = await axios.get('/api/issue/assignee/' + this.$route.params.id);
+                this.assignee = assigneeProc.data[0];
+
+                // Load data approver
+                const approverProc = await axios.get('/api/issue/approver/' + this.$route.params.id);
+                if (!approverProc) {
                     this.approver.name = '';
                 } else {
-                    this.approver.name = response.data[0].name;
+                    this.approver.name = approverProc.data[0].name;
                 }
+
+                // Load comments
+                const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);
+                this.comments = resp.data;
+
+                // Load user logged in
+                const res = await axios.get('/getUserLoggedIn');
+                this.user = res.data;
+                this.imageUser = res.data.avatar;
+                this.username = res.data.name;
+
+                this.$Progress.finish();
             },
             async deleteData(id) {
                 this.$Progress.start();
                 await axios.delete('/api/issue/delete-comment/' + id);
-                this.loadComments();
                 this.loadDataIssue();
                 await Swal.fire({
                     icon: 'success',
@@ -265,7 +265,6 @@
                     comment: this.comment.desc,
                     issueid: this.issues.id
                 }).then(response => {
-                    this.loadComments();
                     this.loadDataIssue();
                     this.comment = {};
                     this.Hidden = false;
@@ -286,14 +285,9 @@
                     });
                 });
             },
-            async loadComments() {
-                const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);
-                this.comments = resp.data;
-            },
             async approveIssue() {
                 this.$Progress.start();
                 await axios.patch('/api/issue/approved/' + this.$route.params.id);
-                this.loadApprover();
                 this.loadDataIssue();
                 Swal.fire({
                     icon: 'success',

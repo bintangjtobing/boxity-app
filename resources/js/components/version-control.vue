@@ -116,14 +116,14 @@
             }
         },
         mounted() {
-            this.$Progress.start();
             this.loadVerControl();
-            this.$Progress.finish();
         },
         methods: {
             async loadVerControl() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/version-control');
                 this.vControl = resp.data;
+                this.$Progress.finish();
             },
             async handleSubmit() {
                 this.$Progress.start();

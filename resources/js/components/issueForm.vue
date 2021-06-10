@@ -122,19 +122,18 @@
         },
         created() {
             this.$Progress.start();
-            this.loadUserLoggedIn();
             this.assigneeGet();
             this.$Progress.finish();
         },
         methods: {
-            async loadUserLoggedIn() {
-                const res = await axios.get('/getUserLoggedIn');
-                this.imageUser = res.data.avatar;
-                this.username = res.data.name;
-            },
             async assigneeGet() {
                 const res = await axios.get('/api/assignees');
                 this.users = res.data;
+
+                // Load user logged in
+                const resUser = await axios.get('/getUserLoggedIn');
+                this.imageUser = resUser.data.avatar;
+                this.username = resUser.data.name;
             },
             async handleSubmit(event) {
                 event.preventDefault();
