@@ -53,14 +53,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadAlbum();
-            this.$Progress.finish();
         },
         methods: {
             async loadAlbum() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/album');
                 this.album = resp.data;
+                this.$Progress.finish();
             },
         },
     }

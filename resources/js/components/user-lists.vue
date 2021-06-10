@@ -232,11 +232,8 @@
             };
         },
         mounted() {
-            this.$Progress.start();
             this.loadUsers();
             this.generatePassword();
-            this.countUsers();
-            this.$Progress.finish();
         },
         methods: {
             generatePassword() {
@@ -244,11 +241,15 @@
                 this.user.password = genPass;
                 this.user.confirmPassword = genPass;
             },
-            loadUsers() {
-                axios.get("api/users")
-                    .then(res => {
-                        this.members = res.data;
-                    });
+            async loadUsers() {
+                this.$Progress.start();
+                const resMember = await axios.get('/api/users');
+                this.members = resMember.data;
+
+                // Count users
+                const respCount = await axios.get('/api/count-users');
+                this.count = respCount.data;
+                this.$Progress.finish();
             },
             async deleteData(id) {
                 const result = await Swal.fire({
@@ -388,10 +389,6 @@
                         }
                     });
                 });
-            },
-            async countUsers() {
-                const data = await axios.get('/api/count-users');
-                this.count = data.data;
             },
             rndStr(len) {
                 let text = " "

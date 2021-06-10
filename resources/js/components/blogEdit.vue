@@ -83,14 +83,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataBlog();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataBlog() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/blogs/' + this.$route.params.id);
                 this.blog = resp.data;
+                this.$Progress.finish();
             },
             async handleSubmit() {
                 this.$Progress.start();

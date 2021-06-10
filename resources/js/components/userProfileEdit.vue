@@ -226,14 +226,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataUser();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataUser() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/u/' + this.$route.params.username);
                 this.user = resp.data;
+                this.$Progress.finish();
             },
             fileUpload(e) {
                 this.imageLocation = e.target.files[0];

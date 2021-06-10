@@ -42,14 +42,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadJob();
-            this.$Progress.finish();
         },
         methods: {
             async loadJob() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/blogs/' + this.$route.params.id);
                 this.blogs = resp.data;
+                this.$Progress.finish();
             },
         },
     }

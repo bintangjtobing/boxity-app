@@ -122,14 +122,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataUser();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataUser() {
+                this.$Progress.start();
                 const response = await axios.get('/api/customers/' + this.$route.params.id);
                 this.user = response.data;
+                this.$Progress.finish();
             },
             async handleSubmit() {
                 const payload = {};

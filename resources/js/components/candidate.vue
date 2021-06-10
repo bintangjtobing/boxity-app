@@ -83,21 +83,18 @@
             }
         },
         mounted() {
-            this.$Progress.start();
-            this.loadUsers();
             this.loadCandidates();
-            this.$Progress.finish();
         },
         methods: {
-            loadUsers() {
-                axios.get("/api/users")
-                    .then(res => {
-                        this.members = res.data;
-                    });
-            },
             async loadCandidates() {
+                this.$Progress.start();
                 const res = await axios.get('/api/candidates');
                 this.candidates = res.data;
+                axios.get("/api/users")
+                    .then(resp => {
+                        this.members = resp.data;
+                    });
+                this.$Progress.finish();
             },
             async deleteData(id) {
                 const result = await Swal.fire({

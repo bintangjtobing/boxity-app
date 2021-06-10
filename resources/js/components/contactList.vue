@@ -70,14 +70,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadContact();
-            this.$Progress.finish();
         },
         methods: {
             async loadContact() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/contact-list');
                 this.users = resp.data;
+                this.$Progress.finish();
             },
         },
     }

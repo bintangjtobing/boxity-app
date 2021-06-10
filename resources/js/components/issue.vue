@@ -225,16 +225,18 @@
             }
         },
         mounted() {
-            this.$Progress.start();
             this.loadIssues();
-            this.$Progress.finish();
         },
         methods: {
             async loadIssues() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/issue');
                 this.issues = resp.data;
+
+                // Get issue from user logged in
                 const respy = await axios.get('/api/issue/created');
                 this.fromYou = respy.data;
+                this.$Progress.finish();
             },
             dateFromCreated() {
                 return timeago.format(created_at);

@@ -141,17 +141,11 @@
             }
         },
         mounted() {
-            this.$Progress.start();
             this.loadCompany();
-            this.loggedUser();
-            this.$Progress.finish();
         },
         methods: {
-            async loggedUser() {
-                const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;
-            },
             async loadCompany() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/company-details');
                 if (resp.data.length < 1) {
                     this.isReadOnly = false;
@@ -161,6 +155,11 @@
                     this.isReadOnly = true;
                     console.log(resp.data[0]);
                 }
+
+                // Load logged user
+                const respUser = await axios.get('/getUserLoggedIn');
+                this.user = respUser.data;
+                this.$Progress.finish();
             },
             fileUpload(e) {
                 this.imageLocation = e.target.files[0];

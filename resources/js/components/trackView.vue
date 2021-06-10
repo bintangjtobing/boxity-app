@@ -174,14 +174,14 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataTrack();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataTrack() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/track-delivery/' + this.$route.params.id);
                 this.tracks = resp.data;
+                this.$Progress.finish();
             },
             async createTrack() {
                 this.$Progress.start();

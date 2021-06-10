@@ -196,19 +196,19 @@
             };
         },
         mounted() {
-            this.$Progress.start();
             this.loadCustomers();
-            this.$Progress.finish();
         },
         created() {
             this.countCustomers();
         },
         methods: {
             loadCustomers() {
+                this.$Progress.start();
                 axios.get("api/customers")
                     .then(res => {
                         this.members = res.data;
                     });
+                this.$Progress.finish();
             },
             async deleteData(id) {
                 const result = await Swal.fire({

@@ -70,18 +70,18 @@
             }
         },
         mounted() {
-            this.$Progress.start();
             this.loadCareers();
-            this.$Progress.finish();
         },
         methods: {
             async loadCareers() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/career');
                 this.careers = resp.data;
                 if (resp.data.description > 20) {
                     let desc = resp.data.description.substring(0, 17) + '...';
                     this.careers.description = desc;
                 }
+                this.$Progress.finish();
             },
             async deleteCareer(id) {
                 const result = await Swal.fire({

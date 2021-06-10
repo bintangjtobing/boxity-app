@@ -218,24 +218,18 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadGoods();
-            this.loadUser();
-            this.userGet();
-            this.$Progress.finish();
         },
         methods: {
-            async userGet() {
-                const resp = await axios.get('/getUserLoggedIn');
-                this.member = resp.data;
-            },
             async loadGoods() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/goods-receipt');
                 this.goodsData = resp.data;
-            },
-            async loadUser() {
-                const resp = await axios.get('/api/contact-list');
-                this.user = resp.data;
+                const respMember = await axios.get('/getUserLoggedIn');
+                this.member = respMember.data;
+                const respUser = await axios.get('/api/contact-list');
+                this.user = respUser.data;
+                this.$Progress.finish();
             },
             async submitHandle() {
                 this.$Progress.start();

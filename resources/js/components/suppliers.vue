@@ -196,19 +196,19 @@
             };
         },
         mounted() {
-            this.$Progress.start();
             this.loadSuppliers();
-            this.$Progress.finish();
         },
         created() {
             this.countSuppliers();
         },
         methods: {
             loadSuppliers() {
+                this.$Progress.start();
                 axios.get("api/suppliers")
                     .then(res => {
                         this.members = res.data;
                     });
+                this.$Progress.finish();
             },
             async deleteData(id) {
                 const result = await Swal.fire({

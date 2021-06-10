@@ -241,15 +241,15 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadNote();
-            this.$Progress.finish();
         },
         methods: {
             async loadNote() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/notepad');
                 this.notes = resp.data;
                 this.title = '- all data';
+                this.$Progress.finish();
             },
             async favoriteData() {
                 this.$Progress.start();
