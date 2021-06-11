@@ -5,8 +5,8 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title"><abbr
-                                    :title="stockgroup.name">{{stockgroup.name}}</abbr> Stock Group
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Stock Group - <abbr
+                                    :title="stockgroup.name">{{stockgroup.name}}</abbr>
                             </h4>
                         </div>
                     </div>
@@ -22,6 +22,10 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
                                     role="tab" aria-controls="v-pills-home" aria-selected="true">details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="v-pills-others-tab" data-toggle="pill" href="#v-pills-others"
+                                    role="tab" aria-controls="v-pills-others" aria-selected="true">Others</a>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +57,7 @@
                                                             class="form-control form-control-default">
                                                             <option value="" disabled>Select Customer:</option>
                                                             <option v-for="users in user" :key="users.id"
-                                                                v-bind:value="users.id">
+                                                                :value="users.id">
                                                                 {{users.customerName}}</option>
                                                         </select>
                                                     </div>
@@ -84,6 +88,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade  show active" id="v-pills-others" role="tabpanel"
+                            aria-labelledby="v-pills-others-tab">
+                            <div class="row ml-4">
+                                <div class="col-lg-12">
+                                    <div class="card card-vertical card-default card-md mb-4">
+                                        <div class="card-body pb-md-30">
+                                            <div class="vertical-form">
+                                                <form @submit.prevent="handleSubmit">
+                                                    <!-- Insert Code here -->
+                                                    <div class="form-group my-2">
+                                                        <div class="justify-content-end">
+                                                            <button v-on:click="handleSubmit" type="submit"
+                                                                class="btn btn-success btn-default btn-squared px-30"
+                                                                data-dismiss="modal">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +125,7 @@
             'editor': Editor
         },
         title() {
-            return 'Stock group data';
+            return `Stock Group data`;
         },
         data() {
             return {
@@ -107,30 +134,29 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadDataWarehouse();
-            this.loadUser();
-            this.$Progress.finish();
         },
         methods: {
             async loadDataWarehouse() {
+                this.$Progress.start();
                 const response = await axios.get('/api/stock-group/' + this.$route.params.id);
                 this.stockgroup = response.data;
-            },
-            async loadUser() {
-                const resp = await axios.get('/api/contact-list');
+
+                // Load User
+                const resp = await axios.get('/api/customers');
                 this.user = resp.data;
+                this.$Progress.finish();
             },
             async handleSubmit() {
                 this.$Progress.start();
-                await axios.patch('/api/stock-group/' + this.$route.params.id, this.warehouse);
+                await axios.patch('/api/stock-group/' + this.$route.params.id, this.stockgroup);
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
-                    text: 'Success update warehouse data',
+                    text: 'Success update stock group data',
                 });
                 this.$Progress.finish();
-                this.$router.push('/warehouse-list');
+                this.$router.push('/stock-group');
             },
         },
     }

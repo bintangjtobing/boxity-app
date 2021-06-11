@@ -153,21 +153,20 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadItemGroup();
-            this.loadUser();
-            this.$Progress.finish();
         },
         methods: {
             async loadItemGroup() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/item-group');
                 this.itemGroupData = resp.data;
                 const count = await axios.get('/api/count-stock-group');
                 this.countStocks = count.data;
-            },
-            async loadUser() {
-                const resp = await axios.get('/api/stock-group');
-                this.stock = resp.data;
+
+                // Load stock group
+                const respStock = await axios.get('/api/stock-group');
+                this.stock = respStock.data;
+                this.$Progress.finish();
             },
             async submitHandle() {
                 this.$Progress.start();
