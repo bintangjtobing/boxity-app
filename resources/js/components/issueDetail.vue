@@ -223,6 +223,13 @@
                 this.issues = response.data[0];
                 this.countComment = countComment.data;
 
+                // Load user logged in
+                const res = await axios.get('/getUserLoggedIn');
+                this.user = res.data;
+                this.imageUser = res.data.avatar;
+                this.username = res.data.name;
+                console.log(this.user.role);
+
                 // Load data assignee
                 const assigneeProc = await axios.get('/api/issue/assignee/' + this.$route.params.id);
                 this.assignee = assigneeProc.data[0];
@@ -238,13 +245,6 @@
                 // Load comments
                 const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);
                 this.comments = resp.data;
-
-                // Load user logged in
-                const res = await axios.get('/getUserLoggedIn');
-                this.user = res.data;
-                this.imageUser = res.data.avatar;
-                this.username = res.data.name;
-
                 this.$Progress.finish();
             },
             async deleteData(id) {
