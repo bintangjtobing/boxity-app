@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade  show active" id="v-pills-meta" role="tabpanel"
+                        <div class="tab-pane fade  show" id="v-pills-meta" role="tabpanel"
                             aria-labelledby="v-pills-meta-tab">
                             <div class="edit-profile">
                                 <div class="card">

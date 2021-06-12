@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade  show active" id="v-pills-others" role="tabpanel"
+                        <div class="tab-pane fade  show" id="v-pills-others" role="tabpanel"
                             aria-labelledby="v-pills-others-tab">
                             <div class="row ml-4">
                                 <div class="col-lg-12">

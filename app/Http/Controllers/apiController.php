@@ -1303,7 +1303,7 @@ class apiController extends Controller
     }
     public function getGoodsTransferById($id)
     {
-        return response()->json(goodsTransfer::find($id));
+        return response()->json(goodsTransfer::with('fromWarehouse')->with('toWarehouse')->find($id));
     }
     public function postGoodsTransferById($id, Request $request)
     {
@@ -1369,7 +1369,7 @@ class apiController extends Controller
     {
         return response()->json(goodsItemTransfer::find($id)->delete());
     }
-
+    
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
     public function plusOneEachTen()
     {

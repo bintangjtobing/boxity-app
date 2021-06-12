@@ -37,7 +37,7 @@
                                         <span v-if="item.type=='5'">Service</span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/item-group/${item.id}`" class="edit">
+                                        <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
@@ -222,21 +222,20 @@
             }
         },
         created() {
-            this.$Progress.start();
             this.loadItem();
-            this.loadItemGroup();
-            this.$Progress.finish();
         },
         methods: {
             async loadItem() {
+                this.$Progress.start();
                 const resp = await axios.get('/api/inventory-item');
                 this.inventoryItem = resp.data;
                 const count = await axios.get('/api/count-item-group');
                 this.countItems = count.data;
-            },
-            async loadItemGroup() {
-                const resp = await axios.get('/api/item-group');
-                this.inventoryOpt = resp.data;
+
+                // Load item group
+                const respItemGroup = await axios.get('/api/item-group');
+                this.inventoryOpt = respItemGroup.data;
+                this.$Progress.finish();
             },
             async submitHandle() {
                 this.$Progress.start();
