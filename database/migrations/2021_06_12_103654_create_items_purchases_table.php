@@ -25,6 +25,12 @@ class CreateItemsPurchasesTable extends Migration
             $table->string('requested_by')->nullable();
             $table->string('used_by')->nullable();
             $table->longText('remarks')->nullable();
+
+            // Is it for purchase order, purchase invoices, purchases request or purchases return
+            $table->integer('po_status')->default('0');
+            $table->integer('pi_status')->default('0');
+            $table->integer('prequest_status')->default('0');
+            $table->integer('preturn_status')->default('0');
             $table->timestamps();
         });
     }

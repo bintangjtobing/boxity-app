@@ -97,8 +97,9 @@
                                                     placeholder="Brand">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
+                                                <span></span>
                                                 <select v-model="inventorydata.item_group"
                                                     class="form-control form-control-default">
                                                     <option value="" disabled>Select category item</option>
@@ -106,6 +107,13 @@
                                                         :value="inventoryOpt.id">
                                                         {{inventoryOpt.name}}</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <span>Unit</span>
+                                                <input type="text" v-model="inventorydata.unit" class="form-control"
+                                                    placeholder="Ex: Kg for weight, Pcs for things or else">
                                             </div>
                                         </div>
                                     </div>

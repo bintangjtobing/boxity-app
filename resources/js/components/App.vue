@@ -272,79 +272,79 @@
                                 <span>Purchasing</span>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/purchase-order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/purchase-invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/purchase-return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/purchase-request">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="menu-title m-top-15">
                                 <span>Sales</span>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/sales-order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
                                     <span class="menu-text">Sales Order</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/sales-invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
                                     <span class="menu-text">Sales Invoice</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/sales-return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Sales Return</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li>
-                                <a href="#">
+                                <router-link to="/sales-delivery-receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>
                                     <span class="menu-text">Delivery Receipt</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                                </router-link>
                             </li>
                         </div>
                         <div v-if="user.role=='it' || user.role=='admin'">

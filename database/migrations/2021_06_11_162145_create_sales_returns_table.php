@@ -15,6 +15,15 @@ class CreateSalesReturnsTable extends Migration
     {
         Schema::create('sales_returns', function (Blueprint $table) {
             $table->id();
+            $table->string('return_number');
+            $table->integer('customer')->nullable()->index('customer');
+            $table->string('return_date')->nullable();
+            $table->integer('toGL')->default('0');
+
+            // Status 0, un-active, 1-> approved, 2-> terminated
+            $table->integer('status')->default('0');
+            $table->integer('created_by')->index('created_by');
+            $table->integer('updated_by')->index('updated_by');
             $table->timestamps();
         });
     }

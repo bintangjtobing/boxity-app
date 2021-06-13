@@ -69,7 +69,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <select v-model="itemgroup.stock_id" id="" class="form-control form-control-default">
+                                    <select v-model="itemgroup.stock_id" id=""
+                                        class="form-control form-control-default">
                                         <option value="" disabled>Select stock group:</option>
                                         <option v-for="stock in stock" :key="stock.id" :value="stock.id">
                                             {{stock.name}}</option>
@@ -149,7 +150,6 @@
         },
         created() {
             this.loadItemGroup();
-            this.loadUser();
         },
         methods: {
             async loadItemGroup() {
@@ -157,10 +157,11 @@
                 this.itemGroupData = resp.data;
                 const count = await axios.get('/api/count-item-group');
                 this.countItems = count.data;
-            },
-            async loadUser() {
-                const resp = await axios.get('/api/stock-group');
-                this.stock = resp.data;
+
+                // Load user
+                const respUser = await axios.get('/api/stock-group');
+                this.stock = respUser.data;
+
             },
             async submitHandle() {
                 await axios.post('/api/item-group', this.itemgroup).then(response => {
