@@ -86,22 +86,30 @@ import goodsTransferForm from './components/goodsTransferForm.vue';
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
 import purchaseOrderForm from './components/purchases/purchaseOrderForm.vue';
+import purchaseOrderAdd from './components/purchases/purchaseOrderAdd.vue';
 import purchaseInvoices from './components/purchases/purchaseInvoices.vue';
 import purchaseInvoicesForm from './components/purchases/purchaseInvoicesForm.vue';
+import purchaseInvoicesAdd from './components/purchases/purchaseInvoicesAdd.vue';
 import purchaseRequest from './components/purchases/purchaseRequest.vue';
 import purchaseRequestForm from './components/purchases/purchaseRequestForm.vue';
+import purchaseRequestAdd from './components/purchases/purchaseRequestAdd.vue';
 import purchaseReturn from './components/purchases/purchaseReturn.vue';
 import purchaseReturnForm from './components/purchases/purchaseReturnForm.vue';
+import purchaseReturnAdd from './components/purchases/purchaseReturnAdd.vue';
 
 // Sales Modules
 import SalesOrder from './components/sales/salesOrder.vue';
 import SalesOrderForm from './components/sales/salesOrderForm.vue';
+import SalesOrderAdd from './components/sales/salesOrderAdd.vue';
 import SalesInvoices from './components/sales/salesInvoices.vue';
 import SalesInvoicesForm from './components/sales/salesInvoicesForm.vue';
+import SalesInvoicesAdd from './components/sales/salesInvoicesAdd.vue';
 import SalesDeliveryReceipt from './components/sales/salesDeliveryReceipt.vue';
 import SalesDeliveryReceiptForm from './components/sales/salesDeliveryReceiptForm.vue';
+import SalesDeliveryReceiptAdd from './components/sales/salesDeliveryReceiptAdd.vue';
 import SalesReturn from './components/sales/salesReturn.vue';
 import SalesReturnForm from './components/sales/salesReturnForm.vue';
+import SalesReturnAdd from './components/sales/salesReturnAdd.vue';
 
 
 // membuat router
@@ -309,6 +317,10 @@ const routes = [{
         path: '/purchase-order',
         component: purchaseOrder
     }, {
+        name: 'purchaseOrderAdd',
+        path: '/purchase-order/add',
+        component: purchaseOrderAdd
+    }, {
         name: 'detailPurchaseOrder',
         path: '/detail/purchase-order/:id',
         component: purchaseOrderForm,
@@ -317,6 +329,10 @@ const routes = [{
         name: 'purchaseInvoices',
         path: '/purchase-invoices',
         component: purchaseInvoices
+    }, {
+        name: 'purchaseInvoicesAdd',
+        path: '/purchase-invoices/add',
+        component: purchaseInvoicesAdd
     }, {
         name: 'detailPurchaseInvoices',
         path: '/detail/purchase-invoices/:id',
@@ -327,6 +343,10 @@ const routes = [{
         path: '/purchase-request',
         component: purchaseRequest
     }, {
+        name: 'purchaseRequestAdd',
+        path: '/purchase-request/add',
+        component: purchaseRequestAdd
+    }, {
         name: 'detailpurchaseRequest',
         path: '/detail/purchase-request/:id',
         component: purchaseRequestForm,
@@ -335,6 +355,10 @@ const routes = [{
         name: 'purchaseReturn',
         path: '/purchase-return',
         component: purchaseReturn
+    }, {
+        name: 'purchaseReturnAdd',
+        path: '/purchase-return/add',
+        component: purchaseReturnAdd
     }, {
         name: 'detailPurchaseReturn',
         path: '/detail/purchase-return/:id',
@@ -346,6 +370,10 @@ const routes = [{
         path: '/sales-order',
         component: SalesOrder
     }, {
+        name: 'salesOrderAdd',
+        path: '/sales-order/add',
+        component: SalesOrderAdd
+    }, {
         name: 'detailSalesOrder',
         path: '/detail/sales-order/:id',
         component: SalesOrderForm,
@@ -354,13 +382,21 @@ const routes = [{
         path: '/sales-invoices',
         component: SalesInvoices
     }, {
+        name: 'salesInvoicesAdd',
+        path: '/sales-invoices/add',
+        component: SalesInvoicesAdd
+    }, {
         name: 'detailSalesInvoices',
         path: '/detail/sales-invoices/:id',
         component: SalesInvoicesForm,
     }, {
-        name: 'alesDeliveryReceipt',
+        name: 'salesDeliveryReceipt',
         path: '/sales-delivery-receipt',
         component: SalesDeliveryReceipt
+    }, {
+        name: 'salesDeliveryReceiptAdd',
+        path: '/sales-delivery-receipt/add',
+        component: SalesDeliveryReceiptAdd
     }, {
         name: 'detailSalesDeliveryReceipt',
         path: '/detail/sales-delivery-receipt/:id',
@@ -369,6 +405,10 @@ const routes = [{
         name: 'SalesReturn',
         path: '/sales-return',
         component: SalesReturn
+    }, {
+        name: 'salesReturnAdd',
+        path: '/sales-return/add',
+        component: SalesReturnAdd
     }, {
         name: 'detailSalesReturn',
         path: '/detail/sales-return/:id',

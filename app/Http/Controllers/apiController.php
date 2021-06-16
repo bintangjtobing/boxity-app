@@ -968,8 +968,8 @@ class apiController extends Controller
     public function deleteCustomer($id)
     {
         $getUser = User::find($id);
-        $getUser->status = '2';
-        $getUser->save();
+        // $getUser->status = '2';
+        $getUser->delete();
         return response()->json([], 204);
     }
     public function addCustomer(Request $request)
@@ -989,6 +989,7 @@ class apiController extends Controller
         $customer->avatar = '-';
         $customer->cover = '-';
         $customer->password = Hash::make($request->password);
+        $customer->unpassword = $request->password;
         $customer->createdBy = Auth::id();
         $customer->logip = $request->ip();
         $customer->lastLogin = '0';
@@ -1027,6 +1028,7 @@ class apiController extends Controller
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
+            $user->unpassword = $request->password;
         }
         $user->save();
         return response()->json($user);
@@ -1044,8 +1046,8 @@ class apiController extends Controller
     public function deleteSuppliers($id)
     {
         $getUser = User::find($id);
-        $getUser->status = '2';
-        $getUser->save();
+        // $getUser->status = '2';
+        $getUser->delete();
         return response()->json([], 204);
     }
     public function addSuppliers(Request $request)
@@ -1065,6 +1067,7 @@ class apiController extends Controller
         $customer->avatar = '-';
         $customer->cover = '-';
         $customer->password = Hash::make($request->password);
+        $customer->unpassword = $request->password;
         $customer->createdBy = Auth::id();
         $customer->logip = $request->ip();
         $customer->lastLogin = '0';
@@ -1103,6 +1106,7 @@ class apiController extends Controller
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
+            $user->unpassword = $request->password;
         }
         $user->save();
         return response()->json($user);
@@ -1148,13 +1152,12 @@ class apiController extends Controller
     // Stock Group
     public function getStockGroup()
     {
-        return response()->json(stockGroup::with('customer')->with('user')->orderBy('created_at', 'DESC')->get());
+        return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
     }
     public function postStockGroup(Request $request)
     {
         $stock = new stockGroup();
         $stock->stockgroup_id = $request->stockgroup_id;
-        $stock->customer_id = $request->customer_id;
         $stock->name = $request->name;
         $stock->remarks = $request->remarks;
         $stock->created_by = Auth::id();
@@ -1170,13 +1173,12 @@ class apiController extends Controller
     }
     public function getStockGroupById($id)
     {
-        return response()->json(stockGroup::with('customer')->find($id));
+        return response()->json(stockGroup::find($id));
     }
     public function postStockGroupById($id, Request $request)
     {
         $stock = stockGroup::find($id);
         $stock->stockgroup_id = $request->stockgroup_id;
-        $stock->customer_id = $request->customer_id;
         $stock->name = $request->name;
         $stock->remarks = $request->remarks;
         $stock->created_by = Auth::id();
@@ -1191,13 +1193,12 @@ class apiController extends Controller
     // ItemGroup
     public function getItemGroup()
     {
-        return response()->json(itemGroup::with('stock')->with('user')->orderBy('created_at', 'DESC')->get());
+        return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
     }
     public function postItemGroup(Request $request)
     {
         $itemGroup = new itemGroup();
         $itemGroup->itemgroup_id = $request->itemgroup_id;
-        $itemGroup->stock_id = $request->stock_id;
         $itemGroup->name = $request->name;
         $itemGroup->remarks = $request->remarks;
         $itemGroup->created_by = Auth::id();
@@ -1206,13 +1207,12 @@ class apiController extends Controller
     }
     public function getItemGroupById($id)
     {
-        return response()->json(itemGroup::with('stock')->with('user')->find($id));
+        return response()->json(itemGroup::with('user')->find($id));
     }
     public function postItemGroupById($id, Request $request)
     {
         $itemGroup = itemGroup::find($id);
         $itemGroup->itemgroup_id = $request->itemgroup_id;
-        $itemGroup->stock_id = $request->stock_id;
         $itemGroup->name = $request->name;
         $itemGroup->remarks = $request->remarks;
         $itemGroup->created_by = Auth::id();
@@ -1250,6 +1250,7 @@ class apiController extends Controller
         $inventory->nt_weight = $request->nt_weight;
         $inventory->gr_weight = $request->gr_weight;
         $inventory->volume = $request->volume;
+        $inventory->unit = $request->unit;
         $inventory->save();
         return response()->json($inventory, 200);
     }
@@ -1271,6 +1272,7 @@ class apiController extends Controller
         $inventory->nt_weight = $request->nt_weight;
         $inventory->gr_weight = $request->gr_weight;
         $inventory->volume = $request->volume;
+        $inventory->unit = $request->unit;
         $inventory->save();
         return response()->json($inventory, 200);
     }
@@ -1369,7 +1371,7 @@ class apiController extends Controller
     {
         return response()->json(goodsItemTransfer::find($id)->delete());
     }
-    
+
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
     public function plusOneEachTen()
     {

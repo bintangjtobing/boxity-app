@@ -3,13 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Item Group<br>
-                        <span>Jumlah <router-link :to="'/stock-group'"><abbr title="Stock Group Link">stock group</abbr>
-                            </router-link> anda
-                            adalah {{countStocks}}, <abbr title="Item Group">Item
-                                Group</abbr> akan berfungsi
-                            jika
-                            anda memiliki stock group minimal sebanyak 1. </span></h4>
+                    <h4 class="text-capitalize breadcrumb-title">Item Group <span>- {{countStocks}} Items</span></h4>
                     <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countStocks">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addItemGroup"
@@ -20,7 +14,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -30,7 +24,7 @@
                                 </v-card-title>
                                 <v-data-table loading loading-text="Loading... Please wait..." :headers="headers"
                                     multi-sort :items="itemGroupData" :items-per-page="10" class="elevation-1"
-                                    :search="search" group-by="stock.name">
+                                    :search="search">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks"></span>
                                     </template>
@@ -62,7 +56,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <input type="text" v-model="itemgroup.itemgroup_id"
-                                                placeholder="Item Group Code" class="form-control">
+                                                placeholder="Item Group Code" class="form-control" autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
@@ -71,14 +65,6 @@
                                                 class="form-control">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <select v-model="itemgroup.stock_id" id=""
-                                        class="form-control form-control-default">
-                                        <option value="" disabled>Select stock group:</option>
-                                        <option v-for="stock in stock" :key="stock.id" :value="stock.id">
-                                            {{stock.name}}</option>
-                                    </select>
                                 </div>
                                 <div class="form-group my-2">
                                     <editor placeholder="Remarks..." v-model="itemgroup.remarks"
@@ -94,7 +80,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
@@ -128,14 +114,11 @@
                 key: 1,
                 itemGroupData: [],
                 headers: [{
-                        text: 'Item Code',
+                        text: 'Item Group Code',
                         value: 'itemgroup_id'
                     }, {
                         text: 'Name',
                         value: 'name'
-                    }, {
-                        text: 'Stock Group',
-                        value: 'stock.name'
                     },
                     {
                         text: 'Remarks',
@@ -148,7 +131,6 @@
                     }
                 ],
                 // end datatable
-                stock: {},
                 countStocks: '0',
             }
         },
@@ -160,12 +142,8 @@
                 this.$Progress.start();
                 const resp = await axios.get('/api/item-group');
                 this.itemGroupData = resp.data;
-                const count = await axios.get('/api/count-stock-group');
+                const count = await axios.get('/api/count-item-group');
                 this.countStocks = count.data;
-
-                // Load stock group
-                const respStock = await axios.get('/api/stock-group');
-                this.stock = respStock.data;
                 this.$Progress.finish();
             },
             async submitHandle() {
@@ -225,3 +203,10 @@
     }
 
 </script>
+<style lang="css">
+    .breadcrumb-main {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+</style>

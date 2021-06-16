@@ -160,7 +160,7 @@
                                                     <!-- Insert Code here -->
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" type="submit"
+                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
                                                                 class="btn btn-success btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>

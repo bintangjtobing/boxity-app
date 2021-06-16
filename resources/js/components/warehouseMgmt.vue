@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>

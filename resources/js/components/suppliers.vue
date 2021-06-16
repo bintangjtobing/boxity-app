@@ -30,7 +30,8 @@
                                                     <div class="form-row">
                                                         <div class="col-lg-6">
                                                             <input type="text" required v-model="user.customerCode"
-                                                                class="form-control" placeholder="Supplier Code ">
+                                                                class="form-control" placeholder="Supplier Code "
+                                                                autofocus>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.customerCode }}</span>
                                                         </div>
@@ -60,14 +61,15 @@
                                                         <div class="col-lg-6">
                                                             <input type="password" required v-model="user.password"
                                                                 class="form-control" id="password"
-                                                                placeholder="Password">
+                                                                placeholder="Password" readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.password }}</span>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="password" required
                                                                 v-model="user.confirmPassword" id="verifyPassword"
-                                                                class="form-control" placeholder="Verify password">
+                                                                class="form-control" placeholder="Verify password"
+                                                                readonly>
                                                             <span class="text-danger error-password">
                                                                 {{ errors.confirmPassword }}
                                                             </span>
@@ -138,7 +140,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1">
+                            :items-per-page="10" class="elevation-1" :search="search">
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/supplier/${item.id}`" class="edit">
                                     <i class="fas fa-pen"></i></router-link>
@@ -197,11 +199,17 @@
         },
         mounted() {
             this.loadSuppliers();
+            this.generatePassword();
         },
         created() {
             this.countSuppliers();
         },
         methods: {
+            generatePassword() {
+                const genPass = this.rndStr(8);
+                this.user.password = genPass;
+                this.user.confirmPassword = genPass;
+            },
             loadSuppliers() {
                 this.$Progress.start();
                 axios.get("api/suppliers")
@@ -221,6 +229,7 @@
                     this.$Progress.start();
                     await axios.delete('api/suppliers/' + id);
                     this.loadSuppliers();
+                    this.countSuppliers();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
@@ -298,6 +307,7 @@
                 return !data.existingEmail && !data.existingName;
             },
             async handleSubmit(event) {
+                this.$Progress.start();
                 event.preventDefault();
 
                 const isValid = await this.validateData();
@@ -315,7 +325,6 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
-                this.$Progress.start();
                 await axios.post('/api/suppliers', payload).then(response => {
                     this.loadSuppliers();
                     Swal.fire({
@@ -337,6 +346,10 @@
                         customerWebsite: '',
                         customerNPWP: '',
                     };
+                    const genPass = this.rndStr(8);
+                    this.user.password = genPass;
+                    this.user.confirmPassword = genPass;
+                    this.countSuppliers();
                     this.$Progress.finish();
                 }).catch(error => {
                     Swal.fire({
@@ -357,6 +370,15 @@
                 const data = await axios.get('/api/count-suppliers');
                 this.count = data.data;
             },
+            rndStr(len) {
+                let text = " "
+                let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
+
+                for (let i = 0; i < len; i++) {
+                    text += chars.charAt(Math.floor(Math.random() * chars.length))
+                }
+                return text
+            }
         },
     }
 

@@ -20,6 +20,7 @@ class CreateInventoryItemsTable extends Migration
             // Type: 1. Stock, 2. Non Stock, 3. Assembly, 4. Bundle, 5. Service
             $table->integer('type')->nullable();
             $table->string('brand')->nullable();
+            $table->string('price')->default('0')->nullable();
             $table->integer('item_group')->index('item_group');
             $table->string('width')->nullable();
             $table->string('length')->nullable();
@@ -27,6 +28,7 @@ class CreateInventoryItemsTable extends Migration
             $table->string('nt_weight')->nullable();
             $table->string('gr_weight')->nullable();
             $table->string('volume')->nullable();
+            $table->string('unit')->nullable();
             $table->timestamps();
         });
     }

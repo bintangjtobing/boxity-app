@@ -16,7 +16,6 @@ class CreateStockGroupsTable extends Migration
         Schema::create('stock_groups', function (Blueprint $table) {
             $table->id();
             $table->string('stockgroup_id');
-            $table->integer('customer_id')->nullable();
             $table->string('name');
             $table->longText('remarks')->nullable();
             $table->integer('created_by');

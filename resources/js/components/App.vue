@@ -226,26 +226,34 @@
                             <li class="menu-title m-top-15">
                                 <span>Warehouse</span>
                             </li>
-                            <li class="has-child">
-                                <a href="#">
+                            <li>
+                                <router-link :to="'/warehouse-list'">
                                     <span class="material-icons-outlined nav-icon">
                                         home_work
                                     </span>
-                                    <span class="menu-text">General Data</span>
-                                    <span class="toggle-icon"></span>
-                                    <span class="badge badge-secondary menuItem">RTL</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <router-link :to="'/warehouse-list'">Warehouse List</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link :to="'/stock-group'">Stock Group</router-link>
-                                    </li>
-                                    <li>
-                                        <router-link :to="'/item-group'">Item Group</router-link>
-                                    </li>
-                                </ul>
+                                    <span class="menu-text">Warehouse List</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="'/stock-group'">
+                                    <span class="material-icons-outlined nav-icon">
+                                        inventory_2
+                                    </span>
+                                    <span class="menu-text">
+                                        Stock Group
+                                    </span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link :to="'/item-group'">
+                                    <span class="material-icons-outlined nav-icon">
+                                        inventory_2
+                                    </span>
+                                    <span class="menu-text">Item Group</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                </router-link>
                             </li>
                             <li class="menu-title m-top-15">
                                 <span>Inventory Control</span>
@@ -277,7 +285,7 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-success menuItem">Doing</span>
                                 </router-link>
                             </li>
                             <li>

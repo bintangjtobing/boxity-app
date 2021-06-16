@@ -138,7 +138,8 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table :headers="headers" multi-sort :items="members" :items-per-page="10" loading
+                        <v-data-table :headers="headers" multi-sort :search="search" :items="members"
+                            :items-per-page="10" loading
                             loading-text="Loading... Please wait" class="elevation-1">
                             <template v-slot:item.status="{ item }">
                                 <div v-if="item.status==1">
@@ -357,7 +358,6 @@
                 await axios.post('/api/users', payload).then(response => {
                     this.loadUsers();
                     this.countUsers();
-                    this.$Progress.finish();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -374,6 +374,7 @@
                     const genPass = this.rndStr(8);
                     this.user.password = genPass;
                     this.user.confirmPassword = genPass;
+                    this.$Progress.finish();
                 }).catch(error => {
                     this.$Progress.fail();
                     Swal.fire({

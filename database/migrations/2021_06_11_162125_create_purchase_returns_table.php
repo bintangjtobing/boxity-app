@@ -19,6 +19,10 @@ class CreatePurchaseReturnsTable extends Migration
             $table->integer('supplier')->nullable()->index('supplier');
             $table->string('return_date')->nullable();
             $table->string('ref_no')->nullable();
+            // Status 0, un-active, 1-> approved, 2-> terminated
+            $table->integer('status')->default('0');
+            $table->integer('created_by')->index('created_by');
+            $table->integer('updated_by')->index('updated_by');
             $table->timestamps();
         });
     }

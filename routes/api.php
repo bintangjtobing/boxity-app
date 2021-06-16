@@ -194,68 +194,84 @@ Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransfe
 Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
 
 // Purchase Order
-Route::get('/purchase-order', 'apiController@getPurchaseOrder');
-Route::post('/purchase-order', 'apiController@postPurchaseOrder');
-Route::get('/purchase-order/{id}', 'apiController@getPurchaseOrderById');
-Route::patch('/purchase-order/{id}', 'apiController@postPurchaseOrderById');
-Route::delete('/purchase-order/{id}', 'apiController@deletePurchaseOrderById');
-Route::get('/count-purchase-order', 'apiController@countPurchaseOrder');
+Route::get('/purchase-order', 'purchasingController@getPurchaseOrder');
+Route::post('/purchase-order', 'purchasingController@postPurchaseOrder');
+Route::get('/purchase-order/{id}', 'purchasingController@getPurchaseOrderById');
+Route::patch('/purchase-order/{id}', 'purchasingController@postPurchaseOrderById');
+Route::delete('/purchase-order/{id}', 'purchasingController@deletePurchaseOrderById');
+Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
 
 // Purchase Invoice
-Route::get('/purchase-invoice', 'apiController@getPurchaseInvoice');
-Route::post('/purchase-invoice', 'apiController@postPurchaseInvoice');
-Route::get('/purchase-invoice/{id}', 'apiController@getPurchaseInvoiceById');
-Route::patch('/purchase-invoice/{id}', 'apiController@postPurchaseInvoiceById');
-Route::delete('/purchase-invoice/{id}', 'apiController@deletePurchaseInvoiceById');
-Route::get('/count-purchase-invoice', 'apiController@countPurchaseInvoice');
+Route::get('/purchase-invoice', 'purchasingController@getPurchaseInvoice');
+Route::post('/purchase-invoice', 'purchasingController@postPurchaseInvoice');
+Route::get('/purchase-invoice/{id}', 'purchasingController@getPurchaseInvoiceById');
+Route::patch('/purchase-invoice/{id}', 'purchasingController@postPurchaseInvoiceById');
+Route::delete('/purchase-invoice/{id}', 'purchasingController@deletePurchaseInvoiceById');
+Route::get('/count-purchase-invoice', 'purchasingController@countPurchaseInvoice');
 
 // Purchase Return
-Route::get('/purchase-return', 'apiController@getPurchaseReturn');
-Route::post('/purchase-return', 'apiController@postPurchaseReturn');
-Route::get('/purchase-return/{id}', 'apiController@getPurchaseReturnById');
-Route::patch('/purchase-return/{id}', 'apiController@postPurchaseReturnById');
-Route::delete('/purchase-return/{id}', 'apiController@deletePurchaseReturnById');
-Route::get('/count-purchase-return', 'apiController@countPurchaseReturn');
+Route::get('/purchase-return', 'purchasingController@getPurchaseReturn');
+Route::post('/purchase-return', 'purchasingController@postPurchaseReturn');
+Route::get('/purchase-return/{id}', 'purchasingController@getPurchaseReturnById');
+Route::patch('/purchase-return/{id}', 'purchasingController@postPurchaseReturnById');
+Route::delete('/purchase-return/{id}', 'purchasingController@deletePurchaseReturnById');
+Route::get('/count-purchase-return', 'purchasingController@countPurchaseReturn');
 
 // Purchase Request
-Route::get('/purchase-request', 'apiController@getPurchaseRequest');
-Route::post('/purchase-request', 'apiController@postPurchaseRequest');
-Route::get('/purchase-request/{id}', 'apiController@getPurchaseRequestById');
-Route::patch('/purchase-request/{id}', 'apiController@postPurchaseRequestById');
-Route::delete('/purchase-request/{id}', 'apiController@deletePurchaseRequestById');
-Route::get('/count-purchase-request', 'apiController@countPurchaseRequest');
+Route::get('/purchase-request', 'purchasingController@getPurchaseRequest');
+Route::post('/purchase-request', 'purchasingController@postPurchaseRequest');
+Route::get('/purchase-request/{id}', 'purchasingController@getPurchaseRequestById');
+Route::patch('/purchase-request/{id}', 'purchasingController@postPurchaseRequestById');
+Route::delete('/purchase-request/{id}', 'purchasingController@deletePurchaseRequestById');
+Route::get('/count-purchase-request', 'purchasingController@countPurchaseRequest');
+
+// Item Purchases
+Route::get('/item-purchase', 'purchasingController@getItemPurchase');
+Route::post('/item-purchase', 'purchasingController@postItemPurchase');
+Route::get('/item-purchase/{id}', 'purchasingController@getItemPurchaseById');
+Route::patch('/item-purchase/{id}', 'purchasingController@postItemPurchaseById');
+Route::delete('/item-purchase/{id}', 'purchasingController@deleteItemPurchaseById');
+Route::get('/count-item-purchase', 'purchasingController@countItemPurchase');
 
 // Sales Order
-Route::get('/sales-order', 'apiController@getSalesOrder');
-Route::post('/sales-order', 'apiController@postSalesOrder');
-Route::get('/sales-order/{id}', 'apiController@getSalesOrderById');
-Route::patch('/sales-order/{id}', 'apiController@postSalesOrderById');
-Route::delete('/sales-order/{id}', 'apiController@deleteSalesOrderById');
-Route::get('/count-sales-order', 'apiController@countSalesOrder');
+Route::get('/sales-order', 'salesController@getSalesOrder');
+Route::post('/sales-order', 'salesController@postSalesOrder');
+Route::get('/sales-order/{id}', 'salesController@getSalesOrderById');
+Route::patch('/sales-order/{id}', 'salesController@postSalesOrderById');
+Route::delete('/sales-order/{id}', 'salesController@deleteSalesOrderById');
+Route::get('/count-sales-order', 'salesController@countSalesOrder');
 
 // Sales Invoice
-Route::get('/sales-invoice', 'apiController@getSalesInvoice');
-Route::post('/sales-invoice', 'apiController@postSalesInvoice');
-Route::get('/sales-invoice/{id}', 'apiController@getSalesInvoiceById');
-Route::patch('/sales-invoice/{id}', 'apiController@postSalesInvoiceById');
-Route::delete('/sales-invoice/{id}', 'apiController@deleteSalesInvoiceById');
-Route::get('/count-sales-invoice', 'apiController@countSalesInvoice');
+Route::get('/sales-invoice', 'salesController@getSalesInvoice');
+Route::post('/sales-invoice', 'salesController@postSalesInvoice');
+Route::get('/sales-invoice/{id}', 'salesController@getSalesInvoiceById');
+Route::patch('/sales-invoice/{id}', 'salesController@postSalesInvoiceById');
+Route::delete('/sales-invoice/{id}', 'salesController@deleteSalesInvoiceById');
+Route::get('/count-sales-invoice', 'salesController@countSalesInvoice');
 
 // Sales Return
-Route::get('/sales-return', 'apiController@getSalesReturn');
-Route::post('/sales-return', 'apiController@postSalesReturn');
-Route::get('/sales-return/{id}', 'apiController@getSalesReturnById');
-Route::patch('/sales-return/{id}', 'apiController@postSalesReturnById');
-Route::delete('/sales-return/{id}', 'apiController@deleteSalesReturnById');
-Route::get('/count-sales-return', 'apiController@countSalesReturn');
+Route::get('/sales-return', 'salesController@getSalesReturn');
+Route::post('/sales-return', 'salesController@postSalesReturn');
+Route::get('/sales-return/{id}', 'salesController@getSalesReturnById');
+Route::patch('/sales-return/{id}', 'salesController@postSalesReturnById');
+Route::delete('/sales-return/{id}', 'salesController@deleteSalesReturnById');
+Route::get('/count-sales-return', 'salesController@countSalesReturn');
 
 // Sales Delivery Receipt
-Route::get('/sales-delivery-receipt', 'apiController@getSalesDeliveryReceipt');
-Route::post('/sales-delivery-receipt', 'apiController@postSalesDeliveryReceipt');
-Route::get('/sales-delivery-receipt/{id}', 'apiController@getSalesDeliveryReceiptById');
-Route::patch('/sales-delivery-receipt/{id}', 'apiController@postSalesDeliveryReceiptById');
-Route::delete('/sales-delivery-receipt/{id}', 'apiController@deleteSalesDeliveryReceiptById');
-Route::get('/count-sales-delivery-receipt', 'apiController@countSalesDeliveryReceipt');
+Route::get('/sales-delivery-receipt', 'salesController@getSalesDeliveryReceipt');
+Route::post('/sales-delivery-receipt', 'salesController@postSalesDeliveryReceipt');
+Route::get('/sales-delivery-receipt/{id}', 'salesController@getSalesDeliveryReceiptById');
+Route::patch('/sales-delivery-receipt/{id}', 'salesController@postSalesDeliveryReceiptById');
+Route::delete('/sales-delivery-receipt/{id}', 'salesController@deleteSalesDeliveryReceiptById');
+Route::get('/count-sales-delivery-receipt', 'salesController@countSalesDeliveryReceipt');
+
+// Item Sales
+Route::get('/item-sales', 'purchasingController@getItemSales');
+Route::post('/item-sales', 'purchasingController@postItemSales');
+Route::get('/item-sales/{id}', 'purchasingController@getItemSalesById');
+Route::patch('/item-sales/{id}', 'purchasingController@postItemSalesById');
+Route::delete('/item-sales/{id}', 'purchasingController@deleteItemSalesById');
+Route::get('/count-item-sales', 'purchasingController@countItemSales');
 
 // Leave Request
 Route::get('/generate-one-lr', 'apiController@plusOneEachTen');

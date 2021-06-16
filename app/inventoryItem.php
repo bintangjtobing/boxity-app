@@ -19,7 +19,8 @@ class inventoryItem extends Model
         'thickness',
         'nt_weight',
         'gr_weight',
-        'volume'
+        'volume',
+        'price',
     ];
     public function itemGroup()
     {

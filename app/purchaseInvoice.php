@@ -12,7 +12,7 @@ class purchaseInvoice extends Model
     ];
     public function supplier()
     {
-        return $this->belongsTo(supplier::class, 'supplier');
+        return $this->belongsTo(User::class, 'supplier');
     }
     public function createdby()
     {

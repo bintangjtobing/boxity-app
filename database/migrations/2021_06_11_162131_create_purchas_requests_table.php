@@ -19,6 +19,10 @@ class CreatePurchasRequestsTable extends Migration
             $table->integer('priority');
             $table->string('pr_date');
             $table->integer('to')->nullable()->index('to');
+            // Status 0, un-active, 1-> approved, 2-> terminated
+            $table->integer('status')->default('0');
+            $table->integer('created_by')->index('created_by');
+            $table->integer('updated_by')->index('updated_by');
             $table->timestamps();
         });
     }

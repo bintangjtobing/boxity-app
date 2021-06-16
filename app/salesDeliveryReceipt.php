@@ -14,4 +14,8 @@ class salesDeliveryReceipt extends Model
     {
         return $this->belongsTo(customer::class, 'customer');
     }
+    public function createdby()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

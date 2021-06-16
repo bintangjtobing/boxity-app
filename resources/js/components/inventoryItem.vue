@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -27,7 +27,8 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
+                                <v-data-table loading loading-text="Loading... Please wait..." :search="search"
+                                    :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
                                     class="elevation-1" group-by="item_group.name">
                                     <template v-slot:item.type="{ item }">
                                         <span v-if="item.type=='1'">Stock</span>
@@ -38,7 +39,7 @@
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fas fa-eye"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>
@@ -65,18 +66,21 @@
                                 <div class="form-row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
+                                            <span>Item Code:</span>
                                             <input type="text" v-model="inventorydata.item_code" placeholder="Item Code"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="form-group">
+                                            <span>Item Name:</span>
                                             <input type="text" v-model="inventorydata.item_name" placeholder="Item Name"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="form-group">
+                                            <span>Type:</span>
                                             <select v-model="inventorydata.type" id=""
                                                 class="form-control form-control-default">
                                                 <option value="" disabled>Type item</option>
@@ -93,13 +97,14 @@
                                     <div class="form-row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                <span>Brand:</span>
                                                 <input type="text" v-model="inventorydata.brand" class="form-control"
                                                     placeholder="Brand">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <span></span>
+                                                <span>Category:</span>
                                                 <select v-model="inventorydata.item_group"
                                                     class="form-control form-control-default">
                                                     <option value="" disabled>Select category item</option>
@@ -111,7 +116,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="form-group">
-                                                <span>Unit</span>
+                                                <span>Unit:</span>
                                                 <input type="text" v-model="inventorydata.unit" class="form-control"
                                                     placeholder="Ex: Kg for weight, Pcs for things or else">
                                             </div>
@@ -169,7 +174,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>

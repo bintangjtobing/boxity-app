@@ -94,12 +94,6 @@
                                                     class="form-control" placeholder="NPWP">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="url" v-model="user.customerWebsite" class="form-control"
-                                                    id="" placeholder="Website, started from `https://` or `http://`">
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="button-group d-flex pt-25">

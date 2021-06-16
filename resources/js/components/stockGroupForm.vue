@@ -52,15 +52,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <select v-model="stockgroup.customer_id" id=""
-                                                            class="form-control form-control-default">
-                                                            <option value="" disabled>Select Customer:</option>
-                                                            <option v-for="users in user" :key="users.id"
-                                                                :value="users.id">
-                                                                {{users.customerName}}</option>
-                                                        </select>
-                                                    </div>
                                                     <div class="form-group my-2">
                                                         <editor placeholder="Remarks..." v-model="stockgroup.remarks"
                                                             api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
@@ -76,7 +67,7 @@
                                                     </div>
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" type="submit"
+                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
                                                                 class="btn btn-success btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>
@@ -99,7 +90,7 @@
                                                     <!-- Insert Code here -->
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" type="submit"
+                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
                                                                 class="btn btn-success btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>
@@ -130,7 +121,6 @@
         data() {
             return {
                 stockgroup: {},
-                user: {},
             }
         },
         created() {
@@ -141,10 +131,6 @@
                 this.$Progress.start();
                 const response = await axios.get('/api/stock-group/' + this.$route.params.id);
                 this.stockgroup = response.data;
-
-                // Load User
-                const resp = await axios.get('/api/customers');
-                this.user = resp.data;
                 this.$Progress.finish();
             },
             async handleSubmit() {

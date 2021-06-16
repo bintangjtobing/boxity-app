@@ -40,18 +40,21 @@
                                                     <div class="form-row">
                                                         <div class="col-lg-3">
                                                             <div class="form-group">
+                                                                <span>Item Code:</span>
                                                                 <input type="text" v-model="inventorydata.item_code"
                                                                     placeholder="Item Code" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-7">
                                                             <div class="form-group">
+                                                                <span>Item Name:</span>
                                                                 <input type="text" v-model="inventorydata.item_name"
                                                                     placeholder="Item Name" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <div class="form-group">
+                                                                <span>Type:</span>
                                                                 <select v-model="inventorydata.type" id=""
                                                                     class="form-control form-control-default">
                                                                     <option value="" disabled>Type item</option>
@@ -66,14 +69,23 @@
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <div class="form-row">
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <div class="form-group">
+                                                                    <span>Brand:</span>
                                                                     <input type="text" v-model="inventorydata.brand"
                                                                         class="form-control" placeholder="Brand">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-2">
                                                                 <div class="form-group">
+                                                                    <span>Current Price:</span>
+                                                                    <input type="text" v-model="inventorydata.price"
+                                                                        class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <span>Item Group:</span>
                                                                     <select v-model="inventorydata.item_group"
                                                                         class="form-control form-control-default">
                                                                         <option value="" disabled>Select category item
@@ -83,6 +95,14 @@
                                                                             :value="inventoryOpt.id">
                                                                             {{inventoryOpt.name}}</option>
                                                                     </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <span>Unit:</span>
+                                                                    <input type="text" v-model="inventorydata.unit"
+                                                                        class="form-control"
+                                                                        placeholder="Ex: Kg for weight, Pcs for things or else">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -160,7 +180,8 @@
                                                     <!-- Insert Code here -->
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" type="submit"
+                                                            <button v-on:click="handleSubmit"
+                                                                v-on:keyup.enter="handleSubmit" type="submit"
                                                                 class="btn btn-success btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>

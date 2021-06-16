@@ -3,12 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Stock Group <br>
-                        <span>Jumlah <router-link :to="'/customers'"><abbr title="Customer Link">customer</abbr>
-                            </router-link> anda adalah {{countCustomers}}, <abbr title="Stock Group">Stock
-                                Group</abbr> akan berfungsi
-                            jika
-                            anda memiliki customer minimal sebanyak 1. </span></h4>
+                    <h4 class="text-capitalize breadcrumb-title">Stock Group <span>- {{countStocks}} Stocks</span></h4>
                     <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countCustomers">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addStockGroup"
@@ -19,7 +14,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -28,7 +23,7 @@
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
                                 <v-data-table :headers="headers" multi-sort :items="stockGroupData" :items-per-page="10"
-                                    class="elevation-1">
+                                    class="elevation-1" :search="search">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks"></span>
                                     </template>
@@ -60,7 +55,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <input type="text" v-model="stockgroup.stockgroup_id"
-                                                placeholder="Stock Group Code" class="form-control">
+                                                placeholder="Stock Group Code" autofocus class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
@@ -69,14 +64,6 @@
                                                 class="form-control">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <select v-model="stockgroup.customer_id" id=""
-                                        class="form-control form-control-default">
-                                        <option value="" disabled>Select Customer:</option>
-                                        <option v-for="users in user" :key="users.id" :value="users.id">
-                                            {{users.customerName}}</option>
-                                    </select>
                                 </div>
                                 <div class="form-group my-2">
                                     <editor placeholder="Remarks..." v-model="stockgroup.remarks"
@@ -92,7 +79,7 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
+                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
                                             class="btn btn-success btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
@@ -126,28 +113,22 @@
                 key: 1,
                 stockGroupData: [],
                 headers: [{
-                        text: 'Code',
-                        value: 'stockgroup_id'
-                    }, {
-                        text: 'Name',
-                        value: 'name'
-                    },
-                    {
-                        text: 'Customer',
-                        value: 'customer.customerName'
-                    }, {
-                        text: 'Remarks',
-                        value: 'remarks'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        filterable: false,
-                        sortable: false
-                    }
-                ],
+                    text: 'Stock Group Code',
+                    value: 'stockgroup_id'
+                }, {
+                    text: 'Name',
+                    value: 'name'
+                }, {
+                    text: 'Remarks',
+                    value: 'remarks'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
                 // end datatable
-                user: {},
-                countCustomers: '0',
+                countStocks: '0',
             }
         },
         created() {
@@ -160,10 +141,8 @@
                 this.stockGroupData = resp.data;
 
                 // LoadUser
-                const respUser = await axios.get('/api/customers');
-                this.user = respUser.data;
-                const count = await axios.get('/api/count-customers');
-                this.countCustomers = count.data;
+                const count = await axios.get('/api/count-stock-group');
+                this.countStocks = count.data;
                 this.$Progress.finish();
             },
             async submitHandle() {

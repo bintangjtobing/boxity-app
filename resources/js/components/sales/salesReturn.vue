@@ -6,15 +6,14 @@
                     <h4 class="text-capitalize breadcrumb-title">Sales Return<br></h4>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <a href="#" data-toggle="modal" data-target="#addSalesReturn"
-                                class="btn btn-sm btn-primary btn-add">
-                                <i class="las la-plus fs-16"></i>Add New Sales Return</a>
+                            <router-link to="/sales-return/add" class="btn btn-sm btn-primary btn-add">
+                                <i class="las la-plus fs-16"></i>Add New Sales Return</router-link>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -32,144 +31,13 @@
                                         <span v-if="item.type=='5'">Service</span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
+                                        <router-link :to="`/detail/sales-return/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="addSalesReturn" tabindex="-1" aria-labelledby="addSalesReturn"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title fw-500" id="staticBackdropLabel">Add Sales Return</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-row">
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <input type="text" v-model="inventorydata.item_code" placeholder="Item Code"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7">
-                                        <div class="form-group">
-                                            <input type="text" v-model="inventorydata.item_name" placeholder="Item Name"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <select v-model="inventorydata.type" id=""
-                                                class="form-control form-control-default">
-                                                <option value="" disabled>Type item</option>
-                                                <option value="1">Stock</option>
-                                                <option value="2">Non Stock</option>
-                                                <option value="3">Assembly</option>
-                                                <option value="4">Bundle</option>
-                                                <option value="5">Service</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-2">
-                                    <div class="form-row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" v-model="inventorydata.brand" class="form-control"
-                                                    placeholder="Brand">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <span></span>
-                                                <select v-model="inventorydata.item_group"
-                                                    class="form-control form-control-default">
-                                                    <option value="" disabled>Select category item</option>
-                                                    <option v-for="inventoryOpt in inventoryOpt" :key="inventoryOpt.id"
-                                                        :value="inventoryOpt.id">
-                                                        {{inventoryOpt.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Unit</span>
-                                                <input type="text" v-model="inventorydata.unit" class="form-control"
-                                                    placeholder="Ex: Kg for weight, Pcs for things or else">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr style="margin-top:10px; margin-bottom:10px;">
-                                <h5>Dimension and Weight</h5>
-                                <p class="muted-text">You can use mm/unit/kg/ or anything else as a unit</p>
-                                <div class="form-group">
-                                    <div class="form-row">
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Width</span>
-                                                <input type="text" v-model="inventorydata.width" class="form-control"
-                                                    placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Length</span>
-                                                <input type="text" v-model="inventorydata.length" class="form-control"
-                                                    placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Thickness</span>
-                                                <input type="text" v-model="inventorydata.thickness"
-                                                    class="form-control" placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Nett Weight</span>
-                                                <input type="text" v-model="inventorydata.nt_weight"
-                                                    class="form-control" placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Gross Weight</span>
-                                                <input type="text" v-model="inventorydata.gr_weight"
-                                                    class="form-control" placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <span>Volume</span>
-                                                <input type="text" v-model="inventorydata.volume" class="form-control"
-                                                    placeholder="0.00 mm">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group my-2">
-                                    <div class="justify-content-end">
-                                        <button v-on:click="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
-                                            data-dismiss="modal">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>

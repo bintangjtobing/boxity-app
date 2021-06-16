@@ -31,6 +31,9 @@ class CreateItemsPurchasesTable extends Migration
             $table->integer('pi_status')->default('0');
             $table->integer('prequest_status')->default('0');
             $table->integer('preturn_status')->default('0');
+            $table->integer('purchasingId')->default('0')->index('purchasingId');
+            $table->integer('created_by')->index('created_by');
+            $table->integer('updated_by')->index('updated_by');
             $table->timestamps();
         });
     }

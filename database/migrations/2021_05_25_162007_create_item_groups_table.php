@@ -16,7 +16,6 @@ class CreateItemGroupsTable extends Migration
         Schema::create('item_groups', function (Blueprint $table) {
             $table->id();
             $table->string('itemgroup_id');
-            $table->integer('stock_id')->nullable();
             $table->string('name');
             $table->longText('remarks')->nullable();
             $table->integer('created_by');
