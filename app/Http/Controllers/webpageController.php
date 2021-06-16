@@ -7,6 +7,7 @@ use App\candidates;
 use App\id_agamas;
 use App\id_sukus;
 use App\jobvacancy;
+use App\popupWindow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,11 @@ class webpageController extends Controller
 {
     public function index()
     {
-        return view('webpage.index');
+        $popup = popupWindow::orderBy('created_at','DESC')->get();
+        if(count($popup) > 0){
+            return view('webpage.index',['popup'=>$popup[0]]);
+        }else{return view('webpage.index');}
+        
     }
     public function tentangkami()
     {

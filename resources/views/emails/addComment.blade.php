@@ -146,17 +146,23 @@
                                                             komentar di issue kamu.
                                                         </span>
                                                     </p>
+                                                    <blockquote
+                                                        style="background-color: rgba(0,0,0,.1); padding:10px; border-radius: .20rem;">
+                                                        {{$userfind->comment}}
+                                                    </blockquote>
                                                     <hr>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        Klik link untuk lihat detail komentar issue tersebut di link
-                                                        yang sudah
-                                                        tersedia: <br>
+                                                        Don't reply to this email directly or <a
+                                                            href="https://btsa.co.id/issues/{{$userfind->issueId}}">reply
+                                                            it on Issue Center</a>.
+                                                        You're receiving this email because of your account on
+                                                        our system.<br>
                                                         <span><a href="https://btsa.co.id/issues/{{$userfind->issueId}} "
                                                                 target="_blank">https://btsa.co.id/issues/{{$userfind->issueId}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        <span style="">Don't reply this email. <br>
+                                                        <span style="">
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
                                                             Best regards, <br>

@@ -111,6 +111,7 @@ import SalesReturn from './components/sales/salesReturn.vue';
 import SalesReturnForm from './components/sales/salesReturnForm.vue';
 import SalesReturnAdd from './components/sales/salesReturnAdd.vue';
 
+import popupWindow from './components/popupWindow.vue';
 
 // membuat router
 const routes = [{
@@ -413,7 +414,11 @@ const routes = [{
         name: 'detailSalesReturn',
         path: '/detail/sales-return/:id',
         component: SalesReturnForm,
-    },
+    }, {
+        name: 'popup-window',
+        path: '/popup-management',
+        component: popupWindow
+    }
 ]
 
 const router = new VueRouter({
