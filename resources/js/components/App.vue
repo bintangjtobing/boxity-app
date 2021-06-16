@@ -258,6 +258,14 @@
                                 </router-link>
                             </li>
                             <li>
+                                <router-link to="/popup-management">
+                                    <span class="material-icons-outlined nav-icon">
+                                        preview
+                                    </span>
+                                    <span class="menu-text">Popup Window</span>
+                                </router-link>
+                            </li>
+                            <li>
                                 <router-link to="/user-guide">
                                     <span class="material-icons-outlined nav-icon">
                                         help

@@ -73,6 +73,7 @@ import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
 import supplierForm from './components/supplierForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
+import popupWindow from './components/popupWindow.vue';
 
 // membuat router
 const routes = [{
@@ -236,6 +237,10 @@ const routes = [{
         name: 'warehouse-management',
         path: '/warehouse-management',
         component: warehouseMgmt
+    }, {
+        name: 'popup-window',
+        path: '/popup-management',
+        component: popupWindow
     }
 ]
 

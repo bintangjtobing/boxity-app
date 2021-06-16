@@ -4,18 +4,19 @@
 
 @section('content')
 <?php $current = Date('Y'); $born = 2000; $count= $current-$born; ?>
-<div class="modal-on-load" data-target="#popupModal"></div>
 
 <!-- Modal -->
-<div class="modal1 mfp-hide" id="popupModal">
+@if($popup ?? '')
+<div class="modal-on-load" data-target="#popupModal"></div>
+    <div class="modal1 mfp-hide" id="popupModal">
     <div class="block mx-auto" style="background-color: #FFF; max-width: 700px;">
         <div class="center" style="padding: 50px;">
-            <h3>New division on May 2021!</h3>
-            <img src="https://res.cloudinary.com/bintangtobing-com/image/upload/v1620448968/popup.jpg"
-                alt="New divison on may 2021">
+            <h3>{{$popup->title}}</h3>
+            <img src="{{$popup->url}}" alt="{{$popup->title}}">
         </div>
     </div>
 </div>
+@endif
 <section id="slider" class="slider-element dark swiper_wrapper slider-parallax min-vh-75" style="overflow: visible">
     <div class="slider-inner">
         <div class="swiper-container swiper-parent">

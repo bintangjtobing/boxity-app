@@ -37,6 +37,7 @@ use App\track_orders;
 use App\track_reports;
 use App\userdetails;
 use App\userGuide;
+use App\popupWindow;
 use Mail;
 
 class apiController extends Controller
@@ -843,7 +844,23 @@ class apiController extends Controller
 
         return response()->json($guide, 200);
     }
-
+    public function getPopup()
+    {
+        if(popupWindow::get()){
+            return response()->json(popupWindow::orderBy('created_at','DESC')->get());
+        } else {
+            return response('No data');
+        }
+    }
+    public function postPopup(Request $request)
+    {
+        $popup = new popupWindow();
+        $popup->title = $request->title;
+        $popup->url = $request->url;
+        $popup->updated_by = Auth::id();
+        $popup->save();
+        return response()->json($popup, 201);
+    }
     // Candidate API
     public function getCandidate()
     {
