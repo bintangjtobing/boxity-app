@@ -42,6 +42,8 @@ use App\track_orders;
 use App\track_reports;
 use App\userdetails;
 use App\userGuide;
+use App\warehouseList;
+use Illuminate\Support\Facades\Date;
 use App\popupWindow;
 use Mail;
 
