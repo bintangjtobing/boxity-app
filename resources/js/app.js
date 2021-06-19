@@ -23,7 +23,7 @@ moment.locale('en-au');
 Vue.mixin(titleMixin);
 Vue.use(VueRouter, VueAxios, Axios, VueSweetalert2);
 const options = {
-    color: '#2788d6',
+    color: '#fa7e1a',
     failedColor: '#874b4b',
     thickness: '5px',
     height: '4px',
