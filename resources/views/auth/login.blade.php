@@ -109,7 +109,7 @@
                     },
                     // Dot color
                     "color": {
-                        "value": "#ed0678"
+                        "value": "#f93a0b"
                     },
                     "shape": {
                         "type": "circle",
