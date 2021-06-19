@@ -205,7 +205,8 @@ class salesController extends Controller
     {
         $ItemSales = new itemSales();
         $ItemSales->item_code = $request->item_code;
-        $ItemSales->qty = $request->qty;
+        $ItemSales->qtyOrdered = $request->qtyOrdered;
+        $ItemSales->qtyShipped = $request->qtyShipped;
         $ItemSales->unit = $request->unit;
         $ItemSales->price = $request->price;
         $ItemSales->remarks = $request->remarks;
@@ -222,7 +223,8 @@ class salesController extends Controller
     {
         $ItemSales = itemSales::find($id);
         $ItemSales->item_code = $request->item_code;
-        $ItemSales->qty = $request->qty;
+        $ItemSales->qtyOrdered = $request->qtyOrdered;
+        $ItemSales->qtyShipped = $request->qtyShipped;
         $ItemSales->unit = $request->unit;
         $ItemSales->price = $request->price;
         $ItemSales->remarks = $request->remarks;

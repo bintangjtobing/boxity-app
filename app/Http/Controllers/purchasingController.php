@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\inventoryItem;
 use App\itemsPurchase;
 use App\purchaseInvoice;
 use App\purchaseOrder;
@@ -201,19 +202,29 @@ class purchasingController extends Controller
     // Item Purchase
     public function getItemPurchase()
     {
-        return response()->json(itemsPurchase::with('item')->with('requestedBy')->orderBy('created_at', 'DESC')->get());
+        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->get());
     }
     public function postItemPurchase(Request $request)
     {
+        $itemPurchase = DB::table('inventory_items')
+            ->where('item_code', '=', $request->item_code)
+            ->update([
+                'inventory_items.price' => $request->currentPrice,
+            ]);
+
         $ItemPurchasing = new itemsPurchase();
         $ItemPurchasing->item_code = $request->item_code;
-        $ItemPurchasing->qty = $request->qty;
+        $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
+        $ItemPurchasing->qtyShipped = '0';
         $ItemPurchasing->unit = $request->unit;
         $ItemPurchasing->price = $request->price;
         $ItemPurchasing->purpose = $request->purpose;
         $ItemPurchasing->requested_by = $request->requested_by;
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $ItemPurchasing->po_status = '1';
         $ItemPurchasing->created_by = Auth::id();
         $ItemPurchasing->updated_by = Auth::id();
         $ItemPurchasing->save();
@@ -225,9 +236,16 @@ class purchasingController extends Controller
     }
     public function postItemPurchaseById($id, Request $request)
     {
+        $itemPurchase = DB::table('inventory_items')
+            ->where('item_code', '=', $request->item_code)
+            ->update([
+                'inventory_items.price' => $request->currentPrice,
+            ]);
+
         $ItemPurchasing = itemsPurchase::find($id);
         $ItemPurchasing->item_code = $request->item_code;
-        $ItemPurchasing->qty = $request->qty;
+        $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
+        $ItemPurchasing->qtyShipped = '0';
         $ItemPurchasing->unit = $request->unit;
         $ItemPurchasing->price = $request->price;
         $ItemPurchasing->purpose = $request->purpose;

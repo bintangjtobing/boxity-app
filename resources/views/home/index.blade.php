@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{!!asset('webpage/css/custom.css')!!}" type="text/css" />
     <link rel="stylesheet" href="{!!asset('webpage/css/calendar.css')!!}" type="text/css" />
 
-    <!-- NonProfit Demo Specific Stylesheet -->
+    <!-- NonProfit Demo Specific Stylesheet -->`
     <link rel="stylesheet" href="{!!asset('webpage/css/colors.php?color=292562')!!}" type="text/css" />
     <!-- Theme Color -->
     <link rel="stylesheet" href="{!!asset('webpage/demos/btsa/css/fonts.css')!!}" type="text/css" />
@@ -46,10 +46,7 @@
 </head>
 
 <body class="stretched">
-<<<<<<< HEAD
     {{-- MODAL ATTACH STARTED --}}
-=======
->>>>>>> ed67e169380288f8cc5d56b1831babf3950b0640
     {{-- PLPESTINDO --}}
     <div class="modal fade bs-example-modal-lg" id="plpview" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">

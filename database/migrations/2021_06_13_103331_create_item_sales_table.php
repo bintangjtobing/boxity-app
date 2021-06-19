@@ -15,9 +15,10 @@ class CreateItemSalesTable extends Migration
     {
         Schema::create('item_sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_code')->index('item_code');
+            $table->string('item_code')->index('item_code');
             // For general
-            $table->integer('qty')->nullable();
+            $table->integer('qtyOrdered')->nullable();
+            $table->integer('qtyShipped')->nullable();
             $table->string('unit')->nullable();
             $table->string('price')->nullable();
             $table->longText('remarks')->nullable();

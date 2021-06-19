@@ -9,7 +9,8 @@ class itemsPurchase extends Model
     protected $table = 'items_purchases';
     protected $fillable = [
         'item_code',
-        'qty',
+        'qtyOrdered',
+        'qtyShipped',
         'unit',
         'price',
         'purpose',
@@ -26,11 +27,15 @@ class itemsPurchase extends Model
     ];
     public function item()
     {
-        return $this->belongsTo(inventoryItem::class, 'item_code');
+        return $this->belongsTo(inventoryItem::class, 'item_code', 'item_code');
     }
     public function requestedBy()
     {
         return $this->belongsTo(User::class, 'requested_by');
+    }
+    public function usedBy()
+    {
+        return $this->belongsTo(User::class, 'used_by');
     }
     public function purchasingOrder()
     {

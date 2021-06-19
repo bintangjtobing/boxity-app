@@ -128,7 +128,7 @@ class apiController extends Controller
     }
     public function getContactList()
     {
-        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->orderBy('name', 'asc')->get());
+        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->where('role', '!=', 'supplier')->orderBy('name', 'asc')->get());
     }
     public function updateUser($id, Request $request)
     {

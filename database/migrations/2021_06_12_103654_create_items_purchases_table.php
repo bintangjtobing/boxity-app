@@ -15,10 +15,11 @@ class CreateItemsPurchasesTable extends Migration
     {
         Schema::create('items_purchases', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_code')->index('item_code');
+            $table->string('item_code')->index('item_code');
 
             // For general
-            $table->integer('qty')->nullable();
+            $table->integer('qtyOrdered')->nullable();
+            $table->integer('qtyShipped')->nullable();
             $table->string('unit')->nullable();
             $table->string('price')->nullable();
             $table->string('purpose')->nullable();
