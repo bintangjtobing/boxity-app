@@ -8,6 +8,7 @@ import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import Axios from 'axios';
 import titleMixin from './mixins/titleMixins.js';
+import '@mdi/font/css/materialdesignicons.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 import 'feather-icons';
