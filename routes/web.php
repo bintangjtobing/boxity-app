@@ -31,9 +31,14 @@ Route::get('/clear-view', function () {
     return redirect('/');
 });
 Route::get('/sign-out', function () {
-    session()->flush();
-    auth()->logout();
+    header("cache-Control: no-store, no-cache, must-revalidate");
+    header("cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     Artisan::call('cache:clear');
+    Session::flush();
+    auth()->logout();
+    $request->session()->regenerate();
     return redirect('/tools');
 });
 
