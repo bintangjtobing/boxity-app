@@ -38,7 +38,7 @@ Route::get('/sign-out', function () {
     Artisan::call('cache:clear');
     Session::flush();
     auth()->logout();
-    $request->session()->regenerate();
+    Session::regenerate();
     return redirect('/tools');
 });
 
