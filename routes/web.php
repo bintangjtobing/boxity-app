@@ -33,6 +33,7 @@ Route::get('/clear-view', function () {
 Route::get('/sign-out', function () {
     session()->flush();
     auth()->logout();
+    Artisan::call('cache:clear');
     return redirect('/tools');
 });
 
