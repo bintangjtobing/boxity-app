@@ -28,11 +28,11 @@ class CreateItemsPurchasesTable extends Migration
             $table->longText('remarks')->nullable();
 
             // Is it for purchase order, purchase invoices, purchases request or purchases return
-            $table->integer('po_status')->default('0');
-            $table->integer('pi_status')->default('0');
-            $table->integer('prequest_status')->default('0');
-            $table->integer('preturn_status')->default('0');
-            $table->integer('purchasingId')->default('0')->index('purchasingId');
+            $table->string('po_status')->default('0')->index('po_status');
+            $table->string('pi_status')->default('0')->index('pi_status');
+            $table->string('prequest_status')->default('0')->index('prequest_status');
+            $table->string('preturn_status')->default('0')->index('preturn_status');
+            $table->string('purchasingId')->default('0')->index('purchasingId');
             $table->integer('created_by')->index('created_by');
             $table->integer('updated_by')->index('updated_by');
             $table->timestamps();

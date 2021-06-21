@@ -25,10 +25,10 @@ class CreateItemSalesTable extends Migration
             $table->timestamps();
 
             // Is it for purchase order, purchase invoices, purchases request or purchases return
-            $table->integer('so_status')->default('0');
-            $table->integer('si_status')->default('0');
-            $table->integer('sdeliveryreceipt_status')->default('0');
-            $table->integer('sreturn_status')->default('0');
+            $table->string('so_status')->default('0')->index('so_status');
+            $table->string('si_status')->default('0')->index('si_status');
+            $table->string('sdeliveryreceipt_status')->default('0')->index('sdeliveryreceipt_status');
+            $table->string('sreturn_status')->default('0')->index('sreturn_status');
             $table->integer('salesId')->default('0')->index('salesId');
             $table->integer('created_by')->index('created_by');
             $table->integer('updated_by')->index('updated_by');

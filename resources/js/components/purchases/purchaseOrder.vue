@@ -24,7 +24,7 @@
                                 </v-card-title>
                                 <v-data-table :search="search" loading loading-text="Loading... Please wait..."
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
-                                    class="elevation-1" group-by="item_group.name">
+                                    class="elevation-1" group-by="supplier.customerName">
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/purchase-order/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
@@ -62,7 +62,7 @@
                         value: 'po_number'
                     }, {
                         text: 'Deliver to',
-                        value: 'deliver_to.warehouse_name'
+                        value: 'recipient.warehouse_name'
                     }, {
                         text: 'Order Date',
                         value: 'order_date'

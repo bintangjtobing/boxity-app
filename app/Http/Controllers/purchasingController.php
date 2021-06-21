@@ -30,10 +30,13 @@ class purchasingController extends Controller
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->order_date = $request->order_date;
         $purchasingOrd->deliver_to = $request->deliver_to;
-        $purchasingOrd->status = $request->status;
         $purchasingOrd->created_by = Auth::id();
         $purchasingOrd->updated_by = Auth::id();
         $purchasingOrd->save();
+
+        $itemGet = DB::table('items_purchases')
+            ->where('po_status', '=', '1')
+            ->update(array('po_status' => $purchasingOrd->po_number));
         return response()->json($purchasingOrd, 200);
     }
     public function getPurchaseOrderById($id)

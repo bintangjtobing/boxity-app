@@ -140,57 +140,53 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <span>PO number:</span>
-                                        <input type="text" v-model="purchaseOrderData.item_code" readonly
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <span>Supplier:</span>
-                                        <select v-model="purchaseOrderData.supplier"
-                                            class="form-control form-control-default">
-                                            <option value="" disabled>Select supplier:</option>
-                                            <option v-for="supplier in supplier" :key="supplier.id"
-                                                :value="supplier.id">
-                                                {{supplier.customerName}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <span>Order date:</span>
-                                        <input type="date" v-model="purchaseOrderData.order_date" class="form-control"
-                                            placeholder="Brand">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <span>Deliver to:</span>
-                                        <select v-model="purchaseOrderData.deliver_to"
-                                            class="form-control form-control-default">
-                                            <option value="" disabled>Select warehouse:</option>
-                                            <option v-for="warehouse in warehouse" :key="warehouse.id"
-                                                :value="warehouse.id">
-                                                {{warehouse.warehouse_name}}</option>
-                                        </select>
-                                    </div>
+                        <div class="form-row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <span>PO number:</span>
+                                    <input type="text" v-model="purchaseOrderData.po_number" readonly
+                                        class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group my-2">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success float-right btn-default btn-squared
-                                                px-30" data-dismiss="modal">Save</button>
-                                    </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <span>Supplier:</span>
+                                    <select v-model="purchaseOrderData.supplier"
+                                        class="form-control form-control-default">
+                                        <option value="" disabled>Select supplier:</option>
+                                        <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
+                                            {{supplier.customerName}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Order date:</span>
+                                    <input type="date" v-model="purchaseOrderData.order_date" class="form-control"
+                                        placeholder="Brand">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Deliver to:</span>
+                                    <select v-model="purchaseOrderData.deliver_to"
+                                        class="form-control form-control-default">
+                                        <option value="" disabled>Select warehouse:</option>
+                                        <option v-for="warehouse in warehouse" :key="warehouse.id"
+                                            :value="warehouse.id">
+                                            {{warehouse.warehouse_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-success float-right btn-default btn-squared
+                                                px-30">Save</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -277,7 +273,7 @@
         methods: {
             generatePONumber() {
                 const genPONumber = this.rndStr(5);
-                this.purchaseOrderData.item_code = genPONumber;
+                this.purchaseOrderData.po_number = genPONumber;
             },
             rndStr(len) {
                 let blank = "";
@@ -385,27 +381,20 @@
             },
             async submitHandle() {
                 this.$Progress.start();
-                await axios.post('/api/inventory-item', this.purchaseOrderData).then(response => {
-                    this.loadItem();
+                await axios.post('/api/purchase-order', this.purchaseOrderData).then(response => {
+                    this.loadData();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add Inventory Item',
+                        text: 'Success add new purchase order',
                     });
                     this.purchaseOrderData = {
-                        item_name: '',
-                        type: '',
-                        item_group: '',
-                        brand: '',
-                        width: '',
-                        length: '',
-                        thickness: '',
-                        nt_weight: '',
-                        gr_weight: '',
-                        volume: '',
+                        supplier: '',
+                        order_date: '',
+                        deliver_to: '',
                     };
                     const genPONumber = this.rndStr(5);
-                    this.purchaseOrderData.item_code = genPONumber;
+                    this.purchaseOrderData.po_number = genPONumber;
                     this.$Progress.finish();
                 }).catch(error => {
                     this.$Progress.fail();
@@ -414,7 +403,7 @@
                         title: 'Something wrong.',
                         confirmButtonText: `Ok`,
                         html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-            it still exist, you can contact our developer. <br><br>Error message: ` +
+                it still exist, you can contact our developer. <br><br>Error message: ` +
                             error,
                     }).then((result) => {
                         if (result.isConfirmed) {
@@ -422,6 +411,7 @@
                         }
                     });
                 });
+                // console.log('data click', [this.purchaseOrderData, this.itemPurchasingData])
             },
             async deleteData(id) {
                 const result = await Swal.fire({
