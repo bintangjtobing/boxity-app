@@ -1,6 +1,6 @@
 {
     "name": "boxity-app",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "private": true,
     "scripts": {
         "dev": "npm run development",
@@ -30,6 +30,7 @@
         "vuetify": "^2.4.9"
     },
     "devDependencies": {
+        "@mdi/font": "^5.9.55",
         "axios": "^0.21.1",
         "babel-core": "^6.26.3",
         "babel-loader": "^8.2.2",

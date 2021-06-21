@@ -23,19 +23,22 @@
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
                                 <v-card-title>
-                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
-                                        single-line hide-details></v-text-field>
+                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                                        hide-details></v-text-field>
                                 </v-card-title>
                                 <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
-                                    :items="goodsData" :items-per-page="10" class="elevation-1">
+                                    :items="goodsData" :search="search" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.typeOfGoods="{ item }">
                                         <div class="userDatatable-inline-title my-3">
                                             <a href="#" class="text-dark fw-500">
-                                                <h6 v-if="item.typeOfGoods == 1">Document
-                                                    #{{item.receiptNumber}}</h6>
-                                                <h6 v-if="item.typeOfGoods == 2">Packet
-                                                    #{{item.receiptNumber}}</h6>
+                                                <h6 v-if="item.typeOfGoods == 1" title="Document">D</h6>
+                                                <h6 v-if="item.typeOfGoods == 2">P</h6>
                                             </a>
+                                        </div>
+                                    </template>
+                                    <template v-slot:item.receiptNumber="{item}">
+                                        <div class="userDatatable-inline-title my-3">
+                                            <h6>#{{item.receiptNumber}}</h6>
                                             <p class="pt-1 d-block mb-0">
                                                 <i class="fas fa-dolly"></i> via {{item.courier}} • Received at
                                                 {{item.created_at}}
@@ -192,19 +195,19 @@
                     receiverid: '',
                 },
                 // datatable
-                goodsData: [],
                 search: '',
-                key: 1,
+                goodsData: [],
                 headers: [{
                     text: 'Goods Type',
                     value: 'typeOfGoods'
                 }, {
+                    text: 'Receipt No.',
+                    value: 'receiptNumber'
+                }, {
                     text: 'Recipient',
-                    filterable: false,
                     value: 'receiver'
                 }, {
                     text: 'Status',
-                    filterable: false,
                     value: 'status'
                 }, {
                     text: 'Actions',
