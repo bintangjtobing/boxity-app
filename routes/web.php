@@ -81,6 +81,7 @@ Route::post('/reset-password/{id}', 'authController@processResetPassword');
 
 // Homepage Data
 Route::get('/', 'webpageController@index');
+Route::get('/connect', 'webpageController@connect');
 Route::get('/tentang-kami', 'webpageController@tentangkami');
 Route::get('/blog', 'webpageController@blog');
 Route::get('/galeri', 'webpageController@galeri');

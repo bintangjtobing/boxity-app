@@ -15,11 +15,16 @@ class webpageController extends Controller
 {
     public function index()
     {
-        $popup = popupWindow::orderBy('created_at','DESC')->get();
-        if(count($popup) > 0){
-            return view('webpage.index',['popup'=>$popup[0]]);
-        }else{return view('webpage.index');}
-        
+        $popup = popupWindow::orderBy('created_at', 'DESC')->get();
+        if (count($popup) > 0) {
+            return view('webpage.index', ['popup' => $popup[0]]);
+        } else {
+            return view('webpage.index');
+        }
+    }
+    public function connect()
+    {
+        return view('webpage.connect');
     }
     public function tentangkami()
     {

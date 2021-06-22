@@ -2,9 +2,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="https://btsa.co.id/icon.png" type="image/png" alt="BTSA LOGISTICS icon">
+    <meta name='viewport' content='initial-scale=1, viewport-fit=cover'>
+    <link rel="stylesheet" href="{!!asset('webpage/connect/styles.css')!!}">
+    <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
     <script src="https://kit.fontawesome.com/bf3b9c3659.js" crossorigin="anonymous"></script>
     <meta name="description"
         content="BTSA Logistics adalah Expedisi, EMKL, EMKU & Custom Clearance dan juga termasuk daftar perusahaan custom clearance di Indonesia. Berada di Jakarta, Medan, Surabaya, Semarang, Palembang, Pekan Baru, Bali,  Makasar dan Lombok.">
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <img src="assets/profile-picture.jpg" alt="profile picture" class="profile-picture">
+    <img src="{!!asset('webpage/connect/assets/profile-picture.jpg')!!}" alt="profile picture" class="profile-picture">
     <div class="profile-name">@btsalogistics</div>
     <a href="https://btsa.co.id" class="links"><i class="fas fa-wifi"></i> Website</a>
     <a href="https://btsa.co.id/karir" class="links"><i class="fab fa-audible"></i> Job Vacancy</a>
