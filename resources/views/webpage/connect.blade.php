@@ -23,7 +23,8 @@
     <a href="https://btsa.co.id/facebook" class="links"><i class="fab fa-facebook"></i> Facebook</a>
     <div class="bottom-text">
         <small class="text-muted">
-            &copy; 2018-2021&nbsp;BTSA LOGISTICS. All Rights Reserved. </small>
+            <?php $y = date('Y'); ?>
+            &copy; 2018-{{$y}}&nbsp;BTSA LOGISTICS. All Rights Reserved. </small>
     </div>
 </body>
 
