@@ -13,15 +13,6 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # If subdomain does not map to a subdirectory then redirect to root of main domain
-    RewriteCond %{HTTP_HOST} ^(.*)\.(btsa\.co.id)
-    RewriteCond %{DOCUMENT_ROOT}/connect/%1 !-d
-    RewriteRule ^ https://%2/ [R=302,L]
-
-    # Otherwise, internally rewrite the request to subdirectory (if not already)
-    RewriteCond %{HTTP_HOST} ^(.*)\.btsa\.co.id
-    RewriteRule ^((?!connect/).*)$ connect/%1/$1 [L]
-
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
