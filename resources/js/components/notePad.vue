@@ -4,7 +4,7 @@
             <div class="col-lg-12">
 
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Notepad <span>{{title}}</span></h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Notepad <span>{{title}}</span></h2>
                 </div>
 
             </div>

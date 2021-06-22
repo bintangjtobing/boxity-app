@@ -3,7 +3,7 @@
         <div class="row mt-2">
             <div class="col-md-12 col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Direct Message</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Direct Message</h2>
                 </div>
                 <div class="chat-area d-flex mb-40">
                     <ContactList :contacts="contacts" @selected="startConversationWith"></ContactList>

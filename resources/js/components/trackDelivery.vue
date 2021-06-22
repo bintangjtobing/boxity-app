@@ -3,13 +3,13 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Track delivery system management</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Track delivery system management</h2>
                     <div class="action-btn">
                         <router-link :to="`/track-delivery/new`" class="btn px-15 btn-primary">
                             <i class="las la-plus fs-16"></i>Add new track</router-link>
                     </div>
                 </div>
-                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
+                <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
                         <v-card-title>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line

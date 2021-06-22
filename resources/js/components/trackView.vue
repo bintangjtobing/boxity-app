@@ -3,8 +3,8 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main mb-2">
-                    <h4 class="text-capitalize breadcrumb-title">Order track detail <span>#{{tracks.order_id}}</span>
-                    </h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Order track detail <span>#{{tracks.order_id}}</span>
+                    </h2>
                     Order created at {{tracks.created_at}}
                 </div>
             </div>

@@ -31,7 +31,7 @@
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
                             aria-labelledby="v-pills-home-tab">
-                            <div class="row ml-4">
+                            <div class="row mx-4">
                                 <div class="col-lg-12">
                                     <div class="card card-vertical card-default card-md mb-4">
                                         <div class="card-body pb-md-30">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="tab-pane fade  show" id="v-pills-others" role="tabpanel"
                             aria-labelledby="v-pills-others-tab">
-                            <div class="row ml-4">
+                            <div class="row mx-4">
                                 <div class="col-lg-12">
                                     <div class="card card-vertical card-default card-md mb-4">
                                         <div class="card-body pb-md-30">

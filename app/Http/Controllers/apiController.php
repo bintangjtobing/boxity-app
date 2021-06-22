@@ -45,6 +45,7 @@ use App\userGuide;
 use App\warehouseList;
 use Illuminate\Support\Facades\Date;
 use App\popupWindow;
+use App\warehouseCustomer;
 use Mail;
 
 class apiController extends Controller
@@ -1162,6 +1163,37 @@ class apiController extends Controller
         $warehouse->address = $request->address;
         $warehouse->remarks = $request->remarks;
         $warehouse->pic = $request->pic;
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+
+    // Warehouse Customer
+    public function getWarehouseCustomer($id)
+    {
+        return response()->json(warehouseCustomer::where('warehouse_id', $id)->with('warehouseDetail')->with('customerDetail')->orderBy('created_at', 'DESC')->get());
+        // return response($id);
+    }
+    public function postWarehouseCustomer(Request $request, $id)
+    {
+        $warehouse = new warehouseCustomer();
+        $warehouse->warehouse_id = $id;
+        $warehouse->customer_id = $request->customerId;
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getWarehouseCustomerById($id)
+    {
+        return response()->json(warehouseCustomer::find($id));
+    }
+    public function deleteWarehouseCustomerById($id)
+    {
+        return response()->json(warehouseCustomer::find($id)->delete());
+    }
+    public function postWarehouseCustomerById($id, Request $request)
+    {
+        $warehouse = warehouseCustomer::find($id);
+        $warehouse->warehouse_id = $id;
+        $warehouse->customer_id = $request->customerId;
         $warehouse->save();
         return response()->json($warehouse, 201);
     }

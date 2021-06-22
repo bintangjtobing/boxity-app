@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Sales Delivery Receipt<br></h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Sales Delivery Receipt<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link to="/sales-delivery-receipt/add" class="btn btn-sm btn-primary btn-add">

@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Warehouse List</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Warehouse List</h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addWarehouse"

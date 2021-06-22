@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Goods Receipt</h4>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Goods Receipt</h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap"
                         v-if="member.role == 'hrdga' || member.role=='admin'">
                         <div class="action-btn">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header color-dark fw-500">
                         Goods receipt list
                     </div>

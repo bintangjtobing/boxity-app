@@ -157,6 +157,13 @@ Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
 Route::delete('/warehouse/{id}', 'apiController@deleteWarehouseById');
 Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
 
+// Warehouse Customer
+Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomer');
+Route::post('/warehouse-customer/{id}', 'apiController@postWarehouseCustomer');
+// Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomerById');
+Route::delete('/warehouse-customer/{id}', 'apiController@deleteWarehouseCustomerById');
+Route::patch('/warehouse-customer/{id}', 'apiController@postWarehouseCustomerById');
+
 // Stock Group
 Route::get('/stock-group', 'apiController@getStockGroup');
 Route::post('/stock-group', 'apiController@postStockGroup');

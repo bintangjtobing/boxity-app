@@ -3,12 +3,12 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize breadcrumb-title">Inventory Item<br>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Inventory Item<br>
                         <span>Jumlah <router-link :to="'/item-group'"><abbr title="Stock Group Link">item group</abbr>
                             </router-link> anda
                             adalah {{countItems}}, <abbr title="Inventory Item">Inventory Item</abbr> akan berfungsi
                             jika
-                            anda memiliki item group minimal sebanyak 1. </span></h4>
+                            anda memiliki item group minimal sebanyak 1. </span></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addInventoryItem"
