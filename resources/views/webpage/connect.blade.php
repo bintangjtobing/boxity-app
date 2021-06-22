@@ -15,6 +15,7 @@
 <body>
     <img src="{!!asset('webpage/connect/assets/profile-picture.jpg')!!}" alt="profile picture" class="profile-picture">
     <div class="profile-name">@btsalogistics</div>
+    <a href="mailto:market@btsa.co.id" class="links"><i class="far fa-paper-plane"></i> Mail Us</a>
     <a href="https://btsa.co.id" class="links"><i class="fas fa-wifi"></i> Website</a>
     <a href="https://btsa.co.id/karir" class="links"><i class="fab fa-audible"></i> Job Vacancy</a>
     <a href="https://btsa.co.id/blog" class="links"><i class="far fa-newspaper"></i> News Updated</a>
