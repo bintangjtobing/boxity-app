@@ -8,7 +8,8 @@ class salesReturn extends Model
 {
     protected $table = 'sales_returns';
     protected $fillable = [
-        'return_number', 'customer', 'return_date', 'toGL', 'status', 'created_by', 'updated_by'
+        'return_number', 'customer', 'return_date', 'toGL', 'status', 'created_by',
+        'updated_by', 'remarks'
     ];
     public function customer()
     {

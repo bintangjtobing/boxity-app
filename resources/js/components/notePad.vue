@@ -293,7 +293,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new notepad',
+                        text: 'Success New notepad',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

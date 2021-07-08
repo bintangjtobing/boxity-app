@@ -106,7 +106,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new popup.',
+                        text: 'Success New popup.',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

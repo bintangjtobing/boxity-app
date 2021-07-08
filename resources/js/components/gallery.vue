@@ -8,7 +8,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link :to="`/gallery/new`" class="btn btn-sm btn-primary btn-add">
-                                <i class="la la-plus"></i> Add new album</router-link>
+                                <i class="la la-plus"></i> New album</router-link>
                         </div>
                     </div>
                 </div>

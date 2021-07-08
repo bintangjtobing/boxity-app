@@ -92,6 +92,10 @@ Route::get('/generatePDF/{id}', function ($id) {
     return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
 });
 
+// REPORTING PDF
+Route::get('/report/purchase-order/{id}', 'purchasingController@reportPO');
+Route::get('/report/receiving-confirmation/{id}', 'receivingController@reportPO');
+
 // View details blog
 Route::get('/blog/v/{title}', 'webpageController@viewBlog');
 

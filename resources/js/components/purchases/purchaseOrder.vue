@@ -7,7 +7,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link to="/purchase-order/add" class="btn btn-sm btn-primary btn-add">
-                                <i class="las la-plus fs-16"></i>Add New Purchase Order</router-link>
+                                <i class="las la-plus fs-16"></i>New Purchase Order</router-link>
                         </div>
                     </div>
                 </div>
@@ -24,10 +24,12 @@
                                 </v-card-title>
                                 <v-data-table :search="search" loading loading-text="Loading... Please wait..."
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
-                                    class="elevation-1" group-by="supplier.customerName">
+                                    class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/purchase-order/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                        <a :href="`/report/purchase-order/${item.id}`" target="_blank" class="view">
+                                            <i class="fas fa-print"></i></a>
+                                        <router-link :to="`/detail/purchase-order/${item.po_number}`" class="edit">
+                                            <i class="fas fa-eye"></i></router-link>
                                         <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>
@@ -62,14 +64,14 @@
                         value: 'po_number'
                     }, {
                         text: 'Deliver to',
-                        value: 'recipient.warehouse_name'
+                        value: 'warehouse.warehouse_name'
                     }, {
                         text: 'Order Date',
                         value: 'order_date'
                     },
                     {
                         text: 'Supplier',
-                        value: 'supplier.customerName'
+                        value: 'suppliers.customerName'
                     }, {
                         text: 'Actions',
                         value: 'actions',
@@ -101,7 +103,7 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    await axios.delete('/api/inventory-item/' + id);
+                    await axios.get('/api/purchases-order/' + id);
                     this.loadItem();
                     await Swal.fire({
                         icon: 'success',
@@ -109,6 +111,7 @@
                         text: 'Success deleted current item.'
                     });
                 }
+                // console.log(id);
             },
         },
     }

@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Career</h2>
                     <div class="action-btn">
                         <router-link :to="`/career/new`" class="btn px-15 btn-primary">
-                            <i class="las la-plus fs-16"></i>Add new job vacancy</router-link>
+                            <i class="las la-plus fs-16"></i>New job vacancy</router-link>
                     </div>
                 </div>
             </div>

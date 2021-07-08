@@ -81,8 +81,6 @@ import itemGroup from './components/itemGroup.vue';
 import itemGroupForm from './components/itemGroupForm.vue';
 import inventoryItem from './components/inventoryItem.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
-import goodsTransfer from './components/goodsTransfer.vue';
-import goodsTransferForm from './components/goodsTransferForm.vue';
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -111,6 +109,16 @@ import SalesDeliveryReceiptAdd from './components/sales/salesDeliveryReceiptAdd.
 import SalesReturn from './components/sales/salesReturn.vue';
 import SalesReturnForm from './components/sales/salesReturnForm.vue';
 import SalesReturnAdd from './components/sales/salesReturnAdd.vue';
+
+// Receiving Confirmation
+import receivingConfirmation from './components/receivingConfirmation/receivingConfirmation.vue';
+import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
+import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
+
+// Shipping Confirmation
+import shippingConfirmation from './components/shippingConfirmation/shippingConfirmation.vue';
+import shippingConfirmationDetail from './components/shippingConfirmation/shippingConfirmationForm.vue';
+import shippingConfirmationAdd from './components/shippingConfirmation/shippingConfirmationAdd.vue';
 
 import popupWindow from './components/popupWindow.vue';
 
@@ -304,14 +312,34 @@ const routes = [{
         name: 'detailInventoryItem',
         path: '/detail/inventory-item/:id',
         component: inventoryItemForm,
+    },
+    // Receiving Confirmation
+    {
+        name: 'receivingConfirmation',
+        path: '/receiving-confirmation',
+        component: receivingConfirmation
     }, {
-        name: 'goodsTransfer',
-        path: '/goods-transfer',
-        component: goodsTransfer
+        name: 'receivingConfirmationAdd',
+        path: '/receiving-confirmation/add',
+        component: receivingConfirmationAdd
     }, {
-        name: 'detailgoodsTransfer',
-        path: '/detail/goods-transfer/:id',
-        component: goodsTransferForm,
+        name: 'detailReceivingConfirmation',
+        path: '/detail/receiving-confirmation/:receiving_number',
+        component: receivingConfirmationDetail,
+    },
+    // Receiving Confirmation
+    {
+        name: 'shippingConfirmation',
+        path: '/shipping-confirmation',
+        component: shippingConfirmation
+    }, {
+        name: 'shippingConfirmationAdd',
+        path: '/shipping-confirmation/add',
+        component: shippingConfirmationAdd
+    }, {
+        name: 'receivingConfirmationDetail',
+        path: '/shipping-confirmation/detail',
+        component: shippingConfirmationDetail
     },
     // Purchases
     {
@@ -324,7 +352,7 @@ const routes = [{
         component: purchaseOrderAdd
     }, {
         name: 'detailPurchaseOrder',
-        path: '/detail/purchase-order/:id',
+        path: '/detail/purchase-order/:po_number',
         component: purchaseOrderForm,
     },
     {

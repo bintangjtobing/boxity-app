@@ -19,6 +19,7 @@ class CreateSalesOrdersTable extends Migration
             $table->integer('customer')->nullable()->index('customer');
             $table->string('order_date')->nullable();
             $table->integer('status')->default('0');
+            $table->longText('remarks')->nullable();
             $table->integer('created_by')->index('created_by');
             $table->integer('updated_by')->index('updated_by');
             $table->timestamps();

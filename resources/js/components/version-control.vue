@@ -136,7 +136,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new change log.',
+                        text: 'Success New change log.',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

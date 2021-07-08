@@ -8,13 +8,13 @@ class purchaseOrder extends Model
 {
     protected $table = 'purchase_orders';
     protected $fillable = [
-        'po_number', 'supplier', 'order_date', 'deliver_to', 'status', 'created_by', 'updated_by'
+        'po_number', 'supplier', 'order_date', 'deliver_to', 'status', 'created_by', 'updated_by', 'remarks'
     ];
-    public function supplier()
+    public function suppliers()
     {
         return $this->belongsTo(User::class, 'supplier');
     }
-    public function recipient()
+    public function warehouse()
     {
         return $this->belongsTo(warehouseList::class, 'deliver_to');
     }
@@ -26,4 +26,11 @@ class purchaseOrder extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+    public function item()
+    {
+        return $this->belongsTo(itemsPurchase::class, 'po_number', 'purchasingId');
+    }
+    protected $casts = [
+        'created_at' => 'datetime:d M, Y',
+    ];
 }

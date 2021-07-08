@@ -139,7 +139,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new order track.',
+                        text: 'Success New order track.',
                     });
                     this.$Progress.finish();
                     this.$router.push('/track-delivery');

@@ -77,7 +77,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new album.',
+                        text: 'Success New album.',
                     });
                     this.$Progress.finish();
                     this.$router.push('/gallery');

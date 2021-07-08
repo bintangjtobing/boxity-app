@@ -10,6 +10,7 @@ class inventoryItem extends Model
     protected $fillable = [
         'item_code',
         'item_name',
+        'qty',
         'unit',
         'type',
         'brand',
@@ -21,9 +22,14 @@ class inventoryItem extends Model
         'gr_weight',
         'volume',
         'price',
+        'customerId',
     ];
     public function itemGroup()
     {
         return $this->belongsTo(itemGroup::class, 'item_group');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customerId');
     }
 }

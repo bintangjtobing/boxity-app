@@ -135,7 +135,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new job vacancy.',
+                        text: 'Success New job vacancy.',
                     });
                     this.$Progress.finish();
                     this.$router.push('/career');

@@ -178,7 +178,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new warehouse',
+                        text: 'Success New warehouse',
                     });
                     this.warehouse = {
                         warehouse_code: '',

@@ -11,14 +11,14 @@
                     </div>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
-                            <i class="las la-plus fs-16"></i>Add new user</a>
+                            <i class="las la-plus fs-16"></i>New user</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newMember"
                             role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new user</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New user</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -361,7 +361,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new user',
+                        text: 'Success New user',
                     });
                     this.user = {
                         gender: '',

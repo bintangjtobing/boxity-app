@@ -103,7 +103,7 @@ class webpageController extends Controller
         if ($request->hasFile('supported_file') && $request->hasFile('picture')) {
             $request->file('supported_file')->move('storage/file/' . $request->nama_lengkap, $request->file('supported_file')->getClientOriginalName());
             $candidate->supported_file = $request->file('supported_file')->getClientOriginalName();
-            $request->file('picture')->move('storage/file/' . $request->nama_lengkap, $request->file('picture')->getClientOriginalName());
+            $request->file('picture')->move('storage/file/' . $request->nama_lengkap, $request->file('picture')->getClientOriginalName());  
             $candidate->picture = $request->file('picture')->getClientOriginalName();
         }
         $candidate->save();

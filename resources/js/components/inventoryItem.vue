@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="form-group mt-2">
                                     <div class="form-row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <span>Brand:</span>
                                                 <input type="text" v-model="inventorydata.brand" class="form-control"
@@ -119,6 +119,12 @@
                                                 <span>Unit:</span>
                                                 <input type="text" v-model="inventorydata.unit" class="form-control"
                                                     placeholder="Ex: Kg for weight, Pcs for things or else">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group">
+                                                <span>Quantity:</span>
+                                                <input type="text" readonly class="form-control" :value="0">
                                             </div>
                                         </div>
                                     </div>
@@ -210,25 +216,32 @@
                 key: 1,
                 inventoryItem: [],
                 headers: [{
-                        text: 'Item Code',
-                        value: 'item_code'
-                    }, {
-                        text: 'Name',
-                        value: 'item_name'
-                    }, {
-                        text: 'Item Group',
-                        value: 'item_group.name'
-                    },
-                    {
-                        text: 'Tipe Item',
-                        value: 'type'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        filterable: false,
-                        sortable: false
-                    }
-                ],
+                    text: 'Item Code',
+                    value: 'item_code'
+                }, {
+                    text: 'Name',
+                    value: 'item_name'
+                }, {
+                    text: 'Item Group',
+                    value: 'item_group.name'
+                }, {
+                    text: 'Ending Balance',
+                    filterable: false,
+                    align: 'center',
+                    value: 'qty'
+                }, {
+                    text: 'Unit Type',
+                    filterable: false,
+                    value: 'unit',
+                }, {
+                    text: 'Tipe Item',
+                    value: 'type'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
                 // end datatable
                 inventoryOpt: {},
                 countItems: '0',

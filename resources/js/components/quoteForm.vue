@@ -63,7 +63,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new quote.',
+                        text: 'Success New quote.',
                     });
                     this.$router.push('/quote');
                 }).catch(error => {

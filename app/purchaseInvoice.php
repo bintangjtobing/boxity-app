@@ -8,7 +8,8 @@ class purchaseInvoice extends Model
 {
     protected $table = 'purchase_invoices';
     protected $fillable = [
-        'purchase_invoices', 'supplier', 'invoice_date', 'reference_no', 'status', 'created_by', 'updated_by'
+        'purchase_invoices', 'supplier', 'invoice_date', 'reference_no', 'status', 'created_by',
+        'updated_by', 'remarks'
     ];
     public function supplier()
     {

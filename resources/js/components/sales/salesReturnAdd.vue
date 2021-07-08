@@ -5,7 +5,7 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Add New Sales Return</h4>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">New Sales Return</h4>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
             'editor': Editor
         },
         title() {
-            return `Add New Sales Return`;
+            return `New Sales Return`;
         },
         data() {
             return {

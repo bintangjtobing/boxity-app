@@ -148,7 +148,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new issue.',
+                        text: 'Success New issue.',
                     });
                     this.$Progress.finish();
                     this.$router.push('/issues');

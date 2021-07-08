@@ -27,7 +27,7 @@ class itemsPurchase extends Model
     ];
     public function item()
     {
-        return $this->belongsTo(inventoryItem::class, 'item_code', 'item_code');
+        return $this->belongsTo(inventoryItem::class, 'item_code');
     }
     public function requestedBy()
     {

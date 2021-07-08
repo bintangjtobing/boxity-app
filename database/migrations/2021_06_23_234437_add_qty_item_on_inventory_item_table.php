@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddSomeFieldOnInventoryItemsTable extends Migration
+class AddQtyItemOnInventoryItemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class CreateAddSomeFieldOnInventoryItemsTable extends Migration
     public function up()
     {
         Schema::table('inventory_items', function (Blueprint $table) {
-            $table->string('unit')->nullable()->after('type');
+            $table->integer('qty')->default(0)->after('item_name');
+            $table->integer('customerId')->index('customerId')->after('unit');
         });
     }
 
@@ -26,7 +27,8 @@ class CreateAddSomeFieldOnInventoryItemsTable extends Migration
     public function down()
     {
         Schema::table('inventory_items', function (Blueprint $table) {
-            $table->dropColumn('unit');
+            $table->dropColumn('qty');
+            $table->dropColumn('customerId');
         });
     }
 }

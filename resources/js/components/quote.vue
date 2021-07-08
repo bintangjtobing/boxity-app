@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Quote report</h2>
                     <div class="action-btn">
                         <router-link :to="`/quote/new`" class="btn px-15 btn-primary">
-                            <i class="las la-plus fs-16"></i>Add new quote</router-link>
+                            <i class="las la-plus fs-16"></i>New quote</router-link>
                     </div>
                 </div>
             </div>

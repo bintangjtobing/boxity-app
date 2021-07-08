@@ -1004,7 +1004,7 @@ class apiController extends Controller
         $customer->gender = '-';
         $customer->organisation = '-';
         $customer->phone = '-';
-        $customer->avatar = '-';
+        $customer->avatar = '7.jpg';
         $customer->cover = '-';
         $customer->password = Hash::make($request->password);
         $customer->unpassword = $request->password;
@@ -1133,7 +1133,18 @@ class apiController extends Controller
     // Warehouse
     public function getWarehouse()
     {
-        return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'customer') {
+            // If logged user is having role as CUSTOMER
+            // then warehouse shows that having this ID CUSTOMER
+            $warehouse = DB::table('warehouse_lists')
+                ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
+                ->where('warehouse_customers.customer_id', '=', Auth::id())
+                ->orderBy('warehouse_lists.warehouse_name', 'ASC')
+                ->get();
+            return $warehouse;
+        } else {
+            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function postWarehouse(Request $request)
     {
@@ -1201,7 +1212,11 @@ class apiController extends Controller
     // Stock Group
     public function getStockGroup()
     {
-        return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'customer') {
+            return response()->json(stockGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function postStockGroup(Request $request)
     {
@@ -1242,7 +1257,11 @@ class apiController extends Controller
     // ItemGroup
     public function getItemGroup()
     {
-        return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'customer') {
+            return response()->json(itemGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function postItemGroup(Request $request)
     {
@@ -1283,13 +1302,18 @@ class apiController extends Controller
     // Inventory Item
     public function getInventoryItem()
     {
-        return response()->json(inventoryItem::with('itemGroup')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'customer') {
+            return response()->json(inventoryItem::where('customerId', Auth::id())->with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(inventoryItem::with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function postInventoryItem(Request $request)
     {
         $inventory = new inventoryItem();
         $inventory->item_code = $request->item_code;
         $inventory->item_name = $request->item_name;
+        $inventory->qty = 0;
         $inventory->type = $request->type;
         $inventory->brand = $request->brand;
         $inventory->item_group = $request->item_group;
@@ -1300,6 +1324,7 @@ class apiController extends Controller
         $inventory->gr_weight = $request->gr_weight;
         $inventory->volume = $request->volume;
         $inventory->unit = $request->unit;
+        $inventory->customerId = Auth::id();
         $inventory->save();
         return response()->json($inventory, 200);
     }
@@ -1335,90 +1360,6 @@ class apiController extends Controller
     public function deleteInventoryItemById($id)
     {
         return response()->json(inventoryItem::find($id)->delete());
-    }
-
-    // Goods Transfer
-    public function getGoodsTransfer()
-    {
-        return response()->json(goodsTransfer::with('fromWarehouse')->with('toWarehouse')->orderBy('created_at', 'DESC')->get());
-    }
-    public function postGoodsTransfer(Request $request)
-    {
-        $goodsTransfer = new goodsTransfer();
-        $goodsTransfer->refNumber = $request->refNumber;
-        $goodsTransfer->mutation_date = $request->mutation_date;
-        $goodsTransfer->from = $request->from;
-        $goodsTransfer->to = $request->to;
-        $goodsTransfer->save();
-        return response()->json($goodsTransfer, 200);
-    }
-    public function getGoodsTransferById($id)
-    {
-        return response()->json(goodsTransfer::with('fromWarehouse')->with('toWarehouse')->find($id));
-    }
-    public function postGoodsTransferById($id, Request $request)
-    {
-        $goodsTransfer = goodsTransfer::find($id);
-        $goodsTransfer->refNumber = $request->refNumber;
-        $goodsTransfer->mutation_date = $request->mutation_date;
-        $goodsTransfer->from = $request->from;
-        $goodsTransfer->to = $request->to;
-        $goodsTransfer->save();
-        return response()->json($goodsTransfer, 200);
-    }
-    public function countGoodsTransfer()
-    {
-        $ItemCount = DB::table('goods_transfers')
-            ->get()
-            ->count();
-        return response()->json($ItemCount);
-    }
-    public function deleteGoodsTransferById($id)
-    {
-        return response()->json(goodsTransfer::find($id)->delete());
-    }
-
-    // Goods Item Transfer
-    public function getGoodsItemTransfer()
-    {
-        return response()->json(goodsItemTransfer::with('item')->with('goodsTfID')->orderBy('created_at', 'DESC')->get());
-    }
-    public function postGoodsItemTransfer(Request $request)
-    {
-        $goodsTransfer = new goodsItemTransfer();
-        $goodsTransfer->itemCode = $request->itemCode;
-        $goodsTransfer->qty = $request->qty;
-        $goodsTransfer->unit = $request->unit;
-        $goodsTransfer->remarks = $request->remarks;
-        $goodsTransfer->tf_goods_id = $request->tf_goods_id;
-        $goodsTransfer->save();
-        return response()->json($goodsTransfer, 200);
-    }
-    public function getGoodsItemTransferById($id)
-    {
-        return response()->json(goodsItemTransfer::find($id));
-    }
-    public function postGoodsItemTransferById($id, Request $request)
-    {
-        $goodsTransfer = goodsItemTransfer::find($id);
-        $goodsTransfer->itemCode = $request->itemCode;
-        $goodsTransfer->qty = $request->qty;
-        $goodsTransfer->unit = $request->unit;
-        $goodsTransfer->remarks = $request->remarks;
-        $goodsTransfer->tf_goods_id = $request->tf_goods_id;
-        $goodsTransfer->save();
-        return response()->json($goodsTransfer, 200);
-    }
-    public function countGoodsItemTransfer()
-    {
-        $ItemCount = DB::table('goods_item_transfers')
-            ->get()
-            ->count();
-        return response()->json($ItemCount);
-    }
-    public function deleteGoodsItemTransferById($id)
-    {
-        return response()->json(goodsItemTransfer::find($id)->delete());
     }
 
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan

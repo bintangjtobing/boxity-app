@@ -241,7 +241,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new good receipt',
+                        text: 'Success New good receipt',
                     });
                     this.$Progress.finish();
                     this.goods = {

@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Blog management</h2>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
-                            <i class="las la-plus fs-16"></i>Add new blog</a>
+                            <i class="las la-plus fs-16"></i>New blog</a>
 
                         <!-- Modal -->
                         <div class="modal fade new-member" id="newMember" role="dialog" tabindex="-1"
@@ -14,7 +14,7 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content modal-lg radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Add new blog</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New blog</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -180,7 +180,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new blog',
+                        text: 'Success New blog',
                     });
                     this.blog = {
                         title: '',

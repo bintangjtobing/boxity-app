@@ -21,6 +21,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->string('deliver_to')->nullable()->index('deliver_to');
             // Status 0, un-active, 1-> approved, 2-> terminated
             $table->integer('status')->default('0');
+            $table->longText('remarks')->nullable();
             $table->integer('created_by')->index('created_by');
             $table->integer('updated_by')->index('updated_by');
             $table->timestamps();

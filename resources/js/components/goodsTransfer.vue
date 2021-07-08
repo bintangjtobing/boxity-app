@@ -169,7 +169,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new Goods Transfer',
+                        text: 'Success New Goods Transfer',
                     });
                     this.itemgroup = {
                         warehouse_code: '',

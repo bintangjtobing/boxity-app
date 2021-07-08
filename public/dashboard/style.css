@@ -2712,7 +2712,7 @@ table.table-rounded thead tr th,
 .atbd-mailCompose__action svg,
 .mail-details .mail-attatched__hover .btn-mail svg,
 .mail-details .mail-attatched__hover .btn-mail img {
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .bg-white,

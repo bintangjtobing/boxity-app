@@ -7,7 +7,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link to="/sales-return/add" class="btn btn-sm btn-primary btn-add">
-                                <i class="las la-plus fs-16"></i>Add New Sales Return</router-link>
+                                <i class="las la-plus fs-16"></i>New Sales Return</router-link>
                         </div>
                     </div>
                 </div>

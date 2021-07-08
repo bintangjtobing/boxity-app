@@ -23,8 +23,8 @@
                                     role="tab" aria-controls="v-pills-home" aria-selected="true">details</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="v-pills-others-tab" data-toggle="pill" href="#v-pills-others"
-                                    role="tab" aria-controls="v-pills-others" aria-selected="true">Others</a>
+                                <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history"
+                                    role="tab" aria-controls="v-pills-history" aria-selected="true">History</a>
                             </li>
                         </ul>
                     </div>
@@ -69,7 +69,7 @@
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <div class="form-row">
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Brand:</span>
                                                                     <input type="text" v-model="inventorydata.brand"
@@ -80,6 +80,13 @@
                                                                 <div class="form-group">
                                                                     <span>Current Price:</span>
                                                                     <input type="text" v-model="inventorydata.price"
+                                                                        class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <span>Ending Balance:</span>
+                                                                    <input type="text" v-model="inventorydata.qty"
                                                                         class="form-control" readonly>
                                                                 </div>
                                                             </div>
@@ -169,24 +176,65 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade  show" id="v-pills-others" role="tabpanel"
-                            aria-labelledby="v-pills-others-tab">
+                        <div class="tab-pane fade  show" id="v-pills-history" role="tabpanel"
+                            aria-labelledby="v-pills-history-tab">
                             <div class="row mx-4">
                                 <div class="col-lg-12">
                                     <div class="card card-vertical card-default card-md mb-4">
                                         <div class="card-body pb-md-30">
                                             <div class="vertical-form">
-                                                <form @submit.prevent="handleSubmit">
-                                                    <!-- Insert Code here -->
-                                                    <div class="form-group my-2">
-                                                        <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit"
-                                                                v-on:keyup.enter="handleSubmit" type="submit"
-                                                                class="btn btn-success btn-default btn-squared px-30"
-                                                                data-dismiss="modal">Submit</button>
+                                                <div class="form-row">
+                                                    <div class="col-lg-5">
+                                                        <div class="form-group mb-10">
+                                                            <span>From:</span>
+                                                            <input type="date" v-model="range.fromDate" id=""
+                                                                class="form-control">
                                                         </div>
                                                     </div>
-                                                </form>
+                                                    <div class="col-lg-5">
+                                                        <div class="form-group mb-10">
+                                                            <span>Until:</span>
+                                                            <input type="date" v-model="range.toDate" id=""
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group mt-4">
+                                                            <div class="justify-content-end">
+                                                                <button v-on:click="searchData"
+                                                                    v-on:keyup.enter="searchData"
+                                                                    class="btn btn-success btn-default btn-squared px-30">Search</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <!-- Table Customer Listed -->
+                                                    <div class="col-lg-12">
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <div
+                                                                    class="userDatatable projectDatatable project-table bg-white border-0">
+                                                                    <div class="table-responsive">
+                                                                        <v-card-title>
+                                                                            <v-text-field v-model="search"
+                                                                                append-icon="mdi-magnify"
+                                                                                label="Search here..." single-line
+                                                                                hide-details>
+                                                                            </v-text-field>
+                                                                        </v-card-title>
+                                                                        <v-data-table loading
+                                                                            loading-text="Loading... Please wait..."
+                                                                            :search="search" :headers="headers"
+                                                                            multi-sort :items="historyItem"
+                                                                            :items-per-page="10" class="elevation-1">
+                                                                        </v-data-table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -213,10 +261,25 @@
             return {
                 inventorydata: {},
                 inventoryOpt: {},
+                range: {},
+
+                // datatable
+                search: '',
+                key: 1,
+                historyItem: [],
+                headers: [{
+                    text: 'Customer Name',
+                    value: 'customer_detail.customerName'
+                }, {
+                    text: 'Data Added',
+                    value: 'created_at'
+                }],
+                // end datatable
             }
         },
         created() {
             this.loadDataInventoryItem();
+            this.loadHistoryItem();
         },
         methods: {
             async loadDataInventoryItem() {
@@ -229,6 +292,13 @@
                 this.inventoryOpt = resp.data;
                 this.$Progress.finish();
             },
+            async loadHistoryItem() {
+                this.$Progress.start();
+                // Load customer warehouse
+                const custList = await axios.get('/api/warehouse-customer/' + this.$route.params.id);
+                this.historyItem = custList.data;
+                this.$Progress.finish();
+            },
             async handleSubmit() {
                 await axios.patch('/api/inventory-item/' + this.$route.params.id, this.inventorydata);
                 Swal.fire({
@@ -238,6 +308,9 @@
                 });
                 this.$router.push('/inventory-item');
             },
+            async searchData() {
+                console.log(this.range);
+            }
         },
     }
 

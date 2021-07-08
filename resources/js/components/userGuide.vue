@@ -150,7 +150,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new guide',
+                        text: 'Success New guide',
                     });
                     this.$Progress.finish();
                 }).catch(error => {

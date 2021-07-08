@@ -3,8 +3,9 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Stock Group <span>- {{countStocks}} Stocks</span></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countCustomers">
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Stock Group <span>- {{countStocks}}
+                            Stocks</span></h2>
+                    <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addStockGroup"
                                 class="btn btn-sm btn-primary btn-add">
@@ -152,7 +153,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success add new Stock Group',
+                        text: 'Success New Stock Group',
                     });
                     this.stockgroup = {
                         warehouse_code: '',

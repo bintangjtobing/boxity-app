@@ -30,7 +30,7 @@
                         </li>
                         <li class="nav-author">
                             <div class="dropdown-custom">
-                                <a href="javascript:;" class="nav-item-toggle"><img v-if="user.role!='customer'"
+                                <a href="javascript:;" class="nav-item-toggle"><img
                                         :src="'./dashboard/img/author/profile/'+user.avatar" alt="User avatar"
                                         class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
@@ -140,7 +140,7 @@
                             <li class="menu-title m-top-15">
                                 <span>Associate</span>
                             </li>
-                            <li>
+                            <li v-if="user.role=='admin'">
                                 <router-link to="/customers">
                                     <span class="material-icons-outlined nav-icon">
                                         groups
@@ -223,10 +223,10 @@
                             </li>
                         </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li class="menu-title m-top-15">
+                            <li class="menu-title m-top-15" v-if="user.role=='admin'">
                                 <span>Warehouse</span>
                             </li>
-                            <li>
+                            <li v-if="user.role=='admin'">
                                 <router-link :to="'/warehouse-list'">
                                     <span class="material-icons-outlined nav-icon">
                                         home_work
@@ -234,6 +234,9 @@
                                     <span class="menu-text">Warehouse List</span>
                                     <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
+                            </li>
+                            <li class="menu-title m-top-15">
+                                <span>Inventory Control</span>
                             </li>
                             <li>
                                 <router-link :to="'/stock-group'">
@@ -255,9 +258,6 @@
                                     <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
-                            <li class="menu-title m-top-15">
-                                <span>Inventory Control</span>
-                            </li>
                             <li>
                                 <router-link to="/inventory-item">
                                     <span class="material-icons-outlined nav-icon">
@@ -267,13 +267,16 @@
                                     <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
+                            <li class="menu-title m-top-15">
+                                <span>Receiving & Putaway</span>
+                            </li>
                             <li>
-                                <router-link to="/goods-transfer">
+                                <router-link to="/receiving-confirmation">
                                     <span class="material-icons-outlined nav-icon">
-                                        local_shipping
+                                        archive
                                     </span>
-                                    <span class="menu-text">Goods Transfer</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="menu-text">Receiving Conf.</span>
+                                    <span class="badge badge-secondary menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -285,7 +288,7 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
-                                    <span class="badge badge-success menuItem">Doing</span>
+                                    <span class="badge badge-secondary menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
@@ -313,6 +316,18 @@
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
                                     <span class="badge badge-primary menuItem">Soon</span>
+                                </router-link>
+                            </li>
+                            <li class="menu-title m-top-15">
+                                <span>Shipping</span>
+                            </li>
+                            <li>
+                                <router-link to="/shipping-confirmation">
+                                    <span class="material-icons-outlined nav-icon">
+                                        local_shipping
+                                    </span>
+                                    <span class="menu-text">Shipping Conf.</span>
+                                    <span class="badge badge-success menuItem">Soon</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -392,6 +407,23 @@
                                 </router-link>
                             </li>
                         </div>
+                        <li class="menu-title m-top-15">
+                            <span>Privacy & Others</span>
+                        </li>
+                        <li>
+                            <a :href="'/api/logs'" v-if="user.role=='admin'">
+                                <span class="material-icons-outlined nav-icon">
+                                    bug_report
+                                </span>
+                                <span class="menu-text">Trace logs</span>
+                            </a>
+                            <a :href="'/api/logs'">
+                                <span class="material-icons-outlined nav-icon">
+                                    report
+                                </span>
+                                <span class="menu-text">Activity Log</span>
+                            </a>
+                        </li>
                         <li>
                             <a v-on:click="signOutConfirm" class="text-danger">
                                 <span class="material-icons-outlined nav-icon">
