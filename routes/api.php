@@ -237,12 +237,22 @@ Route::patch('/purchase-order/{po_number}', 'purchasingController@postPurchaseOr
 Route::delete('/purchases-order/{id}', 'purchasingController@deletePurchaseOrderById');
 Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
 
+// Item on Purchases Order
+Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchase');
+Route::post('/po/item-purchase', 'itemOnPurchasingController@postItemPurchase');
+Route::post('/po/item-purchase/{po_number}', 'itemOnPurchasingController@postItemPurchaseByPoNumber');
+Route::get('/po/item-purchase/{po_number}', 'itemOnPurchasingController@getItemPurchaseByPoNumber');
+Route::get('/po/item-purchases/{id}', 'itemOnPurchasingController@getItemPurchaseById');
+Route::patch('/po/item-purchase/{id}', 'itemOnPurchasingController@postItemPurchaseById');
+Route::delete('/po/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPurchaseById');
+Route::get('/po/count-item-purchase', 'itemOnPurchasingController@countItemPurchase');
+
 // Purchase Invoice
 Route::get('/purchase-invoice', 'purchasingController@getPurchaseInvoice');
 Route::post('/purchase-invoice', 'purchasingController@postPurchaseInvoice');
-Route::get('/purchase-invoice/{id}', 'purchasingController@getPurchaseInvoiceById');
-Route::patch('/purchase-invoice/{id}', 'purchasingController@postPurchaseInvoiceById');
-Route::delete('/purchase-invoice/{id}', 'purchasingController@deletePurchaseInvoiceById');
+Route::get('/purchase-invoice/{pi_number}', 'purchasingController@getPurchaseInvoiceByPiNumber');
+Route::patch('/purchase-invoice/{pi_number}', 'purchasingController@postPurchaseInvoiceByPiNumber');
+Route::delete('/purchases-invoice/{id}', 'purchasingController@deletePurchaseInvoiceById');
 Route::get('/count-purchase-invoice', 'purchasingController@countPurchaseInvoice');
 
 // Purchase Return
@@ -260,16 +270,6 @@ Route::get('/purchase-request/{id}', 'purchasingController@getPurchaseRequestByI
 Route::patch('/purchase-request/{id}', 'purchasingController@postPurchaseRequestById');
 Route::delete('/purchase-request/{id}', 'purchasingController@deletePurchaseRequestById');
 Route::get('/count-purchase-request', 'purchasingController@countPurchaseRequest');
-
-// Item Purchases
-Route::get('/item-purchase', 'purchasingController@getItemPurchase');
-Route::post('/item-purchase', 'purchasingController@postItemPurchase');
-Route::post('/item-purchase/{po_number}', 'purchasingController@postItemPurchaseByPoNumber');
-Route::get('/item-purchase/{po_number}', 'purchasingController@getItemPurchaseByPoNumber');
-Route::get('/item-purchases/{id}', 'purchasingController@getItemPurchaseById');
-Route::patch('/item-purchase/{id}', 'purchasingController@postItemPurchaseById');
-Route::delete('/item-purchase/{id}', 'purchasingController@deleteItemPurchaseById');
-Route::get('/count-item-purchase', 'purchasingController@countItemPurchase');
 
 // Sales Order
 Route::get('/sales-order', 'salesController@getSalesOrder');

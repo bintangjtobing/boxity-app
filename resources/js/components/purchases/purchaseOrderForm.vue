@@ -433,7 +433,7 @@
                 this.supplier = resp.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/item-purchase/' + this.$route.params.po_number);
+                const itemPurchasingData = await axios.get('/api/po/item-purchase/' + this.$route.params.po_number);
                 this.itemPurchasingData = itemPurchasingData.data;
                 const purchasingOrderData = await axios.get('/api/purchase-order/' + this.$route.params.po_number);
                 this.purchaseOrderData = purchasingOrderData.data;
@@ -445,7 +445,7 @@
             },
             async modifyItemPurchasing(id) {
                 this.$Progress.start();
-                const resp = await axios.get('/api/item-purchases/' + id);
+                const resp = await axios.get('/api/po/item-purchases/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
@@ -458,7 +458,7 @@
             },
             async modifyItemList() {
                 this.$Progress.start();
-                await axios.patch('/api/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
+                await axios.patch('/api/po/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -483,7 +483,7 @@
             async addToList() {
                 this.$Progress.start();
                 // console.log(this.itemAdd);
-                await axios.post('/api/item-purchase/' + this.$route.params.po_number, this.itemAdd).then(
+                await axios.post('/api/po/item-purchase/' + this.$route.params.po_number, this.itemAdd).then(
                     response => {
                         Swal.fire({
                             icon: 'success',
@@ -546,7 +546,7 @@
                 });
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    await axios.delete('/api/item-purchase/' + id);
+                    await axios.delete('/api/po/item-purchase/' + id);
                     this.loadData();
                     await Swal.fire({
                         icon: 'success',

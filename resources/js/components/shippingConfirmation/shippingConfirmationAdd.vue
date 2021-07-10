@@ -312,7 +312,7 @@
                 this.supplier = resp.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/item-purchase');
+                const itemPurchasingData = await axios.get('/api/po/item-purchase');
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
@@ -322,7 +322,7 @@
             },
             async modifyItemPurchasing(id) {
                 this.$Progress.start();
-                const resp = await axios.get('/api/item-purchase/' + id);
+                const resp = await axios.get('/api/po/item-purchase/' + id);
                 this.itemAdd = resp.data;
                 this.titleItemDescription = 'Modify Shipping Confirmation Items';
                 this.isVisibleSave = true;
@@ -332,7 +332,7 @@
             },
             async addToList() {
                 this.$Progress.start();
-                await axios.post('/api/item-purchase', this.itemAdd).then(response => {
+                await axios.post('/api/po/item-purchase', this.itemAdd).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -355,7 +355,7 @@
             },
             async modifyItemPurchase() {
                 this.$Progress.start();
-                await axios.patch('/api/item-purchase/' + this.itemAdd.id, this.itemAdd).then(response => {
+                await axios.patch('/api/po/item-purchase/' + this.itemAdd.id, this.itemAdd).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

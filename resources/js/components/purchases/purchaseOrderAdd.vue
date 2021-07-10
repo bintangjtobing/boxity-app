@@ -416,7 +416,7 @@ n<template>
             async modifyItemList() {
                 this.$Progress.start();
                 console.log('Item :', this.itemModify);
-                await axios.patch('/api/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
+                await axios.patch('/api/po/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -446,7 +446,7 @@ n<template>
                 this.supplier = resp.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/item-purchase');
+                const itemPurchasingData = await axios.get('/api/po/item-purchase');
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
@@ -456,7 +456,7 @@ n<template>
             },
             async modifyItemPurchasing(id) {
                 this.$Progress.start();
-                const resp = await axios.get('/api/item-purchases/' + id);
+                const resp = await axios.get('/api/po/item-purchases/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
@@ -471,7 +471,7 @@ n<template>
             },
             async addToList() {
                 this.$Progress.start();
-                await axios.post('/api/item-purchase', this.itemAdd).then(response => {
+                await axios.post('/api/po/item-purchase', this.itemAdd).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -494,7 +494,7 @@ n<template>
             },
             async modifyItemPurchase() {
                 this.$Progress.start();
-                await axios.patch('/api/item-purchase/' + this.itemAdd.id, this.itemAdd).then(response => {
+                await axios.patch('/api/po/item-purchase/' + this.itemAdd.id, this.itemAdd).then(response => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -562,7 +562,7 @@ n<template>
                 });
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    await axios.delete('/api/item-purchase/' + id);
+                    await axios.delete('/api/po/item-purchase/' + id);
                     this.loadData();
                     await Swal.fire({
                         icon: 'success',
