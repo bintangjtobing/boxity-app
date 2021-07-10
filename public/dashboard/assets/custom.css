@@ -1,0 +1,638 @@
+.text-danger {
+    font-size: 12px !important;
+}
+
+.color-primary,
+a:hover h1,
+a:hover h2,
+a:hover h3,
+a:hover h4,
+a:hover h5,
+a:hover h6,
+.navbar-right__menu .dropdown-wrapper__more:hover,
+.strikingDash-top-menu ul li>ul li a:hover,
+.strikingDash-top-menu ul li>ul li a.active,
+.strikingDash-top-menu>ul>li a.active,
+.strikingDash-top-menu>ul>li .megaMenu-wrapper.megaMenu-small ul li>a:hover,
+.strikingDash-top-menu>ul>li .megaMenu-wrapper.megaMenu-small ul li>a.active,
+.dropdown-default .dropdown-item:hover,
+.dropdown-menu .dropdown-item:hover,
+.sidebar.collapsed .sidebar__menu-group li a.active,
+.sidebar.collapsed .sidebar__menu-group li a:hover,
+.sidebar.collapsed .sidebar__menu-group .has-child ul li a:hover,
+.sidebar.collapsed .sidebar__menu-group .has-child ul li a.active,
+.sidebar__menu-group ul.sidebar_nav li>a:hover,
+.sidebar__menu-group ul.sidebar_nav li>a.active,
+.sidebar__menu-group ul.sidebar_nav li>a:hover .toggle-icon,
+.sidebar__menu-group ul.sidebar_nav li>a:hover .nav-icon,
+.sidebar__menu-group ul.sidebar_nav li>a.active .toggle-icon,
+.sidebar__menu-group ul.sidebar_nav li>a.active .nav-icon,
+.sidebar__menu-group ul.sidebar_nav li ul li>a:hover,
+.sidebar__menu-group ul.sidebar_nav li ul li>a.active,
+.sidebar-toggle:hover svg,
+.sidebar-toggle:hover i,
+.sidebar-toggle:hover svg #Path_1,
+.sidebar-toggle:hover svg #Path_2,
+.sidebar-toggle:hover svg #Path_3,
+.badge.badge-outlined.badge-primary,
+.badge.badge-transparent.badge-primary,
+.atbd-nav-controller .nav .nav-link.active,
+.atbd-nav-controller .nav .nav-link:focus,
+.atbd-nav-controller .nav .nav-link.active:hover,
+.atbd-nav-controller .nav .nav-link:focus:hover,
+.avatar.avatar-primary.avatar-transparent,
+.avatar .avatar-badge-wrap .badge-icon.badge-icon-primary,
+.breadcrumb-main .breadcrumb-action .action-btn .btn i,
+.breadcrumb-main .breadcrumb-action .action-btn .btn svg,
+.breadcrumb-main .breadcrumb-action .input-container .icon-left svg,
+.breadcrumb-main .breadcrumb-action .input-container .icon-left i,
+.atbd-breadcrumb__item:first-child a,
+.atbd-breadcrumb__item:first-child a span,
+.card .card-header .card-tab-links li a.active,
+.feature-cards figcaption button,
+.custom-checkbox input[type="checkbox"]+label::before,
+.performance-stats div:hover span,
+.revenue-chart-box__Icon.order-bg-opacity-primary svg,
+.orderDatatable_actions li a.revenue-chart-box__Icon.view:hover svg,
+.ap-tab-main .nav-link.active,
+.ap-post-cc-reply__reaction li a:hover,
+.ps-tab .nav-link:hover,
+.ps-tab .nav-link.active,
+.signUp-condition.signIn-condition a,
+.landing-pages-table table tbody td a:hover,
+.modal-info-body .modal-info-icon.primary svg,
+.user-info-tab .ap-tab-main .nav-item .nav-link.active,
+.user-info-tab .ap-tab-main .nav-item .nav-link.active svg,
+.project-tap .nav-link.active,
+.icon-list-social__link.active,
+.timeline-box.timeline-box--2 .timeline-single__content p:hover,
+.atbd-menu.menu-horizontal .atbd-menu__item:hover>.atbd-menu__link,
+.atbd-menu.menu-horizontal .atbd-menu__item.active>.atbd-menu__link,
+.atbd-menu.menu-horizontal .atbd-menu__item:hover>.atbd-menu__link svg,
+.atbd-menu.menu-horizontal .atbd-menu__item:hover>.atbd-menu__link img,
+.atbd-menu.menu-horizontal .atbd-menu__item.active>.atbd-menu__link svg,
+.atbd-menu.menu-horizontal .atbd-menu__item.active>.atbd-menu__link img,
+.atbd-submenu li>a:hover,
+.atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:hover::before,
+.atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:hover .atbd-menu__icon,
+.atbd-menu.menu-vertical .atbd-menu__item.has-submenu>.atbd-menu__link:hover .atbd-menu__text,
+.atbd-menu.menu-vertical .atbd-menu__item .atbd-menu__link:hover::before,
+.atbd-menu.menu-vertical .atbd-menu__item .atbd-menu__link:hover .atbd-menu__icon svg,
+.atbd-menu.menu-vertical .atbd-menu__item .atbd-menu__link:hover .atbd-menu__text,
+.atbd-pop-message.message-primary .atbd-pop-message__icon i,
+.atbd-pop-message.message-primary .atbd-pop-message__icon svg,
+.atbd-pop-message.message-primary .atbd-pop-message__icon span,
+.atbd-tag.tag-primary.tag-transparented,
+.atbd-steps__item.finished .atbd-steps__icon,
+.atbd-upload__file li .file-name .name-text,
+.page-title-wrap .atbd-breadcrumb__item:first-child a:hover,
+.page-title-wrap .atbd-breadcrumb__item a:hover,
+.page-info__single span.info-text.color-primary,
+.select2-container--default .select2-results__option[aria-selected="true"],
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+#full-calendar .fc-toolbar-chunk .fc-button-group .fc-button.fc-listMonth-button i,
+#full-calendar .fc-toolbar-chunk .fc-button-group .fc-button.fc-listMonth-button svg,
+#full-calendar .fc-toolbar-chunk .fc-button-group .fc-button.fc-listMonth-button img,
+#full-calendar .fc-toolbar-chunk .fc-button-group .fc-button.fc-listMonth-button.fc-button-active,
+.fc-daygrid-day.fc-day-today .fc-daygrid-day-number,
+.shop-breadcrumb .action-btn .btn i,
+.product-item__body .product-desc-price,
+.quantity .bttn:hover,
+.product-cart .subtotal,
+.order-summery .total-money h5,
+.table5 .userDatatable-title .userDatatable-sort i.down,
+.order-profile-icon svg,
+.search-result form button,
+.gallery-filter .ap-tab-main .nav-link.active,
+.breadcrumb-main.application-ui .breadcrumb-action .btn-group-toggle .btn:hover,
+.faqs-wrapper-tab .nav-link:hover,
+.faqs-wrapper-tab .nav-link.active,
+.fileM-sidebar .fileM-types .sidebar__menu-group ul.sidebar_nav li.has-child.open>a,
+.fileM-action__right .dropdown .dropdown-item:hover,
+.fileM-action__right .dropdown .dropdown-item:hover svg,
+.knowledgebase__list li a:hover,
+.knowledgebase__list li .knowledgebase__list-collapsed:hover,
+.knowledgebase__more a:hover,
+.knowledgebase-adv__content article a:hover,
+.knowledgebase-adv .collapse-adv__area .nav-pills .nav-link.active,
+.knowledgebase-help-request .knowledgebase__share ul li a:hover,
+.post-pagination p a:hover,
+.footer-copyright p a:hover,
+.footer-menu ul li a:hover,
+.atbd-mail-sidebar .mail-list li a:hover i,
+.atbd-mail-sidebar .mail-list li a:hover svg,
+.atbd-mail-sidebar .mail-list li a:hover span,
+.atbd-mail-sidebar .mail-list li a:hover img,
+.atbd-mail-sidebar .mail-list li a.active i,
+.atbd-mail-sidebar .mail-list li a.active svg,
+.atbd-mail-sidebar .mail-list li a.active span,
+.atbd-mail-sidebar .mail-list li a.active img,
+.mailbox-top .icon-action:hover i,
+.mailbox-top .icon-action:hover svg,
+.mailbox-top .icon-action.active i,
+.mailbox-top .icon-action.active svg,
+.mail-details .icon-action:hover i,
+.mail-details .icon-action:hover svg,
+.mail-details .icon-action.active i,
+.mail-details .icon-action.active svg,
+.mail-reply__action a:hover,
+.mailbox-list__single:hover .mail-content__top .mail-title .badge {
+    color: #f06532;
+}
+
+.bg-primary,
+.daterangepicker .ranges ul li.active,
+.daterangepicker.show-calendar .calendar-table tbody td.available.active.start-date::after,
+.daterangepicker.show-calendar .calendar-table tbody td.available.active.start-date::before,
+.daterangepicker.show-calendar .calendar-table tbody td.available.active.end-date::after,
+.daterangepicker.show-calendar .calendar-table tbody td.available.active.end-date::before,
+.daterangepicker.single .calendar-table tbody td.today,
+.daterangepicker.single .calendar-table tbody td.active,
+.daterangepicker .ranges li.active,
+.strikingDash-top-menu>ul>li .megaMenu-wrapper.megaMenu-small ul li>a:hover::after,
+.strikingDash-top-menu>ul>li .megaMenu-wrapper.megaMenu-small ul li>a.active::after,
+.badge-dot.dot-primary,
+.btn.btn-transparent-primary:hover,
+.atbd-button-group.btn-group-withIcon .btn:hover,
+.atbd-nav-controller .nav .nav-link.active:not(:first-child)::before,
+.avatar.avatar-primary,
+.custom-switch .custom-control-input .custom-control-input:checked~.custom-control-label::before,
+.custom-switch.switch-primary .custom-control-input:checked~.custom-control-label::before,
+.card .card-header .card-tab .btn.btn-white.active:hover,
+.card .card-header .card-tab .btn.active,
+.card .card-header .card-tab .btn.active:hover,
+.card .card-header .card-tab-links li a.active::before,
+.feature-cards figcaption button:hover,
+.custom-checkbox input[type="checkbox"]:checked+label::after,
+.custom-checkbox.checkbox-theme-2 input[type="checkbox"]+label::before,
+.ap-tab-main .nav-link::after,
+.account-profile-cards__button button.active,
+.account-profile #remove_pro_pic,
+.notification-content__body .custom-control-input:checked~.custom-control-label::before,
+.atbd-pagination__link:hover,
+.atbd-pagination__link.active,
+.modal-content.modal-bg-primary,
+.atbd-menu__link::after,
+.atbd-tag.tag-primary,
+.atbd-steps__item.finished .atbd-steps__line,
+.atbd-steps__item.active .atbd-steps__icon,
+.atbd-steps__item.active .atbd-steps__line,
+.custom-radio input[type="radio"]:checked+label::after,
+.radio-horizontal-list2 .custom-radio input[type="radio"]+label::before,
+.atbd-tab .nav-link::after,
+.new-member .modal-header .close:hover,
+#full-calendar .fc-toolbar-chunk .fc-button-group .fc-button-primary.fc-button-active,
+.fc-daygrid-day .fc-daygrid-event.primary,
+.ui-slider .ui-slider-range,
+.checkout-progress div.step.current span:nth-of-type(1),
+.wizard9 .checkout-progress2 .step.current span:first-child,
+.search-keyword ul li a.active,
+.ail-light+.ail-btn,
+.ail-light:checked+.ail-btn,
+.version-list__single ul.version-primary li::after,
+.banner-feature--2,
+.banner-feature--5,
+.banner-feature--8,
+.testimonial-slider-global.slick-slider .slick-dots li.slick-active button,
+.kb__header-search-form .input-group button,
+.mailbar-toggle span {
+    background: #f06532;
+}
+
+/* .modal-backdrop {
+    z-index: 1 !important;
+} */
+
+.fa-select option {
+    font-family:
+        'Font Awesome 5 Free',
+        'Font Awesome 5 Brands';
+}
+
+.reporterImg {
+    width: 1.75rem;
+}
+
+.reporter {
+    background-color: #c1f4e5;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: .5rem;
+}
+
+.reporter span {
+    font-size: .85rem;
+}
+
+.reporter label {
+    font-size: .85rem;
+    line-height: 10px;
+}
+
+.form-control.ih-medium {
+    font-size: 12px;
+}
+
+.form-control::placeholder {
+    font-size: 12px;
+}
+
+.form-group textarea {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+th,
+td {
+    vertical-align: middle;
+}
+
+.breadcrumb-main span {
+    color: #8B949E;
+    font-weight: 400;
+}
+
+.badge.badge-round {
+    border-radius: 2em !important;
+}
+
+.badge.badge-lg {
+    padding: 1rem 1rem !important;
+    margin: 0px 8px 0px 0px;
+    font-size: 14px !important;
+}
+
+.badge-outline-success {
+    color: #3fb950;
+    background-color: #3fb9501A;
+    border: 1px solid #3fb950;
+}
+
+.badge-outline-danger {
+    color: #f85149;
+    background-color: #da36331a;
+    border: 1px solid #f85149;
+}
+
+.badge-outline-warning {
+    color: #d1bb27;
+    background-color: #d1bb271a;
+    border: 1px solid #d1bb27;
+}
+
+.badge-outline-closed {
+    color: #a371f7;
+    background-color: #bc8cff1a;
+    border: 1px solid #a371f7;
+}
+
+.descIssue .desc {
+    color: #8b949e;
+    font-size: 14px;
+}
+
+.atbd-comment-box__author figure img {
+    border-radius: 50%;
+}
+
+.sidebarInfo {
+    line-height: 6px;
+}
+
+.sidebarInfo label {
+    font-size: 10px;
+}
+
+.sidebarInfo span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.priority-highest {
+    color: #d4000b;
+}
+
+.priority-high {
+    color: #f04446;
+}
+
+.priority-medium {
+    color: #ef7d32;
+}
+
+.priority-low {
+    color: #1f873d;
+}
+
+.priority-lowest {
+    color: #4fa55d;
+}
+
+.reply-editor__author img {
+    border-radius: 50%;
+}
+
+.btn-reply:hover {
+    cursor: pointer;
+}
+
+.listComment span {
+    cursor: pointer;
+    color: #292562;
+}
+
+.headerIssueList .breadcrumb-main {
+    margin-bottom: 0px;
+}
+
+.headerIssueList span {
+    font-size: 14px;
+}
+
+.btn span,
+.btn i {
+    margin-right: 0 !important;
+}
+
+.comment-list hr {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+figcaption .explainCareers p {
+    font-size: 12px !important;
+}
+
+figcaption .explainCareers span::before,
+figcaption .explainCareers span::after {
+    content: "\a";
+    white-space: pre;
+}
+
+figcaption .explainCareers span {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+figcaption .explainCareers .descCareer {
+    background-color: #0000001a;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: .25rem;
+    border: .5px solid #5a5f7d;
+}
+
+.cp-img__main {
+    border-radius: 50%;
+}
+
+.form-group span {
+    font-size: 12px;
+}
+
+.ap-button a {
+    font-size: 13px;
+    border-radius: 6px;
+    align-items: center;
+    line-height: 2.84615;
+    font-weight: 500;
+    margin: 5px;
+    padding: 2px 18px;
+}
+
+.bg-gradient-primary {
+    background-color: #282562 !important;
+    background: -webkit-linear-gradient(left, #282562, #3e3996) !important;
+    background: -o-linear-gradient(left, #282562, #3e3996) !important;
+    background: -moz-linear-gradient(left, #282562, #3e3996) !important;
+    background: linear-gradient(left, #282562, #3e3996) !important;
+}
+
+.swal2-header .swal2-title {
+    font-size: 1.5rem !important;
+}
+
+.swal2-html-container {
+    font-size: 12px !important;
+}
+
+.swal2-icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.swal2-icon .swal2-icon-content {
+    font-size: 2.5rem !important;
+}
+
+.userDatatable-content .rounded-pill {
+    cursor: pointer;
+}
+
+a {
+    cursor: pointer;
+}
+
+.breadcrumb-main p a {
+    text-decoration: underline !important;
+}
+
+.knowledgebase-details {
+    padding: 0 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 35px !important;
+}
+
+.btn-primary,
+.btn-success,
+.bg-gradient-primary {
+    color: #fff !important;
+}
+
+.v-card__title {
+    padding-top: 0 !important;
+}
+
+.view,
+.edit,
+.remove {
+    margin: 8px 0px !important;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, .2);
+    color: #222;
+}
+
+.text-dark p {
+    margin-bottom: 0 !important;
+}
+
+.view:hover,
+.edit:hover,
+.remove:hover {
+    color: #fff;
+}
+
+.view:hover {
+    background-color: #3498db;
+}
+
+.edit:hover {
+    background-color: #f1c40f;
+}
+
+.remove:hover {
+    background-color: #c0392b;
+    color: #fff !important;
+}
+
+.pasfoto {
+    width: 150px;
+}
+
+.selected {
+    background-color: #fff;
+}
+
+.circleImgProfile {
+    border-radius: 50%;
+}
+
+.feature-cards img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn-danger {
+    color: #fff !important;
+}
+
+.sidebar__menu-group ul.sidebar_nav li>a {
+    font-size: 12px !important;
+    padding: 6.05px 30px !important;
+}
+
+.sidebar__menu-group ul.sidebar_nav li>a .nav-icon {
+    width: 14px !important;
+}
+
+.material-icons-outlined {
+    font-size: 18px !important;
+}
+
+.footer-copyright p {
+    font-size: 12px !important;
+}
+
+.sidebar__menu-group ul.sidebar_nav li.menu-title span {
+    font-weight: 900 !important;
+    color: #3e3e3e !important;
+}
+
+.router-link-exact-active,
+.router-link-exact-active span {
+    color: #f06532;
+}
+
+.mb-20,
+.my-20 {
+    margin-bottom: 1.25rem !important;
+}
+
+.wh-120,
+.navbar-right__menu .nav-author img,
+.navbar-right__menu .nav-author__info .author-img img {
+    object-fit: cover !important;
+}
+
+.navbar-right__menu .nav-author img {
+    height: 34px;
+}
+
+.color-primary,
+.material-icons-outlined,
+.nav-icon {
+    color: #f06532;
+}
+
+.breadcrumb-main span {
+    font-size: 14px;
+}
+
+.navbar-left .navbar-brand {
+    margin-right: 5rem;
+}
+
+.unvisible {
+    display: none !important;
+}
+
+/* Responsive Design */
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+
+    /* CSS */
+
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+    /* CSS */
+
+}
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* CSS */
+
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+    /* CSS */
+
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    /* CSS */
+
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .navbar-left .navbar-brand svg,
+    .navbar-left .navbar-brand img {
+        max-width: 140px !important;
+    }
+
+}
