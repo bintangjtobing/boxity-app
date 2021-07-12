@@ -6,6 +6,7 @@ use App\purchaseInvoice;
 use App\purchaseOrder;
 use App\purchaseRequest;
 use App\purchaseReturn;
+use App\itemsPurchase;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

@@ -1138,6 +1138,8 @@ class apiController extends Controller
             // then warehouse shows that having this ID CUSTOMER
             $warehouse = DB::table('warehouse_lists')
                 ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
+                ->join('users', 'warehouse_lists.created_by', '=', 'users.id')
+
                 ->where('warehouse_customers.customer_id', '=', Auth::id())
                 ->orderBy('warehouse_lists.warehouse_name', 'ASC')
                 ->get();
@@ -1156,6 +1158,14 @@ class apiController extends Controller
         $warehouse->pic = $request->pic;
         $warehouse->created_by = Auth::id();
         $warehouse->save();
+
+        if (Auth::user()->role == 'customer') {
+            $warehouseCust = new warehouseCustomer();
+            $warehouseCust->warehouse_id = $warehouse->id;
+            $warehouseCust->customer_id = Auth::id();
+            $warehouseCust->save();
+        }
+
         return response()->json($warehouse, 200);
     }
     public function getWarehouseById($id)

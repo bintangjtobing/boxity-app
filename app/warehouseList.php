@@ -19,4 +19,10 @@ class warehouseList extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function customers()
+    {
+        return $this->belongsTo(warehouseCustomer::class, 'id', 'warehouse_id');
+    }
+
 }

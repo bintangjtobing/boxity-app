@@ -219,8 +219,6 @@ Route::get('/item-receivings/{id}', 'receivingController@getItemReceivingById');
 Route::patch('/item-receiving/{id}', 'receivingController@postItemReceivingById');
 Route::delete('/item-receiving/{id}', 'receivingController@deleteItemReceivingById');
 Route::get('/count-item-receiving', 'receivingController@countItemReceiving');
-
-// ///////////////// CONFIRMATION SECTION END ///////////////////////////////////
 // Shipping Confirmation
 Route::get('/shipping-confirmation', 'shippingController@getShippingConfirmation');
 Route::post('/shipping-confirmation', 'shippingController@postShippingConfirmation');
@@ -228,6 +226,8 @@ Route::get('/shipping-confirmation/{id}', 'shippingController@getShippingsConfir
 Route::patch('/shipping-confirmation/{id}', 'shippingController@postShippingConfirmationById');
 Route::delete('/shipping-confirmation/{id}', 'shippingController@deleteShippingConfirmationById');
 Route::get('/count-shipping-confirmation', 'shippingController@countShippingConfirmation');
+
+
 
 // Purchase Order
 Route::get('/purchase-order', 'purchasingController@getPurchaseOrder');
