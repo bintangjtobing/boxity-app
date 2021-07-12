@@ -116,8 +116,6 @@ import receivingConfirmation from './components/receivingConfirmation/receivingC
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
 import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
 
-import popupWindow from './components/popupWindow.vue';
-
 // membuat router
 const routes = [{
         name: 'home',
