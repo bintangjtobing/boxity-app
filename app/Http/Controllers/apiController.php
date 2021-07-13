@@ -71,10 +71,12 @@ class apiController extends Controller
         $userId = isset($data['id']) ? $data['id'] : null;
         $sameEmailUser = User::where(['email' => $data['email']])->first();
         $sameNameUser = User::where(['name' => $data['name']])->first();
+        $sameOldPasswordUser = User::where(['unpassword' => $data['oldPassword']])->first();
 
         return response()->json([
             'existingEmail' => isset($sameEmailUser) && $sameEmailUser->id != $userId,
             'existingName' => isset($sameNameUser) && $sameNameUser->id != $userId,
+            'existingPassword' => isset($sameOldPasswordUser) && $sameOldPasswordUser->id != $userId,
         ]);
     }
     public function getUsernameData($username)

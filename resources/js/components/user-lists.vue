@@ -19,108 +19,105 @@
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
                                         <h6 class="modal-title fw-500" id="staticBackdropLabel">New user</h6>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button id="closeModal" type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-9">
-                                                            <input type="text" required v-model="user.name"
-                                                                class="form-control" placeholder="Fullname">
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.name }}</span>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <select v-model="user.gender" required id="select-tag"
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                                <option disabled value="">Select gender:</option>
-                                                                <option v-bind:value="`M`">Male</option>
-                                                                <option v-bind:value="`F`">Female</option>
-                                                            </select>
-                                                        </div>
+                                            <div class="form-group mb-20">
+                                                <div class="form-row">
+                                                    <div class="col-lg-9">
+                                                        <input type="text" required v-model="user.name"
+                                                            class="form-control" placeholder="Fullname">
+                                                        <span class="text-danger error-password">
+                                                            {{ errors.name }}</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <select v-model="user.gender" required id="select-tag"
+                                                            class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
+                                                            <option disabled value="">Select gender:</option>
+                                                            <option v-bind:value="`M`">Male</option>
+                                                            <option v-bind:value="`F`">Female</option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group mb-20">
-                                                    <input type="email" required v-model="user.email"
-                                                        class="form-control" placeholder="Email">
-                                                    <span class="text-danger error-password">
-                                                        {{ errors.email }}</span>
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <input type="password" required v-model="user.password"
-                                                                class="form-control" id="password"
-                                                                placeholder="Password" readonly>
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.password }}</span>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="password" required
-                                                                v-model="user.confirmPassword" id="verifyPassword"
-                                                                class="form-control" placeholder="Verify password"
-                                                                readonly>
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.confirmPassword }}
-                                                            </span>
-                                                        </div>
+                                            </div>
+                                            <div class="form-group mb-20">
+                                                <input type="email" required v-model="user.email" class="form-control"
+                                                    placeholder="Email">
+                                                <span class="text-danger error-password">
+                                                    {{ errors.email }}</span>
+                                            </div>
+                                            <div class="form-group mb-20">
+                                                <div class="form-row">
+                                                    <div class="col-lg-6">
+                                                        <input type="password" required v-model="user.password"
+                                                            class="form-control" id="password" placeholder="Password"
+                                                            readonly>
+                                                        <span class="text-danger error-password">
+                                                            {{ errors.password }}</span>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="password" required v-model="user.confirmPassword"
+                                                            id="verifyPassword" class="form-control"
+                                                            placeholder="Verify password" readonly>
+                                                        <span class="text-danger error-password">
+                                                            {{ errors.confirmPassword }}
+                                                        </span>
                                                     </div>
                                                 </div>
-                                                <div class="form-group mb-20">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-4">
-                                                            <select v-model="user.role" required id="select-tag"
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                                <option disabled value="">Select role:</option>
-                                                                <option v-bind:value="`user`">User</option>
-                                                                <option v-bind:value="`head`">Head</option>
-                                                                <option v-bind:value="`it`">IT</option>
-                                                                <option v-bind:value="`hrdga`">HRD & GA</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <select v-model="user.department" required id="select-tag"
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                                <option disabled value="">Select department:</option>
-                                                                <option v-bind:value="`finance`">Finance</option>
-                                                                <option v-bind:value="`ekspor`">Ekspor</option>
-                                                                <option v-bind:value="`impor`">Impor</option>
-                                                                <option v-bind:value="`trucking`">Trucking</option>
-                                                                <option v-bind:value="`antar-pulau`">Antar-Pulau
-                                                                </option>
-                                                                <option v-bind:value="`sta-logistics`">STA LOGISTICS
-                                                                </option>
-                                                                <option v-bind:value="`infinity-solutions`">Infinity
-                                                                    Solutions
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <select v-model="user.divisi" required id="select-tag"
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                                <option disabled value="">Select division:</option>
-                                                                <option v-bind:value="`staff`">Staff</option>
-                                                                <option v-bind:value="`supervisor`">Supervisor</option>
-                                                                <option v-bind:value="`manager`">Manager</option>
-                                                            </select>
-                                                        </div>
+                                            </div>
+                                            <div class="form-group mb-20">
+                                                <div class="form-row">
+                                                    <div class="col-lg-4">
+                                                        <select v-model="user.role" required id="select-tag"
+                                                            class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
+                                                            <option disabled value="">Select role:</option>
+                                                            <option v-bind:value="`user`">User</option>
+                                                            <option v-bind:value="`head`">Head</option>
+                                                            <option v-bind:value="`it`">IT</option>
+                                                            <option v-bind:value="`hrdga`">HRD & GA</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select v-model="user.department" required id="select-tag"
+                                                            class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
+                                                            <option disabled value="">Select department:</option>
+                                                            <option v-bind:value="`finance`">Finance</option>
+                                                            <option v-bind:value="`ekspor`">Ekspor</option>
+                                                            <option v-bind:value="`impor`">Impor</option>
+                                                            <option v-bind:value="`trucking`">Trucking</option>
+                                                            <option v-bind:value="`antar-pulau`">Antar-Pulau
+                                                            </option>
+                                                            <option v-bind:value="`sta-logistics`">STA LOGISTICS
+                                                            </option>
+                                                            <option v-bind:value="`infinity-solutions`">Infinity
+                                                                Solutions
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <select v-model="user.divisi" required id="select-tag"
+                                                            class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
+                                                            <option disabled value="">Select division:</option>
+                                                            <option v-bind:value="`staff`">Staff</option>
+                                                            <option v-bind:value="`supervisor`">Supervisor</option>
+                                                            <option v-bind:value="`manager`">Manager</option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="button-group d-flex pt-25">
-                                                    <button v-on:click="handleSubmit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize"
-                                                        data-dismiss="modal">Submit
-                                                    </button>
-                                                    <button class="btn btn-light btn-default btn-squared fw-400
+                                            </div>
+                                            <div class="button-group d-flex pt-25">
+                                                <button v-on:click="handleSubmit"
+                                                    class="btn btn-primary btn-default btn-squared text-capitalize">Submit
+                                                </button>
+                                                <button class="btn btn-light btn-default btn-squared fw-400
                                                         text-capitalize b-light color-light" aria-label="Close"
-                                                        data-dismiss="modal">cancel
-                                                    </button>
-                                                </div>
-                                            </form>
+                                                    data-dismiss="modal">cancel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,8 +136,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table :headers="headers" multi-sort :search="search" :items="members"
-                            :items-per-page="10" loading
-                            loading-text="Loading... Please wait" class="elevation-1">
+                            :items-per-page="10" loading loading-text="Loading... Please wait" class="elevation-1">
                             <template v-slot:item.status="{ item }">
                                 <div v-if="item.status==1">
                                     <span class="rounded-pill userDatatable-content-status color-success
@@ -237,6 +233,9 @@
             this.generatePassword();
         },
         methods: {
+            hideModal() {
+                document.getElementById('closeModal').click();
+            },
             generatePassword() {
                 const genPass = this.rndStr(8);
                 this.user.password = genPass;
@@ -340,11 +339,9 @@
                 return !data.existingEmail && !data.existingName;
             },
             async handleSubmit() {
-                // event.preventDefault();
-
                 const isValid = await this.validateData();
                 if (!isValid) return false;
-
+                this.hideModal();
                 const payload = {};
                 _.forEach(['name', 'role', 'department', 'divisi', 'gender', 'email'], (field) => {
                     if (this.user[field]) {
@@ -357,7 +354,6 @@
                 this.$Progress.start();
                 await axios.post('/api/users', payload).then(response => {
                     this.loadUsers();
-                    this.countUsers();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

@@ -166,7 +166,18 @@
                                         <div class="edit-profile__body">
                                             <h3>Change Password</h3>
                                             <div class="form-row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label for="name1">Old Password</label>
+                                                        <input type="password" class="form-control" id="oldPassword"
+                                                            v-model="user.oldPassword">
+                                                        <span class="text-danger error-password">
+                                                            {{ errors.oldPassword }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label for="name1">Password</label>
                                                         <input type="password" class="form-control" id="name1"
@@ -175,7 +186,9 @@
                                                             {{ errors.password }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label for="name1">Confirm Password</label>
                                                         <input type="password" class="form-control"
@@ -245,7 +258,6 @@
                 }
             },
             handleSubmit(e) {
-                e.preventDefault();
                 // const config = {
                 //     headers: {
                 //         'Content-Type': 'multipart/form-data',
@@ -313,10 +325,30 @@
                 }
                 return true;
             },
-            updatePassword(e) {
-                e.preventDefault();
+            async validateData() {
                 const isPasswordValid = this.validatePassword();
                 if (!isPasswordValid) return false;
+
+                const {
+                    data
+                } = await axios.post('/api/users/check-user-data', this.user);
+                if (data.existingPassword) {
+                    this.errors = {
+                        ...this.errors,
+                        oldPassword: 'Password is not match!',
+                    };
+                } else {
+                    this.errors = {
+                        ...this.errors,
+                        oldPassword: '',
+                    };
+                }
+                return !data.existingPassword;
+            },
+            async updatePassword(e) {
+                e.preventDefault();
+                const isValid = await this.validateData();
+                if (!isValid) return false;
                 // const pass = this.user.password;
                 this.$Progress.start();
                 axios.patch('/api/profile/password-update/' + this.user.id, this.user);
