@@ -59,6 +59,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    {!! NoCaptcha::renderJs() !!}
+                                    {!! NoCaptcha::display() !!}
+                                </div>
+
+                                <div class="form-group">
                                     <div class="custom-checkbox custom-control">
                                         <input type="checkbox" name="remember" id="remember"
                                             class="custom-control-input">

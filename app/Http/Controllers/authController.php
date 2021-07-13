@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class authController extends Controller
 {
@@ -52,7 +53,7 @@ class authController extends Controller
     {
         $version = changeLog::orderBy('created_at', 'DESC')->get();
         $company = company_details::get();
-        
+
         $users = User::where('id', $id)->get();
         $user = $users[0];
         $user->password = Hash::make($request->password);
@@ -62,14 +63,21 @@ class authController extends Controller
     }
     public function loginProcess(Request $request)
     {
-        $remember_me = $request->has('remember') ? true : false;
-        $request->merge(['status' => '1']);
-        if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
-            $user = User::where(['email' => $request->email])->first();
-            Auth::loginUsingId($user->id, TRUE);
-            return redirect('/tools');
+        $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+        if ($validator->fails()) {
+            return back()->with('gagal', 'The re-captcha response is required!');
+        } else {
+            $remember_me = $request->has('remember') ? true : false;
+            $request->merge(['status' => '1']);
+            if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
+                $user = User::where(['email' => $request->email])->first();
+                Auth::loginUsingId($user->id, TRUE);
+                return redirect('/tools');
+            }
+            return back()->with('gagal', ' Please check your auth status or your input!');
         }
-        return back()->with('gagal', ' Please check your auth status or your input!');
         // return 200;
     }
 }
