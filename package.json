@@ -1,6 +1,6 @@
 {
     "name": "boxity-app",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "private": true,
     "scripts": {
         "dev": "npm run development",

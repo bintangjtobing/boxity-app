@@ -21,7 +21,7 @@
             <div class="row justify-content-md-center h-100">
                 <div class="card-wrapper">
                     <div class="brand">
-                        <img src="{!!asset('auth/img/logo.png')!!}" alt="boxity + {{$company->company_id}}">
+                        <img src="{!!asset('auth/img/logo0.1.8.png')!!}" alt="boxity + {{$company->company_id}}">
                     </div>
                     <div class="card fat">
                         <div class="card-body">
