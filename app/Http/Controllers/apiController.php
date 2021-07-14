@@ -419,13 +419,14 @@ class apiController extends Controller
     }
     public function updateProfile($id, Request $request)
     {
-
-        // $lamp = $request->file('image');
-        // $filename =
-        //     time() . '-' .  $request->file->getClientOriginalName();
-        // $request->file->move('dashboard/img/author/profile/', $filename);
         $profile = User::find($id);
-        // $profile->avatar = $filename;
+        if ($request->file('image')) {
+            $lamp = $request->file('image');
+            $filename =
+                time() . '-' .  $lamp->getClientOriginalName();
+            $lamp->move('dashboard/img/author/profile/', $filename);
+            $profile->avatar = $filename;
+        }
         $profile->name = $request->name;
         $profile->username = $request->username;
         $profile->email = $request->email;
@@ -446,6 +447,7 @@ class apiController extends Controller
         $profile->save();
         Mail::to($profile->email)->send(new confirmUpdateProfile($profile));
         return response()->json($profile, 201);
+        // return response($filename);
     }
     public function updatePassword($id, Request $request)
     {

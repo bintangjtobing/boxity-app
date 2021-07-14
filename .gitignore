@@ -13,6 +13,6 @@ public/.DS_Store
 .tmp/
 .DS_Store
 *.code-workspace
-public/imagePublic
+public/dashboard/img/author/profile
 public/storage
 .vscode/settings.json
