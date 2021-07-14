@@ -246,7 +246,6 @@
                 reader.readAsDataURL(this.imageLocation)
                 reader.onload = e => {
                     this.imagePreview = e.target.result;
-                    console.log(this.imageLocation);
                 }
             },
             submitHandle() {
@@ -266,7 +265,6 @@
                 data.append('bio', this.user.bio);
                 data.append('facebook', this.user.facebook);
                 data.append('instagram', this.user.instagram);
-                console.log(data);
 
                 this.$Progress.start();
                 axios.post('/api/profile/' + this.user.id, data, config).then(response => {
