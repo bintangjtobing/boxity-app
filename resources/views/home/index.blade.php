@@ -318,8 +318,8 @@
 	============================================= -->
     <script src="{!!asset('webpage/js/jquery.js')!!}"></script>
     <script src="{!!asset('webpage/js/plugins.min.js')!!}"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCCy7lGZgJPwXvksxrn8VcvjRDRekxKpcY"></script>
-    {{-- <script src="{!!asset('webpage/js/jquery.calendario.js')!!}"></script> --}}
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyC4SlyQKhvVyRwsYIm4MOUaPgTHY3WBTBo"></script>
+    <script src="{!!asset('webpage/js/jquery.calendario.js')!!}"></script>
     <script src="{!!asset('webpage/demos/btsa/js/events.js')!!}"></script>
 
     <!-- Footer Scripts
