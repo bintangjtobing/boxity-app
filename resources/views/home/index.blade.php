@@ -144,13 +144,13 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <a href="https://res.cloudinary.com/blogbtsa/image/upload/v1599719961/CompanyProfile/Company_Profile_BTSA_2020_IND.pdf"
+                                <a href="https://res.cloudinary.com/blogbtsa/image/upload/v1626334849/CompanyProfile/Company_Profile_BTSA_IND_2021.pdf"
                                     target="_blank" class="card center border-left-0 border-right-0 border-top-0
                                     border-bottom border-bottom shadow py-3 rounded-0 font-weight-semibold
                                     text-uppercase ls1">Indonesian</a>
                             </div>
                             <div class="col-lg-6">
-                                <a href="https://res.cloudinary.com/blogbtsa/image/upload/v1599719961/CompanyProfile/Company_Profile_BTSA_2020_ENG.pdf"
+                                <a href="https://res.cloudinary.com/blogbtsa/image/upload/v1626334857/CompanyProfile/Company_Profile_BTSA_ENG_2021.pdf"
                                     target="_blank" class="card center border-left-0 border-right-0 border-top-0
                                     border-bottom border-bottom shadow py-3 rounded-0 font-weight-semibold
                                     text-uppercase ls1">English</a>
