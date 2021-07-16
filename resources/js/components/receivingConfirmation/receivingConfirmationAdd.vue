@@ -24,7 +24,7 @@ n<template>
                                 <div class="form-group">
                                     <span>Item name:</span>
                                     <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                        class="form-control form-control-default">
+                                        class="form-control ">
                                         <option value="" disabled>Select item:</option>
                                         <option v-for="items in items" :key="items.id" :value="items.id">
                                             {{items.item_name}}</option>
@@ -164,8 +164,8 @@ n<template>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <span>Customer:</span>
-                                    <select v-model="receivingConfirmationData.customer"
-                                        class="form-control form-control-default" v-if="logged.role=='admin'">
+                                    <select v-model="receivingConfirmationData.customer" class="form-control"
+                                        v-if="logged.role=='admin'">
                                         <option value="" disabled>Select customer:</option>
                                         <option v-for="customer in customer" :key="customer.id" :value="customer.id">
                                             {{customer.customerName}}</option>
@@ -185,7 +185,7 @@ n<template>
                                 <div class="form-group">
                                     <span>Deliver to:</span>
                                     <select v-model="receivingConfirmationData.receiving_warehouse"
-                                        class="form-control form-control-default">
+                                        class="form-control">
                                         <option value="" disabled>Select warehouse:</option>
                                         <option v-for="warehouse in warehouse" :key="warehouse.id"
                                             :value="warehouse.id">
@@ -211,13 +211,11 @@ n<template>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Status:</span>
-                                    <select v-model="receivingConfirmationData.status" id=""
-                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
-                                        required>
+                                    <select v-model="receivingConfirmationData.status" class="form-control">
                                         <option value="" disabled>Choose status:</option>
-                                        <option v-bind:value="`2`" class="priority-medium">Putted on rack
+                                        <option v-bind:value="`2`">Putted on rack
                                         </option>
-                                        <option v-bind:value="`1`" class="priority-low">Receive on warehouse
+                                        <option v-bind:value="`1`">Receive on warehouse
                                         </option>
                                     </select>
                                 </div>

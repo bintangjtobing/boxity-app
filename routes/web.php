@@ -93,7 +93,10 @@ Route::get('/generatePDF/{id}', function ($id) {
 });
 
 // REPORTING PDF
-Route::get('/report/purchase-order/{id}', 'purchasingController@reportPO');
+Route::get('/report/purchase/order/{id}', 'purchasingController@reportPO');
+Route::get('/report/purchase/invoices/{id}', 'purchasingController@reportPI');
+Route::get('/report/purchase/return/{id}', 'purchasingController@reportPR');
+Route::get('/report/purchase/request/{id}', 'purchasingController@reportPRE');
 Route::get('/report/receiving-confirmation/{id}', 'receivingController@reportPO');
 
 // View details blog

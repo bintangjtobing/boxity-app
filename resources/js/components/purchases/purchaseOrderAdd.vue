@@ -520,7 +520,7 @@ n<template>
             },
             async submitHandle() {
                 this.$Progress.start();
-                await axios.post('/api/purchase-order', this.purchaseOrderData).then(response => {
+                await axios.post('/api/purchase/order', this.purchaseOrderData).then(response => {
                     this.loadData();
                     Swal.fire({
                         icon: 'success',
@@ -534,7 +534,7 @@ n<template>
                     };
                     const genPONumber = this.rndStr(5);
                     this.purchaseOrderData.po_number = genPONumber;
-                    this.$router.push('/purchase-order');
+                    this.$router.push('/purchase/order');
                     this.$Progress.finish();
                 }).catch(error => {
                     this.$Progress.fail();

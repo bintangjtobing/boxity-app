@@ -8,10 +8,14 @@ class purchaseInvoice extends Model
 {
     protected $table = 'purchase_invoices';
     protected $fillable = [
-        'purchase_invoices', 'supplier', 'invoice_date', 'reference_no', 'status', 'created_by',
-        'updated_by', 'remarks'
+        'pi_number', 'supplier', 'invoice_date', 'reference_no', 'status', 'created_by',
+        'updated_by', 'remarks', 'vehicle_no', 'drivers', 'deliver_to'
     ];
-    public function supplier()
+    public function warehouse()
+    {
+        return $this->belongsTo(warehouseList::class, 'deliver_to');
+    }
+    public function suppliers()
     {
         return $this->belongsTo(User::class, 'supplier');
     }
@@ -22,5 +26,9 @@ class purchaseInvoice extends Model
     public function updatedby()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function item()
+    {
+        return $this->belongsTo(itemsPurchase::class, 'pi_number', 'purchasingId');
     }
 }

@@ -15,7 +15,7 @@ class CreatePurchaseReturnsTable extends Migration
     {
         Schema::create('purchase_returns', function (Blueprint $table) {
             $table->id();
-            $table->string('return_number');
+            $table->string('pr_number');
             $table->integer('supplier')->nullable()->index('supplier');
             $table->string('return_date')->nullable();
             $table->string('ref_no')->nullable();

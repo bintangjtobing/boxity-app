@@ -6,10 +6,10 @@
             <nav class="navbar navbar-light">
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
-                        <img class="svg" :src="'./dashboard/img/svg/bars.svg'" alt="img"></a>
-                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="'./dashboard/img/Logo_Dark.png'"
-                            alt="logo BTSA Logistics"><img class="light" :src="'./dashboard/img/Logo_white.png'"
-                            alt="logo BTSA Logistics"></a>
+                        <img class="svg" src="http://localhost:8000/dashboard/img/svg/bars.svg" alt="img"></a>
+                    <a class="navbar-brand" href="/tools"><img class="svg dark"
+                            src="http://localhost:8000/dashboard/img/Logo_Dark.png" alt="logo"><img class="light"
+                            src="http://localhost:8000/dashboard/img/Logo_white.png" alt="logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
                         <h4>{{user.customerName}}</h4>
@@ -31,13 +31,13 @@
                         <li class="nav-author">
                             <div class="dropdown-custom">
                                 <a href="javascript:;" class="nav-item-toggle"><img
-                                        :src="'./dashboard/img/author/profile/'+user.avatar" alt="User avatar"
-                                        class="rounded-circle"> {{user.name}}</a>
+                                        v-bind:src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                        alt="User" class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
                                     <div class="nav-author__info">
                                         <div class="author-img" v-if="user.role!='customer'">
-                                            <img :src="'./dashboard/img/author/profile/'+user.avatar" alt="User avatar"
-                                                class="rounded-circle">
+                                            <img :src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                                alt="User" class="rounded-circle">
                                         </div>
                                         <div>
                                             <h6>{{user.name}}</h6>
@@ -271,7 +271,7 @@
                                 <span>Receiving & Putaway</span>
                             </li>
                             <li>
-                                <router-link to="/purchase-order">
+                                <router-link to="/purchase/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
@@ -280,30 +280,30 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-invoices">
+                                <router-link to="/purchase/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-return">
+                                <router-link to="/purchase/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-warning menuItem">Doing</span>
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-request">
+                                <router-link to="/purchase/request">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
@@ -319,7 +319,7 @@
                                 <span>Dispatching</span>
                             </li>
                             <li>
-                                <router-link to="/sales-order">
+                                <router-link to="/sales/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
@@ -328,7 +328,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-invoices">
+                                <router-link to="/sales/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
@@ -337,7 +337,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-return">
+                                <router-link to="/sales/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
@@ -346,7 +346,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-delivery-receipt">
+                                <router-link to="/sales/delivery-receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>
@@ -476,6 +476,7 @@
     export default {
         data() {
             return {
+                publicPath: process.env.BASE_URL,
                 user: {},
                 version: {},
                 company: {},
