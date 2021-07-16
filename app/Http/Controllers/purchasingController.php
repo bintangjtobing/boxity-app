@@ -25,16 +25,6 @@ use Mail;
 
 class purchasingController extends Controller
 {
-    // GET Warehouse BASED on Invoices
-    public function getWarehouse()
-    {
-        if (Auth::user()->role == 'customer') {
-            return Auth::user();
-        } else {
-            $arrayName = $this->getPurchaseOrder();
-            return $arrayName[0]->warehouse;
-        }
-    }
     public function getCompany()
     {
         return company_details::first();
@@ -111,8 +101,8 @@ class purchasingController extends Controller
         ]);
 
         $customer = new Party([
-            'name'          => $this->getWarehouse()->warehouse_name,
-            'address'       => $this->getWarehouse()->address,
+            'name'          => $getPO->warehouse->warehouse_name,
+            'address'       => $getPO->warehouse->address,
         ]);
 
         // $items = [
@@ -238,8 +228,8 @@ class purchasingController extends Controller
         ]);
 
         $customer = new Party([
-            'name'          => $this->getWarehouse()->warehouse_name,
-            'address'       => $this->getWarehouse()->address,
+            'name'          => $getPI->warehouse->warehouse_name,
+            'address'       => $getPI->warehouse->address,
         ]);
 
         // $items = [
@@ -359,10 +349,9 @@ class purchasingController extends Controller
             'name'          => $this->getCompany()->company_name,
             'address'         => $this->getCompany()->address,
         ]);
-
         $customer = new Party([
-            'name'          => $this->getWarehouse()->warehouse_name,
-            'address'       => $this->getWarehouse()->address,
+            'name'          => $getPI->warehouse->warehouse_name,
+            'address'       => $getPI->warehouse->address,
         ]);
         foreach ($getItemOnPI as $getItemOnPI) {
             $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyRequested)->units($getItemOnPI->unit);
@@ -376,8 +365,8 @@ class purchasingController extends Controller
 
         $invoice = InvoiceRequest::make('Purchase Request')
             ->series($getPI->pre_number)
-            ->seller($client)
-            ->buyer($customer)
+            ->seller($customer)
+            ->buyer($client)
             ->date($getPI->created_at)
             ->dateFormat('m/d/Y')
             ->payUntilDays(14)
