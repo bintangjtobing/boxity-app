@@ -303,7 +303,7 @@
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
