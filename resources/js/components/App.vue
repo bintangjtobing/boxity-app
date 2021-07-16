@@ -285,7 +285,7 @@
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
@@ -294,7 +294,7 @@
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-warning menuItem">Doing</span>
                                 </router-link>
                             </li>
                             <li>
