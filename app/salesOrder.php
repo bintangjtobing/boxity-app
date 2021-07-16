@@ -13,7 +13,7 @@ class salesOrder extends Model
     ];
     public function customer()
     {
-        return $this->belongsTo(customer::class, 'customer');
+        return $this->belongsTo(User::class, 'customer');
     }
     public function createdby()
     {
