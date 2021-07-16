@@ -21,6 +21,7 @@ Route::patch('/users/{id}', 'apiController@updateUser');
 Route::get('/u/{username}', 'apiController@getUsernameData');
 
 // Check user data first
+Route::post('/users/check-users-data', 'apiController@checkUsersData');
 Route::post('/users/check-user-data', 'apiController@checkUserData');
 
 // get user list without user logged in

@@ -337,7 +337,7 @@
 
                 const {
                     data
-                } = await axios.post('/api/users/check-user-data', this.user);
+                } = await axios.post('/api/users/check-users-data', this.user);
                 if (data.existingPassword) {
                     this.errors = {
                         ...this.errors,

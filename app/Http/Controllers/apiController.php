@@ -65,7 +65,7 @@ class apiController extends Controller
         $getUser->save();
         return response()->json([], 204);
     }
-    public function checkUserData(Request $req)
+    public function checkUsersData(Request $req)
     {
         $data = $req->all();
         $userId = isset($data['id']) ? $data['id'] : null;
@@ -77,6 +77,18 @@ class apiController extends Controller
             'existingEmail' => isset($sameEmailUser) && $sameEmailUser->id != $userId,
             'existingName' => isset($sameNameUser) && $sameNameUser->id != $userId,
             'existingPassword' => isset($sameOldPasswordUser) && $sameOldPasswordUser->id != $userId,
+        ]);
+    }
+    public function checkUserData(Request $req)
+    {
+        $data = $req->all();
+        $userId = isset($data['id']) ? $data['id'] : null;
+        $sameEmailUser = User::where(['email' => $data['email']])->first();
+        $sameNameUser = User::where(['name' => $data['name']])->first();
+
+        return response()->json([
+            'existingEmail' => isset($sameEmailUser) && $sameEmailUser->id != $userId,
+            'existingName' => isset($sameNameUser) && $sameNameUser->id != $userId,
         ]);
     }
     public function getUsernameData($username)
