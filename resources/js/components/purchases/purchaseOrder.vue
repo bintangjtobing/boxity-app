@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Order<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/purchase-order/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/purchase/order/add" class="btn btn-sm btn-primary btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Order</router-link>
                         </div>
                     </div>
@@ -26,9 +26,9 @@
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
                                     class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:item.actions="{item}">
-                                        <a :href="`/report/purchase-order/${item.id}`" target="_blank" class="view">
+                                        <a :href="`/report/purchase/order/${item.id}`" target="_blank" class="view">
                                             <i class="fas fa-print"></i></a>
-                                        <router-link :to="`/detail/purchase-order/${item.po_number}`" class="edit">
+                                        <router-link :to="`/detail/purchase/order/${item.po_number}`" class="edit">
                                             <i class="fas fa-eye"></i></router-link>
                                         <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
@@ -89,7 +89,7 @@
         methods: {
             async loadItem() {
                 this.$Progress.start();
-                const resp = await axios.get('/api/purchase-order');
+                const resp = await axios.get('/api/purchase/order');
                 this.purchaseOrderItem = resp.data;
                 const count = await axios.get('/api/count-purchase-order');
                 this.countItems = count.data;
@@ -103,12 +103,12 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    await axios.get('/api/purchases-order/' + id);
+                    await axios.delete('/api/purchases-order/' + id);
                     this.loadItem();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
-                        text: 'Success deleted current item.'
+                        text: 'Success deleted current purchase order item.'
                     });
                 }
                 // console.log(id);

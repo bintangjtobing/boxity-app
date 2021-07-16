@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Invoices<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/purchase-invoices/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/purchase/invoices/add" class="btn btn-sm btn-primary btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Invoices</router-link>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                         <span v-if="item.type=='5'">Service</span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/purchase-invoices/${item.id}`" class="edit">
+                                        <router-link :to="`/detail/purchase/invoices/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>

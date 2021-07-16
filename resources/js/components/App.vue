@@ -270,7 +270,7 @@
                                 <span>Receiving & Putaway</span>
                             </li>
                             <li>
-                                <router-link to="/purchase-order">
+                                <router-link to="/purchase/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
@@ -279,7 +279,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-invoices">
+                                <router-link to="/purchase/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
@@ -288,7 +288,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-return">
+                                <router-link to="/purchase/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
@@ -297,7 +297,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/purchase-request">
+                                <router-link to="/purchase/request">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>
@@ -318,7 +318,7 @@
                                 <span>Dispatching</span>
                             </li>
                             <li>
-                                <router-link to="/sales-order">
+                                <router-link to="/sales/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
                                     </span>
@@ -327,7 +327,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-invoices">
+                                <router-link to="/sales/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
                                     </span>
@@ -336,7 +336,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-return">
+                                <router-link to="/sales/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
                                     </span>
@@ -345,7 +345,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales-delivery-receipt">
+                                <router-link to="/sales/delivery-receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>

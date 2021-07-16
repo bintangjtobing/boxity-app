@@ -324,104 +324,104 @@ const routes = [{
     // Purchases
     {
         name: 'purchaseOrder',
-        path: '/purchase-order',
+        path: '/purchase/order',
         component: purchaseOrder
     }, {
         name: 'purchaseOrderAdd',
-        path: '/purchase-order/add',
+        path: '/purchase/order/add',
         component: purchaseOrderAdd
     }, {
         name: 'detailPurchaseOrder',
-        path: '/detail/purchase-order/:po_number',
+        path: '/detail/purchase/order/:po_number',
         component: purchaseOrderForm,
     },
     {
         name: 'purchaseInvoices',
-        path: '/purchase-invoices',
+        path: '/purchase/invoices',
         component: purchaseInvoices
     }, {
         name: 'purchaseInvoicesAdd',
-        path: '/purchase-invoices/add',
+        path: '/purchase/invoices/add',
         component: purchaseInvoicesAdd
     }, {
         name: 'detailPurchaseInvoices',
-        path: '/detail/purchase-invoices/:id',
+        path: '/detail/purchase/invoices/:id',
         component: purchaseInvoicesForm,
     },
     {
         name: 'purchaseRequest',
-        path: '/purchase-request',
+        path: '/purchase/request',
         component: purchaseRequest
     }, {
         name: 'purchaseRequestAdd',
-        path: '/purchase-request/add',
+        path: '/purchase/request/add',
         component: purchaseRequestAdd
     }, {
         name: 'detailpurchaseRequest',
-        path: '/detail/purchase-request/:id',
+        path: '/detail/purchase/request/:id',
         component: purchaseRequestForm,
     },
     {
         name: 'purchaseReturn',
-        path: '/purchase-return',
+        path: '/purchase/return',
         component: purchaseReturn
     }, {
         name: 'purchaseReturnAdd',
-        path: '/purchase-return/add',
+        path: '/purchase/return/add',
         component: purchaseReturnAdd
     }, {
         name: 'detailPurchaseReturn',
-        path: '/detail/purchase-return/:id',
+        path: '/detail/purchase/return/:id',
         component: purchaseReturnForm,
     },
     // Sales
     {
         name: 'SalesOrder',
-        path: '/sales-order',
+        path: '/sales/order',
         component: SalesOrder
     }, {
         name: 'salesOrderAdd',
-        path: '/sales-order/add',
+        path: '/sales/order/add',
         component: SalesOrderAdd
     }, {
         name: 'detailSalesOrder',
-        path: '/detail/sales-order/:id',
+        path: '/detail/sales/order/:id',
         component: SalesOrderForm,
     }, {
         name: 'SalesInvoices',
-        path: '/sales-invoices',
+        path: '/sales/invoices',
         component: SalesInvoices
     }, {
         name: 'salesInvoicesAdd',
-        path: '/sales-invoices/add',
+        path: '/sales/invoices/add',
         component: SalesInvoicesAdd
     }, {
         name: 'detailSalesInvoices',
-        path: '/detail/sales-invoices/:id',
+        path: '/detail/sales/invoices/:id',
         component: SalesInvoicesForm,
     }, {
         name: 'salesDeliveryReceipt',
-        path: '/sales-delivery-receipt',
+        path: '/sales/delivery-receipt',
         component: SalesDeliveryReceipt
     }, {
         name: 'salesDeliveryReceiptAdd',
-        path: '/sales-delivery-receipt/add',
+        path: '/sales/delivery-receipt/add',
         component: SalesDeliveryReceiptAdd
     }, {
         name: 'detailSalesDeliveryReceipt',
-        path: '/detail/sales-delivery-receipt/:id',
+        path: '/detail/sales/delivery-receipt/:id',
         component: SalesDeliveryReceiptForm,
     }, {
         name: 'SalesReturn',
-        path: '/sales-return',
+        path: '/sales/return',
         component: SalesReturn
     }, {
         name: 'salesReturnAdd',
-        path: '/sales-return/add',
+        path: '/sales/return/add',
         component: SalesReturnAdd
     }, {
         name: 'detailSalesReturn',
-        path: '/detail/sales-return/:id',
+        path: '/detail/sales/return/:id',
         component: SalesReturnForm,
     }, {
         name: 'popup-window',
