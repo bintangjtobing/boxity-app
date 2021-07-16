@@ -269,13 +269,24 @@ Route::patch('/purchase/return/{id}', 'purchasingController@postPurchaseReturnBy
 Route::delete('/purchase/return/{id}', 'purchasingController@deletePurchaseReturnById');
 Route::get('/count-purchase-return', 'purchasingController@countPurchaseReturn');
 
+///////////////////// PURCHASE REQUEST /////////////////////////////
 // Purchase Request
 Route::get('/purchase/request', 'purchasingController@getPurchaseRequest');
 Route::post('/purchase/request', 'purchasingController@postPurchaseRequest');
-Route::get('/purchase/request/{id}', 'purchasingController@getPurchaseRequestById');
-Route::patch('/purchase/request/{id}', 'purchasingController@postPurchaseRequestById');
-Route::delete('/purchase/request/{id}', 'purchasingController@deletePurchaseRequestById');
+Route::get('/purchase/request/{pre_number}', 'purchasingController@getPurchaseRequestByPreNumber');
+Route::patch('/purchase/request/{pre_number}', 'purchasingController@postPurchaseRequestByPreNumber');
+Route::delete('/purchases/request/{id}', 'purchasingController@deletePurchaseRequestById');
 Route::get('/count-purchase-request', 'purchasingController@countPurchaseRequest');
+
+Route::get('/pre/item-purchase', 'itemOnPurchasingController@getItemPurchasePRE');
+Route::post('/pre/item-purchase', 'itemOnPurchasingController@postItemPurchasePRE');
+Route::post('/pre/item-purchase/{pre_number}', 'itemOnPurchasingController@postItemPurchaseByPreNumber');
+Route::get('/pre/item-purchase/{pre_number}', 'itemOnPurchasingController@getItemPurchaseByPreNumber');
+Route::get('/pre/item-purchases/{id}', 'itemOnPurchasingController@getItemPurchasePREById');
+Route::patch('/pre/item-purchase/{id}', 'itemOnPurchasingController@postItemPurchasePREById');
+Route::delete('/pre/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPurchasePREById');
+Route::get('/pre/count-item-purchase', 'itemOnPurchasingController@countItemPurchasePRE');
+///////////////////// PURCHASE REQUEST END /////////////////////////////
 
 // Sales Order
 Route::get('/sales/order', 'salesController@getSalesOrder');

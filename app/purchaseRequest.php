@@ -11,12 +11,16 @@ class purchaseRequest extends Model
         'pre_number', 'priority', 'pr_date', 'to', 'status', 'created_by',
         'updated_by', 'remarks'
     ];
-    public function to()
+    public function warehouse()
     {
         return $this->belongsTo(User::class, 'to');
     }
     public function createdby()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+    public function item()
+    {
+        return $this->belongsTo(itemsPurchase::class, 'pre_number', 'purchasingId');
     }
 }

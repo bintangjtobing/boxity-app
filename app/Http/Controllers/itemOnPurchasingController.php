@@ -231,4 +231,74 @@ class itemOnPurchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
+
+    // ITEM ON PURCHASE REQUEST
+    public function getItemPurchasePRE()
+    {
+        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('prequest_status', 1)->where('created_by', Auth::id())->get());
+    }
+    public function postItemPurchasePRE(Request $request)
+    {
+        $ItemPurchasing = new itemsPurchase();
+        $ItemPurchasing->item_code = $request->itemid;
+        $ItemPurchasing->qtyRequested = $request->qtyRequested;
+        $ItemPurchasing->unit = $request->unit;
+        $ItemPurchasing->purpose = $request->purpose;
+        $ItemPurchasing->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $ItemPurchasing->prequest_status = '1';
+        $ItemPurchasing->created_by = Auth::id();
+        $ItemPurchasing->updated_by = Auth::id();
+        $ItemPurchasing->save();
+        return response()->json($ItemPurchasing, 200);
+    }
+    public function postItemPurchaseByPreNumber($pre_number, Request $request)
+    {
+        $ItemPurchasing = new itemsPurchase();
+        $ItemPurchasing->item_code = $request->itemid;
+        $ItemPurchasing->qtyRequested = $request->qtyRequested;
+        $ItemPurchasing->unit = $request->unit;
+        $ItemPurchasing->purpose = $request->purpose;
+        $ItemPurchasing->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $ItemPurchasing->pi_status = '2';
+        $ItemPurchasing->purchasingId = $pre_number;
+        $ItemPurchasing->created_by = Auth::id();
+        $ItemPurchasing->updated_by = Auth::id();
+        $ItemPurchasing->save();
+        return response()->json($ItemPurchasing, 200);
+    }
+    public function getItemPurchasePREById($id)
+    {
+        return response()->json(itemsPurchase::where('id', $id)->with('item', 'usedBy', 'requestedBy')->first());
+    }
+    public function getItemPurchaseByPreNumber($pre_number)
+    {
+        return response()->json(itemsPurchase::where('purchasingId', $pre_number)->with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postItemPurchasePREById($id, Request $request)
+    {
+        $ItemPurchasing = itemsPurchase::find($id);
+        $ItemPurchasing->qtyRequested = $request->qtyRequested;
+        $ItemPurchasing->unit = $request->unit;
+        $ItemPurchasing->purpose = $request->purpose;
+        $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->updated_by = Auth::id();
+        $ItemPurchasing->save();
+        return response()->json($ItemPurchasing, 200);
+        // return $request->itemid;
+    }
+    public function deleteItemPurchasePREById($id)
+    {
+        return response()->json(itemsPurchase::find($id)->delete());
+    }
+    public function countItemPurchasePRE()
+    {
+        $ItemCount = DB::table('items_purchases')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
 }

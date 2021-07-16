@@ -11,6 +11,8 @@ class itemsPurchase extends Model
         'item_code',
         'qtyOrdered',
         'qtyShipped',
+        'qtyRequested',
+        'qtyReturns',
         'unit',
         'price',
         'purpose',

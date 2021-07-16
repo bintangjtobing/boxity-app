@@ -19,4 +19,8 @@ class purchaseReturn extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function item()
+    {
+        return $this->belongsTo(itemsPurchase::class, 'pr_number', 'purchasingId');
+    }
 }
