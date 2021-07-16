@@ -6,9 +6,10 @@
             <nav class="navbar navbar-light">
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
-                        <img class="svg" :src="'dashboard/img/svg/bars.svg'" alt="img"></a>
-                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="'./dashboard/img/Logo_Dark.png'"
-                            alt="logo"><img class="light" :src="'./dashboard/img/Logo_white.png'" alt="logo"></a>
+                        <img class="svg" src="http://localhost:8000/dashboard/img/svg/bars.svg" alt="img"></a>
+                    <a class="navbar-brand" href="/tools"><img class="svg dark"
+                            src="http://localhost:8000/dashboard/img/Logo_Dark.png" alt="logo"><img class="light"
+                            src="http://localhost:8000/dashboard/img/Logo_white.png" alt="logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
                         <h4>{{user.customerName}}</h4>
@@ -30,13 +31,13 @@
                         <li class="nav-author">
                             <div class="dropdown-custom">
                                 <a href="javascript:;" class="nav-item-toggle"><img
-                                        v-bind:src="`./dashboard/img/author/profile/`+user.avatar" alt="User"
-                                        class="rounded-circle"> {{user.name}}</a>
+                                        v-bind:src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                        alt="User" class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
                                     <div class="nav-author__info">
                                         <div class="author-img" v-if="user.role!='customer'">
-                                            <img :src="`./dashboard/img/author/profile/`+user.avatar" alt="User"
-                                                class="rounded-circle">
+                                            <img :src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                                alt="User" class="rounded-circle">
                                         </div>
                                         <div>
                                             <h6>{{user.name}}</h6>

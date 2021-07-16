@@ -15,7 +15,7 @@ class CreatePurchasRequestsTable extends Migration
     {
         Schema::create('purchase_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('pr_no');
+            $table->string('pre_number');
             $table->integer('priority');
             $table->string('pr_date');
             $table->integer('to')->nullable()->index('to');

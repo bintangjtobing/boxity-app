@@ -345,7 +345,7 @@ const routes = [{
         component: purchaseInvoicesAdd
     }, {
         name: 'detailPurchaseInvoices',
-        path: '/detail/purchase/invoices/:id',
+        path: '/detail/purchase/invoices/:pi_number',
         component: purchaseInvoicesForm,
     },
     {
@@ -358,7 +358,7 @@ const routes = [{
         component: purchaseRequestAdd
     }, {
         name: 'detailpurchaseRequest',
-        path: '/detail/purchase/request/:id',
+        path: '/detail/purchase/request/:pre_number',
         component: purchaseRequestForm,
     },
     {
@@ -371,7 +371,7 @@ const routes = [{
         component: purchaseReturnAdd
     }, {
         name: 'detailPurchaseReturn',
-        path: '/detail/purchase/return/:id',
+        path: '/detail/purchase/return/:pr_number',
         component: purchaseReturnForm,
     },
     // Sales
@@ -389,15 +389,15 @@ const routes = [{
         component: SalesOrderForm,
     }, {
         name: 'SalesInvoices',
-        path: '/sales/invoices',
+        path: 'sales/invoices',
         component: SalesInvoices
     }, {
         name: 'salesInvoicesAdd',
-        path: '/sales/invoices/add',
+        path: 'sales/invoices/add',
         component: SalesInvoicesAdd
     }, {
         name: 'detailSalesInvoices',
-        path: '/detail/sales/invoices/:id',
+        path: '/detailsales/invoices/:id',
         component: SalesInvoicesForm,
     }, {
         name: 'salesDeliveryReceipt',

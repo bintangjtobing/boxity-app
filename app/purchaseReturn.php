@@ -8,7 +8,7 @@ class purchaseReturn extends Model
 {
     protected $table = 'purchase_returns';
     protected $fillable = [
-        'return_number', 'supplier', 'return_date', 'ref_no', 'status', 'created_by',
+        'pr_number', 'supplier', 'return_date', 'ref_no', 'status', 'created_by',
         'updated_by', 'remarks'
     ];
     public function supplier()

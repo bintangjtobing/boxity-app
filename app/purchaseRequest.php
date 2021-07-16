@@ -8,7 +8,7 @@ class purchaseRequest extends Model
 {
     protected $table = 'purchase_requests';
     protected $fillable = [
-        'pr_no', 'priority', 'pr_date', 'to', 'status', 'created_by',
+        'pre_number', 'priority', 'pr_date', 'to', 'status', 'created_by',
         'updated_by', 'remarks'
     ];
     public function to()
