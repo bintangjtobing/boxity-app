@@ -1,156 +1,134 @@
 <template>
-  <div>
-    <div class="row mt-4">
-      <div class="col-lg-12">
-        <div class="breadcrumb-main">
-          <h2 class="text-capitalize fw-700 breadcrumb-title">
-            Sales Order<br />
-          </h2>
-          <div class="breadcrumb-action justify-content-center flex-wrap">
-            <div class="action-btn">
-              <router-link
-                to="/sales/order/add"
-                class="btn btn-sm btn-primary btn-add"
-              >
-                <i class="las la-plus fs-16"></i>New Sales Order</router-link
-              >
+    <div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="breadcrumb-main">
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">
+                        Sales Order<br />
+                    </h2>
+                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                        <div class="action-btn">
+                            <router-link to="/sales/order/add" class="btn btn-sm btn-primary btn-add">
+                                <i class="las la-plus fs-16"></i>New Sales Order</router-link>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div
-              class="
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="
                 userDatatable
                 projectDatatable
                 project-table
                 bg-white
                 border-0
-              "
-            >
-              <div class="table-responsive">
-                <v-card-title>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search here..."
-                    single-line
-                    hide-details
-                  ></v-text-field>
-                </v-card-title>
-                <v-data-table
-                  :search="search"
-                  :headers="headers"
-                  multi-sort
-                  :items="inventoryItem"
-                  :items-per-page="10"
-                  class="elevation-1"
-                  group-by="customer.name"
-                >
-                  <template v-slot:item.status="{ item }">
-                    <span v-if="item.status == '0'">DRAFT</span>
-                    <span v-if="item.status == '1'">APPROVED</span>
-                    <span v-if="item.status == '2'">CANCELED</span>
-                  </template>
-                  <template v-slot:item.actions="{ item }">
-                    <router-link
-                      :to="`/detail/sales/order/${item.id}`"
-                      class="edit"
-                    >
-                      <i class="fas fa-pen"></i
-                    ></router-link>
-                    <a v-on:click="deleteInventoryItem(item.id)" class="remove">
-                      <i class="fas fa-trash"></i
-                    ></a>
-                  </template>
-                </v-data-table>
-              </div>
+              ">
+                            <div class="table-responsive">
+                                <v-card-title>
+                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
+                                        single-line hide-details></v-text-field>
+                                </v-card-title>
+                                <v-data-table :search="search" :headers="headers" multi-sort :items="inventoryItem"
+                                    :items-per-page="10" class="elevation-1" group-by="customer.name">
+                                    <template v-slot:item.status="{ item }">
+                                        <span v-if="item.status == '0'">DRAFT</span>
+                                        <span v-if="item.status == '1'">APPROVED</span>
+                                        <span v-if="item.status == '2'">CANCELED</span>
+                                    </template>
+                                    <template v-slot:item.actions="{ item }">
+                                        <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
+                                            <i class="fas fa-pen"></i></router-link>
+                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
+                                            <i class="fas fa-trash"></i></a>
+                                    </template>
+                                </v-data-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 <script>
-import Swal from "sweetalert2";
-import Editor from "@tinymce/tinymce-vue";
+    import Swal from "sweetalert2";
+    import Editor from "@tinymce/tinymce-vue";
 
-export default {
-  components: {
-    editor: Editor,
-  },
-  title() {
-    return "Sales Order";
-  },
-  data() {
-    return {
-      inventorydata: {
-        type: "",
-        addSalesOrder: "",
-        item_group: "",
-      },
-      // datatable
-      search: "",
-      key: 1,
-      inventoryItem: [],
-      headers: [
-        {
-          text: "SO #",
-          value: "so_number",
+    export default {
+        components: {
+            editor: Editor,
         },
-        {
-          text: "Order Date",
-          value: "order_date",
+        title() {
+            return "Sales Order";
         },
-        {
-          text: "Status",
-          value: "status",
+        data() {
+            return {
+                inventorydata: {
+                    type: "",
+                    addSalesOrder: "",
+                    item_group: "",
+                },
+                // datatable
+                search: "",
+                key: 1,
+                inventoryItem: [],
+                headers: [{
+                        text: "SO #",
+                        value: "so_number",
+                    },
+                    {
+                        text: "Order Date",
+                        value: "order_date",
+                    },
+                    {
+                        text: "Status",
+                        value: "status",
+                    },
+                    {
+                        text: "Actions",
+                        value: "actions",
+                        filterable: false,
+                        sortable: false,
+                    },
+                ],
+            };
         },
-        {
-          text: "Actions",
-          value: "actions",
-          filterable: false,
-          sortable: false,
+        created() {
+            this.loadItem();
         },
-      ],
+        methods: {
+            async loadItem() {
+                this.$Progress.start();
+                const resp = await axios.get("/api/sales/order");
+                this.inventoryItem = resp.data;
+
+                this.$Progress.finish();
+            },
+            async deleteInventoryItem(id) {
+                const result = await Swal.fire({
+                    title: "Delete data item?",
+                    showCancelButton: true,
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    await axios.delete("/api/inventory-item/" + id);
+                    this.loadItem();
+                    await Swal.fire({
+                        icon: "success",
+                        title: "Successfully Deleted",
+                        text: "Success deleted current item.",
+                    });
+                }
+            },
+        },
     };
-  },
-  created() {
-    this.loadItem();
-  },
-  methods: {
-    async loadItem() {
-      this.$Progress.start();
-      const resp = await axios.get("/api/sales/order");
-      this.inventoryItem = resp.data;
 
-      this.$Progress.finish();
-    },
-    async deleteInventoryItem(id) {
-      const result = await Swal.fire({
-        title: "Delete data item?",
-        showCancelButton: true,
-        cancelButtonColor: "#d33",
-        confirmButtonText: `Delete`,
-      });
-      if (result.isConfirmed) {
-        await axios.delete("/api/inventory-item/" + id);
-        this.loadItem();
-        await Swal.fire({
-          icon: "success",
-          title: "Successfully Deleted",
-          text: "Success deleted current item.",
-        });
-      }
-    },
-  },
-};
 </script>
 <style lang="css">
-.form-group {
-  margin-bottom: 0;
-}
+    .form-group {
+        margin-bottom: 0;
+    }
+
 </style>
