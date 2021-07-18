@@ -11,7 +11,7 @@ class purchaseReturn extends Model
         'pr_number', 'supplier', 'return_date', 'ref_no', 'status', 'created_by',
         'updated_by', 'remarks'
     ];
-    public function supplier()
+    public function suppliers()
     {
         return $this->belongsTo(User::class, 'supplier');
     }

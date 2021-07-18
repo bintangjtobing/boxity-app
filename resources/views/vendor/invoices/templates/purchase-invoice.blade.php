@@ -193,50 +193,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th align="left">Supplier</th>
                     <th align="left">Delivery Address</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="seller">
-                        @if($invoice->seller->name)
-                        <span class="seller-name">
-                            <strong>{{ $invoice->seller->name }}</strong>
-                        </span><br>
-                        @endif
-
-                        @if($invoice->seller->address)
-                        <span class="seller-address">
-                            {!! $invoice->seller->address !!}
-                        </span><br>
-                        @endif
-
-                        @if($invoice->seller->code)
-                        <span class="seller-code">
-                            {{ __('invoices::invoice.code') }}: {{ $invoice->seller->code }}
-                        </span><br>
-                        @endif
-
-                        @if($invoice->seller->vat)
-                        <span class="seller-vat">
-                            {{ __('invoices::invoice.vat') }}: {{ $invoice->seller->vat }}
-                        </span><br>
-                        @endif
-
-                        @if($invoice->seller->phone)
-                        <span class="seller-phone">
-                            {{ __('invoices::invoice.phone') }}: {{ $invoice->seller->phone }}
-                        </span><br>
-                        @endif
-                        <br>
-                        @foreach($invoice->seller->custom_fields as $key => $value)
-                        <span class="seller-custom-field">
-                            {{ ucfirst($key) }}: {{ $value }}
-                        </span><br>
-                        @endforeach
-                    </td>
-
                     <td class="buyer">
                         @if($invoice->buyer->name)
                         <span class="buyer-name">
@@ -384,13 +345,12 @@
         <span>
             Notes: {!! $invoice->notes !!}
         </span><br>
-
-        <span>
+        {{-- <span>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </span><br>
         <span>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </span>
+        </span> --}}
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {

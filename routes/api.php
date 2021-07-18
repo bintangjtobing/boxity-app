@@ -262,13 +262,24 @@ Route::delete('/pi/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPu
 Route::get('/pi/count-item-purchase', 'itemOnPurchasingController@countItemPurchasePI');
 ///////////////// PURCHASE INVOICE END ///////////////////////////////////
 
-// Purchase Return
+///////////////// PURCHASE RETURN ///////////////////////////////////
+// Purchase RETURN
 Route::get('/purchase/return', 'purchasingController@getPurchaseReturn');
 Route::post('/purchase/return', 'purchasingController@postPurchaseReturn');
-Route::get('/purchase/return/{id}', 'purchasingController@getPurchaseReturnById');
-Route::patch('/purchase/return/{id}', 'purchasingController@postPurchaseReturnById');
-Route::delete('/purchase/return/{id}', 'purchasingController@deletePurchaseReturnById');
+Route::get('/purchase/return/{pr_number}', 'purchasingController@getPurchaseReturnByPrNumber');
+Route::patch('/purchase/return/{pr_number}', 'purchasingController@postPurchaseReturnByPrNumber');
+Route::delete('/purchases-return/{id}', 'purchasingController@deletePurchaseReturnById');
 Route::get('/count-purchase-return', 'purchasingController@countPurchaseReturn');
+
+Route::get('/pr/item-purchase', 'itemOnPurchasingController@getItemPurchasePR');
+Route::post('/pr/item-purchase', 'itemOnPurchasingController@postItemPurchasePR');
+Route::post('/pr/item-purchase/{pr_number}', 'itemOnPurchasingController@postItemPurchaseByPrNumber');
+Route::get('/pr/item-purchase/{pr_number}', 'itemOnPurchasingController@getItemPurchaseByPrNumber');
+Route::get('/pr/item-purchases/{id}', 'itemOnPurchasingController@getItemPurchasePRById');
+Route::patch('/pr/item-purchase/{id}', 'itemOnPurchasingController@postItemPurchasePRById');
+Route::delete('/pr/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPurchasePRById');
+Route::get('/pr/count-item-purchase', 'itemOnPurchasingController@countItemPurchasePR');
+///////////////// PURCHASE RETURN END ///////////////////////////////////
 
 ///////////////////// PURCHASE REQUEST /////////////////////////////
 // Purchase Request

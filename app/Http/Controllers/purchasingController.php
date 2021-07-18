@@ -21,6 +21,8 @@ use LaravelDaily\Invoices\InvoiceRequest;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\InvoiceInvoice;
+use LaravelDaily\Invoices\InvoiceReturn;
 use Mail;
 
 class purchasingController extends Controller
@@ -120,7 +122,9 @@ class purchasingController extends Controller
         }
 
         // NOTES FOR INVOICING
-        if ($getPO->remarks) {
+        if ($getPO->remarks == null) {
+            $notes = '';
+        } else {
             $notes = $getPO->remarks;
         }
         // $notes = implode("<br>", $notes);
@@ -139,7 +143,7 @@ class purchasingController extends Controller
             ->currencyDecimalPoint(',')
             ->filename($client->name . ' ' . $customer->name)
             ->addItems($items)
-            // ->notes($notes)
+            ->notes($notes)
             ->logo(public_path('webpage/images/logo.png'))
             // You can additionally save generated invoice to configured disk
             ->save('public');
@@ -247,12 +251,14 @@ class purchasingController extends Controller
         }
 
         // NOTES FOR INVOICING
-        if ($getPI->remarks) {
+        if ($getPI->remarks == null) {
+            $notes = '';
+        } else {
             $notes = $getPI->remarks;
         }
         // $notes = implode("<br>", $notes);
 
-        $invoice = Invoice::make('Purchase Invoice')
+        $invoice = InvoiceInvoice::make('Purchase Invoice')
             ->series($getPI->pi_number)
             ->seller($client)
             ->buyer($customer)
@@ -266,7 +272,7 @@ class purchasingController extends Controller
             ->currencyDecimalPoint(',')
             ->filename($client->name . ' ' . $customer->name)
             ->addItems($items)
-            // ->notes($notes)
+            ->notes($notes)
             ->logo(public_path('webpage/images/logo.png'))
             // You can additionally save generated invoice to configured disk
             ->save('public');
@@ -358,7 +364,9 @@ class purchasingController extends Controller
         }
 
         // NOTES FOR INVOICING
-        if ($getPI->remarks) {
+        if ($getPI->remarks == null) {
+            $notes = '';
+        } else {
             $notes = $getPI->remarks;
         }
         // $notes = implode("<br>", $notes);
@@ -377,7 +385,121 @@ class purchasingController extends Controller
             ->currencyDecimalPoint(',')
             ->filename($client->name . ' ' . $customer->name)
             ->addItems($items)
-            // ->notes($notes)
+            ->notes($notes)
+            ->logo(public_path('webpage/images/logo.png'))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        $link = $invoice->url();
+        // Then send email to party with link
+
+        // And return invoice itself to browser or have a different view
+        return $invoice->stream();
+        // return $getItemOnPO;
+        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+    }
+    // PURCHASE RETURN
+    public function getPurchaseReturn()
+    {
+        if (Auth::user()->role == 'customer') {
+            return purchaseReturn::where('created_by', Auth::id())->with('suppliers')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        } else {
+            return purchaseReturn::with('suppliers')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        }
+    }
+    public function postPurchaseReturn(Request $request)
+    {
+        $purchasingOrd = new purchaseReturn();
+        $purchasingOrd->pr_number = $request->pr_number;
+        $purchasingOrd->supplier = $request->supplier;
+        $purchasingOrd->return_date = $request->return_date;
+        $purchasingOrd->ref_no = $request->ref_no;
+        $purchasingOrd->status = '0';
+        $purchasingOrd->remarks = $request->remarks;
+        $purchasingOrd->created_by = Auth::id();
+        $purchasingOrd->updated_by = Auth::id();
+        $purchasingOrd->save();
+
+        $itemGet = DB::table('items_purchases')
+            ->where('preturn_status', '=', '1')
+            // PO Status 2, means having a purchasing ID
+            ->update(array('purchasingId' => $purchasingOrd->pr_number, 'preturn_status' => '2'));
+        return response()->json($purchasingOrd, 200);
+    }
+    public function getPurchaseReturnByPrNumber($pr_number)
+    {
+        return response()->json(purchaseReturn::where('pr_number', $pr_number)->with('suppliers')->first());
+    }
+    public function postPurchaseReturnByPrNumber($pr_number, Request $request)
+    {
+        $purchasingUpdate = DB::table('purchase_returns')
+            ->where('pr_number', '=', $pr_number)
+            ->update(array(
+                'supplier' => $request->supplier,
+                'return_date' => $request->return_date,
+                'ref_no' => $request->ref_no,
+                'status' => $request->status,
+                'remarks' => $request->remarks,
+                'updated_by' => Auth::id(),
+            ));
+        return response()->json($purchasingUpdate, 200);
+    }
+    public function deletePurchaseReturnById($id)
+    {
+        $purchaseOrd = purchaseReturn::find($id);
+        $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->pr_number)->get();
+        foreach ($itemPurchase as $itemPurchases) {
+            $itemPurchases->delete();
+        }
+        $purchaseOrd->delete();
+        return response()->json(201);
+    }
+    public function countPurchaseReturn()
+    {
+        $ItemCount = DB::table('purchase_returns')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+    public function reportPR($id)
+    {
+        $getPI = purchaseReturn::where('id', $id)->with('suppliers')->first();
+        $getItemOnPI = itemsPurchase::where('purchasingId', $getPI->pr_number)->with('item')->get();
+        $client = new Party([
+            'name'          => $this->getCompany()->company_name,
+            'address'         => $this->getCompany()->address,
+        ]);
+        $customer = new Party([
+            'name'          => $getPI->suppliers->customerName,
+            'address'       => $getPI->suppliers->customerAddress,
+        ]);
+        foreach ($getItemOnPI as $getItemOnPI) {
+            $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyReturns)->units($getItemOnPI->unit);
+        }
+
+        // NOTES FOR INVOICING
+        if ($getPI->remarks == null) {
+            $notes = '';
+        } else {
+            $notes = $getPI->remarks;
+        }
+        // $notes = implode("<br>", $notes);
+
+        $invoice = InvoiceReturn::make('Purchase Return')
+            ->series($getPI->pr_number)
+            ->seller($client)
+            ->buyer($customer)
+            ->date($getPI->created_at)
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(14)
+            ->currencySymbol('Rp')
+            ->currencyCode('Rupiahs')
+            ->currencyFormat('{SYMBOL}. {VALUE}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename($client->name . ' ' . $customer->name)
+            ->addItems($items)
+            ->notes($notes)
             ->logo(public_path('webpage/images/logo.png'))
             // You can additionally save generated invoice to configured disk
             ->save('public');
