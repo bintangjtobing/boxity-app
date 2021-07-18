@@ -294,7 +294,7 @@
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-warning menuItem">Doing</span>
+                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
                                 </router-link>
                             </li>
                             <li>
