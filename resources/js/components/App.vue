@@ -6,10 +6,10 @@
             <nav class="navbar navbar-light">
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
-                        <img class="svg" src="http://localhost:8000/dashboard/img/svg/bars.svg" alt="img"></a>
+                        <img class="svg" src="https://btsa.co.id/dashboard/img/svg/bars.svg" alt="img"></a>
                     <a class="navbar-brand" href="/tools"><img class="svg dark"
-                            src="http://localhost:8000/dashboard/img/Logo_Dark.png" alt="logo"><img class="light"
-                            src="http://localhost:8000/dashboard/img/Logo_white.png" alt="logo"></a>
+                            src="https://btsa.co.id/dashboard/img/Logo_Dark.png" alt="logo"><img class="light"
+                            src="https://btsa.co.id/dashboard/img/Logo_white.png" alt="logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
                         <h4>{{user.customerName}}</h4>
@@ -31,12 +31,12 @@
                         <li class="nav-author">
                             <div class="dropdown-custom">
                                 <a href="javascript:;" class="nav-item-toggle"><img
-                                        v-bind:src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                        v-bind:src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
                                         alt="User" class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
                                     <div class="nav-author__info">
                                         <div class="author-img" v-if="user.role!='customer'">
-                                            <img :src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                            <img :src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
                                                 alt="User" class="rounded-circle">
                                         </div>
                                         <div>
