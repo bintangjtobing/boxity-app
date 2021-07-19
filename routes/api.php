@@ -342,3 +342,6 @@ Route::get('/count-item-sales', 'purchasingController@countItemSales');
 
 // Leave Request
 Route::get('/generate-one-lr', 'apiController@plusOneEachTen');
+
+// USER ACTIVITY LOGS
+Route::get('/user-logs', 'apiController@getActivityLogs');

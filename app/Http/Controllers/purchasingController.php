@@ -51,6 +51,14 @@ class purchasingController extends Controller
         $purchasingOrd->remarks = $request->remarks;
         $purchasingOrd->created_by = Auth::id();
         $purchasingOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Purchase Order ' . $purchasingOrd->po_number . '.';
+        $saveLogs->save();
+
         $purchasingOrd->save();
 
         $itemGet = DB::table('items_purchases')
@@ -74,6 +82,14 @@ class purchasingController extends Controller
                 'remarks' => $request->remarks,
                 'updated_by' => Auth::id(),
             ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Purchase Order ' . $po_number . '.';
+        $saveLogs->save();
+
         return response()->json($purchasingUpdate, 200);
     }
     public function deletePurchaseOrderById($id)
@@ -83,6 +99,14 @@ class purchasingController extends Controller
         foreach ($itemPurchase as $itemPurchases) {
             $itemPurchases->delete();
         }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Purchase Order ' . $purchaseOrd->po_number . '.';
+        $saveLogs->save();
+
         $purchaseOrd->delete();
         return response()->json(201);
     }
@@ -178,6 +202,14 @@ class purchasingController extends Controller
         $purchasingOrd->remarks = $request->remarks;
         $purchasingOrd->created_by = Auth::id();
         $purchasingOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Purchase Invoice ' . $purchasingOrd->pi_number . '.';
+        $saveLogs->save();
+
         $purchasingOrd->save();
 
         $itemGet = DB::table('items_purchases')
@@ -203,6 +235,13 @@ class purchasingController extends Controller
                 'remarks' => $request->remarks,
                 'updated_by' => Auth::id(),
             ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Purchase Invoice ' . $pi_number . '.';
+        $saveLogs->save();
         return response()->json($purchasingUpdate, 200);
     }
     public function deletePurchaseInvoiceById($id)
@@ -212,6 +251,13 @@ class purchasingController extends Controller
         foreach ($itemPurchase as $itemPurchases) {
             $itemPurchases->delete();
         }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Purchase Invoice ' . $purchaseOrd->pi_number . '.';
+        $saveLogs->save();
         $purchaseOrd->delete();
         return response()->json(201);
     }
@@ -305,6 +351,14 @@ class purchasingController extends Controller
         $purchasingOrd->remarks = $request->remarks;
         $purchasingOrd->created_by = Auth::id();
         $purchasingOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Purchase Request ' . $purchasingOrd->pre_number . '.';
+        $saveLogs->save();
+
         $purchasingOrd->save();
 
         $itemGet = DB::table('items_purchases')
@@ -328,6 +382,14 @@ class purchasingController extends Controller
                 'remarks' => $request->remarks,
                 'updated_by' => Auth::id(),
             ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Purchase Request ' . $pre_number . '.';
+        $saveLogs->save();
+
         return response()->json($purchasingUpdate, 200);
     }
     public function deletePurchaseRequestById($id)
@@ -337,6 +399,13 @@ class purchasingController extends Controller
         foreach ($itemPurchase as $itemPurchases) {
             $itemPurchases->delete();
         }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Purchase Request ' . $purchaseOrd->pre_number . '.';
+        $saveLogs->save();
         $purchaseOrd->delete();
         return response()->json(201);
     }
@@ -418,6 +487,14 @@ class purchasingController extends Controller
         $purchasingOrd->remarks = $request->remarks;
         $purchasingOrd->created_by = Auth::id();
         $purchasingOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Purchase Return ' . $purchasingOrd->pr_number . '.';
+        $saveLogs->save();
+
         $purchasingOrd->save();
 
         $itemGet = DB::table('items_purchases')
@@ -442,6 +519,13 @@ class purchasingController extends Controller
                 'remarks' => $request->remarks,
                 'updated_by' => Auth::id(),
             ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Purchase Return ' . $pr_number . '.';
+        $saveLogs->save();
         return response()->json($purchasingUpdate, 200);
     }
     public function deletePurchaseReturnById($id)
@@ -451,6 +535,13 @@ class purchasingController extends Controller
         foreach ($itemPurchase as $itemPurchases) {
             $itemPurchases->delete();
         }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Purchase Return ' . $purchaseOrd->pr_number . '.';
+        $saveLogs->save();
         $purchaseOrd->delete();
         return response()->json(201);
     }

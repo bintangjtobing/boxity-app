@@ -82,6 +82,7 @@ import itemGroup from './components/itemGroup.vue';
 import itemGroupForm from './components/itemGroupForm.vue';
 import inventoryItem from './components/inventoryItem.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
+import userLogs from './components/userLogs.vue';
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -121,6 +122,10 @@ const routes = [{
         name: 'home',
         path: '/tools',
         component: Index
+    }, {
+        name: 'userLogs',
+        path: '/user-logs',
+        component: userLogs
     }, {
         name: 'user',
         path: '/users-management',

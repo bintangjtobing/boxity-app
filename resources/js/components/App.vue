@@ -402,12 +402,12 @@
                                 </span>
                                 <span class="menu-text">Trace logs</span>
                             </a>
-                            <a :href="'/api/logs'">
+                            <router-link to="/user-logs">
                                 <span class="material-icons-outlined nav-icon">
                                     report
                                 </span>
                                 <span class="menu-text">Activity Log</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li>
                             <a v-on:click="signOutConfirm" class="text-danger">
