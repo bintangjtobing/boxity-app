@@ -7,9 +7,12 @@ use App\candidates;
 use App\id_agamas;
 use App\id_sukus;
 use App\jobvacancy;
+use App\Mail\confirmationToCandidate;
+use App\Mail\confirmationToHRD;
 use App\popupWindow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class webpageController extends Controller
 {
@@ -103,10 +106,12 @@ class webpageController extends Controller
         if ($request->hasFile('supported_file') && $request->hasFile('picture')) {
             $request->file('supported_file')->move('storage/file/' . $request->nama_lengkap, $request->file('supported_file')->getClientOriginalName());
             $candidate->supported_file = $request->file('supported_file')->getClientOriginalName();
-            $request->file('picture')->move('storage/file/' . $request->nama_lengkap, $request->file('picture')->getClientOriginalName());  
+            $request->file('picture')->move('storage/file/' . $request->nama_lengkap, $request->file('picture')->getClientOriginalName());
             $candidate->picture = $request->file('picture')->getClientOriginalName();
         }
         $candidate->save();
+        Mail::to($candidate->email)->send(new confirmationToCandidate($candidate));
+        Mail::to('hrd@btsa.co.id')->cc('ga@btsa.co.id')->send(new confirmationToHRD($candidate));
         return view('webpage.karirSelesai', ['jobs' => $jobs[0], 'candidate' => $candidate]);
         //return $jobs[0];
     }
