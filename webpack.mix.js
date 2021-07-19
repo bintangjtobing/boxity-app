@@ -22,3 +22,6 @@ mix.styles([
     'public/dashboard/assets/vendor_assets/css/trumbowyg.min.css',
     'public/dashboard/assets/vendor_assets/css/wickedpicker.min.css',
 ], 'public/css/asset.css');
+if (mix.inProduction()) {
+    mix.version();
+}
