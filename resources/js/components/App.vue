@@ -232,7 +232,7 @@
                                         home_work
                                     </span>
                                     <span class="menu-text">Warehouse List</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -246,7 +246,7 @@
                                     <span class="menu-text">
                                         Stock Group
                                     </span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -255,7 +255,7 @@
                                         inventory_2
                                     </span>
                                     <span class="menu-text">Item Group</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -264,7 +264,7 @@
                                         category
                                     </span>
                                     <span class="menu-text">Inventory Item</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -276,7 +276,7 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
-                                    <span class="badge badge-secondary menuItem">RTL</span>
+                                    <span class="badge badge-secondary menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -285,7 +285,7 @@
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -294,7 +294,7 @@
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -303,7 +303,7 @@
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -312,7 +312,7 @@
                                         archive
                                     </span>
                                     <span class="menu-text">Receiving Conf.</span>
-                                    <span class="badge badge-secondary menuItem">RTL</span>
+                                    <span class="badge badge-secondary menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
