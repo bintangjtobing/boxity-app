@@ -9,6 +9,7 @@ use App\purchaseInvoice;
 use App\purchaseOrder;
 use App\purchaseRequest;
 use App\purchaseReturn;
+use App\userLogs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +93,7 @@ class purchasingController extends Controller
 
         return response()->json($purchasingUpdate, 200);
     }
-    public function deletePurchaseOrderById($id)
+    public function deletePurchaseOrderById($id, Request $request)
     {
         $purchaseOrd = purchaseOrder::find($id);
         $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->po_number)->get();
@@ -244,7 +245,7 @@ class purchasingController extends Controller
         $saveLogs->save();
         return response()->json($purchasingUpdate, 200);
     }
-    public function deletePurchaseInvoiceById($id)
+    public function deletePurchaseInvoiceById($id, Request $request)
     {
         $purchaseOrd = purchaseInvoice::find($id);
         $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->pi_number)->get();
@@ -371,6 +372,54 @@ class purchasingController extends Controller
     {
         return response()->json(purchaseRequest::where('pre_number', $pre_number)->with('warehouse')->first());
     }
+    public function getPurchaseRequestMakePOByPreNumber($pre_number)
+    {
+        $getPRE = purchaseRequest::where('pre_number', $pre_number)->with('warehouse')->first();
+        $getItemOnPRE = itemsPurchase::where('purchasingId', $pre_number)->with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->get();
+
+        $getNumberFromPONum = substr($getPRE->pre_number, 4, 13);
+
+        for ($i = 0; $i < count($getItemOnPRE); $i++) {
+            $detailsToItemOnPO = new itemsPurchase();
+            $detailsToItemOnPO->item_code = $getItemOnPRE[$i]->item_code;
+            $detailsToItemOnPO->qtyOrdered = $getItemOnPRE[$i]->qtyRequested;
+            $detailsToItemOnPO->qtyShipped = '0';
+            $detailsToItemOnPO->unit = $getItemOnPRE[$i]->unit;
+
+            // po status 2 means stored at database with the purchase order id above;
+            $detailsToItemOnPO->po_status = '2';
+            $detailsToItemOnPO->purchasingId = 'PO.' . $getNumberFromPONum;
+            $detailsToItemOnPO->created_by = Auth::id();
+            $detailsToItemOnPO->updated_by = Auth::id();
+            $detailsToItemOnPO->save();
+        }
+        $detailsToPO = new purchaseOrder();
+        $detailsToPO->po_number = 'PO.' . $getNumberFromPONum;
+        $detailsToPO->supplier = '0';
+        $detailsToPO->order_date = date("Y-m-d");
+        $detailsToPO->deliver_to = $getPRE->to;
+        $detailsToPO->status = 0;
+        $detailsToPO->created_by = Auth::id();
+        $detailsToPO->updated_by = Auth::id();
+        $detailsToPO->save();
+
+        // Update status to 3, means it is approve and already has PO created
+        $statusPRE = purchaseRequest::where('pre_number', $pre_number)
+            ->update(array(
+                'status' => 3,
+            ));
+        return response()->json($detailsToPO);
+    }
+    public function approvePurchaseRequestByPreNumber($pre_number)
+    {
+        // Update status to 1, means it is approved
+        $statusPRE = purchaseRequest::where('pre_number', $pre_number)
+            ->update(array(
+                'status' => 1,
+                'approvedBy' => Auth::id(),
+            ));
+        return response()->json($detailsToPO);
+    }
     public function postPurchaseRequestByPreNumber($pre_number, Request $request)
     {
         $purchasingUpdate = DB::table('purchase_requests')
@@ -392,7 +441,7 @@ class purchasingController extends Controller
 
         return response()->json($purchasingUpdate, 200);
     }
-    public function deletePurchaseRequestById($id)
+    public function deletePurchaseRequestById($id, Request $request)
     {
         $purchaseOrd = purchaseRequest::find($id);
         $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->pre_number)->get();
@@ -528,7 +577,7 @@ class purchasingController extends Controller
         $saveLogs->save();
         return response()->json($purchasingUpdate, 200);
     }
-    public function deletePurchaseReturnById($id)
+    public function deletePurchaseReturnById($id, Request $request)
     {
         $purchaseOrd = purchaseReturn::find($id);
         $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->pr_number)->get();

@@ -370,6 +370,19 @@ a {
     display: none !important;
 }
 
+.create {
+    margin: 8px 0px !important;
+    padding: 8px;
+    border-radius: .25rem;
+    border: 1px solid rgba(0, 0, 0, .2);
+    color: #222;
+}
+
+.create:hover {
+    background-color: #359224;
+    color: #fff !important;
+}
+
 /* Responsive Design */
 /*
   ##Device = Desktops

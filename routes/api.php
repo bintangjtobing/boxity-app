@@ -286,6 +286,8 @@ Route::get('/pr/count-item-purchase', 'itemOnPurchasingController@countItemPurch
 Route::get('/purchase/request', 'purchasingController@getPurchaseRequest');
 Route::post('/purchase/request', 'purchasingController@postPurchaseRequest');
 Route::get('/purchase/request/{pre_number}', 'purchasingController@getPurchaseRequestByPreNumber');
+Route::get('/copy/purchase/request/{pre_number}', 'purchasingController@getPurchaseRequestMakePOByPreNumber');
+Route::get('/approve/purchase/request/{pre_number}', 'purchasingController@approvePurchaseRequestByPreNumber');
 Route::patch('/purchase/request/{pre_number}', 'purchasingController@postPurchaseRequestByPreNumber');
 Route::delete('/purchases/request/{id}', 'purchasingController@deletePurchaseRequestById');
 Route::get('/count-purchase-request', 'purchasingController@countPurchaseRequest');
