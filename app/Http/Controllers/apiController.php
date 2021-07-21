@@ -419,7 +419,7 @@ class apiController extends Controller
         $job->save();
         return response()->json($job, 201);
     }
-    public function deleteJob($id)
+    public function deleteJob($id, Request $request)
     {
         $career = jobvacancy::find($id);
 
@@ -427,7 +427,7 @@ class apiController extends Controller
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Delete job vacancy ' . $job->title . '.';
+        $saveLogs->notes = 'Delete job vacancy ' . $career->title . '.';
         $saveLogs->save();
 
         $career->delete();
@@ -485,7 +485,7 @@ class apiController extends Controller
         $blog->save();
         return response()->json($blog);
     }
-    public function deleteBlogById($id)
+    public function deleteBlogById($id, Request $request)
     {
         $blog = blog::find($id);
 
@@ -1040,7 +1040,7 @@ class apiController extends Controller
     {
         return response()->json(candidates::with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
     }
-    public function deleteCandidate($id)
+    public function deleteCandidate($id, Request $request)
     {
         $getUser = candidates::find($id);
 
