@@ -138,6 +138,7 @@ Route::post('/chat/send', 'apiController@sendChat');
 // Company Details
 Route::get('/company-details', 'apiController@getCompanyDetails');
 Route::post('/company-details', 'apiController@saveCompanyDetails');
+Route::post('/meta/company-details/{id}', 'apiController@saveMetaCompanyDetails');
 
 // Customers API
 Route::get('/customers', 'apiController@getCustomers');

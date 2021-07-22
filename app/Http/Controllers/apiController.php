@@ -1122,6 +1122,9 @@ class apiController extends Controller
     public function saveCompanyDetails(Request $request)
     {
         $comp = new company_details();
+        $comp->icon = $request->icon;
+        $comp->logo = $request->logo;
+        $comp->logoblack = $request->logoblack;
         $comp->company_id = $request->company_id;
         $comp->company_name = $request->company_name;
         $comp->address = $request->address;
@@ -1135,6 +1138,14 @@ class apiController extends Controller
         $comp->meta_description = $request->meta_description;
         $comp->meta_keywords = $request->meta_keywords;
         $comp->save();
+        return response()->json($comp, 201);
+    }
+    public function saveMetaCompanyDetails($id, Request $request)
+    {
+        $comp = company_details::find($id);
+        // $comp->meta_description = $request->meta_description;
+        // $comp->meta_keywords = $request->meta_keywords;
+        // $comp->save();
         return response()->json($comp, 201);
     }
     public function userGetWithOutLoggedIn()

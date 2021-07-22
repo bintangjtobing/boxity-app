@@ -22,5 +22,7 @@ class company_details extends Model
         'site',
         'meta_description',
         'meta_keywords',
+        'icon',
+        'logo', 'logoblack'
     ];
 }

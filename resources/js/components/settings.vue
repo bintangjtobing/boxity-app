@@ -42,8 +42,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-xxl-6 col-lg-12 col-sm-12">
                                                 <div class="edit-profile__body mx-lg-20">
-                                                    <form>
-                                                        <!-- <div class="form-group mb-20">
+                                                    <!-- <div class="form-group mb-20">
                                                             <label for="">Company Logo</label>
                                                             <input id="file-upload" type="file" name="fileUpload"
                                                                 class="" @change="fileUpload">
@@ -53,68 +52,81 @@
                                                                     v-if="imagePreview">
                                                             </label>
                                                         </div> -->
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Company ID</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.company_id" :readonly="isReadOnly"
-                                                                required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Company name</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.company_name" autofocus
-                                                                :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Address</label>
-                                                            <textarea class="form-control" v-model="company.address"
-                                                                cols="30" rows="3" :readonly="isReadOnly"
-                                                                required></textarea>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">City</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.city" :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">State</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.state" :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Country</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.country" :readonly="isReadOnly"
-                                                                required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Tax number</label>
-                                                            <input type="text" maxlength="15" class="form-control"
-                                                                v-model="company.taxNumber" :readonly="isReadOnly">
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Phone</label>
-                                                            <input type="text" maxlength="12" class="form-control"
-                                                                v-model="company.phone" :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">E-mail</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.email" :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Site</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.site" :readonly="isReadOnly" required>
-                                                        </div>
-                                                        <div class="button-group d-flex flex-wrap pt-30 mb-15"
-                                                            v-if="user.divisi == 'developer'">
-                                                            <button @click="saveCompany"
-                                                                class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
-                                                                information
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company ID</label>
+                                                        <input type="text" class="form-control"
+                                                            v-model="company.company_id" :readonly="isReadOnly"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company Icon</label>
+                                                        <input type="text" class="form-control" v-model="company.icon"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company Logo White</label>
+                                                        <input type="text" class="form-control" v-model="company.logo"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company Logo Black</label>
+                                                        <input type="text" class="form-control"
+                                                            v-model="company.logoblack" :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company name</label>
+                                                        <input type="text" class="form-control"
+                                                            v-model="company.company_name" autofocus
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Address</label>
+                                                        <textarea class="form-control" v-model="company.address"
+                                                            cols="30" rows="3" :readonly="isReadOnly"
+                                                            required></textarea>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">City</label>
+                                                        <input type="text" class="form-control" v-model="company.city"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">State</label>
+                                                        <input type="text" class="form-control" v-model="company.state"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Country</label>
+                                                        <input type="text" class="form-control"
+                                                            v-model="company.country" :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Tax number</label>
+                                                        <input type="text" maxlength="15" class="form-control"
+                                                            v-model="company.taxNumber" :readonly="isReadOnly">
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Phone</label>
+                                                        <input type="text" maxlength="12" class="form-control"
+                                                            v-model="company.phone" :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">E-mail</label>
+                                                        <input type="text" class="form-control" v-model="company.email"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Site</label>
+                                                        <input type="text" class="form-control" v-model="company.site"
+                                                            :readonly="isReadOnly" required>
+                                                    </div>
+                                                    <div class="button-group d-flex flex-wrap pt-30 mb-15"
+                                                        v-if="user.divisi == 'developer'">
+                                                        <button @click="saveCompany"
+                                                            class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
+                                                            information
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,27 +147,23 @@
                                         <div class="row justify-content-center">
                                             <div class="col-xxl-6 col-lg-12 col-sm-12">
                                                 <div class="edit-profile__body mx-lg-20">
-                                                    <form>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Company Description</label>
-                                                            <textarea v-model="company.meta_description"
-                                                                class="form-control" :readonly="isReadOnly" cols="30"
-                                                                rows="10"></textarea>
-                                                        </div>
-                                                        <div class="form-group mb-20">
-                                                            <label for="names">Company keywords</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="company.meta_keywords" :readonly="isReadOnly"
-                                                                required>
-                                                        </div>
-                                                        <div class="button-group d-flex flex-wrap pt-30 mb-15"
-                                                            v-if="user.divisi == 'developer'">
-                                                            <button @click="saveCompany"
-                                                                class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
-                                                                information
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company Description</label>
+                                                        <textarea v-model="company.meta_description"
+                                                            class="form-control" cols="30" rows="10"></textarea>
+                                                    </div>
+                                                    <div class="form-group mb-20">
+                                                        <label for="names">Company keywords</label>
+                                                        <input type="text" class="form-control"
+                                                            v-model="company.meta_keywords" required>
+                                                    </div>
+                                                    <div class="button-group d-flex flex-wrap pt-30 mb-15"
+                                                        v-if="user.divisi == 'developer'">
+                                                        <button @click="saveMetaCompany(company.id)"
+                                                            class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
+                                                            meta information
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,6 +188,7 @@
                 company: {},
                 user: {},
                 isReadOnly: false,
+                isReadMetaOnly: false,
                 imagePreview: '',
                 imageLocation: '',
             }
@@ -239,6 +248,27 @@
                         }
                     });
                 });
+            },
+            async saveMetaCompany(id) {
+                this.$Progress.start();
+                await axios.post('/api/meta/company-details/' + id, this.company).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success save the company meta information',
+                    });
+                    this.loadCompany();
+                }).catch(error => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Something wrong.',
+                        confirmButtonText: `Ok`,
+                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                            error,
+                    });
+                });
+                this.$Progress.finish();
             }
         },
     }
