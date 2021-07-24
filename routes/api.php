@@ -195,6 +195,11 @@ Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
 Route::get('/count-inventory-item', 'apiController@countInventoryItem');
 Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
 
+// History Ittem
+Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
+Route::get('/sum/in/item-history/{id}', 'apiController@sumQtyInHistoryItem');
+Route::get('/sum/out/item-history/{id}', 'apiController@sumQtyOutHistoryItem');
+
 // Goods Item Transfer -> list item in one row goods transfer
 Route::get('/goods-item-transfer', 'apiController@getGoodsItemTransfer');
 Route::post('/goods-item-transfer', 'apiController@postGoodsItemTransfer');

@@ -41,18 +41,18 @@ class itemsPurchase extends Model
     }
     public function purchasingOrder()
     {
-        return $this->belongsTo(purchaseOrder::class, 'purchasingId');
+        return $this->belongsTo(purchaseOrder::class, 'purchasingId', 'po_number');
     }
     public function purchasingInvoices()
     {
-        return $this->belongsTo(purchaseInvoice::class, 'purchasingId');
+        return $this->belongsTo(purchaseInvoice::class, 'purchasingId', 'pi_number');
     }
     public function purchasingReturn()
     {
-        return $this->belongsTo(purchaseReturn::class, 'purchasingId');
+        return $this->belongsTo(purchaseReturn::class, 'purchasingId', 'pr_number');
     }
     public function purchasingRequest()
     {
-        return $this->belongsTo(purchaseRequest::class, 'purchasingId');
+        return $this->belongsTo(purchaseRequest::class, 'purchasingId', 'pre_number');
     }
 }

@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Date;
 use App\popupWindow;
 use App\userLogs;
 use App\warehouseCustomer;
+use App\itemHistory;
+use App\itemsPurchase;
 use Mail;
 
 class apiController extends Controller
@@ -1663,6 +1665,28 @@ class apiController extends Controller
         return response()->json(inventoryItem::find($id)->delete());
     }
 
+    // History item
+    public function getHistoryItemById($id)
+    {
+        return response()->json(itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get());
+    }
+    public function sumQtyInHistoryItem($id)
+    {
+        $getHistory = itemHistory::where('itemId', $id)->get();
+        if (!$getHistory) {
+            return '0';
+        } else {
+            $getPINum = $getHistory[0]->itemInId;
+            return response()->json(itemsPurchase::where('item_code', $id)->sum('qtyShipped'));
+        }
+    }
+    public function sumQtyOutHistoryItem($id)
+    {
+        // $getHistory = itemHistory::where('itemId', $id)->get();
+        // $getSINum = $getHistory[0]->itemOutId;
+        // return response()->json(itemsPurchase::where('item_code', $id)->sum('qtyShipped'));
+        return 0;
+    }
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
     public function plusOneEachTen()
     {

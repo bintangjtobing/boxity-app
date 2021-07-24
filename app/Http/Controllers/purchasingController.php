@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\company_details;
 use App\inventoryItem;
+use App\itemHistory;
 use App\itemsPurchase;
 use App\purchaseInvoice;
 use App\purchaseOrder;
@@ -217,7 +218,36 @@ class purchasingController extends Controller
             ->where('pi_status', '=', '1')
             // PO Status 2, means having a purchasing ID
             ->update(array('purchasingId' => $purchasingOrd->pi_number, 'pi_status' => '2'));
-        return response()->json($purchasingOrd, 200);
+
+        $getItemOnPI = itemsPurchase::where('purchasingId', $purchasingOrd->pi_number)->get();
+        // Jika item yang ada di PI lebih dari 1
+        if (count($getItemOnPI) > 0) {
+            foreach ($getItemOnPI as $getItemOnPi) {
+                $inputToHistory = new itemHistory();
+                $inputToHistory->itemId = $getItemOnPi->item_code;
+                $inputToHistory->itemInId = $purchasingOrd->pi_number;
+                $inputToHistory->type = 1;
+                $inputToHistory->date = $purchasingOrd->created_at;
+                $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
+                $inputToHistory->remarks = $getItemOnPi->remarks;
+                $inputToHistory->save();
+
+                // Get inventory item related
+                $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
+                $getQtyItem = $itemRelated->qty;
+                $getInputQtyValue = $getItemOnPi->qtyShipped;
+                // Sum the value between get Qty Item and Get Value Inputted
+                $sumQty = $getQtyItem + $getInputQtyValue;
+
+                // Update to inventory item
+                $getInventory = DB::table('inventory_items')
+                    ->where('id', $getItemOnPi->item_code)
+                    ->update(array(
+                        'qty' => $sumQty,
+                    ));
+            }
+        }
+        return 200;
     }
     public function getPurchaseInvoiceByPiNumber($pi_number)
     {
@@ -251,6 +281,10 @@ class purchasingController extends Controller
         $itemPurchase = itemsPurchase::where('purchasingId', $purchaseOrd->pi_number)->get();
         foreach ($itemPurchase as $itemPurchases) {
             $itemPurchases->delete();
+        }
+        $itemsHistory = itemHistory::where('itemInId', $purchaseOrd->pi_number)->get();
+        foreach ($itemsHistory as $itemHistory) {
+            $itemHistory->delete();
         }
 
         // Save to logs
