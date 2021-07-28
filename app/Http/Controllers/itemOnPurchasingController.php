@@ -7,6 +7,7 @@ use App\purchaseOrder;
 use App\purchaseRequest;
 use App\purchaseReturn;
 use App\itemsPurchase;
+use App\itemHistory;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -183,12 +184,20 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
 
-        // po status 1 means stored at database but not with the purchase order id;
         $ItemPurchasing->pi_status = '2';
         $ItemPurchasing->purchasingId = $pi_number;
         $ItemPurchasing->created_by = Auth::id();
         $ItemPurchasing->updated_by = Auth::id();
         $ItemPurchasing->save();
+
+        $inputToHistory = new itemHistory();
+        $inputToHistory->itemId = $ItemPurchasing->item_code;
+        $inputToHistory->itemInId = $pi_number;
+        $inputToHistory->type = 1;
+        $inputToHistory->date = $ItemPurchasing->created_at;
+        $inputToHistory->qtyIn = $ItemPurchasing->qtyShipped;
+        $inputToHistory->remarks = $ItemPurchasing->remarks;
+        $inputToHistory->save();
         return response()->json($ItemPurchasing, 200);
     }
     public function getItemPurchasePIById($id)

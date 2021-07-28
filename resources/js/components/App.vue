@@ -11,7 +11,7 @@
                             class="light" :src="company.logo" alt="logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
-                        <h4>{{user.customerName}}</h4>
+                    <h4>{{user.customerName}}</h4>
                     </div>
                 </div>
                 <div class="navbar-right">
