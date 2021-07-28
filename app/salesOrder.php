@@ -18,6 +18,5 @@ class salesOrder extends Model
     public function createdby()
     {
         return $this->belongsTo(User::class, 'created_by');
-        123
     }
 }
