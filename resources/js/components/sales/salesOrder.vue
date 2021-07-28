@@ -55,23 +55,12 @@
     import Swal from "sweetalert2";
     import Editor from "@tinymce/tinymce-vue";
 
-export default {
-  components: {
-    editor: Editor,
-  },
-  title() {
-    return "Sales Order";
-  },
-  data() {
-    return {
-      // datatable
-      search: "",
-      key: 1,
-      inventoryItem: [],
-      headers: [
-        {
-          text: "SO #",
-          value: "so_number",
+    export default {
+        components: {
+            editor: Editor,
+        },
+        title() {
+            return "Sales Order";
         },
         data() {
             return {
@@ -135,11 +124,9 @@ export default {
             },
         },
     };
-
 </script>
 <style lang="css">
     .form-group {
         margin-bottom: 0;
     }
-
 </style>
