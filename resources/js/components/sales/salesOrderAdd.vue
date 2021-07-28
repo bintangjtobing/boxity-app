@@ -1,4 +1,4 @@
-n<template>
+<template>
   <div>
     <div class="row mt-4">
       <div class="col-lg-12">
@@ -44,7 +44,7 @@ n<template>
               <div class="col-1">
                 <span>
                   <svg
-                    :class="classRotate(isShow)"
+                    :class="classRotate(isShow.colapse)"
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -59,7 +59,7 @@ n<template>
                 </span>
               </div>
             </div>
-            <div v-show="isShow">
+            <div v-show="isShow.colapse">
               <div class="form-row">
                 <div class="col-lg-12">
                   <div class="form-row">
@@ -243,154 +243,180 @@ n<template>
       <div class="col-lg-12" :class="{ unvisible: isVisibleModifyForm }">
         <div class="card mb-3">
           <div class="card-body">
-            <h5>Modify Item</h5>
-            <p class="muted-text">{{ titleItemDescription }}</p>
-            <div class="form-row">
-              <div class="col-lg-12">
-                <div class="form-row">
-                  <div class="form-group col-lg-5">
-                    <span>From warehouse:</span>
+            <div
+              class="row justify-content-between align-items-center"
+              @click="isShowing()"
+            >
+              <div class="col-5">
+                <h5>Modify Item</h5>
+                <p class="muted-text">{{ titleItemDescription }}</p>
+              </div>
+              <div class="col-1">
+                <span>
+                  <svg
+                    :class="classRotate(isShow.colapse)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-caret-down-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div v-show="isShow.colapse">
+              <div class="form-row">
+                <div class="col-lg-12">
+                  <div class="form-row">
+                    <div class="form-group col-lg-5">
+                      <span>From warehouse:</span>
+                      <input
+                        type="text"
+                        v-model="itemModify.warehouse_name"
+                        id=""
+                        class="form-control"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group col-lg-5">
+                      <span>Item name:</span>
+                      <input
+                        type="text"
+                        v-model="itemModify.item_name"
+                        id=""
+                        class="form-control"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Quantity:</span>
+                    <span v-show="isShow.qtyItem" id="qtyItem">{{
+                      "(Quantity Item = " + qtyItem + ")"
+                    }}</span>
+                    <input
+                      type="number"
+                      v-model="itemModify.qtyOrdered"
+                      @input="onModifyQtyInc"
+                      placeholder="0"
+                      id=""
+                      min="0"
+                      max="10000"
+                      step="1"
+                      class="form-control"
+                    />
+                    <span v-show="isShow.qty" id="qty"
+                      >Tidak boleh lebih dari quantity item</span
+                    >
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Unit:</span>
                     <input
                       type="text"
-                      v-model="itemModify.warehouse_name"
+                      v-model="itemModify.unit"
                       id=""
                       class="form-control"
                       readonly
                     />
                   </div>
-                  <div class="form-group col-lg-5">
-                    <span>Item name:</span>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Price:</span>
                     <input
-                      type="text"
-                      v-model="itemModify.item_name"
-                      id=""
+                      type="number"
+                      v-model="itemModify.currentPrice"
+                      @change="onModifyPriceChange"
+                      @input="onModifyPriceChange"
                       class="form-control"
+                      min="0"
+                      max="9999999"
+                      step="250"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Line total:</span>
+                    <input
+                      type="number"
+                      v-model="itemModify.price"
+                      class="form-control"
+                      min="0.00"
+                      max="10000.00"
+                      step="0.01"
                       readonly
                     />
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Quantity:</span>
-                  <span v-show="isShow.qtyItem" id="qtyItem">{{
-                    "(Quantity Item = " + qtyItem + ")"
-                  }}</span>
-                  <input
-                    type="number"
-                    v-model="itemModify.qtyOrdered"
-                    @input="onModifyQtyInc"
-                    placeholder="0"
-                    id=""
-                    min="0"
-                    max="10000"
-                    step="1"
-                    class="form-control"
-                  />
-                  <span v-show="isShow.qty" id="qty"
-                    >Tidak boleh lebih dari quantity item</span
-                  >
+              <div class="form-row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Purpose:</span>
+                    <input
+                      type="text"
+                      v-model="itemModify.purpose"
+                      id=""
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Used by:</span>
+                    <selectSearch
+                      v-model="selected.usedBy"
+                      v-bind="{
+                        datas: users,
+                        width: '100%',
+                        name: 'name',
+                      }"
+                      @dataSelected="onItemSelectedUsed"
+                    ></selectSearch>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Remarks:</span>
+                    <textarea
+                      v-model="itemModify.remarks"
+                      class="form-control"
+                      id=""
+                      cols="30"
+                      rows="2"
+                    ></textarea>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Unit:</span>
-                  <input
-                    type="text"
-                    v-model="itemModify.unit"
-                    id=""
-                    class="form-control"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Price:</span>
-                  <input
-                    type="number"
-                    v-model="itemModify.currentPrice"
-                    @change="onModifyPriceChange"
-                    @input="onModifyPriceChange"
-                    class="form-control"
-                    min="0"
-                    max="9999999"
-                    step="250"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Line total:</span>
-                  <input
-                    type="number"
-                    v-model="itemModify.price"
-                    class="form-control"
-                    min="0.00"
-                    max="10000.00"
-                    step="0.01"
-                    readonly
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Purpose:</span>
-                  <input
-                    type="text"
-                    v-model="itemModify.purpose"
-                    id=""
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Used by:</span>
-                  <selectSearch
-                    v-model="selected.usedBy"
-                    v-bind="{
-                      datas: users,
-                      width: '100%',
-                      name: 'name',
-                    }"
-                    @dataSelected="onItemSelectedUsed"
-                  ></selectSearch>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Remarks:</span>
-                  <textarea
-                    v-model="itemModify.remarks"
-                    class="form-control"
-                    id=""
-                    cols="30"
-                    rows="2"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="form-group my-2">
-              <div class="row">
-                <div class="col-12">
-                  <button
-                    v-on:click="modifyItemList"
-                    v-on:keyup.enter="modifyItemList"
-                    class="
-                      btn btn-success
-                      float-right
-                      btn-default btn-squared
-                      px-30
-                    "
-                    :disabled="btndisableModify"
-                  >
-                    Update item list
-                  </button>
+              <div class="form-group my-2">
+                <div class="row">
+                  <div class="col-12">
+                    <button
+                      v-on:click="modifyItemList"
+                      v-on:keyup.enter="modifyItemList"
+                      class="
+                        btn btn-success
+                        float-right
+                        btn-default btn-squared
+                        px-30
+                      "
+                      :disabled="btndisableModify"
+                    >
+                      Update item list
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -572,6 +598,7 @@ export default {
         so_number: "",
         customer: "",
         order_date: "",
+        remarks: ""
       },
 
       // data relation
@@ -620,6 +647,7 @@ export default {
       isShow: {
         qty: false,
         qtyItem: false,
+        colapse: true,
       },
       selected: {
         item: "",
@@ -630,7 +658,6 @@ export default {
         select: true,
         input: true,
       },
-      isShow: true,
     };
   },
   created() {
@@ -672,7 +699,7 @@ export default {
       return param ? "rotate" : "";
     },
     isShowing: function () {
-      this.isShow = !this.isShow;
+      this.isShow.colapse = !this.isShow.colapse;
     },
     onWarehouseSelected(param) {
       this.itemAdd.warehouseid = param.id;
@@ -844,42 +871,11 @@ export default {
       };
       this.$Progress.finish();
     },
-    async modifyItemPurchase() {
-      this.$Progress.start();
-      await axios
-        .patch("/api/po/item-purchase/" + this.itemAdd.id, this.itemAdd)
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "Congratulations",
-            text: "Success modify item on purchase order table",
-          });
-          this.itemAdd = {
-            warehouseid: "",
-            itemid: "",
-            qtyOrdered: "0",
-            unit: "",
-            currentPrice: "0",
-            price: "0",
-            purpose: "",
-            requested_by: "",
-            used_by: "",
-            remarks: "",
-          };
-        });
-      this.selected.usedBy = "";
-      this.titleItemDescription = "Add some items on Sales Orders.";
-      this.isVisibleAddForm = false;
-      this.isVisibleModifyForm = true;
-      this.loadData();
-      this.$Progress.finish();
-    },
     async submitHandle() {
       this.$Progress.start();
       await axios
-        .post("/api/sales/order", this.salesOrderData)
+        .patch("/api/sales/order", this.salesOrderData)
         .then((response) => {
-          console.log(response);
           this.loadData();
           Swal.fire({
             icon: "success",
@@ -890,6 +886,7 @@ export default {
             so_number: "",
             customer: "",
             order_date: "",
+            remarks: ""
           };
           const genSONumber = this.rndStr(5);
           this.salesOrderData.so_number = genSONumber;
@@ -897,7 +894,6 @@ export default {
           this.$Progress.finish();
         })
         .catch((error) => {
-          console.log(error);
           this.$Progress.fail();
           Swal.fire({
             icon: "warning",
@@ -913,7 +909,6 @@ export default {
             }
           });
         });
-      // console.log('data click', [this.purchaseOrderData, this.itemSalesData])
     },
     async deleteItemPurchasing(id) {
       const result = await Swal.fire({
@@ -934,7 +929,6 @@ export default {
         this.$Progress.finish();
       }
     },
-    submitChek() {},
   },
 };
 </script>

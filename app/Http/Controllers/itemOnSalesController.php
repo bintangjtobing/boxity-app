@@ -21,6 +21,10 @@ class itemOnSalesController extends Controller
         return response()->json(itemsSales::where('id', $id)->with('item', 'used', 'usedBy', 'requestedBy', 'warehouse')->first());
     }
     
+    public function getItemSalesBySoNumber ($so_number) {
+        return response()->json(itemsSales::where('salesingId', $so_number)->with('item', 'used', 'usedBy', 'requestedBy', 'warehouse')->get());
+    }
+    
     public function postItemSales (Request $request) {
         DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
@@ -41,7 +45,8 @@ class itemOnSalesController extends Controller
         $itemsSales->used_by = $request->used_by;
         $itemsSales->remarks = $request->remarks;
         
-        $itemsSales->so_status = '1';
+        $itemsSales->salesingId = $request->so_number ?? '0';
+        $itemsSales->so_status = $request->so_status ?? '1';
         $itemsSales->created_by = Auth::id();
         $itemsSales->updated_by = Auth::id();
         $itemsSales->save();

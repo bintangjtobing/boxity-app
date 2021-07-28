@@ -339,6 +339,7 @@ Route::get('/count-sales-delivery-receipt', 'salesController@countSalesDeliveryR
 Route::get('/item-sales', 'itemOnSalesController@getItemSales');
 Route::post('/item-sales', 'itemOnSalesController@postItemSales');
 Route::get('/item-sales/{id}', 'itemOnSalesController@getItemSalesById');
+Route::get('/item-sales/so-number/{so_number}', 'itemOnSalesController@getItemSalesBySoNumber');
 Route::patch('/item-sales/{id}', 'itemOnSalesController@postItemSalesById');
 Route::delete('/item-sales/{id}', 'itemOnSalesController@deleteItemSalesById');
 Route::get('/count-item-sales', 'itemOnSalesController@countItemSales');
