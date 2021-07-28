@@ -35,6 +35,10 @@ class itemsPurchase extends Model
     {
         return $this->belongsTo(User::class, 'requested_by');
     }
+    public function used()
+    {
+        return $this->belongsTo(User::class, 'used_by');
+    }
     public function usedBy()
     {
         return $this->belongsTo(User::class, 'used_by');

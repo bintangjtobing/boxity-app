@@ -94,7 +94,7 @@ class itemOnPurchasingController extends Controller
     }
     public function getItemPurchasePOById($id)
     {
-        return response()->json(itemsPurchase::where('id', $id)->with('item', 'usedBy', 'requestedBy')->first());
+        return response()->json(itemsPurchase::where('id', $id)->with('item', 'used', 'usedBy', 'requestedBy')->first());
     }
     public function getItemPurchaseByPoNumber($po_number)
     {

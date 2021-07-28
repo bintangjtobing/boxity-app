@@ -395,7 +395,7 @@ const routes = [{
         component: SalesOrderAdd
     }, {
         name: 'detailSalesOrder',
-        path: '/detail/sales/order/:id',
+        path: '/detail/sales/order/:so_id',
         component: SalesOrderForm,
     }, {
         name: 'SalesInvoices',
