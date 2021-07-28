@@ -157,7 +157,7 @@ Route::get('/count-suppliers', 'apiController@countSuppliers');
 Route::patch('/suppliers/{id}', 'apiController@updateSuppliers');
 
 // Warehouse
-// Get Warehouse based on customer's warehouse
+// Get Warehouse based on customer's warehouse  
 Route::get('/warehouse', 'apiController@getWarehouse');
 Route::post('/warehouse', 'apiController@postWarehouse');
 Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
@@ -336,12 +336,12 @@ Route::delete('/sales/delivery-receipt/{id}', 'salesController@deleteSalesDelive
 Route::get('/count-sales-delivery-receipt', 'salesController@countSalesDeliveryReceipt');
 
 // Item Sales
-Route::get('/item-sales', 'purchasingController@getItemSales');
-Route::post('/item-sales', 'purchasingController@postItemSales');
-Route::get('/item-sales/{id}', 'purchasingController@getItemSalesById');
-Route::patch('/item-sales/{id}', 'purchasingController@postItemSalesById');
-Route::delete('/item-sales/{id}', 'purchasingController@deleteItemSalesById');
-Route::get('/count-item-sales', 'purchasingController@countItemSales');
+Route::get('/item-sales', 'itemOnSalesController@getItemSales');
+Route::post('/item-sales', 'itemOnSalesController@postItemSales');
+Route::get('/item-sales/{id}', 'itemOnSalesController@getItemSalesById');
+Route::patch('/item-sales/{id}', 'itemOnSalesController@postItemSalesById');
+Route::delete('/item-sales/{id}', 'itemOnSalesController@deleteItemSalesById');
+Route::get('/count-item-sales', 'itemOnSalesController@countItemSales');
 
 // Leave Request
 Route::get('/generate-one-lr', 'apiController@plusOneEachTen');

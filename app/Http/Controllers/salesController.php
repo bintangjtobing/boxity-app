@@ -7,6 +7,8 @@ use App\salesDeliveryReceipt;
 use App\salesInvoice;
 use App\salesOrder;
 use App\salesReturn;
+use App\userLogs;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,14 +37,27 @@ class salesController extends Controller
         $salesOrd->so_number = $request->so_number;
         $salesOrd->customer = $request->customer;
         $salesOrd->order_date = $request->order_date;
-        $salesOrd->status = $request->status;
+        $salesOrd->status = 0;
         $salesOrd->created_by = Auth::id();
         $salesOrd->updated_by = Auth::id();
+        
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Sales Order ' . $salesOrd->so_number . '.';
+        $saveLogs->save();
+        
         $salesOrd->save();
-        return response()->json($salesOrd, 200);
-    }
-    public function getSalesOrderById($id)
-    {
+        DB::table('items_sales')
+            ->where('so_status', '=', '1')
+            // PO Status 2, means having a purchasing ID
+            ->update(array('salesingId' => $salesOrd->so_number, 'so_status' => '2'));
+            
+            return response()->json($salesOrd, 200);
+        }
+        public function getSalesOrderById($id)
+        {
         return response()->json(salesOrder::find($id));
     }
     public function postSalesOrderById($id, Request $request)

@@ -471,7 +471,9 @@ n<template>
             },
             async addToList() {
                 this.$Progress.start();
+                console.log(this.itemAdd)
                 await axios.post('/api/po/item-purchase', this.itemAdd).then(response => {
+                    console.log(response)
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

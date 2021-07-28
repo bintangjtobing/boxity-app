@@ -21,7 +21,7 @@ n<template>
               "
             >
               <h4 class="text-capitalize fw-500 breadcrumb-title">
-                New Sales Order <span>#{{ purchaseOrderData.po_number }}</span>
+                New Sales Order <span>#{{ salesOrderData.so_number }}</span>
               </h4>
             </div>
           </div>
@@ -33,152 +33,212 @@ n<template>
       <div class="col-lg-12" :class="{ unvisible: isVisibleAddForm }">
         <div class="card mb-3">
           <div class="card-body">
-            <h5>Items</h5>
-            <p class="muted-text">{{ titleItemDescription }}</p>
-            <div class="form-row">
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Item name:</span>
-                  <selectSearch
-                    v-bind="{ datas: items, width: '40%' }"
-                    @dataSelected="onItemSelected"
-                  ></selectSearch>
+            <div
+              class="row justify-content-between align-items-center"
+              @click="isShowing()"
+            >
+              <div class="col-5">
+                <h5>Items</h5>
+                <p class="muted-text">{{ titleItemDescription }}</p>
+              </div>
+              <div class="col-1">
+                <span>
+                  <svg
+                    :class="classRotate(isShow)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-caret-down-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div v-show="isShow">
+              <div class="form-row">
+                <div class="col-lg-12">
+                  <div class="form-row">
+                    <div class="form-group col-lg-5">
+                      <span>From warehouse:</span>
+                      <selectSearch
+                        v-model="selected.warehouse"
+                        v-bind="{
+                          datas: warehouse,
+                          width: '100%',
+                          name: 'warehouse_name',
+                        }"
+                        @dataSelected="onWarehouseSelected"
+                      ></selectSearch>
+                    </div>
+                    <div class="form-group col-lg-5">
+                      <span>Item name:</span>
+                      <selectSearch
+                        v-model="selected.item"
+                        v-bind="{
+                          datas: items,
+                          width: '100%',
+                          name: 'item_name',
+                          group: 'item_code',
+                          isDisable: isDisable.select,
+                        }"
+                        @dataSelected="onItemSelected"
+                      ></selectSearch>
 
-                  <span class="float-left"
-                    ><abbr title="Add new item"
-                      >Don't see the item you're looking for?</abbr
+                      <span class="float-left"
+                        ><abbr title="Add new item"
+                          >Don't see the item you're looking for?</abbr
+                        >
+                        <router-link :to="'/inventory-item'">
+                          Add new item here</router-link
+                        >
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Quantity:</span>
+                    <span v-show="isShow.qtyItem" id="qtyItem">{{
+                      "(Quantity Item = " + qtyItem + ")"
+                    }}</span>
+                    <input
+                      type="number"
+                      v-model="itemAdd.qtyOrdered"
+                      @input="onQtyInc"
+                      placeholder=""
+                      id=""
+                      min="0"
+                      max="10000"
+                      step="1"
+                      class="form-control"
+                      required
+                      :disabled="isDisable.input"
+                    />
+                    <span v-show="isShow.qty" id="qty"
+                      >Can't be more than quantity items</span
                     >
-                    <router-link :to="'/inventory-item'">
-                      Add new item here</router-link
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Unit:</span>
+                    <input
+                      type="text"
+                      v-model="itemAdd.unit"
+                      id=""
+                      class="form-control"
+                      required
+                      readonly
+                      :disabled="isDisable.input"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Price:</span>
+                    <input
+                      type="number"
+                      v-model="itemAdd.currentPrice"
+                      @change="onPriceChange"
+                      @input="onPriceChange"
+                      class="form-control"
+                      min="0"
+                      max="9999999"
+                      step="250"
+                      required
+                      :disabled="isDisable.input"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <span>Line total:</span>
+                    <input
+                      type="number"
+                      v-model="itemAdd.price"
+                      class="form-control"
+                      min="0.00"
+                      max="10000.00"
+                      step="0.01"
+                      readonly
+                      :disabled="isDisable.input"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Purpose:</span>
+                    <input
+                      type="text"
+                      v-model="itemAdd.purpose"
+                      id=""
+                      class="form-control"
+                      :disabled="isDisable.input"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Used by:</span>
+                    <selectSearch
+                      v-model="selected.usedBy"
+                      v-bind="{
+                        datas: users,
+                        width: '100%',
+                        name: 'name',
+                        isDisable: isDisable.input,
+                      }"
+                      @dataSelected="onItemSelectedUsed"
+                    ></selectSearch>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <span>Remarks:</span>
+                    <textarea
+                      v-model="itemAdd.remarks"
+                      class="form-control"
+                      id=""
+                      cols="30"
+                      rows="2"
+                      :disabled="isDisable.input"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group my-2">
+                <div class="row">
+                  <div class="col-12">
+                    <button
+                      v-on:click="addToList"
+                      v-on:keyup.enter="addToList"
+                      class="
+                        btn btn-success
+                        float-right
+                        btn-default btn-squared
+                        px-30
+                      "
+                      :disabled="btndisable"
                     >
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Quantity:</span>
-                  <input
-                    type="number"
-                    v-model="itemAdd.qtyOrdered"
-                    @change="onQtyInc"
-                    @input="onQtyInc"
-                    placeholder="0"
-                    id=""
-                    min="0"
-                    max="10000"
-                    step="1"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Unit:</span>
-                  <input
-                    type="text"
-                    v-model="itemAdd.unit"
-                    id=""
-                    class="form-control"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Price:</span>
-                  <input
-                    type="number"
-                    v-model="itemAdd.currentPrice"
-                    @change="onPriceChange"
-                    @input="onPriceChange"
-                    class="form-control"
-                    min="0"
-                    max="9999999"
-                    step="250"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <span>Line total:</span>
-                  <input
-                    type="number"
-                    v-model="itemAdd.price"
-                    class="form-control"
-                    min="0.00"
-                    max="10000.00"
-                    step="0.01"
-                    readonly
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Purpose:</span>
-                  <input
-                    type="text"
-                    v-model="itemAdd.purpose"
-                    id=""
-                    class="form-control"
-                  />
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Used by:</span>
-                  <select
-                    v-model="itemAdd.used_by"
-                    class="form-control form-control-default"
-                  >
-                    <option value="" disabled>Select user:</option>
-                    <option
-                      v-for="users in users"
-                      :key="users.id"
-                      :value="users.id"
-                    >
-                      {{ users.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Remarks:</span>
-                  <textarea
-                    v-model="itemAdd.remarks"
-                    class="form-control"
-                    id=""
-                    cols="30"
-                    rows="2"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="form-group my-2">
-              <div class="row">
-                <div class="col-12">
-                  <button
-                    v-on:click="addToList"
-                    v-on:keyup.enter="addToList"
-                    class="
-                      btn btn-success
-                      float-right
-                      btn-default btn-squared
-                      px-30
-                    "
-                  >
-                    Add to lists
-                  </button>
+                      Add to lists
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- Form Modify -->
       <div class="col-lg-12" :class="{ unvisible: isVisibleModifyForm }">
         <div class="card mb-3">
@@ -187,15 +247,27 @@ n<template>
             <p class="muted-text">{{ titleItemDescription }}</p>
             <div class="form-row">
               <div class="col-lg-12">
-                <div class="form-group">
-                  <span>Item name:</span>
-                  <input
-                    type="text"
-                    v-model="itemModify.item_name"
-                    id=""
-                    class="form-control"
-                    readonly
-                  />
+                <div class="form-row">
+                  <div class="form-group col-lg-5">
+                    <span>From warehouse:</span>
+                    <input
+                      type="text"
+                      v-model="itemModify.warehouse_name"
+                      id=""
+                      class="form-control"
+                      readonly
+                    />
+                  </div>
+                  <div class="form-group col-lg-5">
+                    <span>Item name:</span>
+                    <input
+                      type="text"
+                      v-model="itemModify.item_name"
+                      id=""
+                      class="form-control"
+                      readonly
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -203,10 +275,12 @@ n<template>
               <div class="col-lg-3">
                 <div class="form-group">
                   <span>Quantity:</span>
+                  <span v-show="isShow.qtyItem" id="qtyItem">{{
+                    "(Quantity Item = " + qtyItem + ")"
+                  }}</span>
                   <input
                     type="number"
                     v-model="itemModify.qtyOrdered"
-                    @change="onModifyQtyInc"
                     @input="onModifyQtyInc"
                     placeholder="0"
                     id=""
@@ -215,6 +289,9 @@ n<template>
                     step="1"
                     class="form-control"
                   />
+                  <span v-show="isShow.qty" id="qty"
+                    >Tidak boleh lebih dari quantity item</span
+                  >
                 </div>
               </div>
               <div class="col-lg-3">
@@ -274,19 +351,15 @@ n<template>
               <div class="col-lg-12">
                 <div class="form-group">
                   <span>Used by:</span>
-                  <select
-                    v-model="itemModify.used_by"
-                    class="form-control form-control-default"
-                  >
-                    <option value="" disabled>Select user:</option>
-                    <option
-                      v-for="users in users"
-                      :key="users.id"
-                      :value="users.id"
-                    >
-                      {{ users.name }}
-                    </option>
-                  </select>
+                  <selectSearch
+                    v-model="selected.usedBy"
+                    v-bind="{
+                      datas: users,
+                      width: '100%',
+                      name: 'name',
+                    }"
+                    @dataSelected="onItemSelectedUsed"
+                  ></selectSearch>
                 </div>
               </div>
               <div class="col-lg-12">
@@ -314,6 +387,7 @@ n<template>
                       btn-default btn-squared
                       px-30
                     "
+                    :disabled="btndisableModify"
                   >
                     Update item list
                   </button>
@@ -350,7 +424,7 @@ n<template>
                 <v-data-table
                   :search="search"
                   :headers="headers"
-                  :items="itemPurchasingData"
+                  :items="itemSalesData"
                   :items-per-page="10"
                   class="elevation-1"
                 >
@@ -381,7 +455,7 @@ n<template>
                   <span>SO number:</span>
                   <input
                     type="text"
-                    v-model="purchaseOrderData.po_number"
+                    v-model="salesOrderData.so_number"
                     readonly
                     class="form-control"
                   />
@@ -390,19 +464,15 @@ n<template>
               <div class="col-lg-4">
                 <div class="form-group">
                   <span>Customer:</span>
-                  <select
-                    v-model="purchaseOrderData.supplier"
-                    class="form-control form-control-default"
-                  >
-                    <option value="" disabled>Select supplier:</option>
-                    <option
-                      v-for="supplier in supplier"
-                      :key="supplier.id"
-                      :value="supplier.id"
-                    >
-                      {{ supplier.customerName }}
-                    </option>
-                  </select>
+                  <selectSearch
+                    v-model="selected.so"
+                    v-bind="{
+                      datas: customer,
+                      width: '100%',
+                      name: 'customerName',
+                    }"
+                    @dataSelected="onItemSelectedSO"
+                  ></selectSearch>
                 </div>
               </div>
               <div class="col-lg-3">
@@ -410,7 +480,7 @@ n<template>
                   <span>Order date:</span>
                   <input
                     type="date"
-                    v-model="purchaseOrderData.order_date"
+                    v-model="salesOrderData.order_date"
                     class="form-control"
                     placeholder="Brand"
                   />
@@ -423,7 +493,7 @@ n<template>
                   <span>Remarks:</span>
                   <textarea
                     class="form-control"
-                    v-model="purchaseOrderData.remarks"
+                    v-model="salesOrderData.remarks"
                     cols="30"
                     rows="4"
                   ></textarea>
@@ -442,6 +512,7 @@ n<template>
                       btn-default btn-squared
                       px-30
                     "
+                    :disabled="btndisableSO"
                   >
                     Save
                   </button>
@@ -468,14 +539,12 @@ export default {
   },
   data() {
     return {
-      searchInput: {
-        searchItem: "",
-      },
       // Page Info
       titleItemDescription: "Add some items on Sales Orders.",
       isVisibleAddForm: false,
       isVisibleModifyForm: true,
       itemModify: {
+        warehouseid: "",
         itemid: "",
         qtyOrdered: "0",
         unit: "",
@@ -487,6 +556,7 @@ export default {
         remarks: "",
       },
       itemAdd: {
+        warehouseid: "",
         itemid: "",
         qtyOrdered: "0",
         unit: "",
@@ -497,18 +567,21 @@ export default {
         used_by: "",
         remarks: "",
       },
-      purchaseOrderData: {
-        supplier: "",
-        deliver_to: "",
+      qtyItem: "",
+      salesOrderData: {
+        so_number: "",
+        customer: "",
+        order_date: "",
       },
 
       // data relation
-      supplier: {},
+      customer: {},
       items: {},
       users: {},
+      warehouse: {},
 
       // Datatable
-      itemPurchasingData: [],
+      itemSalesData: [],
       search: "",
       key: 1,
       headers: [
@@ -544,19 +617,81 @@ export default {
         },
       ],
       countItems: "0",
+      isShow: {
+        qty: false,
+        qtyItem: false,
+      },
+      selected: {
+        item: "",
+        usedBy: "",
+        so: "",
+      },
+      isDisable: {
+        select: true,
+        input: true,
+      },
+      isShow: true,
     };
   },
   created() {
     this.loadData();
     this.generateSONumber();
   },
+  computed: {
+    btndisable: function () {
+      return (
+        !this.itemAdd.warehouseid ||
+        !this.itemAdd.itemid ||
+        this.itemAdd.qtyOrdered === "" ||
+        this.itemAdd.qtyOrdered > this.qtyItem ||
+        !this.itemAdd.currentPrice ||
+        !this.itemAdd.purpose ||
+        !this.itemAdd.used_by
+      );
+    },
+    btndisableModify: function () {
+      return (
+        !this.itemModify.warehouseid ||
+        !this.itemModify.itemid ||
+        this.itemModify.qtyOrdered === "" ||
+        this.itemModify.qtyOrdered > this.qtyItem ||
+        !this.itemModify.currentPrice ||
+        !this.itemModify.purpose ||
+        !this.itemModify.used_by
+      );
+    },
+    btndisableSO: function () {
+      return (
+        this.salesOrderData.customer === "" ||
+        this.salesOrderData.order_date === ""
+      );
+    },
+  },
   methods: {
-    onClickChild(value) {
-      console.log(value)
+    classRotate: function (param) {
+      return param ? "rotate" : "";
+    },
+    isShowing: function () {
+      this.isShow = !this.isShow;
+    },
+    onWarehouseSelected(param) {
+      this.itemAdd.warehouseid = param.id;
+      this.itemModify.warehouseid = param.id;
+      this.selected.warehouse = param.warehouse_name;
+      this.isDisable.select = false;
+    },
+    onItemSelectedSO(param) {
+      this.salesOrderData.customer = param.id;
+      this.selected.so = param.customerName;
+    },
+    onItemSelectedUsed(param) {
+      this.itemAdd.used_by = param.id;
+      this.itemModify.used_by = param.id;
+      this.selected.usedBy = param.name;
     },
     generateSONumber() {
       const genSONumber = this.rndStr(5);
-      this.purchaseOrderData.po_number = genSONumber;
+      this.salesOrderData.so_number = genSONumber;
     },
     rndStr(len) {
       let blank = "";
@@ -574,20 +709,24 @@ export default {
     },
     // on CHange Attribute
     async onItemSelected(value) {
-      const getId = value.id
-
+      this.isDisable.input = false;
+      this.isShow.qty = false;
+      const getId = value.id;
       this.$Progress.start();
-      const getItemDataSelected = await axios.get(
+      const { data: itemData } = await axios.get(
         "/api/inventory-item/" + getId
       );
       this.$Progress.finish();
-      this.itemAdd = {
-        unit: getItemDataSelected.data.unit,
-        currentPrice: getItemDataSelected.data.price,
-        itemid: getItemDataSelected.data.id,
-      };
+      this.itemAdd.unit = itemData.unit;
+      this.itemAdd.currentPrice = itemData.price;
+      this.itemAdd.itemid = itemData.id;
+      this.qtyItem = itemData.qty;
+      this.selected.item = `${value.item_code} - ${value.item_name}`;
+      this.isShow.qtyItem = true;
     },
     onQtyInc() {
+      this.isShow.qty = this.itemAdd.qtyOrdered > this.qtyItem ? true : false;
+
       this.itemAdd.price =
         parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
     },
@@ -596,6 +735,9 @@ export default {
         parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
     },
     onModifyQtyInc() {
+      this.isShow.qty =
+        this.itemModify.qtyOrdered > this.qtyItem ? true : false;
+
       this.itemModify.price =
         parseInt(this.itemModify.qtyOrdered) *
         parseInt(this.itemModify.currentPrice);
@@ -607,16 +749,16 @@ export default {
     },
     async modifyItemList() {
       this.$Progress.start();
-      console.log("Item :", this.itemModify);
       await axios
-        .patch("/api/po/item-purchase/" + this.itemModify.id, this.itemModify)
+        .patch("/api/item-sales/" + this.itemModify.id, this.itemModify)
         .then((response) => {
           Swal.fire({
             icon: "success",
             title: "Congratulations",
-            text: "Success modify item on purchase order table",
+            text: "Success modify item on sales order table",
           });
           this.itemModify = {
+            warehouseid: "",
             itemid: "",
             qtyOrdered: "0",
             unit: "",
@@ -629,61 +771,77 @@ export default {
           };
         });
       this.loadData();
-      (this.isVisibleAddForm = false),
-        (this.isVisibleModifyForm = true),
-        this.$Progress.finish();
+      this.isVisibleAddForm = false;
+      this.isVisibleModifyForm = true;
+      this.selected.usedBy = "";
+      this.$Progress.finish();
     },
     async loadData() {
       this.$Progress.start();
       // Load data relation
-      const resp = await axios.get("/api/suppliers");
-      this.supplier = resp.data;
-      const itemPurchasingData = await axios.get("/api/po/item-purchase");
-      this.itemPurchasingData = itemPurchasingData.data;
+      const resp = await axios.get("/api/customers");
+      this.customer = resp.data;
+      const itemSalesData = await axios.get("/api/item-sales");
+      this.itemSalesData = itemSalesData.data;
       const itemsData = await axios.get("/api/inventory-item");
       this.items = itemsData.data;
+      const warehouseData = await axios.get("/api/warehouse");
+      this.warehouse = warehouseData.data;
       const contactUsers = await axios.get("/api/contact-list");
       this.users = contactUsers.data;
       this.$Progress.finish();
     },
     async modifyItemPurchasing(id) {
       this.$Progress.start();
-      const resp = await axios.get("/api/po/item-purchases/" + id);
+      const resp = await axios.get("/api/item-sales/" + id);
       this.checkedItem = true;
       this.itemModify = resp.data;
       this.itemModify.currentPrice = resp.data.item.price;
-      this.itemModify.item_name = resp.data.item.item_name;
-      this.itemModify.used_by = resp.data.used_by.id;
+      this.itemModify.item_name = `${resp.data.item.item_code} - ${resp.data.item.item_name}`;
+      this.itemModify.warehouseid = resp.data.warehouse.id;
+      this.itemModify.warehouse_name = resp.data.warehouse.warehouse_name;
+      this.selected.usedBy = `${resp.data.used.name}`;
+      this.itemModify.used_by = resp.data.used.id;
       this.itemModify.itemid = resp.data.item.id;
-      this.titleItemDescription = "Modify Purchase Order Items";
+      this.titleItemDescription = "Modify Sales Order Items";
       this.isVisibleAddForm = true;
       this.isVisibleModifyForm = false;
+      this.isShow.qtyItem = true;
+      this.qtyItem = resp.data.item.qty;
       window.scrollTo(0, 0);
       this.$Progress.finish();
     },
     async addToList() {
       this.$Progress.start();
-      await axios
-        .post("/api/po/item-purchase", this.itemAdd)
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "Congratulations",
-            text: "Success add item on purchase order table",
-          });
-          this.itemAdd = {
-            itemid: "",
-            qtyOrdered: "0",
-            unit: "",
-            currentPrice: "0",
-            price: "0",
-            purpose: "",
-            requested_by: "",
-            used_by: "",
-            remarks: "",
-          };
+      await axios.post("/api/item-sales", this.itemAdd).then((response) => {
+        Swal.fire({
+          icon: "success",
+          title: "Congratulations",
+          text: "Success add item on Sales order table",
         });
+        this.itemAdd = {
+          warehouseid: "",
+          itemid: "",
+          qtyOrdered: "0",
+          unit: "",
+          currentPrice: "0",
+          price: "0",
+          purpose: "",
+          requested_by: "",
+          used_by: "",
+          remarks: "",
+        };
+      });
       this.loadData();
+      this.selected = {
+        warehouse: "",
+        item: "",
+        usedBy: "",
+      };
+      this.isDisable = {
+        select: true,
+        input: true,
+      };
       this.$Progress.finish();
     },
     async modifyItemPurchase() {
@@ -697,6 +855,7 @@ export default {
             text: "Success modify item on purchase order table",
           });
           this.itemAdd = {
+            warehouseid: "",
             itemid: "",
             qtyOrdered: "0",
             unit: "",
@@ -708,7 +867,8 @@ export default {
             remarks: "",
           };
         });
-      this.titleItemDescription = "Add some items on Purchase Orders.";
+      this.selected.usedBy = "";
+      this.titleItemDescription = "Add some items on Sales Orders.";
       this.isVisibleAddForm = false;
       this.isVisibleModifyForm = true;
       this.loadData();
@@ -717,25 +877,27 @@ export default {
     async submitHandle() {
       this.$Progress.start();
       await axios
-        .post("/api/purchase/order", this.purchaseOrderData)
+        .post("/api/sales/order", this.salesOrderData)
         .then((response) => {
+          console.log(response);
           this.loadData();
           Swal.fire({
             icon: "success",
             title: "Congratulations",
-            text: "Success New purchase order",
+            text: "Success New sales order",
           });
-          this.purchaseOrderData = {
-            supplier: "",
+          this.salesOrderData = {
+            so_number: "",
+            customer: "",
             order_date: "",
-            deliver_to: "",
           };
           const genSONumber = this.rndStr(5);
-          this.purchaseOrderData.po_number = genSONumber;
-          this.$router.push("/purchase/order");
+          this.salesOrderData.so_number = genSONumber;
+          this.$router.push("/sales/order");
           this.$Progress.finish();
         })
         .catch((error) => {
+          console.log(error);
           this.$Progress.fail();
           Swal.fire({
             icon: "warning",
@@ -751,18 +913,18 @@ export default {
             }
           });
         });
-      // console.log('data click', [this.purchaseOrderData, this.itemPurchasingData])
+      // console.log('data click', [this.purchaseOrderData, this.itemSalesData])
     },
     async deleteItemPurchasing(id) {
       const result = await Swal.fire({
-        title: "Delete item purchase order?",
+        title: "Delete item sales order?",
         showCancelButton: true,
         cancelButtonColor: "#d33",
         confirmButtonText: `Delete`,
       });
       if (result.isConfirmed) {
         this.$Progress.start();
-        await axios.delete("/api/po/item-purchase/" + id);
+        await axios.delete("/api/item-sales/" + id);
         this.loadData();
         await Swal.fire({
           icon: "success",
@@ -772,15 +934,20 @@ export default {
         this.$Progress.finish();
       }
     },
+    submitChek() {},
   },
 };
 </script>
 
 <style scoped>
-#item input[list] {
-  width: 451px;
+#qtyItem {
+  color: #ebdc31;
 }
-.select .v-input__slot {
-  border: 1px solid #f1f2f6 !important;
+#qty {
+  color: #f44444;
+}
+.rotate {
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 </style>
