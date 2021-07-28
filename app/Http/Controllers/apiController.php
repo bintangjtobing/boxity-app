@@ -45,6 +45,8 @@ use App\userGuide;
 use App\warehouseList;
 use Illuminate\Support\Facades\Date;
 use App\popupWindow;
+use App\Role;
+use App\Permissions;
 use App\userLogs;
 use App\warehouseCustomer;
 use Mail;
@@ -1685,5 +1687,65 @@ class apiController extends Controller
         } else {
             return response()->json(userLogs::with('user')->where('userId', Auth::id())->orderBy('created_at', 'DESC')->get());
         }
+    }
+
+    // ROLES & PERMISSIONS
+    public function getRoles()
+    {
+        return Role::orderBy('created_at', 'DESC')->get();
+    }
+    public function getPermissions()
+    {
+        return Permissions::orderBy('created_at', 'DESC')->get();
+    }
+    public function addNewRoles(Request $request)
+    {
+        $postRole = new Role();
+        $postRole->name = $request->name;
+        $postRole->slug = $request->slug;
+        $postRole->save();
+
+
+        foreach ($request->permissions as $listPermissions) {
+            $permission = new Permissions();
+            $permission->name = $listPermissions['value'];
+            $permission->slug = strtolower(str_replace(" ", "-", $listPermissions['value']));
+            $permission->save();
+            $postRole->permissions()->attach($permission->id);
+            $postRole->save();
+        }
+        // $postRole->save();
+        return 200;
+    }
+    public function getRolesById($id)
+    {
+        return Role::with('permissions')->where('id', $id)->first();
+        // return $id;
+    }
+    public function updateRolesById($id, Request $request)
+    {
+        $postRole = Role::find($id);
+        $postRole->name = $request->name;
+        $postRole->slug = $request->slug;
+
+        $roleDelete = Role::find($id)->permissions()->detach();
+        $roleDelete = Role::find($id)->permissions()->delete();
+
+        foreach ($request->permissions as $listPermissions) {
+            $permission = new Permissions();
+            $permission->name = $listPermissions['value'];
+            $permission->slug = strtolower(str_replace(" ", "-", $listPermissions['value']));
+            $permission->save();
+            $postRole->permissions()->attach($permission->id);
+            $postRole->save();
+        }
+        return 200;
+    }
+    public function deleteRolesById($id)
+    {
+        $roleDelete = Role::find($id)->permissions()->delete();
+        $roleDelete = Role::find($id)->permissions()->detach();
+        $role = Role::find($id)->delete();
+        return 200;
     }
 }

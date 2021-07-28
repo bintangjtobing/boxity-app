@@ -173,6 +173,19 @@
                                 </router-link>
                             </li>
                         </div>
+                        <div v-if="user.role=='admin'">
+                            <li class="menu-title m-top-15">
+                                <span>Role & Permissions</span>
+                            </li>
+                            <li>
+                                <router-link to="/role-management">
+                                    <span class="material-icons-outlined nav-icon">
+                                        accessibility
+                                    </span>
+                                    <span class="menu-text">Role management</span>
+                                </router-link>
+                            </li>
+                        </div>
                         <div v-if="user.role=='admin' || user.role=='hrdga'">
                             <li class="menu-title m-top-15">
                                 <span>Human Resources Management</span>

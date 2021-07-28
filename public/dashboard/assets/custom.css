@@ -292,7 +292,9 @@ a {
 .pasfoto {
     width: 150px;
 }
-
+.reply-editor__author img {
+    height: auto;
+}
 .selected {
     background-color: #fff;
 }

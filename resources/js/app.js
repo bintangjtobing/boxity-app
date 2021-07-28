@@ -13,7 +13,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 import 'feather-icons';
 import moment from 'moment';
-import VueProgressBar from 'vue-progressbar'
+import VueProgressBar from 'vue-progressbar';
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -116,6 +116,11 @@ import SalesReturnAdd from './components/sales/salesReturnAdd.vue';
 import receivingConfirmation from './components/receivingConfirmation/receivingConfirmation.vue';
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
 import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
+
+// ROLES & PERMISSIONS
+import roleView from './components/rolepermissions/role.vue';
+import roleForm from './components/rolepermissions/roleEdit.vue';
+import roleAdd from './components/rolepermissions/roleAdd.vue';
 
 // membuat router
 const routes = [{
@@ -432,6 +437,20 @@ const routes = [{
         name: 'popup-window',
         path: '/popup-management',
         component: popupWindow
+    },
+    // ROLES AND PERMISSIONS
+    {
+        name: 'role-view',
+        path: '/role-management',
+        component: roleView
+    }, {
+        name: 'detailRole',
+        path: '/role-management/detail/:id',
+        component: roleForm
+    }, {
+        name: 'addRole',
+        path: '/role-management/add',
+        component: roleAdd
     }
 ]
 

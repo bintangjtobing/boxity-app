@@ -348,3 +348,11 @@ Route::get('/generate-one-lr', 'apiController@plusOneEachTen');
 
 // USER ACTIVITY LOGS
 Route::get('/user-logs', 'apiController@getActivityLogs');
+
+// Role & Permission
+Route::get('/roles', 'apiController@getRoles');
+Route::get('/permissions', 'apiController@getPermissions');
+Route::post('/roles', 'apiController@addNewRoles');
+Route::get('/roles/{id}', 'apiController@getRolesById');
+Route::patch('/roles/{id}', 'apiController@updateRolesById');
+Route::delete('/roles/{id}', 'apiController@deleteRolesById');
