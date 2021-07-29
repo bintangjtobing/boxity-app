@@ -157,7 +157,7 @@ Route::get('/count-suppliers', 'apiController@countSuppliers');
 Route::patch('/suppliers/{id}', 'apiController@updateSuppliers');
 
 // Warehouse
-// Get Warehouse based on customer's warehouse  
+// Get Warehouse based on customer's warehouse
 Route::get('/warehouse', 'apiController@getWarehouse');
 Route::post('/warehouse', 'apiController@postWarehouse');
 Route::get('/warehouse/{id}', 'apiController@getWarehouseById');
@@ -237,6 +237,8 @@ Route::get('/purchase/order/{po_number}', 'purchasingController@getPurchaseOrder
 Route::patch('/purchase/order/{po_number}', 'purchasingController@postPurchaseOrderByPoNumber');
 Route::delete('/purchases-order/{id}', 'purchasingController@deletePurchaseOrderById');
 Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
+Route::get('/approve/purchase/order/{po_number}', 'purchasingController@approvePurchaseOrderByPoNumber');
+
 
 // Item on Purchases Order
 Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasePO');

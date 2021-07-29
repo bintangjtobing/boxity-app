@@ -94,6 +94,16 @@ class purchasingController extends Controller
 
         return response()->json($purchasingUpdate, 200);
     }
+    public function approvePurchaseOrderByPoNumber($po_number, Request $request)
+    {
+        // Update status to 1, means it is approved
+        $statusPRE = purchaseOrder::where('po_number', $po_number)
+            ->update(array(
+                'status' => 1,
+                'approvedBy' => Auth::id(),
+            ));
+        return response()->json($detailsToPO);
+    }
     public function deletePurchaseOrderById($id, Request $request)
     {
         $purchaseOrd = purchaseOrder::find($id);

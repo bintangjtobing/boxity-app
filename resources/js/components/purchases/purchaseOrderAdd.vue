@@ -354,6 +354,7 @@ n<template>
                     }, {
                         text: 'Actions',
                         value: 'actions',
+                        align: 'right',
                         filterable: false,
                         sortable: false
                     }
