@@ -30,18 +30,14 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
-                            <div class="col-5">
+                            <div class="col-lg-6">
                                 <h5>Items</h5>
                                 <p class="muted-text">{{ titleItemDescription }}</p>
                             </div>
-                            <div class="col-1">
-                                <span>
-                                    <svg :class="classRotate(isShow.colapse)" xmlns="http://www.w3.org/2000/svg"
-                                        width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                    </svg>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
                                 </span>
                             </div>
                         </div>
@@ -687,7 +683,7 @@
             async submitHandle() {
                 this.$Progress.start();
                 await axios
-                    .patch("/api/sales/order", this.salesOrderData)
+                    .post("/api/sales/order", this.salesOrderData)
                     .then((response) => {
                         this.loadData();
                         Swal.fire({

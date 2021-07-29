@@ -331,7 +331,7 @@ class apiController extends Controller
     {
         return response()->json(commentIssue::with('user')->where('issueId', $id)->get());
     }
-    public function approveIssue($id)
+    public function approveIssue($id, Request $request)
     {
         $issue = issue::find($id);
         $issue->approved_by = Auth::id();

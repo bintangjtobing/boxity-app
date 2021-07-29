@@ -305,15 +305,6 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li>
-                                <router-link to="/receiving-confirmation">
-                                    <span class="material-icons-outlined nav-icon">
-                                        archive
-                                    </span>
-                                    <span class="menu-text">Receiving Conf.</span>
-                                    <span class="badge badge-secondary menuItem">NEW</span>
-                                </router-link>
-                            </li>
                             <li class="menu-title m-top-15">
                                 <span>Dispatching</span>
                             </li>

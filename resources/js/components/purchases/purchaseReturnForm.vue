@@ -17,8 +17,19 @@
             <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5>Add Item</h5>
-                        <p class="muted-text">{{titleItemDescription}}</p>
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Items</h5>
+                                <p class="muted-text">{{ titleItemDescription }}</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
+                        <div v-show="isShow.colapse">
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -86,6 +97,7 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,8 +105,19 @@
             <div class="col-lg-12" :class="{unvisible: isVisibleModifyForm}">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5>Modify Item</h5>
-                        <p class="muted-text">{{titleItemDescription}}</p>
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Modify Item</h5>
+                                <p class="muted-text">{{ titleItemDescription }}</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
+                        <div v-show="isShow.colapse">
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -162,6 +185,7 @@
                                         list</button>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -280,6 +304,9 @@
         },
         data() {
             return {
+                isShow: {
+                    colapse: true,
+                },
                 updateOnly: true,
                 checkedPR: false,
                 checkedItem: false,
@@ -347,6 +374,12 @@
             this.loadLoggedUser();
         },
         methods: {
+            classRotate: function (param) {
+                return param ? "rotate" : "";
+            },
+            isShowing: function () {
+                this.isShow.colapse = !this.isShow.colapse;
+            },
             // Load loggedin user
             async loadLoggedUser() {
                 const resp = await axios.get('/getUserLoggedIn');
@@ -515,3 +548,10 @@
     }
 
 </script>
+<style scoped>
+    .rotate {
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+</style>

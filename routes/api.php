@@ -208,27 +208,6 @@ Route::patch('/goods-item-transfer/{id}', 'apiController@postGoodsItemTransferBy
 Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransferById');
 Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
 
-// ///////////////// CONFIRMATION SECTION START ///////////////////////////////////
-// Receiving Confirmation
-Route::get('/receiving-confirmation', 'receivingController@getReceivingConfirmation');
-Route::post('/receiving-confirmation', 'receivingController@postReceivingConfirmation');
-Route::get('/receiving-confirmation/{receiving_number}', 'receivingController@getReceivingConfirmationByReceivingNumber');
-Route::patch('/receiving-confirmation/{receiving_number}', 'receivingController@postReceivingConfirmationByReceivingNumber');
-Route::delete('/receivings-confirmation/{id}', 'receivingController@deleteReceivingConfirmationById');
-Route::get('/count-receiving-confirmation', 'receivingController@countReceivingConfirmation');
-
-// Item Receiving
-Route::get('/item-receiving', 'receivingController@getItemReceiving');
-Route::post('/item-receiving', 'receivingController@postItemReceiving');
-Route::post('/item-receiving/{receiving_number}', 'receivingController@postItemReceivingByReceivingNumber');
-Route::get('/item-receiving/{receiving_number}', 'receivingController@getItemReceivingByReceivingNumber');
-Route::get('/item-receivings/{id}', 'receivingController@getItemReceivingById');
-Route::patch('/item-receiving/{id}', 'receivingController@postItemReceivingById');
-Route::delete('/item-receiving/{id}', 'receivingController@deleteItemReceivingById');
-Route::get('/count-item-receiving', 'receivingController@countItemReceiving');
-
-// ///////////////// CONFIRMATION SECTION END ///////////////////////////////////
-
 ///////////////// PURCHASE ORDER ///////////////////////////////////
 // Purchase Order
 Route::get('/purchase/order', 'purchasingController@getPurchaseOrder');

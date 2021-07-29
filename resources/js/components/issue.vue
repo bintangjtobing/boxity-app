@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-12 col-sm-12 col-lg-7">
+            <div class="col-12 col-sm-12 col-lg-12">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
                         <h2 class="text-capitalize fw-700 breadcrumb-title">Issue lists</h2>
@@ -44,94 +44,76 @@
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title"><i class="fas fa-code-branch"></i>
-                                            issue</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">priority</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="!issues.length">
-                                    <td colspan="3">
-                                        <div class="atbd-empty text-center">
-                                            <div class="atbd-empty__image">
-                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                            </div>
-                                            <div class="atbd-empty__text">
-                                                <p class="">No issue assigned to you.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="issue in issues" :key="issue.id">
-                                    <td style="width:85%">
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <router-link :to="`/issues/${issue.id}`">
-                                                        <h6 v-if="issue.title.length<95">{{issue.title}}</h6>
-                                                        <h6 v-if="issue.title.length>=95">
-                                                            {{issue.title.substring(0,94)+"..."}}</h6>
-                                                        <p>{{issue.comments_count}}
-                                                            <i class="far fa-comment-dots"></i> · Created
-                                                            {{issue.created_at}} by
-                                                            {{issue.user.name}}
-                                                            <div v-if="issue.status=='0'">
-                                                                <span
-                                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
-                                                            </div>
-                                                            <div v-if="issue.status=='1'">
-                                                                <span
-                                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
-                                                            </div>
-                                                            <div v-if="issue.status=='2'">
-                                                                <span class="bg-opacity-success color-success rounded-pill
-                                                    userDatatable-content-status active"><span><i
-                                                                            class="far fa-history"></i>
-                                                                    </span>&nbsp;Done</span>
-                                                            </div>
-                                                        </p>
-                                                    </router-link>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            <div v-if="issue.priority===0">
-                                                <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
-                                                    Lowest</span>
-                                            </div>
-                                            <div v-if="issue.priority===1">
-                                                <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
-                                            </div>
-                                            <div v-if="issue.priority===2">
-                                                <span class="priority-medium"><i class="fas fa-arrow-up"></i>
-                                                    Medium</span>
-                                            </div>
-                                            <div v-if="issue.priority===3">
-                                                <span class="priority-high"><i class="fas fa-arrow-up"></i>
-                                                    High</span>
-                                            </div>
-                                            <div v-if="issue.priority===4">
-                                                <span class="priority-highest"><i class="fas fa-arrow-up"></i>
-                                                    Highest</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
+                                hide-details>
+                            </v-text-field>
+                        </v-card-title>
+                        <v-data-table :expanded.sync="expanded" show-expand :search="search" loading
+                            loading-text="Loading... Please wait..." :headers="headers" multi-sort :items="issues"
+                            :items-per-page="10" class="elevation-1">
+                            <template v-slot:expanded-item="{ headers, item }">
+                                <td :colspan="headers.length">
+                                    More info: <span v-html="item.issue"></span>
+                                </td>
+                            </template>
+                            <template v-slot:[`item.title`]="{item}">
+                                <router-link :to="`/issues/${item.id}`">#{{item.id}} - {{item.title}}</router-link>
+                            </template>
+                            <template v-slot:[`item.status`]="{item}">
+                                <div v-if="item.status==='0'">
+                                    <span class="rounded-pill userDatatable-content-status color-warning
+                                                bg-opacity-warning active text-capitalize"><i
+                                            class="fas fa-exclamation-circle"></i>
+                                        &nbsp;Draft</span>
+                                </div>
+                                <div v-if="item.status==='1'">
+                                    <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><i
+                                            class="fas fa-check-circle"></i>
+                                        &nbsp;Approved</span>
+                                </div>
+                                <div v-if="item.status==='2'">
+                                    <span class="rounded-pill userDatatable-content-status color-danger
+                                                bg-opacity-danger active text-capitalize"><i
+                                            class="fas fa-times-circle"></i>
+                                        &nbsp;Done</span>
+                                </div>
+                            </template>
+                            <template v-slot:[`item.priority`]="{item}">
+
+                                <div v-if="item.priority===0">
+                                    <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
+                                        Lowest</span>
+                                </div>
+                                <div v-if="item.priority===1">
+                                    <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                </div>
+                                <div v-if="item.priority===2">
+                                    <span class="priority-medium"><i class="fas fa-arrow-up"></i>
+                                        Medium</span>
+                                </div>
+                                <div v-if="item.priority===3">
+                                    <span class="priority-high"><i class="fas fa-arrow-up"></i>
+                                        High</span>
+                                </div>
+                                <div v-if="item.priority===4">
+                                    <span class="priority-highest"><i class="fas fa-arrow-up"></i>
+                                        Highest</span>
+                                </div>
+                            </template>
+                            <template v-slot:[`item.actions`]="{item}">
+                                <a v-on:click="approveIssue(item.id)" class="create"
+                                    v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
+                                    <i class="far fa-thumbs-up"></i> Approve</a>
+                                <router-link :to="`/issues/${item.id}`" class="edit">
+                                    <i class="fas fa-eye"></i></router-link>
+                            </template>
+                        </v-data-table>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-lg-5" style="background-color: #272b411a; border-radius: .45rem;">
+            <div class="col-12 col-sm-12 col-lg-12" style="background-color: #272b411a; border-radius: .45rem;">
                 <div class="headerIssueList mb-4">
                     <div class="breadcrumb-main">
                         <h2 class="text-capitalize fw-700 breadcrumb-title">From you.</h2>
@@ -140,70 +122,64 @@
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th>
-                                        <span class="userDatatable-title"><i class="fas fa-code-branch"></i>
-                                            issue</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">status</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="!fromYou.length">
-                                    <td colspan="3">
-                                        <div class="atbd-empty text-center">
-                                            <div class="atbd-empty__image">
-                                                <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-                                            </div>
-                                            <div class="atbd-empty__text">
-                                                <p class="">No issue from you.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr v-for="fromYous in fromYou" :key="fromYous.id">
-                                    <td>
-                                        <div class="d-flex">
-                                            <div class="userDatatable-inline-title">
-                                                <a href="#" class="text-dark fw-500">
-                                                    <router-link :to="`/issues/${fromYous.id}`">
-                                                        <h6 v-if="fromYous.title.length<35">{{fromYous.title}}</h6>
-                                                        <h6 v-if="fromYous.title.length>=35">
-                                                            {{fromYous.title.substring(0,34)+"..."}}</h6>
-                                                        <p>{{fromYous.comments_count}}
-                                                            <i class="far fa-comment-dots"></i> · Created
-                                                            {{fromYous.created_at}} by
-                                                            {{fromYous.user.name}}
-                                                        </p>
-                                                    </router-link>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content d-inline-block">
-                                            <div v-if="fromYous.status=='0'">
-                                                <span
-                                                    class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unapproved</span>
-                                            </div>
-                                            <div v-if="fromYous.status=='1'">
-                                                <span
-                                                    class="bg-opacity-primary color-primary rounded-pill userDatatable-content-status active">Approved</span>
-                                            </div>
-                                            <div v-if="fromYous.status=='2'">
-                                                <span class="bg-opacity-success color-success rounded-pill
-                                                    userDatatable-content-status active"><span><i
-                                                            class="fas fa-clock"></i> </span>&nbsp;Done</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <v-card-title>
+                            <v-text-field v-model="searchFromYou" append-icon="mdi-magnify" label="Search here..."
+                                single-line hide-details>
+                            </v-text-field>
+                        </v-card-title>
+                        <v-data-table :expanded.sync="expandedFromCreated" show-expand :search="searchFromYou" loading
+                            loading-text="Loading... Please wait..." :headers="headers" multi-sort :items="fromYou"
+                            :items-per-page="10" class="elevation-1">
+                            <template v-slot:expanded-item="{ headers, item }">
+                                <td :colspan="headers.length">
+                                    More info: <span v-html="item.issue"></span>
+                                </td>
+                            </template>
+                            <template v-slot:[`item.title`]="{item}">
+                                <router-link :to="`/issues/${item.id}`">#{{item.id}} - {{item.title}}</router-link>
+                            </template>
+                            <template v-slot:[`item.status`]="{item}">
+                                <div v-if="item.status==='0'">
+                                    <span class="rounded-pill userDatatable-content-status color-warning
+                                                bg-opacity-warning active text-capitalize"><i
+                                            class="fas fa-exclamation-circle"></i>
+                                        &nbsp;Draft</span>
+                                </div>
+                                <div v-if="item.status==='1'">
+                                    <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><i
+                                            class="fas fa-check-circle"></i>
+                                        &nbsp;Approved</span>
+                                </div>
+                                <div v-if="item.status==='2'">
+                                    <span class="rounded-pill userDatatable-content-status color-danger
+                                                bg-opacity-danger active text-capitalize"><i
+                                            class="fas fa-times-circle"></i>
+                                        &nbsp;Done</span>
+                                </div>
+                            </template>
+                            <template v-slot:[`item.priority`]="{item}">
+                                <div v-if="item.priority===0">
+                                    <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
+                                        Lowest</span>
+                                </div>
+                                <div v-if="item.priority===1">
+                                    <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                </div>
+                                <div v-if="item.priority===2">
+                                    <span class="priority-medium"><i class="fas fa-arrow-up"></i>
+                                        Medium</span>
+                                </div>
+                                <div v-if="item.priority===3">
+                                    <span class="priority-high"><i class="fas fa-arrow-up"></i>
+                                        High</span>
+                                </div>
+                                <div v-if="item.priority===4">
+                                    <span class="priority-highest"><i class="fas fa-arrow-up"></i>
+                                        Highest</span>
+                                </div>
+                            </template>
+                        </v-data-table>
                     </div>
                 </div>
             </div>
@@ -212,20 +188,57 @@
 </template>
 <script>
     import * as timeago from 'timeago.js';
+    import Swal from 'sweetalert2';
     export default {
         title() {
             return 'Issue report';
         },
         data() {
             return {
-                issues: {},
-                fromYou: {},
                 fromCreated: [],
                 countComment: '0',
+
+                // datatable
+                expanded: [],
+                expandedFromCreated: [],
+                search: '',
+                searchFromYou: '',
+                key: 1,
+                issues: [],
+                fromYou: [],
+                headers: [{
+                        text: 'Issue',
+                        value: 'title'
+                    }, {
+                        text: 'Reporter',
+                        value: 'user.name'
+                    }, {
+                        text: 'Issue Date',
+                        value: 'created_at'
+                    },
+                    {
+                        text: 'Status',
+                        value: 'status'
+                    },
+                    {
+                        text: 'Priority',
+                        align: 'right',
+                        value: 'priority'
+                    }, {
+                        text: 'Actions',
+                        value: 'actions',
+                        align: 'right',
+                        filterable: false,
+                        sortable: false
+                    }
+                ],
+                // end datatable
+                user: {},
             }
         },
         mounted() {
             this.loadIssues();
+            this.getUser();
         },
         methods: {
             async loadIssues() {
@@ -241,6 +254,32 @@
             dateFromCreated() {
                 return timeago.format(created_at);
             },
+            async getUser() {
+                // Load user logged in
+                const res = await axios.get('/getUserLoggedIn');
+                this.user = res.data;
+            },
+            async approveIssue(id) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure?',
+                    text: 'Are you sure want to approve this issue?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, approve this!',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios.patch('/api/issue/approved/' + id);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success approve!',
+                            text: 'You have been successfully approve this issue.',
+                        });
+                        this.loadIssues();
+                    }
+                });
+            }
         }
     }
 

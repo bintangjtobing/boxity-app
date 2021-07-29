@@ -341,7 +341,7 @@
                 if (data.existingPassword) {
                     this.errors = {
                         ...this.errors,
-                        oldPassword: 'Password is not match!',
+                        oldPassword: 'Password is not match with the old one!',
                     };
                 } else {
                     this.errors = {

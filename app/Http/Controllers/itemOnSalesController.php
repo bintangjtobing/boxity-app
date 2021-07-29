@@ -12,26 +12,29 @@ use Illuminate\Support\Facades\Auth;
 
 class itemOnSalesController extends Controller
 {
-    public function getItemSales () {
-            return response()->json(itemsSales::where('so_status', 1)->where('created_by', Auth::id())->with('item', 'used', 'usedBy', 'requestedBy')->get(), 200);
-
+    public function getItemSales()
+    {
+        return response()->json(itemsSales::where('so_status', 1)->where('created_by', Auth::id())->with('item', 'used', 'usedBy', 'requestedBy')->get(), 200);
     }
-    
-    public function getItemSalesById ($id) {
+
+    public function getItemSalesById($id)
+    {
         return response()->json(itemsSales::where('id', $id)->with('item', 'used', 'usedBy', 'requestedBy', 'warehouse')->first());
     }
-    
-    public function getItemSalesBySoNumber ($so_number) {
+
+    public function getItemSalesBySoNumber($so_number)
+    {
         return response()->json(itemsSales::where('salesingId', $so_number)->with('item', 'used', 'usedBy', 'requestedBy', 'warehouse')->get());
     }
-    
-    public function postItemSales (Request $request) {
+
+    public function postItemSales(Request $request)
+    {
         DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
             ->update([
                 'inventory_items.price' => $request->currentPrice,
-            ]);       
-            
+            ]);
+
         $itemsSales = new itemsSales();
         $itemsSales->warehouseId = $request->warehouseid;
         $itemsSales->item_code = $request->itemid;
@@ -44,7 +47,7 @@ class itemOnSalesController extends Controller
         $itemsSales->requested_by = Auth::id();
         $itemsSales->used_by = $request->used_by;
         $itemsSales->remarks = $request->remarks;
-        
+
         $itemsSales->salesingId = $request->so_number ?? '0';
         $itemsSales->so_status = $request->so_status ?? '1';
         $itemsSales->created_by = Auth::id();
@@ -52,8 +55,9 @@ class itemOnSalesController extends Controller
         $itemsSales->save();
         return response()->json($itemsSales, 200);
     }
-    
-    public function postItemSalesById ($id, Request $request) { 
+
+    public function postItemSalesById($id, Request $request)
+    {
         DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
             ->update([
@@ -71,10 +75,9 @@ class itemOnSalesController extends Controller
         $itemSales->save();
         return response()->json($itemSales, 200);
     }
-    
+
     public function deleteItemSalesById($id)
     {
         return response()->json(itemsSales::find($id)->delete());
     }
-    
 }

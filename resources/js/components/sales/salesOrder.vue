@@ -31,10 +31,30 @@
                                 </v-card-title>
                                 <v-data-table :search="search" :headers="headers" multi-sort :items="inventoryItem"
                                     :items-per-page="10" class="elevation-1" group-by="customer.name">
-                                    <template v-slot:item.status="{ item }">
-                                        <span v-if="item.status == '0'">DRAFT</span>
-                                        <span v-if="item.status == '1'">APPROVED</span>
-                                        <span v-if="item.status == '2'">CANCELED</span>
+                                    <template v-slot:[`item.status`]="{item}">
+                                        <div v-if="item.status===0">
+                                            <span class="rounded-pill userDatatable-content-status color-warning
+                                                bg-opacity-warning active text-capitalize"><i
+                                                    class="fas fa-exclamation-circle"></i>
+                                                &nbsp;Draft</span>
+                                        </div>
+                                        <div v-if="item.status===1">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><i
+                                                    class="fas fa-check-circle"></i>
+                                                &nbsp;Approved</span>
+                                        </div>
+                                        <div v-if="item.status===2">
+                                            <span class="rounded-pill userDatatable-content-status color-danger
+                                                bg-opacity-danger active text-capitalize"><i
+                                                    class="fas fa-times-circle"></i>
+                                                &nbsp;Canceled</span>
+                                        </div>
+                                        <div v-if="item.status===3">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><i class="fas fa-link"></i>
+                                                &nbsp;PO Already Created</span>
+                                        </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
@@ -124,9 +144,11 @@
             },
         },
     };
+
 </script>
 <style lang="css">
     .form-group {
         margin-bottom: 0;
     }
+
 </style>

@@ -51,7 +51,7 @@
                                             <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active text-capitalize"><i
                                                     class="fas fa-exclamation-circle"></i>
-                                                &nbsp;Need Approval</span>
+                                                &nbsp;Draft</span>
                                         </div>
                                         <div v-if="item.status===1">
                                             <span class="rounded-pill userDatatable-content-status color-success

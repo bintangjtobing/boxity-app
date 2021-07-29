@@ -60,14 +60,11 @@
                                 </div>
                                 <div class="form-group my-2">
                                     <label for="">Assignees:</label>
-                                    <select v-model="issue.assignee" id=""
-                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
-                                        required>
-                                        <option disabled value="">Choose user</option>
-                                        <option v-for="assignee in users" :key="assignee.id" :value="assignee.id">
-                                            {{assignee.name}}
-                                        </option>
-                                    </select>
+                                    <selectSearch v-model="selected.assignee" v-bind="{
+                        datas: users,
+                        width: '100%',
+                        name: 'name',
+                      }" @dataSelected="onUserSelected"></selectSearch>
                                 </div>
                                 <div class="form-group my-3">
                                     <label for="">Priority:</label>
@@ -98,6 +95,7 @@
     import Swal from 'sweetalert2';
     import vue2Dropzone from 'vue2-dropzone';
     import Editor from '@tinymce/tinymce-vue';
+    import selectSearch from './item/selectSearch.vue'
 
     export default {
         title() {
@@ -105,7 +103,8 @@
         },
         components: {
             vueDropzone: vue2Dropzone,
-            'editor': Editor
+            'editor': Editor,
+            selectSearch: selectSearch
         },
         data() {
             return {
@@ -118,6 +117,9 @@
                     priority: '',
                     description: '',
                 },
+                selected: {
+                    assignee: '',
+                }
             }
         },
         created() {
@@ -126,6 +128,10 @@
             this.$Progress.finish();
         },
         methods: {
+            onUserSelected(param) {
+                this.issue.assignee = param.id;
+                this.selected.assignee = param.name;
+            },
             async assigneeGet() {
                 const res = await axios.get('/api/assignees');
                 this.users = res.data;
