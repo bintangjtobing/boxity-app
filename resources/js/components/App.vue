@@ -7,11 +7,11 @@
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
                         <img class="svg" src="https://btsa.co.id/dashboard/img/svg/bars.svg" alt="img"></a>
-                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="company.logodark" alt="logo"><img
-                            class="light" :src="company.logo" alt="logo"></a>
+                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="company.logoblack"><img
+                            class="light" :src="company.logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
-                    <h4>{{user.customerName}}</h4>
+                        <h4>{{user.customerName}}</h4>
                     </div>
                 </div>
                 <div class="navbar-right">
