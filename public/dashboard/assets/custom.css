@@ -13,8 +13,9 @@
 }
 
 .reporterImg {
-    max-width: 1.75rem;
-    height: auto;
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
 }
 
 .reporter {
