@@ -3,7 +3,8 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main mb-2">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">{{issues.title}} <span>#{{issues.id}}</span></h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">{{issues.title}} <span>#{{issues.id}}</span>
+                    </h2>
                 </div>
                 <div v-if="issues.status=='0'">
                     <div class="mb-4 descIssue">
@@ -223,6 +224,10 @@
                 this.issues = response.data[0];
                 this.countComment = countComment.data;
 
+                // Load comments
+                const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);
+                this.comments = resp.data;
+
                 // Load user logged in
                 const res = await axios.get('/getUserLoggedIn');
                 this.user = res.data;
@@ -241,10 +246,6 @@
                 } else {
                     this.approver.name = approverProc.data[0].name;
                 }
-
-                // Load comments
-                const resp = await axios.get('/api/issue/comment/' + this.$route.params.id);
-                this.comments = resp.data;
                 this.$Progress.finish();
             },
             async deleteData(id) {
