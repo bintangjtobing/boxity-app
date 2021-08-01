@@ -20,6 +20,8 @@ class CreateItemsPurchasesTable extends Migration
             // For general
             $table->integer('qtyOrdered')->nullable();
             $table->integer('qtyShipped')->nullable();
+            $table->integer('qtyRequested')->nullable();
+            $table->integer('qtyReturns')->nullable();
             $table->string('unit')->nullable();
             $table->string('price')->nullable();
             $table->string('purpose')->nullable();

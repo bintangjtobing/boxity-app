@@ -6,10 +6,9 @@
             <nav class="navbar navbar-light">
                 <div class="navbar-left">
                     <a href="" class="sidebar-toggle">
-                        <img class="svg" src="http://localhost:8000/dashboard/img/svg/bars.svg" alt="img"></a>
-                    <a class="navbar-brand" href="/tools"><img class="svg dark"
-                            src="http://localhost:8000/dashboard/img/Logo_Dark.png" alt="logo"><img class="light"
-                            src="http://localhost:8000/dashboard/img/Logo_white.png" alt="logo"></a>
+                        <img class="svg" src="https://btsa.co.id/dashboard/img/svg/bars.svg" alt="img"></a>
+                    <a class="navbar-brand" href="/tools"><img class="svg dark" :src="company.logoblack"><img
+                            class="light" :src="company.logo"></a>
                     <div>
                         <span>{{user.customerCity}}</span>
                         <h4>{{user.customerName}}</h4>
@@ -31,12 +30,12 @@
                         <li class="nav-author">
                             <div class="dropdown-custom">
                                 <a href="javascript:;" class="nav-item-toggle"><img
-                                        v-bind:src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                        v-bind:src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
                                         alt="User" class="rounded-circle"> {{user.name}}</a>
                                 <div class="dropdown-wrapper">
                                     <div class="nav-author__info">
                                         <div class="author-img" v-if="user.role!='customer'">
-                                            <img :src="`http://localhost:8000/dashboard/img/author/profile/`+user.avatar"
+                                            <img :src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
                                                 alt="User" class="rounded-circle">
                                         </div>
                                         <div>
@@ -232,7 +231,7 @@
                                         home_work
                                     </span>
                                     <span class="menu-text">Warehouse List</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -246,7 +245,7 @@
                                     <span class="menu-text">
                                         Stock Group
                                     </span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -255,7 +254,7 @@
                                         inventory_2
                                     </span>
                                     <span class="menu-text">Item Group</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -264,7 +263,7 @@
                                         category
                                     </span>
                                     <span class="menu-text">Inventory Item</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -276,7 +275,7 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
-                                    <span class="badge badge-secondary menuItem">RTL</span>
+                                    <span class="badge badge-secondary menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -285,7 +284,7 @@
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
-                                    <span class="badge badge-secondary text-white menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -294,7 +293,7 @@
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-warning menuItem">Doing</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li>
@@ -303,16 +302,7 @@
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </router-link>
-                            </li>
-                            <li>
-                                <router-link to="/receiving-confirmation">
-                                    <span class="material-icons-outlined nav-icon">
-                                        archive
-                                    </span>
-                                    <span class="menu-text">Receiving Conf.</span>
-                                    <span class="badge badge-secondary menuItem">RTL</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -402,12 +392,12 @@
                                 </span>
                                 <span class="menu-text">Trace logs</span>
                             </a>
-                            <a :href="'/api/logs'">
+                            <router-link to="/user-logs">
                                 <span class="material-icons-outlined nav-icon">
                                     report
                                 </span>
                                 <span class="menu-text">Activity Log</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li>
                             <a v-on:click="signOutConfirm" class="text-danger">

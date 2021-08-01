@@ -14,7 +14,7 @@
                 <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
                     <div class="application-task d-flex align-items-center">
                         <div class="application-task-icon wh-60 bg-primary content-center">
-                            <img class="svg" src="http://localhost:8000/dashboard/img/svg/feature-cards9.svg" alt="">
+                            <img class="svg" src="https://btsa.co.id/dashboard/img/svg/feature-cards9.svg" alt="">
                         </div>
                         <div class="application-task-content">
                             <h4>{{solvedIssue}}</h4>
@@ -27,7 +27,7 @@
                 <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
                     <div class="application-task d-flex align-items-center">
                         <div class="application-task-icon wh-60 bg-secondary content-center">
-                            <img class="svg" src="http://localhost:8000/dashboard/img/svg/feature-cards10.svg" alt="">
+                            <img class="svg" src="https://btsa.co.id/dashboard/img/svg/feature-cards10.svg" alt="">
                         </div>
                         <div class="application-task-content">
                             <h4>{{pendingIssue}}</h4>
@@ -49,7 +49,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/lifebuoy.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/lifebuoy.svg" alt="">
                             <span>Issue Center</span>
                         </h4>
                         <div class="card-short__content">
@@ -80,7 +80,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/correct.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/correct.svg" alt="">
                             <span>Goods Receipt</span>
                         </h4>
                         <div class="card-short__content">
@@ -111,7 +111,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/post-it.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/post-it.svg" alt="">
                             <span>Notepad</span>
                         </h4>
                         <div class="card-short__content">
@@ -146,7 +146,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/lifebuoy.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/lifebuoy.svg" alt="">
                             <span>Issue Center</span>
                         </h4>
                         <div class="card-short__content">
@@ -177,7 +177,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/correct.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/correct.svg" alt="">
                             <span>Goods Receipt</span>
                         </h4>
                         <div class="card-short__content">
@@ -208,7 +208,7 @@
                 <figure class="feature-cards6">
                     <div class="card-short">
                         <h4 class="card-short__title align-items-center">
-                            <img src="http://localhost:8000/dashboard/img/svg/post-it.svg" alt="">
+                            <img src="https://btsa.co.id/dashboard/img/svg/post-it.svg" alt="">
                             <span>Notepad</span>
                         </h4>
                         <div class="card-short__content">

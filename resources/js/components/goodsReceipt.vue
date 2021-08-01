@@ -89,18 +89,18 @@
                             <form>
                                 <div class="form-row">
                                     <div class="col-lg-8">
-                                        <div class="form-group mb-25">
-                                            <select
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
-                                                id="n-labels" v-model="goods.receiverid" required>
-                                                <option value="" disabled>Select receiver:</option>
-                                                <option v-for="users in user" :key="users.id" :value="users.id">
-                                                    {{users.name}}</option>
-                                            </select>
+                                        <div class="form-group">
+                                            <span>Recipient: </span>
+                                            <selectSearch v-model="selected.receiverid" v-bind="{
+                        datas: user,
+                        width: '100%',
+                        name: 'name',
+                      }" @dataSelected="onUserSelected"></selectSearch>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div class="form-group mb-25">
+                                        <div class="form-group">
+                                            <span>Courier: </span>
                                             <select
                                                 class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                                 id="n-labels" v-model="goods.courier" required>
@@ -134,7 +134,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group my-2">
+                                <div class="form-group">
+                                    <span>Type: </span>
                                     <select
                                         class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select"
                                         id="n-labels" v-model="goods.typeOfGoods" required>
@@ -144,11 +145,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group my-2">
+                                    <span>Receipt Details: </span>
                                     <input type="text" v-model="goods.receiptNumber" class="form-control"
-                                        placeholder="Nama Pengirim (PT,DLL) and Receipt number (No resi dokumen / pengiriman)"
-                                        id="text" required>
+                                        placeholder="Receipt number, sender name, etc..." id="text" required>
                                 </div>
                                 <div class="form-group my-2">
+                                    <span>Remarks: </span>
                                     <editor placeholder="Document/packet descriptions..." v-model="goods.description"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 300,
@@ -179,10 +181,12 @@
 <script>
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
+    import SelectSearch from './item/selectSearch.vue';
 
     export default {
         components: {
-            'editor': Editor
+            'editor': Editor,
+            selectSearch: SelectSearch,
         },
         title() {
             return 'Goods Receipt';
@@ -218,12 +222,19 @@
                 // end datatable
                 user: {},
                 member: {},
+                selected: {
+                    receiverid: '',
+                }
             }
         },
         created() {
             this.loadGoods();
         },
         methods: {
+            onUserSelected(param) {
+                this.goods.receiverid = param.id;
+                this.selected.receiverid = param.name;
+            },
             async loadGoods() {
                 this.$Progress.start();
                 const resp = await axios.get('/api/goods-receipt');

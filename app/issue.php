@@ -33,7 +33,7 @@ class issue extends Model
         'approved_by',
     ];
     protected $casts = [
-        'created_at' => 'datetime:d M, Y',
+        'created_at' => 'datetime:l, d M, Y',
     ];
     protected $dates = ['created_at', 'updated_at'];
 

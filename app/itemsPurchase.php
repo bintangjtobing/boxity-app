@@ -35,24 +35,28 @@ class itemsPurchase extends Model
     {
         return $this->belongsTo(User::class, 'requested_by');
     }
+    public function used()
+    {
+        return $this->belongsTo(User::class, 'used_by');
+    }
     public function usedBy()
     {
         return $this->belongsTo(User::class, 'used_by');
     }
     public function purchasingOrder()
     {
-        return $this->belongsTo(purchaseOrder::class, 'purchasingId');
+        return $this->belongsTo(purchaseOrder::class, 'purchasingId', 'po_number');
     }
     public function purchasingInvoices()
     {
-        return $this->belongsTo(purchaseInvoice::class, 'purchasingId');
+        return $this->belongsTo(purchaseInvoice::class, 'purchasingId', 'pi_number');
     }
     public function purchasingReturn()
     {
-        return $this->belongsTo(purchaseReturn::class, 'purchasingId');
+        return $this->belongsTo(purchaseReturn::class, 'purchasingId', 'pr_number');
     }
     public function purchasingRequest()
     {
-        return $this->belongsTo(purchaseRequest::class, 'purchasingId');
+        return $this->belongsTo(purchaseRequest::class, 'purchasingId', 'pre_number');
     }
 }

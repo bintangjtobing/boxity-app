@@ -24,7 +24,8 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history"
-                                    role="tab" aria-controls="v-pills-history" aria-selected="true">History</a>
+                                    role="tab" aria-controls="v-pills-history" aria-selected="true">Activites &
+                                    History</a>
                             </li>
                         </ul>
                     </div>
@@ -90,6 +91,14 @@
                                                                         class="form-control" readonly>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <span>Unit:</span>
+                                                                    <input type="text" v-model="inventorydata.unit"
+                                                                        class="form-control"
+                                                                        placeholder="Ex: Kg for weight, Pcs for things or else">
+                                                                </div>
+                                                            </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <span>Item Group:</span>
@@ -102,14 +111,6 @@
                                                                             :value="inventoryOpt.id">
                                                                             {{inventoryOpt.name}}</option>
                                                                     </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Unit:</span>
-                                                                    <input type="text" v-model="inventorydata.unit"
-                                                                        class="form-control"
-                                                                        placeholder="Ex: Kg for weight, Pcs for things or else">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -209,7 +210,37 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
-                                                    <!-- Table Customer Listed -->
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <span>Beginning:</span>
+                                                            <input type="text" v-model="beginningQty" id=""
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <span>Quantity In:</span>
+                                                            <input type="text" v-model="sumQtyIn" id=""
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <span>Quantity Out:</span>
+                                                            <input type="text" v-model="sumQtyOut" id=""
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <span>Ending Balance:</span>
+                                                            <input type="text" v-model="countQty" id=""
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <!-- Table History Listed -->
                                                     <div class="col-lg-12">
                                                         <div class="card mb-3">
                                                             <div class="card-body">
@@ -228,6 +259,23 @@
                                                                             :search="search" :headers="headers"
                                                                             multi-sort :items="historyItem"
                                                                             :items-per-page="10" class="elevation-1">
+                                                                            <template v-slot:[`item.itemInId`]="{item}">
+                                                                                <div>
+                                                                                    <router-link
+                                                                                        :to="`/detail/purchase/invoices/${item.itemInId}`">
+                                                                                        <i
+                                                                                            class="fas fa-link"></i>&nbsp;{{item.itemInId}}
+                                                                                    </router-link>
+                                                                                </div>
+                                                                            </template>
+                                                                            <template v-slot:[`item.type`]="{item}">
+                                                                                <div v-if="item.type===1">
+                                                                                    <span>Purchase Invoice</span>
+                                                                                </div>
+                                                                                <div v-if="item.type===2">
+                                                                                    <span>Sales Invoice</span>
+                                                                                </div>
+                                                                            </template>
                                                                         </v-data-table>
                                                                     </div>
                                                                 </div>
@@ -268,13 +316,33 @@
                 key: 1,
                 historyItem: [],
                 headers: [{
-                    text: 'Customer Name',
-                    value: 'customer_detail.customerName'
+                    text: 'Document #',
+                    value: 'itemInId'
                 }, {
-                    text: 'Data Added',
-                    value: 'created_at'
+                    text: 'Document Type',
+                    value: 'type'
+                }, {
+                    text: 'Date',
+                    value: 'date'
+                }, {
+                    text: 'Qty In',
+                    value: 'qtyIn'
+                }, {
+                    text: 'Qty Out',
+                    value: 'qtyOut'
+                }, {
+                    text: 'Unit',
+                    value: 'item.unit'
+                }, {
+                    text: 'Remarks',
+                    value: 'remarks'
                 }],
                 // end datatable
+
+                sumQtyIn: 0,
+                sumQtyOut: 0,
+                countQty: '-',
+                beginningQty: '-',
             }
         },
         created() {
@@ -295,8 +363,13 @@
             async loadHistoryItem() {
                 this.$Progress.start();
                 // Load customer warehouse
-                const custList = await axios.get('/api/warehouse-customer/' + this.$route.params.id);
-                this.historyItem = custList.data;
+                const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
+                this.historyItem = historyList.data;
+                const qtyInSum = await axios.get('/api/sum/in/item-history/' + this.$route.params.id);
+                this.sumQtyIn = qtyInSum.data;
+                this.inventorydata.qty = qtyInSum.data;
+                const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
+                this.sumQtyOut = qtyOutSum.data;
                 this.$Progress.finish();
             },
             async handleSubmit() {

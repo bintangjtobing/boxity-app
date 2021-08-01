@@ -13,6 +13,8 @@
 
 use App\candidates;
 use App\Http\Controllers\spaController;
+use App\userLogs;
+use Illuminate\Http\Request;
 
 Route::get('/clear-cache', function () {
     $exitCode = Artisan::call('cache:clear');
@@ -30,11 +32,19 @@ Route::get('/clear-view', function () {
     $exitCode = Artisan::call('view:clear');
     return redirect('/');
 });
-Route::get('/sign-out', function () {
+Route::get('/sign-out', function (Request $request) {
     header("cache-Control: no-store, no-cache, must-revalidate");
     header("cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+
+    // Save logs logout
+    $saveLogs = new userLogs();
+    $saveLogs->userId = Auth::id();
+    $saveLogs->ipAddress = $request->ip();
+    $saveLogs->notes = 'Logged out from system.';
+    $saveLogs->save();
+
     Artisan::call('cache:clear');
     Session::flush();
     auth()->logout();

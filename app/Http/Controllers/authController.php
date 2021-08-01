@@ -7,7 +7,7 @@ use App\company_details;
 use App\Mail\askReset;
 use App\Mail\doneReset;
 use App\User;
-
+use App\userLogs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +38,13 @@ class authController extends Controller
         $email = $request->email;
         $users = User::where('email', '=', $email)->get();
         $user = $users[0];
+
+        $saveLogs = new userLogs();
+        $saveLogs->userId = $user->id;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Asking for reset password';
+        $saveLogs->save();
+
         Mail::to($email)->send(new askReset($user));
         return view('auth.doneForgot');
     }
@@ -58,6 +65,13 @@ class authController extends Controller
         $user = $users[0];
         $user->password = Hash::make($request->password);
         $user->save();
+
+        $saveLogs = new userLogs();
+        $saveLogs->userId = $user->id;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Successfully reset password.';
+        $saveLogs->save();
+
         Mail::to($user->email)->send(new doneReset($user));
         return view('auth.doneReset');
     }
@@ -74,6 +88,13 @@ class authController extends Controller
             if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
                 $user = User::where(['email' => $request->email])->first();
                 Auth::loginUsingId($user->id, TRUE);
+
+                $saveLogs = new userLogs();
+                $saveLogs->userId = Auth::id();
+                $saveLogs->ipAddress = $request->ip();
+                $saveLogs->notes = 'Logged in to system.';
+                $saveLogs->save();
+
                 return redirect('/tools');
             }
             return back()->with('gagal', ' Please check your auth status or your input!');

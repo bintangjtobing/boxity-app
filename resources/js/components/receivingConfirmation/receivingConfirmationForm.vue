@@ -71,8 +71,18 @@
             <div class="col-lg-12" :class="{unvisible: isVisibleModifyForm}">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5>Modify Item</h5>
-                        <p class="muted-text">{{titleItemDescription}}</p>
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Modify Item</h5>
+                                <p class="muted-text">{{ titleItemDescription }}</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -338,6 +348,7 @@
                     }, {
                         text: 'Actions',
                         value: 'actions',
+                        align: 'right',
                         filterable: false,
                         sortable: false
                     }

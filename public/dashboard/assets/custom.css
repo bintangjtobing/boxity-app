@@ -13,7 +13,9 @@
 }
 
 .reporterImg {
-    width: 1.75rem;
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
 }
 
 .reporter {
@@ -94,6 +96,9 @@ td {
 }
 
 .atbd-comment-box__author figure img {
+    width: 32px !important;
+    height: 32px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
@@ -131,6 +136,9 @@ td {
 }
 
 .reply-editor__author img {
+    width: 32px !important;
+    height: 32px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
@@ -368,6 +376,19 @@ a {
 
 .unvisible {
     display: none !important;
+}
+
+.create {
+    margin: 8px 0px !important;
+    padding: 8px;
+    border-radius: .25rem;
+    border: 1px solid rgba(0, 0, 0, .2);
+    color: #222;
+}
+
+.create:hover {
+    background-color: #359224;
+    color: #fff !important;
 }
 
 /* Responsive Design */

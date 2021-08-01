@@ -8,7 +8,7 @@ class purchaseOrder extends Model
 {
     protected $table = 'purchase_orders';
     protected $fillable = [
-        'po_number', 'supplier', 'order_date', 'deliver_to', 'status', 'created_by', 'updated_by', 'remarks'
+        'po_number', 'supplier', 'order_date', 'deliver_to', 'status', 'created_by', 'updated_by', 'remarks', 'approvedBy'
     ];
     public function suppliers()
     {
@@ -25,6 +25,10 @@ class purchaseOrder extends Model
     public function updatedby()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function approved()
+    {
+        return $this->belongsTo(User::class, 'approvedBy');
     }
     public function item()
     {

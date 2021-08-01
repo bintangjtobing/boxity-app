@@ -283,10 +283,10 @@
             <thead>
                 <tr>
                     <th scope="col" class="border-0 pl-0" align="left">{{ __('invoices::invoice.description') }}</th>
+                    <th scope="col" class="text-left border-0" align="left">{{ __('invoices::invoice.quantity') }}</th>
                     @if($invoice->hasItemUnits)
                     <th scope="col" class="text-left border-0" align="left">{{ __('invoices::invoice.units') }}</th>
                     @endif
-                    <th scope="col" class="text-left border-0" align="left">{{ __('invoices::invoice.quantity') }}</th>
                     <th scope="col" class="text-left border-0" align="left">{{ __('invoices::invoice.price') }}</th>
                     @if($invoice->hasItemDiscount)
                     <th scope="col" class="text-left border-0" align="left">{{ __('invoices::invoice.discount') }}</th>
@@ -303,10 +303,10 @@
                 @foreach($invoice->items as $item)
                 <tr>
                     <td class="pl-0">{{ $item->title }}</td>
+                    <td class="text-center">{{ $item->quantity }}</td>
                     @if($invoice->hasItemUnits)
                     <td class="text-left">{{ $item->units }}</td>
                     @endif
-                    <td class="text-center">{{ $item->quantity }}</td>
                     <td class="text-left">
                         {{ $invoice->formatCurrency($item->price_per_unit) }}
                     </td>
@@ -381,11 +381,9 @@
                 </tr>
             </tbody>
         </table>
-        @if($invoice->notes)
         <span>
-            {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
-        </span>
-        @endif
+            Notes: {!! $invoice->notes !!}
+        </span><br>
 
         <span>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}

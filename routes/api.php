@@ -21,6 +21,7 @@ Route::patch('/users/{id}', 'apiController@updateUser');
 Route::get('/u/{username}', 'apiController@getUsernameData');
 
 // Check user data first
+Route::post('/users/check-users-data', 'apiController@checkUsersData');
 Route::post('/users/check-user-data', 'apiController@checkUserData');
 
 // get user list without user logged in
@@ -137,6 +138,7 @@ Route::post('/chat/send', 'apiController@sendChat');
 // Company Details
 Route::get('/company-details', 'apiController@getCompanyDetails');
 Route::post('/company-details', 'apiController@saveCompanyDetails');
+Route::post('/meta/company-details/{id}', 'apiController@saveMetaCompanyDetails');
 
 // Customers API
 Route::get('/customers', 'apiController@getCustomers');
@@ -193,6 +195,11 @@ Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
 Route::get('/count-inventory-item', 'apiController@countInventoryItem');
 Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
 
+// History Ittem
+Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
+Route::get('/sum/in/item-history/{id}', 'apiController@sumQtyInHistoryItem');
+Route::get('/sum/out/item-history/{id}', 'apiController@sumQtyOutHistoryItem');
+
 // Goods Item Transfer -> list item in one row goods transfer
 Route::get('/goods-item-transfer', 'apiController@getGoodsItemTransfer');
 Route::post('/goods-item-transfer', 'apiController@postGoodsItemTransfer');
@@ -200,27 +207,6 @@ Route::get('/goods-item-transfer/{id}', 'apiController@getGoodsItemTransferById'
 Route::patch('/goods-item-transfer/{id}', 'apiController@postGoodsItemTransferById');
 Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransferById');
 Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
-
-// ///////////////// CONFIRMATION SECTION START ///////////////////////////////////
-// Receiving Confirmation
-Route::get('/receiving-confirmation', 'receivingController@getReceivingConfirmation');
-Route::post('/receiving-confirmation', 'receivingController@postReceivingConfirmation');
-Route::get('/receiving-confirmation/{receiving_number}', 'receivingController@getReceivingConfirmationByReceivingNumber');
-Route::patch('/receiving-confirmation/{receiving_number}', 'receivingController@postReceivingConfirmationByReceivingNumber');
-Route::delete('/receivings-confirmation/{id}', 'receivingController@deleteReceivingConfirmationById');
-Route::get('/count-receiving-confirmation', 'receivingController@countReceivingConfirmation');
-
-// Item Receiving
-Route::get('/item-receiving', 'receivingController@getItemReceiving');
-Route::post('/item-receiving', 'receivingController@postItemReceiving');
-Route::post('/item-receiving/{receiving_number}', 'receivingController@postItemReceivingByReceivingNumber');
-Route::get('/item-receiving/{receiving_number}', 'receivingController@getItemReceivingByReceivingNumber');
-Route::get('/item-receivings/{id}', 'receivingController@getItemReceivingById');
-Route::patch('/item-receiving/{id}', 'receivingController@postItemReceivingById');
-Route::delete('/item-receiving/{id}', 'receivingController@deleteItemReceivingById');
-Route::get('/count-item-receiving', 'receivingController@countItemReceiving');
-
-// ///////////////// CONFIRMATION SECTION END ///////////////////////////////////
 
 ///////////////// PURCHASE ORDER ///////////////////////////////////
 // Purchase Order
@@ -230,6 +216,8 @@ Route::get('/purchase/order/{po_number}', 'purchasingController@getPurchaseOrder
 Route::patch('/purchase/order/{po_number}', 'purchasingController@postPurchaseOrderByPoNumber');
 Route::delete('/purchases-order/{id}', 'purchasingController@deletePurchaseOrderById');
 Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
+Route::get('/approve/purchase/order/{po_number}', 'purchasingController@approvePurchaseOrderByPoNumber');
+
 
 // Item on Purchases Order
 Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasePO');
@@ -261,19 +249,32 @@ Route::delete('/pi/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPu
 Route::get('/pi/count-item-purchase', 'itemOnPurchasingController@countItemPurchasePI');
 ///////////////// PURCHASE INVOICE END ///////////////////////////////////
 
-// Purchase Return
+///////////////// PURCHASE RETURN ///////////////////////////////////
+// Purchase RETURN
 Route::get('/purchase/return', 'purchasingController@getPurchaseReturn');
 Route::post('/purchase/return', 'purchasingController@postPurchaseReturn');
-Route::get('/purchase/return/{id}', 'purchasingController@getPurchaseReturnById');
-Route::patch('/purchase/return/{id}', 'purchasingController@postPurchaseReturnById');
-Route::delete('/purchase/return/{id}', 'purchasingController@deletePurchaseReturnById');
+Route::get('/purchase/return/{pr_number}', 'purchasingController@getPurchaseReturnByPrNumber');
+Route::patch('/purchase/return/{pr_number}', 'purchasingController@postPurchaseReturnByPrNumber');
+Route::delete('/purchases-return/{id}', 'purchasingController@deletePurchaseReturnById');
 Route::get('/count-purchase-return', 'purchasingController@countPurchaseReturn');
+
+Route::get('/pr/item-purchase', 'itemOnPurchasingController@getItemPurchasePR');
+Route::post('/pr/item-purchase', 'itemOnPurchasingController@postItemPurchasePR');
+Route::post('/pr/item-purchase/{pr_number}', 'itemOnPurchasingController@postItemPurchaseByPrNumber');
+Route::get('/pr/item-purchase/{pr_number}', 'itemOnPurchasingController@getItemPurchaseByPrNumber');
+Route::get('/pr/item-purchases/{id}', 'itemOnPurchasingController@getItemPurchasePRById');
+Route::patch('/pr/item-purchase/{id}', 'itemOnPurchasingController@postItemPurchasePRById');
+Route::delete('/pr/item-purchase/{id}', 'itemOnPurchasingController@deleteItemPurchasePRById');
+Route::get('/pr/count-item-purchase', 'itemOnPurchasingController@countItemPurchasePR');
+///////////////// PURCHASE RETURN END ///////////////////////////////////
 
 ///////////////////// PURCHASE REQUEST /////////////////////////////
 // Purchase Request
 Route::get('/purchase/request', 'purchasingController@getPurchaseRequest');
 Route::post('/purchase/request', 'purchasingController@postPurchaseRequest');
 Route::get('/purchase/request/{pre_number}', 'purchasingController@getPurchaseRequestByPreNumber');
+Route::get('/copy/purchase/request/{pre_number}', 'purchasingController@getPurchaseRequestMakePOByPreNumber');
+Route::get('/approve/purchase/request/{pre_number}', 'purchasingController@approvePurchaseRequestByPreNumber');
 Route::patch('/purchase/request/{pre_number}', 'purchasingController@postPurchaseRequestByPreNumber');
 Route::delete('/purchases/request/{id}', 'purchasingController@deletePurchaseRequestById');
 Route::get('/count-purchase-request', 'purchasingController@countPurchaseRequest');
@@ -321,12 +322,16 @@ Route::delete('/sales/delivery-receipt/{id}', 'salesController@deleteSalesDelive
 Route::get('/count-sales-delivery-receipt', 'salesController@countSalesDeliveryReceipt');
 
 // Item Sales
-Route::get('/item-sales', 'purchasingController@getItemSales');
-Route::post('/item-sales', 'purchasingController@postItemSales');
-Route::get('/item-sales/{id}', 'purchasingController@getItemSalesById');
-Route::patch('/item-sales/{id}', 'purchasingController@postItemSalesById');
-Route::delete('/item-sales/{id}', 'purchasingController@deleteItemSalesById');
-Route::get('/count-item-sales', 'purchasingController@countItemSales');
+Route::get('/item-sales', 'itemOnSalesController@getItemSales');
+Route::post('/item-sales', 'itemOnSalesController@postItemSales');
+Route::get('/item-sales/{id}', 'itemOnSalesController@getItemSalesById');
+Route::get('/item-sales/so-number/{so_number}', 'itemOnSalesController@getItemSalesBySoNumber');
+Route::patch('/item-sales/{id}', 'itemOnSalesController@postItemSalesById');
+Route::delete('/item-sales/{id}', 'itemOnSalesController@deleteItemSalesById');
+Route::get('/count-item-sales', 'itemOnSalesController@countItemSales');
 
 // Leave Request
 Route::get('/generate-one-lr', 'apiController@plusOneEachTen');
+
+// USER ACTIVITY LOGS
+Route::get('/user-logs', 'apiController@getActivityLogs');

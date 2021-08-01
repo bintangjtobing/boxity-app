@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="email">E-Mail Address</label>
                                     <input id="email" type="email" class="form-control" name="email" value="" required
-                                        autofocus>
+                                        autofocus autocomplete="off">
                                     <div class="invalid-feedback">
                                         Email is invalid
                                     </div>
