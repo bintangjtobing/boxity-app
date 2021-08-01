@@ -57,8 +57,10 @@
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">
+                                        <a :href="`/api/report/sales-order/${item.id}`" target="_blank" class="view">
+                                            <i class="fas fa-print"></i></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fas fa-eye"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>

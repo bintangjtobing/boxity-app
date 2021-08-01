@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\itemSales;
+use App\company_details;
+use App\itemsSales;
 use App\salesDeliveryReceipt;
 use App\salesInvoice;
 use App\salesOrder;
@@ -21,7 +22,10 @@ use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 use Mail;
+use PDF;
 
 class salesController extends Controller
 {
@@ -31,8 +35,8 @@ class salesController extends Controller
     {
         return response()->json(salesOrder::with('customer')->with('createdby')->orderBy('created_at', 'DESC')->get());
     }
-    
-    public function getSalesOrderById($id) 
+
+    public function getSalesOrderById($id)
     {
         try {
             $salesOrder = salesOrder::where('id', $id)->with('customer')->first();
@@ -41,7 +45,7 @@ class salesController extends Controller
         }
         return response()->json($salesOrder);
     }
-    
+
     public function postSalesOrder(Request $request)
     {
         $salesOrd = new salesOrder();
@@ -52,23 +56,23 @@ class salesController extends Controller
         $salesOrd->status = 0;
         $salesOrd->created_by = Auth::id();
         $salesOrd->updated_by = Auth::id();
-        
+
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new Sales Order ' . $salesOrd->so_number . '.';
         $saveLogs->save();
-        
+
         $salesOrd->save();
         DB::table('items_sales')
             ->where('so_status', '=', '1')
             // PO Status 2, means having a purchasing ID
             ->update(array('salesingId' => $salesOrd->so_number, 'so_status' => '2'));
-            
-            return response()->json($salesOrd, 200);
+
+        return response()->json($salesOrd, 200);
     }
-    
+
     public function postSalesOrderById($id, Request $request)
     {
         $salesOrd = salesOrder::find($id);
@@ -77,14 +81,14 @@ class salesController extends Controller
         $salesOrd->order_date = $request->order_date;
         $salesOrd->remarks = $request->remarks;
         $salesOrd->updated_by = Auth::id();
-        
+
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Modify Sales Order ' . $salesOrd->so_number . '.';
         $saveLogs->save();
-        
+
         $salesOrd->save();
         return response()->json($salesOrd, 200);
     }
@@ -275,6 +279,47 @@ class salesController extends Controller
     {
         return response()->json(itemSales::find($id)->delete());
     }
+
+    public function reportSalesOrder($id)
+    {
+        $company = company_details::first();
+        $salesOrder = salesOrder::where('id', $id)->with('customers')->first();
+        $itemSales = itemsSales::where('salesingId', $salesOrder->so_number)->with('item')->get();
+
+        $item = [];
+        foreach ($itemSales as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
+        }
+
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "soNumber" => $salesOrder->so_number,
+            "orderDate" => $salesOrder->order_date,
+            "remark" => $salesOrder->remarks,
+            "customerName" => $salesOrder->customers->customerName,
+            "customerAddress" => $salesOrder->customers->customerAddress,
+            "customerEmail" => $salesOrder->customers->customerEmail,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/'.$id))),
+            "image" => public_path('webpage/images/logo.png')
+        ];
+
+        $pdf = PDF::loadView('vendor.invoices.templates.sales-order', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $itemSales;
+    }
+
     public function countItemSales()
     {
         $ItemCount = DB::table('item_sales')

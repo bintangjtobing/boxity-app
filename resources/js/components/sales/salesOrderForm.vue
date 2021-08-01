@@ -75,6 +75,7 @@
                           datas: warehouse,
                           width: '100%',
                           name: 'warehouse_name',
+                          placeholder: 'Select Item',
                         }"
                         @dataSelected="onWarehouseSelected"
                       ></selectSearch>
@@ -89,6 +90,7 @@
                           name: 'item_name',
                           group: 'item_code',
                           isDisable: isDisable.select,
+                          placeholder: 'Select Item',
                         }"
                         @dataSelected="onItemSelected"
                       ></selectSearch>
@@ -200,6 +202,7 @@
                         width: '100%',
                         name: 'name',
                         isDisable: isDisable.input,
+                        placeholder: 'Select Item',
                       }"
                       @dataSelected="onItemSelectedUsed"
                     ></selectSearch>
@@ -390,6 +393,7 @@
                         datas: users,
                         width: '100%',
                         name: 'name',
+                        placeholder: 'Select Item',
                       }"
                       @dataSelected="onItemSelectedUsed"
                     ></selectSearch>
@@ -519,6 +523,7 @@
                       width: '100%',
                       name: 'customerName',
                       isDisable: !isEdit,
+                      placeholder: 'Select Item',
                     }"
                     @dataSelected="onItemSelectedSO"
                   ></selectSearch>
@@ -568,7 +573,7 @@
                 </div>
                 <div class="col-12">
                   <a
-                    href="#"
+                    :href="`/api/report/sales-order/${this.$route.params.so_id}`"
                     class="
                       btn btn-secondary
                       float-right
@@ -576,6 +581,7 @@
                       px-30
                       mx-2
                     "
+                    target="_blank"
                   >
                     <i class="fas fa-print"></i>&nbsp;Print
                   </a>
