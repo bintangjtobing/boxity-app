@@ -295,6 +295,7 @@ Route::post('/sales/order', 'salesController@postSalesOrder');
 Route::get('/sales/order/{id}', 'salesController@getSalesOrderById');
 Route::patch('/sales/order/{id}', 'salesController@postSalesOrderById');
 Route::delete('/sales/order/{id}', 'salesController@deleteSalesOrderById');
+Route::get('/report/sales-order/{id}', 'salesController@reportSalesOrder');
 Route::get('/count-sales-order', 'salesController@countSalesOrder');
 
 // Sales Invoice

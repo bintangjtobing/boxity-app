@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\itemSales;
+use App\company_details;
+use App\itemsSales;
 use App\salesDeliveryReceipt;
 use App\salesInvoice;
 use App\salesOrder;
@@ -22,6 +23,7 @@ use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 
 use Mail;
+use PDF;
 
 class salesController extends Controller
 {
@@ -275,6 +277,43 @@ class salesController extends Controller
     {
         return response()->json(itemSales::find($id)->delete());
     }
+        
+    public function reportSalesOrder ($id) {
+        $company = company_details::first();
+        $salesOrder = salesOrder::where('id', $id)->with('customers')->first();
+        $itemSales = itemsSales::where('salesingId', $salesOrder->so_number)->with('item')->get();
+        
+        $item = [];
+        foreach ($itemSales as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty"=> $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
+        }
+        
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "soNumber" => $salesOrder->so_number,
+            "orderDate" => $salesOrder->order_date,
+            "remark" => $salesOrder->remarks,
+            "customerName" => $salesOrder->customers->customerName,
+            "customerAddress" => $salesOrder->customers->customerAddress,
+            "customerEmail" => $salesOrder->customers->customerEmail,
+            "items" => $item,
+            "image" => public_path('webpage/images/logo.png')
+        ];
+
+        $pdf = PDF::loadView('vendor\invoices\templates\sales-oreder', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
+    
     public function countItemSales()
     {
         $ItemCount = DB::table('item_sales')
