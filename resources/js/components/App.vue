@@ -336,7 +336,7 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link to="/sales/delivery-receipt">
+                                <router-link to="/delivery/receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
                                     </span>

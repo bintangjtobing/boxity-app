@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\company_details;
 use App\itemsSales;
 use App\salesDeliveryReceipt;
 use App\salesInvoice;
 use App\salesOrder;
 use App\salesReturn;
 use App\userLogs;
+use App\company_details;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +21,11 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
+use PDF;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use Mail;
-use PDF;
 
 class salesController extends Controller
 {
@@ -193,91 +193,167 @@ class salesController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    // Sales Delivery Receipt
-    public function getSalesDeliveryReceipt()
+
+    // DELIVERY RECEIPT
+    public function getDeliveryReceipt()
     {
-        return response()->json(salesDeliveryReceipt::with('customer')->with('createdby')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'customer') {
+            return salesDeliveryReceipt::where('created_by', Auth::id())->with('customers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        } else {
+            return salesDeliveryReceipt::with('customers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        }
     }
-    public function postSalesDeliveryReceipt(Request $request)
+    public function postDeliveryReceipt(Request $request)
     {
-        $salesDelRec = new salesDeliveryReceipt();
-        $salesDelRec->sdr_number = $request->sdr_number;
-        $salesDelRec->customer = $request->customer;
-        $salesDelRec->sdr_date = $request->sdr_date;
-        $salesDelRec->toGL = $request->toGL;
-        $salesDelRec->status = $request->status;
-        $salesDelRec->created_by = Auth::id();
-        $salesDelRec->updated_by = Auth::id();
-        $salesDelRec->save();
-        return response()->json($salesDelRec, 200);
+        $deliveryReceiptOrd = new salesDeliveryReceipt();
+        $deliveryReceiptOrd->sdr_number = $request->sdr_number;
+        $deliveryReceiptOrd->customer = $request->customer;
+        $deliveryReceiptOrd->sdr_date = $request->sdr_date;
+        $deliveryReceiptOrd->drivers = $request->drivers;
+        $deliveryReceiptOrd->reference_no = $request->reference_no;
+        $deliveryReceiptOrd->vehicle_no = $request->vehicle_no;
+        $deliveryReceiptOrd->deliver_to = $request->deliver_to;
+        $deliveryReceiptOrd->remarks = $request->remarks;
+        $deliveryReceiptOrd->created_by = Auth::id();
+        $deliveryReceiptOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Sales Delivery Receipt ' . $deliveryReceiptOrd->sdr_number . '.';
+        $saveLogs->save();
+
+        $deliveryReceiptOrd->save();
+
+        $itemGet = DB::table('items_sales')
+            ->where('sdr_status', '=', '1')
+            // PO Status 2, means having a purchasing ID
+            ->update(array('salesingId' => $deliveryReceiptOrd->sdr_number, 'sdr_status' => '2'));
+        return 200;
     }
-    public function getSalesDeliveryReceiptById($id)
+    public function getDeliveryReceiptBySdrNumber($sdr_number)
     {
-        return response()->json(salesDeliveryReceipt::find($id));
+        return response()->json(salesDeliveryReceipt::where('sdr_number', $sdr_number)->with('customers', 'warehouse')->first());
     }
-    public function postSalesDeliveryReceiptById($id, Request $request)
+    public function postDeliveryReceiptBySdrNumber($sdr_number, Request $request)
     {
-        $salesDelRec = salesDeliveryReceipt::find($id);
-        $salesDelRec->sdr_number = $request->sdr_number;
-        $salesDelRec->customer = $request->customer;
-        $salesDelRec->sdr_date = $request->sdr_date;
-        $salesDelRec->toGL = $request->toGL;
-        $salesDelRec->status = $request->status;
-        $salesDelRec->updated_by = Auth::id();
-        $salesDelRec->save();
-        return response()->json($salesDelRec, 200);
+        $purchasingUpdate = DB::table('sales_delivery_receipts')
+            ->where(
+                'sdr_number',
+                '=',
+                $sdr_number
+            )
+            ->update(array(
+                'customer' => $request->customer,
+                'sdr_date' => $request->sdr_date,
+                'deliver_to' => $request->deliver_to,
+                'drivers' => $request->drivers,
+                'reference_no' => $request->reference_no,
+                'vehicle_no' => $request->vehicle_no,
+                'remarks' => $request->remarks,
+                'updated_by' => Auth::id(),
+            ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Purchase Invoice ' . $sdr_number . '.';
+        $saveLogs->save();
+        return response()->json($purchasingUpdate, 200);
     }
-    public function deleteSalesDeliveryReceiptById($id)
+    public function deleteDeliveryReceiptById($id, Request $request)
     {
-        return response()->json(salesDeliveryReceipt::find($id)->delete());
+        $purchaseOrd = salesDeliveryReceipt::find($id);
+        $itemPurchase = itemsSales::where('sdr_number', $purchaseOrd->sdr_number)->get();
+        foreach ($itemPurchase as $itemPurchases) {
+            $itemPurchases->delete();
+        }
+        $itemsHistory = itemHistory::where('itemOutId', $purchaseOrd->sdr_number)->get();
+        foreach ($itemsHistory as $itemHistory) {
+            $itemHistory->delete();
+        }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Sales Delivery Receipt ' . $purchaseOrd->sdr_number . '.';
+        $saveLogs->save();
+        $purchaseOrd->delete();
+        return response()->json(201);
     }
-    public function countSalesDeliveryReceipt()
+    public function countDeliveryReceipt()
     {
         $ItemCount = DB::table('sales_delivery_receipts')
             ->get()
             ->count();
         return response()->json($ItemCount);
     }
+    public function reportSdr($id)
+    {
+        $getSdr = salesDeliveryReceipt::where('id', $id)->with('customers', 'warehouse')->first();
+        $getItemOnPI = itemsSales::where('sdr_number', $getSdr->sdr_number)->with('item')->get();
+        $client = new Party([
+            'name'          => $getSdr->customers->customerName,
+            'address'         => $getSdr->customers->customerAddress,
+        ]);
 
-    // Item Sales
-    public function getItemSales()
-    {
-        return response()->json(itemSales::with('item')->orderBy('created_at', 'DESC')->get());
-    }
-    public function postItemSales(Request $request)
-    {
-        $ItemSales = new itemSales();
-        $ItemSales->item_code = $request->item_code;
-        $ItemSales->qtyOrdered = $request->qtyOrdered;
-        $ItemSales->qtyShipped = $request->qtyShipped;
-        $ItemSales->unit = $request->unit;
-        $ItemSales->price = $request->price;
-        $ItemSales->remarks = $request->remarks;
-        $ItemSales->created_by = Auth::id();
-        $ItemSales->updated_by = Auth::id();
-        $ItemSales->save();
-        return response()->json($ItemSales, 200);
-    }
-    public function getItemSalesById($id)
-    {
-        return response()->json(itemSales::find($id));
-    }
-    public function postItemSalesById($id, Request $request)
-    {
-        $ItemSales = itemSales::find($id);
-        $ItemSales->item_code = $request->item_code;
-        $ItemSales->qtyOrdered = $request->qtyOrdered;
-        $ItemSales->qtyShipped = $request->qtyShipped;
-        $ItemSales->unit = $request->unit;
-        $ItemSales->price = $request->price;
-        $ItemSales->remarks = $request->remarks;
-        $ItemSales->updated_by = Auth::id();
-        $ItemSales->save();
-        return response()->json($ItemSales, 200);
-    }
-    public function deleteItemSalesById($id)
-    {
-        return response()->json(itemSales::find($id)->delete());
+        $customer = new Party([
+            'name'          => $getSdr->warehouse->warehouse_name,
+            'address'       => $getSdr->warehouse->address,
+        ]);
+
+        // $items = [
+        //     (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
+        //     (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
+        //     (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
+        //     (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
+        //     (new InvoiceItem())->title('Service 5')->pricePerUnit(71.09)->quantity(7)->discountByPercent(9),
+        //     (new InvoiceItem())->title('Service 6')->pricePerUnit(76.32)->quantity(9),
+        //     (new InvoiceItem())->title('Service 7')->pricePerUnit(58.18)->quantity(3)->discount(3),
+        //     (new InvoiceItem())->title('Service 8')->pricePerUnit(42.99)->quantity(4)->discountByPercent(3)
+        // ];
+        foreach ($getItemOnPI as $getItemOnPI) {
+            $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyShipped)->units($getItemOnPI->unit);
+        }
+
+        // NOTES FOR INVOICING
+        if ($getSdr->remarks == null) {
+            $notes = '';
+        } else {
+            $notes = $getSdr->remarks;
+        }
+        // $notes = implode("<br>", $notes);
+
+        $invoice = InvoiceInvoice::make('Purchase Invoice')
+            ->series($getSdr->sdr_number)
+            ->seller($client)
+            ->buyer($customer)
+            ->date($getSdr->created_at)
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(14)
+            ->currencySymbol('Rp')
+            ->currencyCode('Rupiahs')
+            ->currencyFormat('{SYMBOL}. {VALUE}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename($client->name . ' ' . $customer->name)
+            ->addItems($items)
+            ->notes($notes)
+            ->logo(public_path('webpage/images/logo.png'))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        $link = $invoice->url();
+        // Then send email to party with link
+
+        // And return invoice itself to browser or have a different view
+        return $invoice->stream();
+        // return $getItemOnPO;
+        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+        // return view('report.index');
     }
 
     public function reportSalesOrder($id)
@@ -311,7 +387,7 @@ class salesController extends Controller
             "customerAddress" => $salesOrder->customers->customerAddress,
             "customerEmail" => $salesOrder->customers->customerEmail,
             "items" => $item,
-            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/'.$id))),
+            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/' . $id))),
             "image" => public_path('webpage/images/logo.png')
         ];
 
@@ -320,11 +396,45 @@ class salesController extends Controller
         // return $itemSales;
     }
 
-    public function countItemSales()
+    public function reportSSdr($sdr_number)
     {
-        $ItemCount = DB::table('item_sales')
-            ->get()
-            ->count();
-        return response()->json($ItemCount);
+        $company = company_details::first();
+        $deliveryReceiptData = salesDeliveryReceipt::where('sdr_number', $sdr_number)->with('customers')->first();
+        $itemSales = itemsSales::where('salesingId', $deliveryReceiptData->sdr_number)->with('item')->get();
+
+        $item = [];
+        foreach ($itemSales as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyShipped,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "item_code" => $x->item->item_code,
+            ];
+            array_push($item, $data);
+        }
+
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "soNumber" => $deliveryReceiptData->sdr_number,
+            "orderDate" => $deliveryReceiptData->sdr_date,
+            "remark" => $deliveryReceiptData->remarks,
+            "drivers" => $deliveryReceiptData->drivers,
+            "vehicleNo" => $deliveryReceiptData->vehicle_no,
+            "customerName" => $deliveryReceiptData->customers->customerName,
+            "customerAddress" => $deliveryReceiptData->customers->customerAddress,
+            "customerEmail" => $deliveryReceiptData->customers->customerEmail,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/deliver-receipt/' . $sdr_number))),
+            "image" => $company->logoblack,
+        ];
+
+        $pdf = PDF::loadView('report.deliveryReceipt', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $getSales;
     }
 }

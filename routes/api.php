@@ -11,6 +11,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/check-company', 'purchasingController@getCompany');
 
+Route::get('/test-pdf', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML('<h1>Test</h1>');
+    return $pdf->stream();
+});
+
 // Users API
 Route::get('/users', 'apiController@getUsers');
 Route::get('/users/{id}', 'apiController@getUserbyId');
@@ -314,14 +320,6 @@ Route::patch('/sales/return/{id}', 'salesController@postSalesReturnById');
 Route::delete('/sales/return/{id}', 'salesController@deleteSalesReturnById');
 Route::get('/count-sales-return', 'salesController@countSalesReturn');
 
-// Sales Delivery Receipt
-Route::get('/sales/delivery-receipt', 'salesController@getSalesDeliveryReceipt');
-Route::post('/sales/delivery-receipt', 'salesController@postSalesDeliveryReceipt');
-Route::get('/sales/delivery-receipt/{id}', 'salesController@getSalesDeliveryReceiptById');
-Route::patch('/sales/delivery-receipt/{id}', 'salesController@postSalesDeliveryReceiptById');
-Route::delete('/sales/delivery-receipt/{id}', 'salesController@deleteSalesDeliveryReceiptById');
-Route::get('/count-sales-delivery-receipt', 'salesController@countSalesDeliveryReceipt');
-
 // Item Sales
 Route::get('/item-sales', 'itemOnSalesController@getItemSales');
 Route::post('/item-sales', 'itemOnSalesController@postItemSales');
@@ -330,6 +328,25 @@ Route::get('/item-sales/so-number/{so_number}', 'itemOnSalesController@getItemSa
 Route::patch('/item-sales/{id}', 'itemOnSalesController@postItemSalesById');
 Route::delete('/item-sales/{id}', 'itemOnSalesController@deleteItemSalesById');
 Route::get('/count-item-sales', 'itemOnSalesController@countItemSales');
+
+///////////////// DELIVERY RECEIPT ///////////////////////////////////
+// Delivery Receipt
+Route::get('/delivery/receipt', 'salesController@getDeliveryReceipt');
+Route::post('/delivery/receipt', 'salesController@postDeliveryReceipt');
+Route::get('/delivery/receipt/{sdr_number}', 'salesController@getDeliveryReceiptBySdrNumber');
+Route::patch('/delivery/receipt/{sdr_number}', 'salesController@postDeliveryReceiptBySdrNumber');
+Route::delete('/delivery-receipt/{id}', 'salesController@deleteDeliveryReceiptById');
+Route::get('/count-delivery-receipt', 'salesController@countDeliveryReceipt');
+
+Route::get('/sdr/item-sales', 'itemOnSalesController@getItemSalesSdr');
+Route::post('/sdr/item-sales', 'itemOnSalesController@postItemPurchaseSdr');
+Route::post('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@postItemSalesBySdrNumber');
+Route::get('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@getItemSalesBySdrNumber');
+Route::get('/sdr/item-saless/{id}', 'itemOnSalesController@getItemSalesSdrById');
+Route::patch('/sdr/item-sales/{id}', 'itemOnSalesController@postItemSalesSdrById');
+Route::delete('/sdr/item-sales/{id}', 'itemOnSalesController@deleteItemSalesSdrById');
+Route::get('/sdr/count-item-purchase', 'itemOnSalesController@countItemSalesSdr');
+///////////////// DELIVERY RECEIPT END ///////////////////////////////////
 
 // Leave Request
 Route::get('/generate-one-lr', 'apiController@plusOneEachTen');

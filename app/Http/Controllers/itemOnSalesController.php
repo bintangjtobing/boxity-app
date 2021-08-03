@@ -80,4 +80,73 @@ class itemOnSalesController extends Controller
     {
         return response()->json(itemsSales::find($id)->delete());
     }
+
+    // ITEM ON Delivery Receipt
+    public function getItemSalesSdr()
+    {
+        return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('sdr_status', 1)->where('created_by', Auth::id())->get());
+    }
+    public function postItemPurchaseSdr(Request $request)
+    {
+        $itemsDelivering = new itemsSales();
+        $itemsDelivering->item_code = $request->itemid;
+        $itemsDelivering->qtyShipped = $request->qtyShipped;
+        $itemsDelivering->unit = $request->unit;
+        $itemsDelivering->requested_by = Auth::id();
+        $itemsDelivering->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $itemsDelivering->sdr_status = '1';
+        $itemsDelivering->created_by = Auth::id();
+        $itemsDelivering->updated_by = Auth::id();
+        $itemsDelivering->save();
+        return response()->json($itemsDelivering, 200);
+    }
+    public function postItemSalesBySdrNumber($sdr_number, Request $request)
+    {
+        $itemsDelivering = new itemsSales();
+        $itemsDelivering->item_code = $request->itemid;
+        $itemsDelivering->qtyShipped = $request->qtyShipped;
+        $itemsDelivering->unit = $request->unit;
+        $itemsDelivering->requested_by = Auth::id();
+        $itemsDelivering->remarks = $request->remarks;
+
+        $itemsDelivering->sdr_status = '2';
+        $itemsDelivering->salesingId = $sdr_number;
+        $itemsDelivering->created_by = Auth::id();
+        $itemsDelivering->updated_by = Auth::id();
+        $itemsDelivering->save();
+        return response()->json($itemsDelivering, 200);
+    }
+    public function getItemSalesBySdrNumber($sdr_number)
+    {
+        return response()->json(itemsSales::where('salesingId', $sdr_number)->with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->get());
+    }
+    public function getItemSalesSdrById($id)
+    {
+        return response()->json(itemsSales::where('id', $id)->with('item', 'usedBy', 'requestedBy')->first());
+    }
+    public function postItemSalesSdrById($id, Request $request)
+    {
+        $itemsDelivering = itemsSales::find($id);
+        $itemsDelivering->qtyShipped = $request->qtyShipped;
+        $itemsDelivering->unit = $request->unit;
+        $itemsDelivering->requested_by = Auth::id();
+        $itemsDelivering->remarks = $request->remarks;
+        $itemsDelivering->updated_by = Auth::id();
+        $itemsDelivering->save();
+        return response()->json($itemsDelivering, 200);
+        // return $request->itemid;
+    }
+    public function deleteItemSalesSdrById($id)
+    {
+        return response()->json(itemsSales::find($id)->delete());
+    }
+    public function countItemSalesSdr()
+    {
+        $ItemCount = DB::table('items_purchases')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
 }

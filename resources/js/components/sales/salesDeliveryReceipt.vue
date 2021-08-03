@@ -3,15 +3,16 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Sales Delivery Receipt<br></h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Delivery Receipt<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/sales/delivery-receipt/add" class="btn btn-sm btn-primary btn-add">
-                                <i class="las la-plus fs-16"></i>New Sales Delivery Receipt</router-link>
+                            <router-link to="/delivery/receipt/add" class="btn btn-sm btn-primary btn-add">
+                                <i class="las la-plus fs-16"></i>New Delivery Receipt</router-link>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Table -->
             <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -21,19 +22,36 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
-                                    class="elevation-1" group-by="item_group.name">
-                                    <template v-slot:item.type="{ item }">
-                                        <span v-if="item.type=='1'">Stock</span>
-                                        <span v-if="item.type=='2'">Non Stock</span>
-                                        <span v-if="item.type=='3'">Assembly</span>
-                                        <span v-if="item.type=='4'">Bundle</span>
-                                        <span v-if="item.type=='5'">Service</span>
+                                <v-data-table :search="search" loading loading-text="Loading... Please wait..."
+                                    :headers="headers" multi-sort :items="purchaseInvoiceItem" :items-per-page="10"
+                                    class="elevation-1" group-by="customers.customerName" group-expanded>
+                                    <template v-slot:[`item.status`]="{item}">
+                                        <div v-if="item.status===0">
+                                            <span class="rounded-pill userDatatable-content-status color-warning
+                                                bg-opacity-warning active text-capitalize"><i
+                                                    class="fas fa-exclamation-circle"></i>
+                                                &nbsp;Draft</span>
+                                        </div>
+                                        <div v-if="item.status===1">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><i
+                                                    class="fas fa-check-circle"></i>
+                                                &nbsp;Approved</span>
+                                        </div>
+                                        <div v-if="item.status===2">
+                                            <span class="rounded-pill userDatatable-content-status color-danger
+                                                bg-opacity-danger active text-capitalize"><i
+                                                    class="fas fa-times-circle"></i>
+                                                &nbsp;Canceled</span>
+                                        </div>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/sales/delivery-receipt/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
-                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
+                                        <a :href="`/report/delivery-receipt/${item.sdr_number}`" target="_blank"
+                                            class="view">
+                                            <i class="fas fa-print"></i></a>
+                                        <router-link :to="`/detail/delivery/receipt/${item.sdr_number}`" class="edit">
+                                            <i class="fas fa-eye"></i></router-link>
+                                        <a v-on:click="deletePurchaseInvoiceItem(item.id)" class="remove">
                                             <i class="fas fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -54,42 +72,34 @@
             'editor': Editor
         },
         title() {
-            return 'Sales Delivery Receipt';
+            return 'Delivery Receipt';
         },
         data() {
             return {
-                inventorydata: {
-                    type: '',
-                    addSalesDeliveryReceipt: '',
-                    item_group: '',
-                },
                 // datatable
                 search: '',
                 key: 1,
-                inventoryItem: [],
+                purchaseInvoiceItem: [],
                 headers: [{
-                        text: 'Item Code',
-                        value: 'item_code'
-                    }, {
-                        text: 'Name',
-                        value: 'item_name'
-                    }, {
-                        text: 'Item Group',
-                        value: 'item_group.name'
-                    },
-                    {
-                        text: 'Tipe Item',
-                        value: 'type'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        align: 'right',
-                        filterable: false,
-                        sortable: false
-                    }
-                ],
+                    text: 'SDR #',
+                    value: 'sdr_number'
+                }, {
+                    text: 'Deliver to',
+                    value: 'customers.customerName'
+                }, {
+                    text: 'Delivery Date',
+                    value: 'sdr_date'
+                }, {
+                    text: 'Status',
+                    value: 'status'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    align: 'right',
+                    filterable: false,
+                    sortable: false
+                }],
                 // end datatable
-                inventoryOpt: {},
                 countItems: '0',
             }
         },
@@ -99,56 +109,13 @@
         methods: {
             async loadItem() {
                 this.$Progress.start();
-                const resp = await axios.get('/api/inventory-item');
-                this.inventoryItem = resp.data;
-                const count = await axios.get('/api/count-item-group');
+                const resp = await axios.get('/api/delivery/receipt');
+                this.purchaseInvoiceItem = resp.data;
+                const count = await axios.get('/api/count-delivery-receipt');
                 this.countItems = count.data;
-
-                // Load item group
-                const respItemGroup = await axios.get('/api/item-group');
-                this.inventoryOpt = respItemGroup.data;
                 this.$Progress.finish();
             },
-            async submitHandle() {
-                this.$Progress.start();
-                await axios.post('/api/inventory-item', this.inventorydata).then(response => {
-                    this.loadItem();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Congratulations',
-                        text: 'Success add Sales Delivery Receipt',
-                    });
-                    this.inventorydata = {
-                        item_code: '',
-                        item_name: '',
-                        type: '',
-                        item_group: '',
-                        brand: '',
-                        width: '',
-                        length: '',
-                        thickness: '',
-                        nt_weight: '',
-                        gr_weight: '',
-                        volume: '',
-                    };
-                    this.$Progress.finish();
-                }).catch(error => {
-                    this.$Progress.fail();
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Something wrong.',
-                        confirmButtonText: `Ok`,
-                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-                it still exist, you can contact our developer. <br><br>Error message: ` +
-                            error,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                });
-            },
-            async deleteInventoryItem(id) {
+            async deletePurchaseInvoiceItem(id) {
                 const result = await Swal.fire({
                     title: 'Delete data item?',
                     showCancelButton: true,
@@ -156,14 +123,15 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    await axios.delete('/api/inventory-item/' + id);
+                    await axios.delete('/api/delivery-receipt/' + id);
                     this.loadItem();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
-                        text: 'Success deleted current item.'
+                        text: 'Success deleted current Delivery Receipt item.'
                     });
                 }
+                // console.log(id);
             },
         },
     }

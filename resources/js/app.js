@@ -406,15 +406,15 @@ const routes = [{
         component: SalesInvoicesForm,
     }, {
         name: 'salesDeliveryReceipt',
-        path: '/sales/delivery-receipt',
+        path: '/delivery/receipt',
         component: SalesDeliveryReceipt
     }, {
         name: 'salesDeliveryReceiptAdd',
-        path: '/sales/delivery-receipt/add',
+        path: '/delivery/receipt/add',
         component: SalesDeliveryReceiptAdd
     }, {
         name: 'detailSalesDeliveryReceipt',
-        path: '/detail/sales/delivery-receipt/:id',
+        path: '/detail/delivery/receipt/:sdr_number',
         component: SalesDeliveryReceiptForm,
     }, {
         name: 'SalesReturn',

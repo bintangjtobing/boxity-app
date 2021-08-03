@@ -108,6 +108,7 @@ Route::get('/report/purchase/invoices/{id}', 'purchasingController@reportPI');
 Route::get('/report/purchase/return/{id}', 'purchasingController@reportPR');
 Route::get('/report/purchase/request/{id}', 'purchasingController@reportPRE');
 Route::get('/report/receiving-confirmation/{id}', 'receivingController@reportPO');
+Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr');
 
 // View details blog
 Route::get('/blog/v/{title}', 'webpageController@viewBlog');

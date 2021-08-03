@@ -233,7 +233,6 @@
                 this.user = res.data;
                 this.imageUser = res.data.avatar;
                 this.username = res.data.name;
-                console.log(this.user.role);
 
                 // Load data assignee
                 const assigneeProc = await axios.get('/api/issue/assignee/' + this.$route.params.id);
