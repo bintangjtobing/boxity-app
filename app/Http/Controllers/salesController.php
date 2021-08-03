@@ -310,7 +310,7 @@ class salesController extends Controller
             "image" => public_path('webpage/images/logo.png')
         ];
 
-        $pdf = PDF::loadView('vendor\invoices\templates\sales-oreder', $data)->setPaper('a4', 'potrait');
+        $pdf = PDF::loadView('vendor\invoices\templates\sales-order', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
     
