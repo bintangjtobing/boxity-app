@@ -22,6 +22,8 @@ use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 use Mail;
 use PDF;
 
@@ -309,6 +311,7 @@ class salesController extends Controller
             "customerAddress" => $salesOrder->customers->customerAddress,
             "customerEmail" => $salesOrder->customers->customerEmail,
             "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/'.$id))),
             "image" => public_path('webpage/images/logo.png')
         ];
 

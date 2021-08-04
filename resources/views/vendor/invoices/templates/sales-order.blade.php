@@ -8,15 +8,23 @@
 
 <body>
     <header class="clearfix">
-        <div id="logo">
+      <table id="headTable">
+        <tr>
+          <td style="text-align: left;">
             <img src="{{ $image }}">
-        </div>
-        <div id="company">
+          </td>
+          <td style="width:20px"></td>
+          <td>
             <h2>{{ $companyName }}</h2>
             <div>{{ $companyAddress }}</div>
             <div>{{ $companyPhone }}</div>
             <div><a href=<?php echo "mailto:".$companyEmail ?>>{{ $companyEmail }}</a></div>
-        </div>
+          </td>
+          <td>
+            <img src="data:image/png;base64,{!! $qrcode !!}" style="padding:auto 0">
+          </td>
+        </tr>
+      </table>
     </header>
     <main>
         <div id="details" class="clearfix">
@@ -109,9 +117,18 @@
     }
 
     header {
-        padding: 10px 0;
+        padding: 0 0 10px;
         margin-bottom: 20px;
         border-bottom: 1px solid #AAAAAA;
+    }
+    
+    header table td {
+      font-size: .85rem;
+      padding: 0;
+    }
+    
+    header tbody {
+      background: #fff;
     }
 
     #logo {
@@ -124,10 +141,11 @@
     }
 
     #company {
-        width: 45%;
+        width: 70%;
         float: right;
         font-size: .85rem;
         text-align: right;
+        display: flex;
     }
 
     #details {
