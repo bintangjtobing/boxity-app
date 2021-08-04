@@ -42,19 +42,19 @@
           </tr>
         </thead>
         <tbody>
-          <?php 
+          <?php
             $i = 0; $total = 0;
             foreach ($items as $item) {
           ?>
           <tr>
             <td class="no">{{ $i }}</td>
             <td class="desc"><h3>{{ $item['name'] }}</h3>{{ $item['remark'] }}</td>
-            <td class="unit">Rp. {{ $item['price'] }}</td>
+            <td class="unit">Rp. {{ number_format($item['price']) }}</td>
             <td class="qty">{{ $item['qty'] }}</td>
-            <td class="total">Rp. {{ $item['priceAmount'] }}</td>
+            <td class="total">Rp. {{ number_format($item['priceAmount']) }}</td>
           </tr>
           <?php 
-              $total = +$item['priceAmount'];
+              $total = $total + $item['priceAmount'];
               $i++;
             } 
           ?>
@@ -63,7 +63,7 @@
           <tr>
             <td colspan="2"></td>
             <td colspan="2">GRAND TOTAL</td>
-            <td>Rp. {{ $total }}</td>
+            <td>Rp. {{ number_format($total) }}</td>
           </tr>
         </tfoot>
       </table>
