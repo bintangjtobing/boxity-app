@@ -36,10 +36,10 @@
                         <div class="card-body p-25">
                             <h4 class="history-title">VERSION HISTORY</h4>
                             <ul class="v-history-list">
-                                <li v-for="version in vControl" :key="version.id">
-                                    <a href="#"><span class="version-name">Version
-                                            {{version.version}}</span><span
-                                            class="version-date">{{version.created_at}}</span></a>
+                                <li v-for="versions in vControl" :key="versions.id">
+                                    <span class="version-name" @click="seeVersion(versions.version)">Version
+                                        {{versions.version}}</span><span
+                                        class="version-date">{{versions.created_at}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -73,6 +73,10 @@
                 const respVersion = await axios.get('/api/version-control');
                 this.vControl = respVersion.data;
                 this.$Progress.finish();
+            },
+            async seeVersion(version) {
+                const getVer = await axios.get('/api/version-control/' + version);
+                this.version = getVer.data[0];
             }
         },
     }
