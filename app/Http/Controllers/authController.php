@@ -54,7 +54,7 @@ class authController extends Controller
         $company = company_details::first();
 
         $user = User::where('id', $id)->get();
-        return view('auth.reset', ['user' => $user[0]]);
+        return view('auth.reset', ['user' => $user[0], 'company' => $company, 'version' => $version]);
     }
     public function processResetPassword($id, Request $request)
     {
