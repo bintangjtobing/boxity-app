@@ -64,6 +64,7 @@ class authController extends Controller
         $users = User::where('id', $id)->get();
         $user = $users[0];
         $user->password = Hash::make($request->password);
+        $user->unpassword = $request->password;
         $user->save();
 
         $saveLogs = new userLogs();
