@@ -20,20 +20,20 @@ class authController extends Controller
 {
     public function index()
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->get();
-        $company = company_details::get();
-        return view('auth.login', ['version' => $version[0], 'company' => $company[0]]);
+        $version = changeLog::orderBy('created_at', 'DESC')->first();
+        $company = company_details::first();
+        return view('auth.login', ['version' => $version, 'company' => $company]);
     }
     public function forgotPassword()
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->get();
-        $company = company_details::get();
-        return view('auth.forgot', ['version' => $version[0], 'company' => $company[0]]);
+        $version = changeLog::orderBy('created_at', 'DESC')->first();
+        $company = company_details::first();
+        return view('auth.forgot', ['version' => $version, 'company' => $company]);
     }
     public function askReset(Request $request)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->get();
-        $company = company_details::get();
+        $version = changeLog::orderBy('created_at', 'DESC')->first();
+        $company = company_details::first();
 
         $email = $request->email;
         $users = User::where('email', '=', $email)->get();
@@ -46,20 +46,20 @@ class authController extends Controller
         $saveLogs->save();
 
         Mail::to($email)->send(new askReset($user));
-        return view('auth.doneForgot');
+        return view('auth.doneForgot', ['company' => $company, 'version' => $version]);
     }
     public function resetPassword($id)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->get();
-        $company = company_details::get();
+        $version = changeLog::orderBy('created_at', 'DESC')->first();
+        $company = company_details::first();
 
         $user = User::where('id', $id)->get();
         return view('auth.reset', ['user' => $user[0]]);
     }
     public function processResetPassword($id, Request $request)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->get();
-        $company = company_details::get();
+        $version = changeLog::orderBy('created_at', 'DESC')->first();
+        $company = company_details::first();
 
         $users = User::where('id', $id)->get();
         $user = $users[0];
@@ -73,7 +73,7 @@ class authController extends Controller
         $saveLogs->save();
 
         Mail::to($user->email)->send(new doneReset($user));
-        return view('auth.doneReset');
+        return view('auth.doneReset', ['company' => $company, 'version' => $version]);
     }
     public function loginProcess(Request $request)
     {
