@@ -239,6 +239,7 @@
             },
             generatePassword() {
                 const genPass = this.rndStr(8);
+                console.log(genPass);
                 this.user.password = genPass;
                 this.user.confirmPassword = genPass;
             },
@@ -389,7 +390,7 @@
                 });
             },
             rndStr(len) {
-                let text = " "
+                let text = ""
                 let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
                 for (let i = 0; i < len; i++) {
