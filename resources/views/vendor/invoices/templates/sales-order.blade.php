@@ -8,23 +8,23 @@
 
 <body>
     <header class="clearfix">
-      <table id="headTable">
-        <tr>
-          <td style="text-align: left;">
-            <img src="{{ $image }}">
-          </td>
-          <td style="width:20px"></td>
-          <td>
-            <h2>{{ $companyName }}</h2>
-            <div>{{ $companyAddress }}</div>
-            <div>{{ $companyPhone }}</div>
-            <div><a href=<?php echo "mailto:".$companyEmail ?>>{{ $companyEmail }}</a></div>
-          </td>
-          <td>
-            <img src="data:image/png;base64,{!! $qrcode !!}" style="padding:auto 0">
-          </td>
-        </tr>
-      </table>
+        <table id="headTable">
+            <tr>
+                <td style="text-align: left;">
+                    <img src="{{ $image }}">
+                </td>
+                <td style="width:20px"></td>
+                <td>
+                    <h2>{{ $companyName }}</h2>
+                    <div>{{ $companyAddress }}</div>
+                    <div>{{ $companyPhone }}</div>
+                    <div><a href=<?php echo "mailto:".$companyEmail ?>>{{ $companyEmail }}</a></div>
+                </td>
+                <td>
+                    <img src="data:image/png;base64,{!! $qrcode !!}" style="padding:auto 0">
+                </td>
+            </tr>
+        </table>
     </header>
     <main>
         <div id="details" class="clearfix">
@@ -59,10 +59,10 @@
                     <td class="desc">
                         {{ $item['name'] }}{{ $item['remark'] }}
                     </td>
-                    <td class="price">Rp. {{ $item['price'] }}</td>
+                    <td class="price">Rp. {{ number_format($item['price'],2) }}</td>
                     <td class="qty">{{ $item['qty'] }}</td>
                     <td class="unit">{{ $item['unit'] }}</td>
-                    <td class="total">Rp. {{ $item['priceAmount'] }}</td>
+                    <td class="total">Rp. {{ number_format($item['priceAmount'],2) }}</td>
                 </tr>
                 <?php
               $total = $total+$item['priceAmount'];
@@ -73,7 +73,7 @@
             <tfoot>
                 <tr>
                     <td colspan="4">Total</td>
-                    <td>Rp. {{ $total }}</td>
+                    <td>Rp. {{ number_format($total,2) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -121,14 +121,14 @@
         margin-bottom: 20px;
         border-bottom: 1px solid #AAAAAA;
     }
-    
+
     header table td {
-      font-size: .85rem;
-      padding: 0;
+        font-size: .85rem;
+        padding: 0;
     }
-    
+
     header tbody {
-      background: #fff;
+        background: #fff;
     }
 
     #logo {
