@@ -543,7 +543,11 @@ class apiController extends Controller
         $profile->email = $request->email;
         $profile->phone = $request->phone;
         $profile->gender = $request->gender;
-        $profile->birth = $request->birth;
+        if (!$request->birth) {
+            $request->birth = '0000-00-00';
+        } else {
+            $profile->birth = $request->birth;
+        }
         $profile->bio = $request->bio;
         if (!$request->instagram) {
             $request->instagram = '-';
