@@ -121,6 +121,16 @@
         margin-bottom: 20px;
         border-bottom: 1px solid #AAAAAA;
     }
+<<<<<<< HEAD
+    
+    header table td {
+      font-size: .85rem;
+      padding: 0;
+    }
+    
+    header tbody {
+      background: #fff;
+=======
 
     header table td {
         font-size: .85rem;
@@ -129,6 +139,7 @@
 
     header tbody {
         background: #fff;
+>>>>>>> 8ab086eafc47100b5f47de1d9351fd3297d7a2c1
     }
 
     #logo {
