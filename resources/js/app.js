@@ -40,6 +40,7 @@ import Career from './components/career.vue';
 import Candidate from './components/candidate.vue';
 import candidateDetail from './components/candidateDetail.vue';
 import Issue from './components/issue.vue';
+import issueClossed from './components/issueClossed.vue';
 import Quote from './components/quote.vue';
 import Gallery from './components/gallery.vue';
 import Blog from './components/blog.vue';
@@ -183,6 +184,10 @@ const routes = [{
         name: 'detail-issue',
         path: '/issues/:id',
         component: issueDetail,
+    }, {
+        name: 'closed-issue',
+        path: '/issues/i/closed',
+        component: issueClossed,
     }, {
         name: 'new-career',
         path: '/career/new',

@@ -38,6 +38,8 @@ Route::get('/assignees', 'apiController@getAssignee');
 Route::post('/issue', 'apiController@addNewIssue');
 Route::get('/issue', 'apiController@getIssues');
 Route::get('/issue/created', 'apiController@getIssuesfromMe');
+Route::get('/issue/closed', 'apiController@getIssuesClosed');
+Route::get('/issue/c/closed', 'apiController@countIssuesClosed');
 Route::get('/issue-with-comment', 'apiController@getIssuewithComment');
 Route::get('/issue/{id}', 'apiController@getIssueById');
 // Get the assignee name & approver to issue

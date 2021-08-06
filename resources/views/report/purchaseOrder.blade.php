@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Report Sales Order</title>
+    <title>Purchase Order Receipt</title>
 </head>
 
 <body>
@@ -26,26 +26,36 @@
         </table>
     </header>
     <main>
+        {{-- Info Purchasing --}}
+        <div id="details" class="clearfix">
+            <div id="invoice">
+                <div class="purchasing_title">Purchase Order</div>
+                <h1>{{$poNumber}}</h1>
+                <div>
+                    Order date <span class="tab">: {{$orderDate}}</span>
+                </div>
+            </div>
+        </div>
+        {{-- INFO SUPPLIER AND WAREHOUSE --}}
         <div id="details" class="clearfix">
             <div id="client">
-                <div class="to">INVOICE TO:</div>
-                <h2>{{ $customerName }}</h2>
-                <div class="address">{{ $customerAddress }}</div>
-                <div class="email"><a href=<?php echo "mailto:".$customerEmail ?>>{{ $customerEmail }}</a></div>
+                <div class="to">Deliver To</div>
+                <h2>{{ $warehouseName }}</h2>
+                <div class="address">{{$warehouseAddress}}</div>
             </div>
             <div id="invoice">
-                <h1>{{ $soNumber }}</h1>
-                <div class="date">Order Date: {{ $orderDate }}</div>
-                <!-- <div class="date">Due Date: 30/06/2014</div> -->
+                <div class="to">Supplier</div>
+                <h2>{{$supplierName}}</h2>
+                <div class="address">{{$supplierAddress}}</div>
             </div>
         </div>
         <table border="0" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th class="desc">Description</th>
+                    <th class="desc">Item</th>
+                    <th class="qty">Qty/UOM</th>
                     <th class="price">Price</th>
-                    <th class="qty">Quantity</th>
-                    <th class="price">Unit</th>
+                    <th class="remarks">Remarks</th>
                     <th class="total">Sub Total</th>
                 </tr>
             </thead>
@@ -56,11 +66,11 @@
           ?>
                 <tr>
                     <td class="desc">
-                        {{ $item['name'] }}{{ $item['remark'] }}
+                        {{ $item['name'] }}
                     </td>
+                    <td class="qty">{{ $item['qty'] }} {{ $item['unit'] }}</td>
                     <td class="price">Rp. {{ number_format($item['price'],2) }}</td>
-                    <td class="qty">{{ $item['qty'] }}</td>
-                    <td class="unit">{{ $item['unit'] }}</td>
+                    <td class="remarks">{{ $item['remark'] }}</td>
                     <td class="total">Rp. {{ number_format($item['priceAmount'],2) }}</td>
                 </tr>
                 <?php

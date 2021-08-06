@@ -54,7 +54,7 @@
                                         <a v-on:click="approvePO(item.po_number)" class="create"
                                             v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
                                             <i class="far fa-thumbs-up"></i> Approve</a>
-                                        <a :href="`/report/purchase/order/${item.id}`" target="_blank"
+                                        <a :href="`/report/purchase/order/${item.po_number}`" target="_blank"
                                             v-if="item.status!=0" class="view">
                                             <i class="fas fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/order/${item.po_number}`" class="edit">

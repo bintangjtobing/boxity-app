@@ -162,7 +162,7 @@
     }
 
     #details {
-        margin-bottom: 50px;
+        margin-bottom: 1.4rem;
     }
 
     #client {

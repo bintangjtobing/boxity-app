@@ -262,9 +262,30 @@ class apiController extends Controller
             ->where('created_by', Auth::id())
             // ->where('status', '!=', '2')
             ->orderBy('created_at', 'DESC')
-            ->limit(5)
             ->get();
         return $issueGet;
+    }
+    public function getIssuesClosed()
+    {
+        if (Auth::user()->role == 'admin') {
+            $issueGet = issue::with('user')
+                ->withCount('comments')
+                ->where('status', '=', '2')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        } else {
+            $issueGet = issue::with('user')
+                ->withCount('comments')
+                ->where('assignee', Auth::id())
+                ->where('status', '=', '2')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+        return $issueGet;
+    }
+    public function countIssuesClosed()
+    {
+        return $this->getIssuesClosed()->count();
     }
     public function getIssuewithComment()
     {

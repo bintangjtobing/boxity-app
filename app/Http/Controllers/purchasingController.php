@@ -26,6 +26,8 @@ use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\InvoiceInvoice;
 use LaravelDaily\Invoices\InvoiceReturn;
 use Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
 
 class purchasingController extends Controller
 {
@@ -129,68 +131,48 @@ class purchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    public function reportPO($id)
+    public function reportPO($po_number)
     {
-        $getPO = purchaseOrder::where('id', $id)->with('suppliers', 'warehouse')->first();
-        $getItemOnPO = itemsPurchase::where('purchasingId', $getPO->po_number)->with('item')->get();
-        $client = new Party([
-            'name'          => $getPO->suppliers->customerName,
-            'address'         => $getPO->suppliers->customerAddress,
-        ]);
+        $company = company_details::first();
+        $purchaseOrder = purchaseOrder::where('po_number', $po_number)->with('suppliers', 'warehouse')->first();
+        $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseOrder->po_number)->with('item')->get();
 
-        $customer = new Party([
-            'name'          => $getPO->warehouse->warehouse_name,
-            'address'       => $getPO->warehouse->address,
-        ]);
-
-        // $items = [
-        //     (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
-        //     (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
-        //     (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
-        //     (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
-        //     (new InvoiceItem())->title('Service 5')->pricePerUnit(71.09)->quantity(7)->discountByPercent(9),
-        //     (new InvoiceItem())->title('Service 6')->pricePerUnit(76.32)->quantity(9),
-        //     (new InvoiceItem())->title('Service 7')->pricePerUnit(58.18)->quantity(3)->discount(3),
-        //     (new InvoiceItem())->title('Service 8')->pricePerUnit(42.99)->quantity(4)->discountByPercent(3)
-        // ];
-        foreach ($getItemOnPO as $getItemOnPO) {
-            $items[] = (new InvoiceItem())->title($getItemOnPO->item->item_name)->pricePerUnit($getItemOnPO->item->price)->quantity($getItemOnPO->qtyOrdered)->units($getItemOnPO->unit);
+        $item = [];
+        foreach ($itemPurchasing as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
         }
 
-        // NOTES FOR INVOICING
-        if ($getPO->remarks == null) {
-            $notes = '';
-        } else {
-            $notes = $getPO->remarks;
-        }
-        // $notes = implode("<br>", $notes);
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "warehouseName" => $purchaseOrder->warehouse->warehouse_name,
+            "warehouseAddress" => $purchaseOrder->warehouse->address,
+            "supplierName" => $purchaseOrder->suppliers->customerName,
+            "supplierAddress" => $purchaseOrder->suppliers->customerAddress,
+            "supplierNPWP" => $purchaseOrder->suppliers->customerNPWP,
+            "supplierEmail" => $purchaseOrder->suppliers->customerEmail,
+            "supplierPhone" => $purchaseOrder->suppliers->customerPhone,
+            "poNumber" => $purchaseOrder->po_number,
+            "orderDate" => $purchaseOrder->order_date,
+            "remark" => $purchaseOrder->remarks,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/order/' . $po_number))),
+            "image" => $company->logoblack,
+        ];
 
-        $invoice = Invoice::make('Purchase Order Invoice')
-            ->series($getPO->po_number)
-            ->seller($client)
-            ->buyer($customer)
-            ->date($getPO->created_at)
-            ->dateFormat('m/d/Y')
-            ->payUntilDays(14)
-            ->currencySymbol('Rp')
-            ->currencyCode('Rupiahs')
-            ->currencyFormat('{SYMBOL}. {VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
-            ->addItems($items)
-            ->notes($notes)
-            ->logo(public_path('webpage/images/logo.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
-
-        $link = $invoice->url();
-        // Then send email to party with link
-
-        // And return invoice itself to browser or have a different view
-        return $invoice->stream();
-        // return $getItemOnPO;
-        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+        $pdf = PDF::loadView('report.purchaseOrder', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $itemPurchasing;
     }
 
     // PURCHASE INVOICE
@@ -313,68 +295,48 @@ class purchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    public function reportPI($id)
+    public function reportPI($pi_number)
     {
-        $getPI = purchaseInvoice::where('id', $id)->with('suppliers', 'warehouse')->first();
-        $getItemOnPI = itemsPurchase::where('purchasingId', $getPI->pi_number)->with('item')->get();
-        $client = new Party([
-            'name'          => $getPI->suppliers->customerName,
-            'address'         => $getPI->suppliers->customerAddress,
-        ]);
+        $company = company_details::first();
+        $purchaseInvoice = purchaseInvoice::where('pi_number', $pi_number)->with('suppliers', 'warehouse')->first();
+        $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseInvoice->pi_number)->with('item')->get();
 
-        $customer = new Party([
-            'name'          => $getPI->warehouse->warehouse_name,
-            'address'       => $getPI->warehouse->address,
-        ]);
-
-        // $items = [
-        //     (new InvoiceItem())->title('Service 1')->pricePerUnit(47.79)->quantity(2)->discount(10),
-        //     (new InvoiceItem())->title('Service 2')->pricePerUnit(71.96)->quantity(2),
-        //     (new InvoiceItem())->title('Service 3')->pricePerUnit(4.56),
-        //     (new InvoiceItem())->title('Service 4')->pricePerUnit(87.51)->quantity(7)->discount(4)->units('kg'),
-        //     (new InvoiceItem())->title('Service 5')->pricePerUnit(71.09)->quantity(7)->discountByPercent(9),
-        //     (new InvoiceItem())->title('Service 6')->pricePerUnit(76.32)->quantity(9),
-        //     (new InvoiceItem())->title('Service 7')->pricePerUnit(58.18)->quantity(3)->discount(3),
-        //     (new InvoiceItem())->title('Service 8')->pricePerUnit(42.99)->quantity(4)->discountByPercent(3)
-        // ];
-        foreach ($getItemOnPI as $getItemOnPI) {
-            $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyShipped)->units($getItemOnPI->unit);
+        $item = [];
+        foreach ($itemPurchasing as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
         }
 
-        // NOTES FOR INVOICING
-        if ($getPI->remarks == null) {
-            $notes = '';
-        } else {
-            $notes = $getPI->remarks;
-        }
-        // $notes = implode("<br>", $notes);
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "warehouseName" => $purchaseInvoice->warehouse->warehouse_name,
+            "warehouseAddress" => $purchaseInvoice->warehouse->address,
+            "supplierName" => $purchaseInvoice->suppliers->customerName,
+            "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
+            "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
+            "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
+            "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
+            "poNumber" => $purchaseInvoice->pi_number,
+            "orderDate" => $purchaseInvoice->invoice_date,
+            "remark" => $purchaseInvoice->remarks,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
+            "image" => $company->logoblack,
+        ];
 
-        $invoice = InvoiceInvoice::make('Purchase Invoice')
-            ->series($getPI->pi_number)
-            ->seller($client)
-            ->buyer($customer)
-            ->date($getPI->created_at)
-            ->dateFormat('m/d/Y')
-            ->payUntilDays(14)
-            ->currencySymbol('Rp')
-            ->currencyCode('Rupiahs')
-            ->currencyFormat('{SYMBOL}. {VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
-            ->addItems($items)
-            ->notes($notes)
-            ->logo(public_path('webpage/images/logo.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
-
-        $link = $invoice->url();
-        // Then send email to party with link
-
-        // And return invoice itself to browser or have a different view
-        return $invoice->stream();
-        // return $getItemOnPO;
-        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+        $pdf = PDF::loadView('report.purchaseInvoice', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $itemPurchasing;
     }
 
     // PURCHASE REQUEST
@@ -509,56 +471,41 @@ class purchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    public function reportPRE($id)
+    public function reportPRE($pre_number)
     {
-        $getPI = purchaseRequest::where('id', $id)->with('warehouse')->first();
-        $getItemOnPI = itemsPurchase::where('purchasingId', $getPI->pre_number)->with('item')->get();
-        $client = new Party([
-            'name'          => $this->getCompany()->company_name,
-            'address'         => $this->getCompany()->address,
-        ]);
-        $customer = new Party([
-            'name'          => $getPI->warehouse->warehouse_name,
-            'address'       => $getPI->warehouse->address,
-        ]);
-        foreach ($getItemOnPI as $getItemOnPI) {
-            $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyRequested)->units($getItemOnPI->unit);
+        $company = company_details::first();
+        $purchaseRequest = purchaseRequest::where('pre_number', $pre_number)->with('warehouse')->first();
+        $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseRequest->pre_number)->with('item')->get();
+
+        $item = [];
+        foreach ($itemPurchasing as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "qty" => $x->qtyRequested,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+            ];
+            array_push($item, $data);
         }
 
-        // NOTES FOR INVOICING
-        if ($getPI->remarks == null) {
-            $notes = '';
-        } else {
-            $notes = $getPI->remarks;
-        }
-        // $notes = implode("<br>", $notes);
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "warehouseName" => $purchaseRequest->warehouse->warehouse_name,
+            "warehouseAddress" => $purchaseRequest->warehouse->address,
+            "poNumber" => $purchaseRequest->pre_number,
+            "orderDate" => $purchaseRequest->pr_date,
+            "remark" => $purchaseRequest->remarks,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/order/' . $pre_number))),
+            "image" => $company->logoblack,
+        ];
 
-        $invoice = InvoiceRequest::make('Purchase Request')
-            ->series($getPI->pre_number)
-            ->seller($customer)
-            ->buyer($client)
-            ->date($getPI->created_at)
-            ->dateFormat('m/d/Y')
-            ->payUntilDays(14)
-            ->currencySymbol('Rp')
-            ->currencyCode('Rupiahs')
-            ->currencyFormat('{SYMBOL}. {VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
-            ->addItems($items)
-            ->notes($notes)
-            ->logo(public_path('webpage/images/logo.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
-
-        $link = $invoice->url();
-        // Then send email to party with link
-
-        // And return invoice itself to browser or have a different view
-        return $invoice->stream();
-        // return $getItemOnPO;
-        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+        $pdf = PDF::loadView('report.purchaseRequest', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $itemPurchasing;
     }
     // PURCHASE RETURN
     public function getPurchaseReturn()
@@ -645,55 +592,50 @@ class purchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    public function reportPR($id)
+    public function reportPR($pr_number)
     {
-        $getPI = purchaseReturn::where('id', $id)->with('suppliers')->first();
-        $getItemOnPI = itemsPurchase::where('purchasingId', $getPI->pr_number)->with('item')->get();
-        $client = new Party([
-            'name'          => $this->getCompany()->company_name,
-            'address'         => $this->getCompany()->address,
-        ]);
-        $customer = new Party([
-            'name'          => $getPI->suppliers->customerName,
-            'address'       => $getPI->suppliers->customerAddress,
-        ]);
-        foreach ($getItemOnPI as $getItemOnPI) {
-            $items[] = (new InvoiceItem())->title($getItemOnPI->item->item_name)->pricePerUnit('0')->quantity($getItemOnPI->qtyReturns)->units($getItemOnPI->unit);
+        $company = company_details::first();
+        $purchaseReturn = purchaseReturn::where('pr_number', $pr_number)->with('suppliers')->first();
+        $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseReturn->pr_number)->with('item')->get();
+
+        $item = [];
+        foreach ($itemPurchasing as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyReturns,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyReturns
+            ];
+            array_push($item, $data);
         }
 
-        // NOTES FOR INVOICING
-        if ($getPI->remarks == null) {
-            $notes = '';
-        } else {
-            $notes = $getPI->remarks;
-        }
-        // $notes = implode("<br>", $notes);
+        $data = [
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "supplierName" => $purchaseReturn->suppliers->customerName,
+            "supplierAddress" => $purchaseReturn->suppliers->customerAddress,
+            "supplierNPWP" => $purchaseReturn->suppliers->customerNPWP,
+            "supplierEmail" => $purchaseReturn->suppliers->customerEmail,
+            "supplierPhone" => $purchaseReturn->suppliers->customerPhone,
+            "poNumber" => $purchaseReturn->pr_number,
+            "orderDate" => $purchaseReturn->return_date,
+            "remark" => $purchaseReturn->remarks,
+            "items" => $item,
+            "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/order/' . $pr_number))),
+            "image" => $company->logoblack,
+        ];
 
-        $invoice = InvoiceReturn::make('Purchase Return')
-            ->series($getPI->pr_number)
-            ->seller($client)
-            ->buyer($customer)
-            ->date($getPI->created_at)
-            ->dateFormat('m/d/Y')
-            ->payUntilDays(14)
-            ->currencySymbol('Rp')
-            ->currencyCode('Rupiahs')
-            ->currencyFormat('{SYMBOL}. {VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
-            ->addItems($items)
-            ->notes($notes)
-            ->logo(public_path('webpage/images/logo.png'))
-            // You can additionally save generated invoice to configured disk
-            ->save('public');
-
-        $link = $invoice->url();
-        // Then send email to party with link
-
-        // And return invoice itself to browser or have a different view
-        return $invoice->stream();
-        // return $getItemOnPO;
-        // return response(purchaseOrder::find($id)->with('supplier')->with('recipient')->with('createdby')->get());
+        $pdf = PDF::loadView('report.purchaseReturn', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $itemPurchasing;
+    }
+    public function reportTest()
+    {
+        $pdf = PDF::loadView('report.test')->setPaper('a4', 'potrait');
+        return $pdf->stream();
     }
 }

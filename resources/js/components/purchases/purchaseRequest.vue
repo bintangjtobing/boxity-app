@@ -81,7 +81,8 @@
                                         <a v-on:click="approvePRE(item.pre_number)" class="create"
                                             v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
                                             <i class="far fa-thumbs-up"></i> Approve</a>
-                                        <a :href="`/report/purchase/request/${item.id}`" target="_blank" class="view">
+                                        <a :href="`/report/purchase/request/${item.pre_number}`" target="_blank"
+                                            class="view">
                                             <i class="fas fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/request/${item.pre_number}`" class="edit">
                                             <i class="fas fa-eye"></i></router-link>

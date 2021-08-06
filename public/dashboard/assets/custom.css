@@ -367,7 +367,22 @@ a {
 }
 
 .breadcrumb-main span {
-    font-size: 14px;
+    font-size: 1rem;
+}
+
+.breadcrumb-main .issueClosed {
+    font-size: 1rem;
+    color: #ababab;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.breadcrumb-main .issueClosed:hover {
+    color: #222;
+}
+
+.breadcrumb-main .issueCountClosed {
+    font-size: 1rem;
 }
 
 .navbar-left .navbar-brand {
@@ -389,6 +404,10 @@ a {
 .create:hover {
     background-color: #359224;
     color: #fff !important;
+}
+
+.tab-space {
+    margin-left: 20px;
 }
 
 /* Responsive Design */

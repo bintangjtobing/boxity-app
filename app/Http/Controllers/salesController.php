@@ -388,7 +388,7 @@ class salesController extends Controller
             "customerEmail" => $salesOrder->customers->customerEmail,
             "items" => $item,
             "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/' . $id))),
-            "image" => public_path('webpage/images/logo.png')
+            "image" => $company->logoblack,
         ];
 
         $pdf = PDF::loadView('vendor.invoices.templates.sales-order', $data)->setPaper('a4', 'potrait');

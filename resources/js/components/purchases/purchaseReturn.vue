@@ -26,7 +26,8 @@
                                     :headers="headers" multi-sort :items="purchaseReturnItem" :items-per-page="10"
                                     class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:[`item.actions`]="{item}">
-                                        <a :href="`/report/purchase/return/${item.id}`" target="_blank" class="view">
+                                        <a :href="`/report/purchase/return/${item.pr_number}`" target="_blank"
+                                            class="view">
                                             <i class="fas fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/return/${item.pr_number}`" class="edit">
                                             <i class="fas fa-eye"></i></router-link>

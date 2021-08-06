@@ -3,7 +3,10 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Issue Center</h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Issue Center <router-link to="/issues/i/closed"
+                            class="ml-4 issueClosed"> <i class="fas fa-check"></i>
+                            {{countClosedIssue}} Issues Closed</router-link>
+                    </h2>
                 </div>
             </div>
         </div>
@@ -72,12 +75,6 @@
                                                 bg-opacity-success active text-capitalize"><i
                                             class="fas fa-check-circle"></i>
                                         &nbsp;Approved</span>
-                                </div>
-                                <div v-if="item.status==='2'">
-                                    <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active text-capitalize"><i
-                                            class="fas fa-times-circle"></i>
-                                        &nbsp;Done</span>
                                 </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
@@ -151,12 +148,6 @@
                                             class="fas fa-check-circle"></i>
                                         &nbsp;Approved</span>
                                 </div>
-                                <div v-if="item.status==='2'">
-                                    <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active text-capitalize"><i
-                                            class="fas fa-times-circle"></i>
-                                        &nbsp;Done</span>
-                                </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
                                 <div v-if="item.priority===0">
@@ -197,6 +188,7 @@
             return {
                 fromCreated: [],
                 countComment: '0',
+                countClosedIssue: 0,
 
                 // datatable
                 expanded: [],
@@ -239,6 +231,7 @@
         mounted() {
             this.loadIssues();
             this.getUser();
+            this.countCloseIssues();
         },
         methods: {
             async loadIssues() {
@@ -258,6 +251,10 @@
                 // Load user logged in
                 const res = await axios.get('/getUserLoggedIn');
                 this.user = res.data;
+            },
+            async countCloseIssues() {
+                const getIssueClosed = await axios.get('/api/issue/c/closed');
+                this.countClosedIssue = getIssueClosed.data;
             },
             async approveIssue(id) {
                 Swal.fire({
