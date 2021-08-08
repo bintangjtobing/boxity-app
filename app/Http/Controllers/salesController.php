@@ -393,7 +393,6 @@ class salesController extends Controller
 
         $pdf = PDF::loadView('vendor.invoices.templates.sales-order', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
-        // return $itemSales;
     }
 
     public function reportSSdr($sdr_number)
