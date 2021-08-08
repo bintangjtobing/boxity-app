@@ -23,7 +23,7 @@
                                     <div class="dropdown">
                                         <a href="#" role="button" title="Details" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
+                                            <i class="fal fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item align-items-center d-flex" href="#">

@@ -9,11 +9,11 @@ class salesInvoice extends Model
     protected $table = 'sales_invoices';
     protected $fillable = [
         'si_number', 'customer', 'invoice_date', 'toGL', 'status', 'created_by',
-        'updated_by', 'remarks'
+        'updated_by', 'remarks', 'reference_no', 'vehicle_no', 'drivers'
     ];
-    public function customer()
+    public function customers()
     {
-        return $this->belongsTo(customer::class, 'customer');
+        return $this->belongsTo(User::class, 'customer');
     }
     public function createdby()
     {

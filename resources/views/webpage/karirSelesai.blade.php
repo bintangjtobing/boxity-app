@@ -25,7 +25,7 @@
                             <p>Kami akan menyeleksi lamaran ini dan menghubungi anda lewat email ataupun telepon untuk
                                 mengundang anda menghadiri tahap
                                 interview.<br>
-                                <a href="/"><i class="fas fa-caret-left"></i> Back to home</a></p>
+                                <a href="/"><i class="fal fa-caret-left"></i> Back to home</a></p>
                         </div>
                     </div>
                 </div>

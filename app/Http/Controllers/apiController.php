@@ -52,6 +52,7 @@ use App\itemsPurchase;
 use App\documentsDelivery;
 use App\itemOndocumentsDelivery;
 use App\Mail\newDocumentDelivery;
+use App\itemsSales;
 use Mail;
 
 class apiController extends Controller
@@ -979,7 +980,7 @@ class apiController extends Controller
         $fileDocument = FileDocument::create([
             'file' => $imageName,
         ]);
-        return response()->json($fileDocument, 201);
+        return response()->json($fileDocumFent, 201);
     }
 
     // Gallery API
@@ -1699,9 +1700,21 @@ class apiController extends Controller
     }
 
     // History item
-    public function getHistoryItemById($id)
+    public function getHistoryItemById($id, Request $req)
     {
-        return response()->json(itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get());
+        $data = [];
+        if (isset($req->fromDate) && isset($req->toDate)) {
+            $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+        }
+        else {
+            $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+        }
+        
+        foreach ($data as $elm) {
+            $elm->itemNumber = $elm->detailItemIn['pi_number'] ?? $elm->detailItemOut['si_number'];
+        }
+        
+        return response()->json($data);
     }
     public function sumQtyInHistoryItem($id)
     {
@@ -1710,15 +1723,18 @@ class apiController extends Controller
             return '0';
         } else {
             $getPINum = $getHistory[0]->itemInId;
-            return response()->json(itemsPurchase::where('item_code', $id)->sum('qtyShipped'));
+            return response()->json(itemsPurchase::where('item_code', $id)->where('pi_status', 2)->sum('qtyShipped'));
         }
     }
     public function sumQtyOutHistoryItem($id)
     {
-        // $getHistory = itemHistory::where('itemId', $id)->get();
-        // $getSINum = $getHistory[0]->itemOutId;
-        // return response()->json(itemsPurchase::where('item_code', $id)->sum('qtyShipped'));
-        return 0;
+        $getHistory = itemHistory::where('itemId', $id)->get();
+        if (!$getHistory) {
+            return '0';
+        } else {
+            $getSINumb = $getHistory[0]->itemOutId;
+            return response()->json(itemsSales::where('item_code', $id)->where('si_status', 2)->sum('qtyShipped'));
+        }
     }
 
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan

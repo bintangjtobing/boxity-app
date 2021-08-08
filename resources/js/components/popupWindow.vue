@@ -54,7 +54,7 @@
                     <div class="card">
                         <div class="card-header py-20 px-20">
                             <div class="changelog-history__title">
-                                <span style="color: red;"><i class="fas fa-circle-notch fa-spin"></i></span> Current
+                                <span style="color: red;"><i class="fal fa-circle-notch fa-spin"></i></span> Current
                                 Live Popup
                             </div>
                         </div>

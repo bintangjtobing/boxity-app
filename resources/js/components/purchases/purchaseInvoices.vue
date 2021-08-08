@@ -28,11 +28,11 @@
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/purchase/invoices/${item.pi_number}`" target="_blank"
                                             class="view">
-                                            <i class="fas fa-print"></i></a>
+                                            <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/invoices/${item.pi_number}`" class="edit">
-                                            <i class="fas fa-eye"></i></router-link>
-                                        <a v-on:click="deletePurchaseInvoiceItem(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-eye"></i></router-link>
+                                        <!-- <a v-on:click="deletePurchaseInvoiceItem(item.id)" class="remove">
+                                            <i class="fad fa-trash"></i></a> -->
                                     </template>
                                 </v-data-table>
                             </div>

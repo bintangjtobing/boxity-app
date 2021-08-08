@@ -35,34 +35,34 @@
                                         <div v-if="item.status===0">
                                             <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active text-capitalize"><i
-                                                    class="fas fa-exclamation-circle"></i>
+                                                    class="fal fa-exclamation-circle"></i>
                                                 &nbsp;Draft</span>
                                         </div>
                                         <div v-if="item.status===1">
                                             <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><i
-                                                    class="fas fa-check-circle"></i>
+                                                    class="fal fa-check-circle"></i>
                                                 &nbsp;Approved</span>
                                         </div>
                                         <div v-if="item.status===2">
                                             <span class="rounded-pill userDatatable-content-status color-danger
                                                 bg-opacity-danger active text-capitalize"><i
-                                                    class="fas fa-times-circle"></i>
+                                                    class="fal fa-times-circle"></i>
                                                 &nbsp;Canceled</span>
                                         </div>
                                         <div v-if="item.status===3">
                                             <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i class="fas fa-link"></i>
+                                                bg-opacity-success active text-capitalize"><i class="fal fa-link"></i>
                                                 &nbsp;PO Already Created</span>
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <a :href="`/api/report/sales-order/${item.id}`" target="_blank" class="view">
-                                            <i class="fas fa-print"></i></a>
+                                            <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
-                                            <i class="fas fa-eye"></i></router-link>
+                                            <i class="fad fa-eye"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>

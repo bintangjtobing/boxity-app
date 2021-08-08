@@ -67,17 +67,17 @@
                                         <div class="userDatatable-content d-inline-block">
                                             <div v-if="quote.status==0">
                                                 <span class="rounded-pill userDatatable-content-status color-warning
-                                                bg-opacity-warning active"><i class="fas fa-exclamation"></i>
+                                                bg-opacity-warning active"><i class="fal fa-exclamation"></i>
                                                     &nbsp;Pending</span>
                                             </div>
                                             <div v-if="quote.status==1">
                                                 <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active"><i class="fas fa-exclamation"></i>
+                                                bg-opacity-success active"><i class="fal fa-exclamation"></i>
                                                     &nbsp;Done</span>
                                             </div>
                                             <div v-if="quote.status==2">
                                                 <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active"><i class="fas fa-lock"></i>
+                                                bg-opacity-danger active"><i class="fal fa-lock"></i>
                                                     &nbsp;Terminated</span>
                                             </div>
                                         </div>
@@ -86,11 +86,11 @@
                                         <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                             <li>
                                                 <router-link :to="`/edit/quote/${quote.id}`" class="edit">
-                                                    <i class="fas fa-pen"></i></router-link>
+                                                    <i class="fad fa-edit"></i></router-link>
                                             </li>
                                             <li>
                                                 <a v-on:click="deletequote(quote.id)" class="remove">
-                                                    <i class="fas fa-trash"></i></a>
+                                                    <i class="fad fa-trash"></i></a>
                                             </li>
                                         </ul>
                                     </td>

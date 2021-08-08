@@ -87,7 +87,7 @@
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Ending Balance:</span>
-                                                                    <input type="text" v-model="inventorydata.qty"
+                                                                    <input type="text" v-model="countQty"
                                                                         class="form-control" readonly>
                                                                 </div>
                                                             </div>
@@ -190,6 +190,8 @@
                                                             <span>From:</span>
                                                             <input type="date" v-model="range.fromDate" id=""
                                                                 class="form-control">
+                                                            <span style="color:red" v-show="notSuitable">From date
+                                                                cannot be latest than Until date</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-5">
@@ -204,7 +206,8 @@
                                                             <div class="justify-content-end">
                                                                 <button v-on:click="searchData"
                                                                     v-on:keyup.enter="searchData"
-                                                                    class="btn btn-success btn-default btn-squared px-30">Search</button>
+                                                                    class="btn btn-success btn-default btn-squared px-30"
+                                                                    :disabled="!isDisableSubmit">Search</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -255,16 +258,25 @@
                                                                             </v-text-field>
                                                                         </v-card-title>
                                                                         <v-data-table loading
-                                                                            loading-text="Loading... Please wait..."
+                                                                            loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
                                                                             multi-sort :items="historyItem"
                                                                             :items-per-page="10" class="elevation-1">
-                                                                            <template v-slot:[`item.itemInId`]="{item}">
-                                                                                <div>
+                                                                            <template
+                                                                                v-slot:[`item.itemNumber`]="{item}">
+                                                                                <div v-if="item.type===1">
                                                                                     <router-link
-                                                                                        :to="`/detail/purchase/invoices/${item.itemInId}`">
+                                                                                        :to="`/detail/purchase/invoices/${item.itemNumber}`">
                                                                                         <i
-                                                                                            class="fas fa-link"></i>&nbsp;{{item.itemInId}}
+                                                                                            class="fal fa-link"></i>&nbsp;{{item.itemNumber}}
+                                                                                    </router-link>
+                                                                                </div>
+                                                                                <div v-if="item.type===2">
+                                                                                    <router-link
+                                                                                        :to="`/detail/sales/invoices/${item.itemNumber}`">
+                                                                                        <i
+                                                                                            class="fal
+                                                                                            fa-link"></i>&nbsp;{{item.itemNumber}}
                                                                                     </router-link>
                                                                                 </div>
                                                                             </template>
@@ -317,7 +329,7 @@
                 historyItem: [],
                 headers: [{
                     text: 'Document #',
-                    value: 'itemInId'
+                    value: 'itemNumber'
                 }, {
                     text: 'Document Type',
                     value: 'type'
@@ -349,6 +361,14 @@
             this.loadDataInventoryItem();
             this.loadHistoryItem();
         },
+        computed: {
+            notSuitable() {
+                return (this.range.fromDate > this.range.toDate) || false
+            },
+            isDisableSubmit() {
+                return (this.range.fromDate < this.range.toDate) || false
+            }
+        },
         methods: {
             async loadDataInventoryItem() {
                 this.$Progress.start();
@@ -370,6 +390,7 @@
                 this.inventorydata.qty = qtyInSum.data;
                 const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
                 this.sumQtyOut = qtyOutSum.data;
+                this.countQty = this.sumQtyIn - this.sumQtyOut;
                 this.$Progress.finish();
             },
             async handleSubmit() {
@@ -382,7 +403,17 @@
                 this.$router.push('/inventory-item');
             },
             async searchData() {
-                console.log(this.range);
+                console.log(this.range.fromDate, ">", this.range.toDate)
+                console.log(this.range.fromDate > this.range.toDate)
+                console.log(this.range.fromDate, "<", this.range.toDate)
+                console.log(this.range.fromDate < this.range.toDate)
+                const historyList = await axios.get('/api/item-history/' + this.$route.params.id, {
+                    params: {
+                        fromDate: this.range.fromDate,
+                        toDate: this.range.toDate
+                    }
+                });
+                this.historyItem = historyList.data;
             }
         },
     }

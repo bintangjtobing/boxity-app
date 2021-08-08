@@ -148,7 +148,102 @@ class itemOnSalesController extends Controller
     }
     public function countItemSalesSdr()
     {
-        $ItemCount = DB::table('items_purchases')
+        $ItemCount = DB::table('items_sales')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+
+    // ITEM ON SALES INVOICES
+    public function getItemSalesSI()
+    {
+        return response()->json(itemsSales::with('item')->orderBy('created_at', 'DESC')->where('si_status', 1)->where('created_by', Auth::id())->get());
+    }
+    public function postItemSalesSI(Request $request)
+    {
+        $itemPurchase = DB::table('inventory_items')
+            ->where('id', '=', $request->itemid)
+            ->update([
+                'inventory_items.price' => $request->currentPrice,
+            ]);
+
+        $itemSalesing = new itemsSales();
+        $itemSalesing->item_code = $request->itemid;
+        $itemSalesing->qtyShipped = $request->qtyShipped;
+        $itemSalesing->unit = $request->unit;
+        $itemSalesing->price = $request->price;
+        $itemSalesing->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $itemSalesing->si_status = '1';
+        $itemSalesing->created_by = Auth::id();
+        $itemSalesing->updated_by = Auth::id();
+        $itemSalesing->save();
+        return response()->json($itemSalesing, 200);
+    }
+    public function postItemSalesBySiNumber($si_number, Request $request)
+    {
+        $itemPurchase = DB::table('inventory_items')
+            ->where('id', '=', $request->itemid)
+            ->update([
+                'inventory_items.price' => $request->currentPrice,
+            ]);
+
+        $itemSalesing = new itemsSales();
+        $itemSalesing->item_code = $request->itemid;
+        $itemSalesing->qtyShipped = $request->qtyShipped;
+        $itemSalesing->unit = $request->unit;
+        $itemSalesing->price = $request->price;
+        $itemSalesing->remarks = $request->remarks;
+
+        $itemSalesing->si_status = '2';
+        $itemSalesing->salesingId = $si_number;
+        $itemSalesing->created_by = Auth::id();
+        $itemSalesing->updated_by = Auth::id();
+        $itemSalesing->save();
+
+        $inputToHistory = new itemHistory();
+        $inputToHistory->itemId = $itemSalesing->item_code;
+        $inputToHistory->itemOutId = $si_number;
+        $inputToHistory->type = 1;
+        $inputToHistory->date = $itemSalesing->created_at;
+        $inputToHistory->qtyIn = $itemSalesing->qtyShipped;
+        $inputToHistory->remarks = $itemSalesing->remarks;
+        $inputToHistory->save();
+        return response()->json($itemSalesing, 200);
+    }
+    public function getItemSalesSIById($id)
+    {
+        return response()->json(itemsSales::where('id', $id)->with('item', 'requestedBy')->first());
+    }
+    public function getItemSalesBySiNumber($si_number)
+    {
+        return response()->json(itemsSales::where('salesingId', $si_number)->with('item', 'requestedBy')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postItemSalesSIById($id, Request $request)
+    {
+        $itemPurchase = DB::table('inventory_items')
+            ->where('id', '=', $request->itemid)
+            ->update([
+                'inventory_items.price' => $request->currentPrice,
+            ]);
+
+        $itemSalesing = itemsSales::find($id);
+        $itemSalesing->qtyShipped = $request->qtyShipped;
+        $itemSalesing->price = $request->price;
+        $itemSalesing->remarks = $request->remarks;
+        $itemSalesing->updated_by = Auth::id();
+        $itemSalesing->save();
+        return response()->json($itemPurchase, 200);
+        // return $request->itemid;
+    }
+    public function deleteItemSalesSIById($id)
+    {
+        return response()->json(itemsSales::find($id)->delete());
+    }
+    public function countItemSalesSI()
+    {
+        $ItemCount = DB::table('items_sales')
             ->get()
             ->count();
         return response()->json($ItemCount);

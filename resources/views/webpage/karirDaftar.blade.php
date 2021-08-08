@@ -20,9 +20,9 @@
                 <div class="row m-b-30">
                     <div class="col-lg-12">
                         <p class="breadcumb-form"><a href="/karir">Karir</a> <span style="font-size:0.55rem;"><i
-                                    class="fas fa-circle mx-2"></i></span> <a
+                                    class="fal fa-circle mx-2"></i></span> <a
                                 href="/karir/detail/{{$jobs->title}}">{{$jobs->title}}</a>
-                            <span style="font-size:0.55rem;"><i class="fas fa-circle mx-2"></i></span> <a href="#">
+                            <span style="font-size:0.55rem;"><i class="fal fa-circle mx-2"></i></span> <a href="#">
                                 Form Pendaftaran
                                 Umum</a></p>
                         <h3><strong>FORMULIR PENDAFTARAN</strong></h3>

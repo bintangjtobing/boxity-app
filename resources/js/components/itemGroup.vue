@@ -31,9 +31,9 @@
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/item-group/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fad fa-edit"></i></router-link>
                                         <a v-on:click="deleteItemGroup(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -48,7 +48,7 @@
                         <div class="modal-header">
                             <h6 class="modal-title fw-500" id="staticBackdropLabel">Add Item Group</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i class="fas fa-times"></i>
+                                <i class="fal fa-times"></i>
                             </button>
                         </div>
                         <div class="modal-body">

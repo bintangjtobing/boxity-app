@@ -32,9 +32,9 @@
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/sales/return/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fad fa-edit"></i></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>

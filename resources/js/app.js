@@ -414,15 +414,15 @@ const routes = [{
         component: SalesOrderForm,
     }, {
         name: 'SalesInvoices',
-        path: 'sales/invoices',
+        path: '/sales/invoices',
         component: SalesInvoices
     }, {
         name: 'salesInvoicesAdd',
-        path: 'sales/invoices/add',
+        path: '/sales/invoices/add',
         component: SalesInvoicesAdd
     }, {
         name: 'detailSalesInvoices',
-        path: '/detailsales/invoices/:id',
+        path: '/detail/sales/invoices/:si_number',
         component: SalesInvoicesForm,
     }, {
         name: 'salesDeliveryReceipt',

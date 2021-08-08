@@ -21,7 +21,7 @@
                                         <h6 class="modal-title fw-500" id="staticBackdropLabel">New user</h6>
                                         <button id="closeModal" type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fal fa-times"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -140,17 +140,17 @@
                             <template v-slot:item.status="{ item }">
                                 <div v-if="item.status==1">
                                     <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active"><i class="fas fa-check"></i>
+                                                bg-opacity-success active"><i class="fal fa-check"></i>
                                         &nbsp;Active</span>
                                 </div>
                                 <div v-if="item.status==0">
                                     <span class="rounded-pill userDatatable-content-status color-warning
-                                                bg-opacity-warning active"><i class="fas fa-exclamation"></i>
+                                                bg-opacity-warning active"><i class="fal fa-exclamation"></i>
                                         &nbsp;Locked</span>
                                 </div>
                                 <div v-if="item.status==2">
                                     <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active"><i class="fas fa-lock"></i>
+                                                bg-opacity-danger active"><i class="fal fa-lock"></i>
                                         &nbsp;Terminated</span>
                                 </div>
                             </template>
@@ -161,9 +161,9 @@
                             </template>
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/user/${item.id}`" class="edit">
-                                    <i class="fas fa-pen"></i></router-link>
+                                    <i class="fad fa-edit"></i></router-link>
                                 <a v-on:click="deleteData(item.id)" class="remove">
-                                    <i class="fas fa-trash"></i></a>
+                                    <i class="fad fa-trash"></i></a>
                             </template>
                         </v-data-table>
                     </div>

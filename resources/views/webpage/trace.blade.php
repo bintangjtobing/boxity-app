@@ -19,7 +19,7 @@
                             onchange="try{setCustomValidity('')}catch(e){}">
                         <div class="input-group-append">
                             <button form="searchform" class="btn btn-secondary" type="submit"><span><i
-                                        class="fas fa-search"></i></span></button>
+                                        class="fal fa-search"></i></span></button>
                         </div>
                     </div>
                 </form>

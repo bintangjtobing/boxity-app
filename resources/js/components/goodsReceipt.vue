@@ -31,8 +31,10 @@
                                     <template v-slot:[`item.typeOfGoods`]="{ item }">
                                         <div class="userDatatable-inline-title my-3">
                                             <a href="#" class="text-dark fw-500">
-                                                <h6 v-if="item.typeOfGoods == 1" title="Document">D</h6>
-                                                <h6 v-if="item.typeOfGoods == 2">P</h6>
+                                                <h6 v-if="item.typeOfGoods == 1" title="Document"><i
+                                                        class="fad fa-file-contract"></i></h6>
+                                                <h6 v-if="item.typeOfGoods == 2" title="Packet"><i
+                                                        class="fad fa-box-full"></i></h6>
                                             </a>
                                         </div>
                                     </template>
@@ -40,7 +42,7 @@
                                         <div class="userDatatable-inline-title my-3">
                                             <h6>#{{item.receiptNumber}}</h6>
                                             <p class="pt-1 d-block mb-0">
-                                                <i class="fas fa-dolly"></i> via {{item.courier}} • Received at
+                                                <i class="far fa-dolly"></i> via {{item.courier}} • Received at
                                                 {{item.created_at}}
                                             </p>
                                         </div>
@@ -59,7 +61,7 @@
                                                 style="color:blue;"><i class="far fa-check-circle"></i> Update
                                                 status</span></a>
                                         <a v-if="item.status==1"><span style="color:green;"><i
-                                                    class="fas fa-check-circle"></i>
+                                                    class="fal fa-check-circle"></i>
                                                 Done</span></a>
                                     </template>
                                 </v-data-table>
@@ -76,7 +78,7 @@
                         <div class="modal-header">
                             <h6 class="modal-title fw-500" id="staticBackdropLabel">Add Goods Receipt</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i class="fas fa-times"></i>
+                                <i class="fal fa-times"></i>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -196,8 +198,9 @@
                 search: '',
                 goodsData: [],
                 headers: [{
-                    text: 'Goods Type',
-                    value: 'typeOfGoods'
+                    text: 'Type',
+                    value: 'typeOfGoods',
+                    align: 'center',
                 }, {
                     text: 'Receipt No.',
                     value: 'receiptNumber'

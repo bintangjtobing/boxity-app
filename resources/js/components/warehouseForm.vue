@@ -141,10 +141,10 @@
                                                         <template v-slot:item.actions="{item}">
                                                             <router-link :to="`/detail/warehouse-customer/${item.id}`"
                                                                 class="edit">
-                                                                <i class="fas fa-eye"></i></router-link>
+                                                                <i class="fad fa-eye"></i></router-link>
                                                             <a v-on:click="deleteWarehouseCustomerList(item.id)"
                                                                 class="remove">
-                                                                <i class="fas fa-trash"></i></a>
+                                                                <i class="fad fa-trash"></i></a>
                                                         </template>
                                                     </v-data-table>
                                                 </div>

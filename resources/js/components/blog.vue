@@ -16,7 +16,7 @@
                                     <div class="modal-header">
                                         <h6 class="modal-title fw-500" id="staticBackdropLabel">New blog</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i class="fas fa-times"></i>
+                                            <i class="fal fa-times"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -93,11 +93,11 @@
                             </template>
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/blogs/${item.id}`" class="view">
-                                    <i class="fas fa-eye"></i></router-link>
+                                    <i class="fad fa-eye"></i></router-link>
                                 <router-link :to="`/edit/blog/${item.id}`" class="edit">
-                                    <i class="fas fa-pen"></i></router-link>
+                                    <i class="fad fa-edit"></i></router-link>
                                 <a @click="deleteBlog(item.id)" class="remove">
-                                    <i class="fas fa-trash"></i></a>
+                                    <i class="fad fa-trash"></i></a>
                             </template>
                         </v-data-table>
                     </div>

@@ -22,13 +22,13 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" multi-sort :items="warehouseData" :items-per-page="10"
-                                    class="elevation-1">
+                                <v-data-table :headers="headers" :search="search" multi-sort :items="warehouseData"
+                                    :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/warehouse/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
+                                            <i class="fad fa-edit"></i></router-link>
                                         <a v-on:click="deleteWarehouse(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -43,7 +43,7 @@
                         <div class="modal-header">
                             <h6 class="modal-title fw-500" id="staticBackdropLabel">Add Warehouse</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i class="fas fa-times"></i>
+                                <i class="fal fa-times"></i>
                             </button>
                         </div>
                         <div class="modal-body">

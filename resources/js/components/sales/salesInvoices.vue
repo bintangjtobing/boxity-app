@@ -21,20 +21,17 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
-                                    class="elevation-1" group-by="item_group.name">
-                                    <template v-slot:item.type="{ item }">
-                                        <span v-if="item.type=='1'">Stock</span>
-                                        <span v-if="item.type=='2'">Non Stock</span>
-                                        <span v-if="item.type=='3'">Assembly</span>
-                                        <span v-if="item.type=='4'">Bundle</span>
-                                        <span v-if="item.type=='5'">Service</span>
-                                    </template>
+                                <v-data-table :headers="headers" :loading="salesInvoiceData.length" multi-sort
+                                    :items="salesInvoiceData" :items-per-page="10" class="elevation-1"
+                                    group-by="customers.customerName">
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/sales/invoices/${item.id}`" class="edit">
-                                            <i class="fas fa-pen"></i></router-link>
-                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                        <a :href="`/report/sales/invoices/${item.si_number}`" target="_blank"
+                                            class="view">
+                                            <i class="fad fa-print"></i></a>
+                                        <router-link :to="`/detail/sales/invoices/${item.si_number}`" class="edit">
+                                            <i class="fad fa-eye"></i></router-link>
+                                        <!-- <a v-on:click="deleteSalesInvoiceData(item.id)" class="remove">
+                                            <i class="fad fa-trash"></i></a> -->
                                     </template>
                                 </v-data-table>
                             </div>
@@ -58,38 +55,27 @@
         },
         data() {
             return {
-                inventorydata: {
-                    type: '',
-                    addSalesInvoices: '',
-                    item_group: '',
-                },
                 // datatable
                 search: '',
                 key: 1,
-                inventoryItem: [],
+                salesInvoiceData: [],
                 headers: [{
-                        text: 'Item Code',
-                        value: 'item_code'
-                    }, {
-                        text: 'Name',
-                        value: 'item_name'
-                    }, {
-                        text: 'Item Group',
-                        value: 'item_group.name'
-                    },
-                    {
-                        text: 'Tipe Item',
-                        value: 'type'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        align: 'right',
-                        filterable: false,
-                        sortable: false
-                    }
-                ],
+                    text: 'SI #',
+                    value: 'si_number'
+                }, {
+                    text: 'Invoice Date',
+                    value: 'invoice_date'
+                }, {
+                    text: 'Customer',
+                    value: 'customers.customerName'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    align: 'right',
+                    filterable: false,
+                    sortable: false
+                }],
                 // end datatable
-                inventoryOpt: {},
                 countItems: '0',
             }
         },
@@ -99,69 +85,26 @@
         methods: {
             async loadItem() {
                 this.$Progress.start();
-                const resp = await axios.get('/api/inventory-item');
-                this.inventoryItem = resp.data;
-                const count = await axios.get('/api/count-item-group');
+                const resp = await axios.get('/api/sales/invoices');
+                this.salesInvoiceData = resp.data;
+                const count = await axios.get('/api/count-sales-invoice');
                 this.countItems = count.data;
-
-                // Load item group
-                const respItemGroup = await axios.get('/api/item-group');
-                this.inventoryOpt = respItemGroup.data;
                 this.$Progress.finish();
             },
-            async submitHandle() {
-                this.$Progress.start();
-                await axios.post('/api/inventory-item', this.inventorydata).then(response => {
-                    this.loadItem();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Congratulations',
-                        text: 'Success add Sales Invoices',
-                    });
-                    this.inventorydata = {
-                        item_code: '',
-                        item_name: '',
-                        type: '',
-                        item_group: '',
-                        brand: '',
-                        width: '',
-                        length: '',
-                        thickness: '',
-                        nt_weight: '',
-                        gr_weight: '',
-                        volume: '',
-                    };
-                    this.$Progress.finish();
-                }).catch(error => {
-                    this.$Progress.fail();
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Something wrong.',
-                        confirmButtonText: `Ok`,
-                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-                it still exist, you can contact our developer. <br><br>Error message: ` +
-                            error,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                });
-            },
-            async deleteInventoryItem(id) {
+            async deleteSalesInvoiceData(id) {
                 const result = await Swal.fire({
-                    title: 'Delete data item?',
+                    title: 'Delete data sales invoices?',
                     showCancelButton: true,
                     cancelButtonColor: '#d33',
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    await axios.delete('/api/inventory-item/' + id);
+                    await axios.delete('/api/sales-invoices/' + id);
                     this.loadItem();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
-                        text: 'Success deleted current item.'
+                        text: 'Success deleted current Sales Invoice.'
                     });
                 }
             },

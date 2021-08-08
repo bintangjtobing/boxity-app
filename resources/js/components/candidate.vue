@@ -28,13 +28,13 @@
                                         <div>
                                             <router-link :to="`/candidate/detail/`+item.id" class="rounded-pill userDatatable-content-status color-primary
                                                 bg-opacity-primary active">
-                                                <i class="fas fa-exclamation-circle"></i> &nbsp;Data lengkap
+                                                <i class="fal fa-exclamation-circle"></i> &nbsp;Data lengkap
                                             </router-link>
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="deleteData(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>

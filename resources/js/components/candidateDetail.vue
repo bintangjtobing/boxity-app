@@ -27,10 +27,10 @@
                                     <b>{{candidates.nama_lengkap}}</b> <br><br>
                                     Gender <br>
                                     <b>
-                                        <span v-if="candidates.jenis_kelamin=='Pria'"><i class="fas fa-mars"></i>&nbsp;
+                                        <span v-if="candidates.jenis_kelamin=='Pria'"><i class="fal fa-mars"></i>&nbsp;
                                             {{candidates.jenis_kelamin}}</span>
                                         <span v-if="candidates.jenis_kelamin=='Wanita'"><i
-                                                class=" fas fa-venus"></i>&nbsp;
+                                                class=" fal fa-venus"></i>&nbsp;
                                             {{candidates.jenis_kelamin}}</span>
                                     </b><br><br>
                                     No. NIK <br>
@@ -76,11 +76,11 @@
                                     <a :href="`/storage/file/`+candidates.nama_lengkap+`/`+candidates.supported_file"
                                         download class="rounded-pill userDatatable-content-status color-primary
                                                 bg-opacity-primary active">
-                                        <i class="fas fa-paperclip"></i> &nbsp;Supported Document
+                                        <i class="fal fa-paperclip"></i> &nbsp;Supported Document
                                     </a>
                                     <a :href="`/generatePDF/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active mt-1">
-                                        <i class="fas fa-print"></i> &nbsp;Print/Export to PDF
+                                        <i class="fad fa-print"></i> &nbsp;Print/Export to PDF
                                     </a>
                                 </p>
                             </div>

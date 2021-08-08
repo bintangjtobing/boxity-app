@@ -281,7 +281,6 @@
                                         home_work
                                     </span>
                                     <span class="menu-text">Warehouse List</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li class="menu-title m-top-15">
@@ -295,7 +294,6 @@
                                     <span class="menu-text">
                                         Stock Group
                                     </span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Item Group">
@@ -304,7 +302,6 @@
                                         inventory_2
                                     </span>
                                     <span class="menu-text">Item Group</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory Item">
@@ -313,7 +310,6 @@
                                         category
                                     </span>
                                     <span class="menu-text">Inventory Item</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                         </div>
@@ -327,7 +323,6 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Purchase Order</span>
-                                    <span class="badge badge-secondary menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Invoice">
@@ -336,7 +331,6 @@
                                         receipt
                                     </span>
                                     <span class="menu-text">Purchase Invoice</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Return">
@@ -345,7 +339,6 @@
                                         assignment_return
                                     </span>
                                     <span class="menu-text">Purchase Return</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Request">
@@ -354,7 +347,6 @@
                                         request_page
                                     </span>
                                     <span class="menu-text">Purchase Request</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                         </div>
@@ -376,7 +368,7 @@
                                         list_alt
                                     </span>
                                     <span class="menu-text">Sales Order</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Invoice">
@@ -385,7 +377,7 @@
                                         receipt
                                     </span>
                                     <span class="menu-text">Sales Invoice</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Return">
@@ -403,7 +395,7 @@
                                         request_page
                                     </span>
                                     <span class="menu-text">Delivery Receipt</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
+                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
                         </div>

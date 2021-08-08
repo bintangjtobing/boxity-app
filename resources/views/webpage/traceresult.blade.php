@@ -39,7 +39,7 @@
                             <div>
                                 <a href="#"
                                     class="button button-rounded button-reveal button-large button-white button-light text-right"><i
-                                        class="fas fa-print"></i><span>Print</span></a>
+                                        class="fad fa-print"></i><span>Print</span></a>
                             </div>
                         </div>
                     </div>
@@ -59,19 +59,19 @@
                                         <span id="desc-toggle">{{$itemN[0]->trackorderId}}</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <span id="title-toggle"><i class="fas fa-box"></i> Delivery
+                                        <span id="title-toggle"><i class="fal fa-box"></i> Delivery
                                             Type</span><br>
                                         <span id="desc-toggle"
                                             style="margin-left: 17px;">{{$itemN[0]->container_type_system}}</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <span id="title-toggle"><i class="fas fa-calendar-day"></i>
+                                        <span id="title-toggle"><i class="fal fa-calendar-day"></i>
                                             Estimated Arrival
                                             Date</span><br> <span
                                             id="desc-toggle">{{$itemN[0]->estimated_arrival_date}}</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <span id="title-toggle"><i class="fas fa-map-marker-alt"></i> Last
+                                        <span id="title-toggle"><i class="fal fa-map-marker-alt"></i> Last
                                             Location</span><br> <span
                                             id="desc-toggle">{{$itemN[0]->current_location}}</span>
                                     </div>
@@ -91,7 +91,7 @@
                                         @foreach ($results as $getDet)
                                         <tr>
                                             <td><span style="color:@if($getDet->status!='Delivered')#c4c3d4 @else #292562
-                                                    @endif;"><i class="fas fa-circle"></i></span></td>
+                                                    @endif;"><i class="fal fa-circle"></i></span></td>
                                             <td>Location <br><strong>{{$getDet->current_location}}</strong></td>
                                             <td>Date & Time <br><strong>{{$getDet->updated_at}}</strong></td>
                                             <td>Status <br><strong>{{$getDet->status}}</strong></td>

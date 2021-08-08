@@ -428,7 +428,7 @@
               @click="activeAddForm"
               class="btn btn-success float-left btn-default btn-squared"
             >
-              <span><i class="fas fa-plus-circle"></i></span>&nbsp; Add item
+              <span><i class="fal fa-plus-circle"></i></span>&nbsp; Add item
             </button>
             <div
               class="
@@ -462,13 +462,13 @@
                       v-on:click="modifyItemPurchasing(item.id)"
                       class="edit"
                     >
-                      <i class="fas fa-pen"></i>
+                      <i class="fad fa-edit"></i>
                     </button>
                     <button
                       v-on:click="deleteItemPurchasing(item.id)"
                       class="remove"
                     >
-                      <i class="fas fa-trash"></i>
+                      <i class="fad fa-trash"></i>
                     </button>
                   </template>
                 </v-data-table>
@@ -564,7 +564,7 @@
                     "
                     target="_blank"
                   >
-                    <i class="fas fa-print"></i>&nbsp;Print
+                    <i class="fad fa-print"></i>&nbsp;Print
                   </a>
                   <button
                     v-on:click="submitHandle"

@@ -38,7 +38,7 @@
                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                             :src="imagePreview" alt="profile img" v-if="imagePreview">
                                                         <span class="cross" id="remove_pro_pic">
-                                                            <i class="fas fa-camera"></i>
+                                                            <i class="fal fa-camera"></i>
                                                         </span>
                                                     </label>
                                                 </div>

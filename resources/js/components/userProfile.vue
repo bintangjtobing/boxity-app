@@ -52,7 +52,7 @@
                                         <i class="far fa-envelope"></i>&nbsp;{{users.email}}
                                     </p>
                                     <p class="user-content-info__item">
-                                        <i class="fas fa-phone-alt"></i>&nbsp;+62{{users.phone}}
+                                        <i class="fal fa-phone-alt"></i>&nbsp;+62{{users.phone}}
                                     </p>
                                 </div>
                             </div>

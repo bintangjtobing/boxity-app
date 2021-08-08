@@ -29,12 +29,12 @@
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/receiving-confirmation/${item.id}`" target="_blank"
                                             class="view">
-                                            <i class="fas fa-print"></i></a>
+                                            <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/receiving-confirmation/${item.receiving_number}`"
                                             class="edit">
-                                            <i class="fas fa-eye"></i></router-link>
+                                            <i class="fad fa-eye"></i></router-link>
                                         <a v-on:click="deleteReceivingConfirmationData(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                     <template v-slot:expanded-item="{ headers, item }">
                                         <td :colspan="headers.length">

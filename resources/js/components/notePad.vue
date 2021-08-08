@@ -79,7 +79,7 @@
                                                                     class="far fa-star"></i></span></a>
                                                         <a v-on:click="unFavoriteNotepad(pad.id)"
                                                             v-if="pad.favorite==1">
-                                                            <span style="color:#fa8b0c;"><i class="fas fa-star"></i>
+                                                            <span style="color:#fa8b0c;"><i class="fal fa-star"></i>
                                                             </span>
                                                         </a>
                                                         <a v-on:click="deleteNotepad(pad.id)"><span><i
@@ -103,7 +103,7 @@
                                                                     class="far fa-star"></i></span></a>
                                                         <a v-on:click="unFavoriteNotepad(pad.id)"
                                                             v-if="pad.favorite==1">
-                                                            <span style="color:#fa8b0c;"><i class="fas fa-star"></i>
+                                                            <span style="color:#fa8b0c;"><i class="fal fa-star"></i>
                                                             </span>
                                                         </a>
                                                         <a v-on:click="deleteNotepad(pad.id)"><span><i
@@ -127,7 +127,7 @@
                                                                     class="far fa-star"></i></span></a>
                                                         <a v-on:click="unFavoriteNotepad(pad.id)"
                                                             v-if="pad.favorite==1">
-                                                            <span style="color:#fa8b0c;"><i class="fas fa-star"></i>
+                                                            <span style="color:#fa8b0c;"><i class="fal fa-star"></i>
                                                             </span>
                                                         </a>
                                                         <a v-on:click="deleteNotepad(pad.id)"><span><i
@@ -151,7 +151,7 @@
                                                                     class="far fa-star"></i></span></a>
                                                         <a v-on:click="unFavoriteNotepad(pad.id)"
                                                             v-if="pad.favorite==1">
-                                                            <span style="color:#fa8b0c;"><i class="fas fa-star"></i>
+                                                            <span style="color:#fa8b0c;"><i class="fal fa-star"></i>
                                                             </span>
                                                         </a>
                                                         <a v-on:click="deleteNotepad(pad.id)"><span><i

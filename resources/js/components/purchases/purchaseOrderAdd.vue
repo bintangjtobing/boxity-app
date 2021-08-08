@@ -223,14 +223,14 @@ n<template>
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" :loading="!itemPurchasingData.length"
+                                <v-data-table :search="search" :loading="itemPurchasingData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemPurchasingData" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
-                                            <i class="fas fa-pen"></i></a>
+                                            <i class="fad fa-edit"></i></a>
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>

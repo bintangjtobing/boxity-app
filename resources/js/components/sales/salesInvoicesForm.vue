@@ -5,170 +5,282 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Sales Invoices data - <abbr
-                                    :title="inventorydata.item_name">{{inventorydata.item_name}}</abbr></h4>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Sales Invoice
+                                #{{salesInvoiceData.si_number}}</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
-                    <div class="ap-tab-wrapper border-bottom ">
-                        <ul class="nav px-30 ap-tab-main text-capitalize" id="v-pills-tab" role="tablist"
-                            aria-orientation="vertical">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
-                                    role="tab" aria-controls="v-pills-home" aria-selected="true">details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="v-pills-others-tab" data-toggle="pill" href="#v-pills-others"
-                                    role="tab" aria-controls="v-pills-others" aria-selected="true">Others</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel"
-                            aria-labelledby="v-pills-home-tab">
-                            <div class="row mx-4">
+            <!-- Form Add -->
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Items</h5>
+                                <p class="muted-text">{{ titleItemDescription }}</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
+                        <div v-show="isShow.colapse">
+                            <div class="form-row">
                                 <div class="col-lg-12">
-                                    <div class="card card-vertical card-default card-md mb-4">
-                                        <div class="card-body pb-md-30">
-                                            <div class="vertical-form">
-                                                <form @submit.prevent="handleSubmit">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <input type="text" v-model="inventorydata.item_code"
-                                                                    placeholder="Item Code" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-7">
-                                                            <div class="form-group">
-                                                                <input type="text" v-model="inventorydata.item_name"
-                                                                    placeholder="Item Name" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <div class="form-group">
-                                                                <select v-model="inventorydata.type" id=""
-                                                                    class="form-control form-control-default">
-                                                                    <option value="" disabled>Type item</option>
-                                                                    <option value="1">Stock</option>
-                                                                    <option value="2">Non Stock</option>
-                                                                    <option value="3">Assembly</option>
-                                                                    <option value="4">Bundle</option>
-                                                                    <option value="5">Service</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <div class="form-row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <input type="text" v-model="inventorydata.brand"
-                                                                        class="form-control" placeholder="Brand">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <select v-model="inventorydata.item_group"
-                                                                        class="form-control form-control-default">
-                                                                        <option value="" disabled>Select category item
-                                                                        </option>
-                                                                        <option v-for="inventoryOpt in inventoryOpt"
-                                                                            :key="inventoryOpt.id"
-                                                                            :value="inventoryOpt.id">
-                                                                            {{inventoryOpt.name}}</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr style="margin-top:10px; margin-bottom:10px;">
-                                                    <h5>Dimension and Weight</h5>
-                                                    <p class="muted-text">You can use mm/unit/kg/ or anything else as a
-                                                        unit</p>
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Width</span>
-                                                                    <input type="text" v-model="inventorydata.width"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Length</span>
-                                                                    <input type="text" v-model="inventorydata.length"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Thickness</span>
-                                                                    <input type="text" v-model="inventorydata.thickness"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Nett Weight</span>
-                                                                    <input type="text" v-model="inventorydata.nt_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Gross Weight</span>
-                                                                    <input type="text" v-model="inventorydata.gr_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-2">
-                                                                <div class="form-group">
-                                                                    <span>Volume</span>
-                                                                    <input type="text" v-model="inventorydata.volume"
-                                                                        class="form-control" placeholder="0.00 mm">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="button-group d-flex pt-25">
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-default btn-squared text-capitalize">Update
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <span>Item name:</span>
+                                        <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
+                                            class="form-control form-control-default">
+                                            <option value="" disabled>Select item:</option>
+                                            <option v-for="items in items" :key="items.id" :value="items.id">
+                                                {{items.item_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped:</span>
+                                        <input type="number" v-model="itemAdd.qtyShipped" @change="onAddQtyInc"
+                                            @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Unit:</span>
+                                        <input type="text" v-model="itemAdd.unit" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Price:</span>
+                                        <input type="number" v-model="itemAdd.currentPrice" @change="onAddPriceChange"
+                                            @input="onAddPriceChange" class="form-control" min="0" max="9999999"
+                                            step="250" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Line total:</span>
+                                        <input type="number" v-model="itemAdd.price" class="form-control" min="0.00"
+                                            max="10000.00" step="0.01" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Remarks:</span>
+                                        <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
+                                            rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group my-2">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                                px-30">Add to lists</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade  show" id="v-pills-others" role="tabpanel"
-                            aria-labelledby="v-pills-others-tab">
-                            <div class="row mx-4">
+                    </div>
+                </div>
+            </div>
+            <!-- Form Modify -->
+            <div class="col-lg-12" :class="{unvisible: isVisibleModifyForm}">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Modify Item</h5>
+                                <p class="muted-text">{{ titleItemDescription }}</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
+                        <div v-show="isShow.colapse">
+                            <div class="form-row">
                                 <div class="col-lg-12">
-                                    <div class="card card-vertical card-default card-md mb-4">
-                                        <div class="card-body pb-md-30">
-                                            <div class="vertical-form">
-                                                <form @submit.prevent="handleSubmit">
-                                                    <!-- Insert Code here -->
-                                                    <div class="form-group my-2">
-                                                        <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
-                                                                class="btn btn-success btn-default btn-squared px-30"
-                                                                data-dismiss="modal">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <span>Item name:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.item_name" id="" class="form-control" readonly>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.qtyShipped" @change="onModifyQtyInc"
+                                            @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Unit:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.unit" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Price:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.currentPrice" @change="onModifyPriceChange"
+                                            @input="onModifyPriceChange" class="form-control" min="0" max="9999999"
+                                            step="250" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Line total:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.price" class="form-control" min="0.00" max="10000.00"
+                                            step="0.01" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Remarks:</span>
+                                        <textarea v-bind:disabled="checkedItem === false" v-model="itemModify.remarks"
+                                            class="form-control" id="" cols="30" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group my-2">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                                px-30" v-bind:disabled="checkedItem === false">Update item
+                                            list</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Table -->
+            <div class=" col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <button @click="activeAddForm"
+                            class="btn btn-success float-left btn-default btn-squared"><span><i
+                                    class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
+                        <div class="userDatatable projectDatatable project-table bg-white border-0">
+                            <div class="table-responsive">
+                                <v-card-title>
+                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
+                                        single-line hide-details>
+                                    </v-text-field>
+                                </v-card-title>
+                                <v-data-table :search="search" :loading="itemSalesingData.length"
+                                    loading-text="Loading... Please wait..." :headers="headers"
+                                    :items="itemSalesingData" :items-per-page="10" class="elevation-1">
+                                    <template v-slot:item.actions="{item}">
+                                        <a v-on:click="modifyItemSalesing(item.id)" class="edit">
+                                            <i class="fad fa-edit"></i></a>
+                                        <a v-on:click="deleteItemSalesing(item.id)" class="remove">
+                                            <i class="fad fa-trash"></i></a>
+                                    </template>
+                                </v-data-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form add PO -->
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>SI number:</span>
+                                    <input type="text" v-model="salesInvoiceData.si_number" readonly
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Customer:</span>
+                                    <select v-bind:disabled="checkedSI === false" v-model="salesInvoiceData.customer"
+                                        class="form-control form-control-default">
+                                        <option value="" disabled>Select customer:</option>
+                                        <option v-for="customer in customer" :key="customer.id" :value="customer.id">
+                                            {{customer.customerName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Invoice date:</span>
+                                    <input v-bind:disabled="checkedSI === false" type="date"
+                                        v-model="salesInvoiceData.invoice_date" class="form-control"
+                                        placeholder="Brand">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Driver Name:</span>
+                                    <input type="text" v-bind:disabled="checkedSI === false"
+                                        v-model="salesInvoiceData.drivers" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Vehicle No:</span>
+                                    <input type="text" v-bind:disabled="checkedSI === false"
+                                        v-model="salesInvoiceData.vehicle_no" class="form-control"
+                                        placeholder="ex: BK 0000 ABC">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <span>Remarks:</span>
+                                    <textarea v-bind:disabled="checkedSI === false" class="form-control"
+                                        v-model="salesInvoiceData.remarks" cols="30" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <div class="row">
+                                <div class="col-5 text-left">
+                                    <div class="checkbox-theme-default custom-checkbox ">
+                                        <input v-model="checkedSI" class="checkbox" type="checkbox" id="check-1">
+                                        <label for="check-1">
+                                            <span class="checkbox-text">Edit mode</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-7 text-right">
+                                    <a :href="`/report/sales/invoices/${salesInvoiceData.id}`" class="btn btn-secondary float-right btn-warning btn-squared
+                                                px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
+                                    <button v-bind:disabled="checkedSI === false" v-on:click="submitHandle"
+                                        v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
+                                                px-30">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -186,38 +298,260 @@
             'editor': Editor
         },
         title() {
-            return `Sales Invoices data`;
+            return `Sales Invoice`;
         },
         data() {
             return {
-                inventorydata: {},
-                inventoryOpt: {},
+                isShow: {
+                    colapse: true,
+                },
+                updateOnly: true,
+                checkedSI: false,
+                checkedItem: false,
+                // Page Info
+                titleItemDescription: 'Items on this Sales Invoice',
+                isVisibleAddForm: true,
+                isVisibleModifyForm: false,
+
+                itemModify: {
+                    itemid: '',
+                    qtyShipped: '0',
+                    unit: '',
+                    currentPrice: '0',
+                    price: '0',
+                    remarks: '',
+                },
+                itemAdd: {
+                    itemid: '',
+                    qtyShipped: '0',
+                    unit: '',
+                    currentPrice: '0',
+                    price: '0',
+                    remarks: '',
+                },
+                salesInvoiceData: {
+                    customers: '',
+                },
+
+                // data relation
+                customer: {},
+                warehouse: {},
+                items: {},
+                users: {},
+                logged: {},
+
+                // Datatable
+                itemSalesingData: [],
+                search: '',
+                key: 1,
+                headers: [{
+                        text: 'Item Code',
+                        value: 'item.item_code'
+                    }, {
+                        text: 'Item Name',
+                        value: 'item.item_name'
+                    }, {
+                        text: 'Qty Ordered',
+                        value: 'qtyShipped'
+                    },
+                    {
+                        text: 'Qty Shipped',
+                        value: 'qtyShipped'
+                    },
+                    {
+                        text: 'Unit',
+                        value: 'unit'
+                    }, {
+                        text: 'Actions',
+                        value: 'actions',
+                        align: 'right',
+                        filterable: false,
+                        sortable: false
+                    }
+                ],
+                countItems: '0',
             }
         },
         created() {
-            this.loadDataInventoryItem();
+            this.loadData();
+            this.loadLoggedUser();
         },
         methods: {
-            async loadDataInventoryItem() {
+            classRotate: function (param) {
+                return param ? "rotate" : "";
+            },
+            isShowing: function () {
+                this.isShow.colapse = !this.isShow.colapse;
+            },
+            // Load loggedin user
+            async loadLoggedUser() {
+                const resp = await axios.get('/getUserLoggedIn');
+                this.logged = resp.data;
+            },
+            // on CHange Attribute
+            async onItemSelected(event) {
+                const getId = event.target.value;
                 this.$Progress.start();
-                const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
-                this.inventorydata = response.data;
-
+                const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
+                this.itemAdd.itemid = getItemDataSelected.data.id;
+                this.$Progress.finish();
+                this.itemAdd = {
+                    unit: getItemDataSelected.data.unit,
+                    currentPrice: getItemDataSelected.data.price,
+                    itemid: getItemDataSelected.data.id,
+                }
+            },
+            onModifyQtyInc() {
+                this.itemModify.price = parseInt(this.itemModify.qtyShipped) * parseInt(this.itemModify.currentPrice);
+            },
+            onModifyPriceChange() {
+                this.itemModify.price = parseInt(this.itemModify.qtyShipped) * parseInt(this.itemModify.currentPrice);
+            },
+            onAddQtyInc() {
+                this.itemAdd.price = parseInt(this.itemAdd.qtyShipped) * parseInt(this.itemAdd.currentPrice);
+            },
+            onAddPriceChange() {
+                this.itemAdd.price = parseInt(this.itemAdd.qtyShipped) * parseInt(this.itemAdd.currentPrice);
+            },
+            activeAddForm() {
+                window.scrollTo(0, 0);
+                this.titleItemDescription = 'Add Sales Invoice Items';
+                this.isVisibleAddForm = false;
+                this.isVisibleModifyForm = true;
+            },
+            async loadData() {
+                this.$Progress.start();
                 // Load data relation
-                const resp = await axios.get('/api/item-group');
-                this.inventoryOpt = resp.data;
+                const resp = await axios.get('/api/customers');
+                this.customer = resp.data;
+                const respWarehouse = await axios.get('/api/warehouse');
+                this.warehouse = respWarehouse.data;
+                const itemSalesingData = await axios.get('/api/si/item-sales/' + this.$route.params.si_number);
+                this.itemSalesingData = itemSalesingData.data;
+                const salesInvoiceData = await axios.get('/api/sales/invoices/' + this.$route.params
+                    .si_number);
+                this.salesInvoiceData = salesInvoiceData.data;
+                const itemsData = await axios.get('/api/inventory-item');
+                this.items = itemsData.data;
+                const contactUsers = await axios.get('/api/contact-list');
+                this.users = contactUsers.data;
                 this.$Progress.finish();
             },
-            async handleSubmit() {
-                await axios.patch('/api/inventory-item/' + this.$route.params.id, this.inventorydata);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success update Sales Invoices data',
+            async modifyItemSalesing(id) {
+                this.$Progress.start();
+                const resp = await axios.get('/api/si/item-saless/' + id);
+                this.checkedItem = true;
+                this.itemModify = resp.data;
+                this.itemModify.currentPrice = resp.data.item.price;
+                this.itemModify.item_name = resp.data.item.item_name;
+                this.itemModify.itemid = resp.data.item.id;
+                this.titleItemDescription = 'Modify Sales Invoice Items';
+                window.scrollTo(0, 0);
+                this.$Progress.finish();
+            },
+            async modifyItemList() {
+                this.$Progress.start();
+                await axios.patch('/api/si/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success modify item on Sales Invoice table',
+                    });
+                    this.itemModify = {
+                        itemid: '',
+                        qtyShipped: '0',
+                        unit: '',
+                        currentPrice: '0',
+                        price: '0',
+                        remarks: '',
+                    }
+                    this.checkedItem = false;
                 });
-                this.$router.push('/inventory-item');
+                this.loadData();
+                this.$Progress.finish();
+            },
+            async addToList() {
+                this.$Progress.start();
+                // console.log(this.itemAdd);
+                await axios.post('/api/si/item-sales/' + this.$route.params.si_number, this.itemAdd).then(
+                    response => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Congratulations',
+                            text: 'Success add item on Sales Invoice table',
+                        });
+                        this.itemAdd = {
+                            itemid: '',
+                            qtyShipped: '0',
+                            unit: '',
+                            currentPrice: '0',
+                            price: '0',
+                            remarks: '',
+                        }
+                    });
+                this.checkedItem = false;
+                this.isVisibleAddForm = true;
+                this.isVisibleModifyForm = false;
+                this.loadData();
+                this.$Progress.finish();
+            },
+            async submitHandle() {
+                this.$Progress.start();
+                await axios.patch('/api/sales/invoices/' + this.$route.params.si_number, this
+                        .salesInvoiceData)
+                    .then(response => {
+                        this.loadData();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Congratulations',
+                            text: 'Success update Sales Invoice information.',
+                        });
+                        this.checkedSI = false;
+                        this.$Progress.finish();
+                    }).catch(error => {
+                        this.$Progress.fail();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Something wrong.',
+                            confirmButtonText: `Ok`,
+                            html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+                it still exist, you can contact our developer. <br><br>Error message: ` +
+                                error,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    });
+                // console.log('data click', [this.salesInvoiceData, this.itemSalesingData])
+            },
+            async deleteItemSalesing(id) {
+                const result = await Swal.fire({
+                    title: 'Delete item Sales Invoice?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    this.$Progress.start();
+                    await axios.delete('/api/si/item-sales/' + id);
+                    this.loadData();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Deleted',
+                        text: 'Success deleted current item.'
+                    });
+                    this.$Progress.finish();
+                }
             },
         },
     }
 
 </script>
+<style scoped>
+    .rotate {
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+</style>

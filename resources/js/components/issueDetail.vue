@@ -9,7 +9,7 @@
                 <div v-if="issues.status=='0'">
                     <div class="mb-4 descIssue">
                         <span class="badge badge-round badge-outline-warning badge-lg" style="margin-right:0px;">
-                            <i class="fas fa-info-circle"></i>&nbsp;Unapproved
+                            <i class="fal fa-info-circle"></i>&nbsp;Unapproved
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
                             <i class="far fa-comment-dots"></i></span>
@@ -18,7 +18,7 @@
                 <div v-if="issues.status=='1'">
                     <div class="mb-4 descIssue">
                         <span class="badge badge-round badge-outline-success badge-lg" style="margin-right:0px;">
-                            <i class="fas fa-info-circle"></i>&nbsp;Open
+                            <i class="fal fa-info-circle"></i>&nbsp;Open
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
                             <i class="far fa-comment-dots"></i></span>
@@ -27,7 +27,7 @@
                 <div v-if="issues.status=='2'">
                     <div class="mb-4 descIssue">
                         <span class="badge badge-round badge-outline-closed badge-lg" style="margin-right:0px;">
-                            <i class="fas fa-history"></i>&nbsp;Closed
+                            <i class="fal fa-history"></i>&nbsp;Closed
                         </span>
                         <span class="desc"><b>{{issues.name}}</b> opened this issue {{created}} · {{countComment}}
                             <i class="far fa-comment-dots"></i></span>
@@ -56,7 +56,7 @@
                                                 <div class="cci__comment-actions">
                                                     <a v-on:click="Hidden=true" v-if="issues.status!=0"
                                                         class="btn-reply">
-                                                        <span><i class="fas fa-reply"></i> Reply</span>
+                                                        <span><i class="fal fa-reply"></i> Reply</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -86,10 +86,10 @@
                                                                 v-on:click="Hidden=true"
                                                                 v-if="issues.status!=0 && comment.fromId != user.id"
                                                                 class="btn-reply">
-                                                                <span><i class="fas fa-reply"></i> Reply</span>
+                                                                <span><i class="fal fa-reply"></i> Reply</span>
                                                             </a> <a v-on:click="deleteData(comment.id)"
                                                                 class="btn-reply" v-if="comment.fromId == user.id">
-                                                                <i class="fas fa-trash"></i></a></span>
+                                                                <i class="fad fa-trash"></i></a></span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -129,7 +129,7 @@
                 <div class="form-group" v-if="issues.status!=2">
                     <div class="justify-content-end">
                         <button v-on:click="closeIssue" type="submit"
-                            class="btn btn-danger btn-default btn-squared px-30"><i class="fas fa-times"></i>&nbsp;Close
+                            class="btn btn-danger btn-default btn-squared px-30"><i class="fal fa-times"></i>&nbsp;Close
                             issue</button>
                     </div>
                 </div>
@@ -154,19 +154,19 @@
                                 <div class="sidebarInfo">
                                     <label>Priority</label><br>
                                     <div v-if="issues.priority==0">
-                                        <span class="priority-lowest"><i class="fas fa-arrow-up"></i> Lowest</span>
+                                        <span class="priority-lowest"><i class="fal fa-arrow-up"></i> Lowest</span>
                                     </div>
                                     <div v-if="issues.priority==1">
-                                        <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                        <span class="priority-low"><i class="fal fa-arrow-up"></i> Low</span>
                                     </div>
                                     <div v-if="issues.priority==2">
-                                        <span class="priority-medium"><i class="fas fa-arrow-up"></i> Medium</span>
+                                        <span class="priority-medium"><i class="fal fa-arrow-up"></i> Medium</span>
                                     </div>
                                     <div v-if="issues.priority==3">
-                                        <span class="priority-high"><i class="fas fa-arrow-up"></i> High</span>
+                                        <span class="priority-high"><i class="fal fa-arrow-up"></i> High</span>
                                     </div>
                                     <div v-if="issues.priority==4">
-                                        <span class="priority-highest"><i class="fas fa-arrow-up"></i> Highest</span>
+                                        <span class="priority-highest"><i class="fal fa-arrow-up"></i> Highest</span>
                                     </div>
                                 </div>
                             </div>

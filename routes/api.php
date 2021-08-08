@@ -328,13 +328,24 @@ Route::delete('/sales/order/{id}', 'salesController@deleteSalesOrderById');
 Route::get('/report/sales-order/{id}', 'salesController@reportSalesOrder');
 Route::get('/count-sales-order', 'salesController@countSalesOrder');
 
+///////////////// SALES INVOICE ///////////////////////////////////
 // Sales Invoice
-Route::get('/sales/invoice', 'salesController@getSalesInvoice');
-Route::post('/sales/invoice', 'salesController@postSalesInvoice');
-Route::get('/sales/invoice/{id}', 'salesController@getSalesInvoiceById');
-Route::patch('/sales/invoice/{id}', 'salesController@postSalesInvoiceById');
-Route::delete('/sales/invoice/{id}', 'salesController@deleteSalesInvoiceById');
+Route::get('/sales/invoices', 'salesController@getSalesInvoice');
+Route::post('/sales/invoices', 'salesController@postSalesInvoice');
+Route::get('/sales/invoices/{si_number}', 'salesController@getSalesInvoiceBySiNumber');
+Route::patch('/sales/invoices/{si_number}', 'salesController@postSalesInvoiceBySiNumber');
+Route::delete('/saless-invoices/{id}', 'salesController@deleteSalesInvoiceById');
 Route::get('/count-sales-invoice', 'salesController@countSalesInvoice');
+
+Route::get('/si/item-sales', 'itemOnSalesController@getItemSalesSI');
+Route::post('/si/item-sales', 'itemOnSalesController@postItemSalesSI');
+Route::post('/si/item-sales/{si_number}', 'itemOnSalesController@postItemSalesBySiNumber');
+Route::get('/si/item-sales/{si_number}', 'itemOnSalesController@getItemSalesBySiNumber');
+Route::get('/si/item-saless/{id}', 'itemOnSalesController@getItemSalesSIById');
+Route::patch('/si/item-sales/{id}', 'itemOnSalesController@postItemSalesSIById');
+Route::delete('/si/item-sales/{id}', 'itemOnSalesController@deleteItemSalesSIById');
+Route::get('/si/count-item-sales', 'itemOnSalesController@countItemSalesSI');
+///////////////// SALES INVOICE END ///////////////////////////////////
 
 // Sales Return
 Route::get('/sales/return', 'salesController@getSalesReturn');

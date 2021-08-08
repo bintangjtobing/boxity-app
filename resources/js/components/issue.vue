@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Issue Center <router-link to="/issues/i/closed"
-                            class="ml-4 issueClosed"> <i class="fas fa-check"></i>
+                            class="ml-4 issueClosed"> <i class="fal fa-check"></i>
                             {{countClosedIssue}} Issues Closed</router-link>
                     </h2>
                 </div>
@@ -67,35 +67,35 @@
                                 <div v-if="item.status==='0'">
                                     <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active text-capitalize"><i
-                                            class="fas fa-exclamation-circle"></i>
+                                            class="fal fa-exclamation-circle"></i>
                                         &nbsp;Draft</span>
                                 </div>
                                 <div v-if="item.status==='1'">
                                     <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><i
-                                            class="fas fa-check-circle"></i>
+                                            class="fal fa-check-circle"></i>
                                         &nbsp;Approved</span>
                                 </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
 
                                 <div v-if="item.priority===0">
-                                    <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-lowest"><i class="fal fa-arrow-up"></i>
                                         Lowest</span>
                                 </div>
                                 <div v-if="item.priority===1">
-                                    <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                    <span class="priority-low"><i class="fal fa-arrow-up"></i> Low</span>
                                 </div>
                                 <div v-if="item.priority===2">
-                                    <span class="priority-medium"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-medium"><i class="fal fa-arrow-up"></i>
                                         Medium</span>
                                 </div>
                                 <div v-if="item.priority===3">
-                                    <span class="priority-high"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-high"><i class="fal fa-arrow-up"></i>
                                         High</span>
                                 </div>
                                 <div v-if="item.priority===4">
-                                    <span class="priority-highest"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-highest"><i class="fal fa-arrow-up"></i>
                                         Highest</span>
                                 </div>
                             </template>
@@ -104,7 +104,7 @@
                                     v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
                                     <i class="far fa-thumbs-up"></i> Approve</a>
                                 <router-link :to="`/issues/${item.id}`" class="edit">
-                                    <i class="fas fa-eye"></i></router-link>
+                                    <i class="fad fa-eye"></i></router-link>
                             </template>
                         </v-data-table>
                     </div>
@@ -139,34 +139,34 @@
                                 <div v-if="item.status==='0'">
                                     <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active text-capitalize"><i
-                                            class="fas fa-exclamation-circle"></i>
+                                            class="fal fa-exclamation-circle"></i>
                                         &nbsp;Draft</span>
                                 </div>
                                 <div v-if="item.status==='1'">
                                     <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><i
-                                            class="fas fa-check-circle"></i>
+                                            class="fal fa-check-circle"></i>
                                         &nbsp;Approved</span>
                                 </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
                                 <div v-if="item.priority===0">
-                                    <span class="priority-lowest"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-lowest"><i class="fal fa-arrow-up"></i>
                                         Lowest</span>
                                 </div>
                                 <div v-if="item.priority===1">
-                                    <span class="priority-low"><i class="fas fa-arrow-up"></i> Low</span>
+                                    <span class="priority-low"><i class="fal fa-arrow-up"></i> Low</span>
                                 </div>
                                 <div v-if="item.priority===2">
-                                    <span class="priority-medium"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-medium"><i class="fal fa-arrow-up"></i>
                                         Medium</span>
                                 </div>
                                 <div v-if="item.priority===3">
-                                    <span class="priority-high"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-high"><i class="fal fa-arrow-up"></i>
                                         High</span>
                                 </div>
                                 <div v-if="item.priority===4">
-                                    <span class="priority-highest"><i class="fas fa-arrow-up"></i>
+                                    <span class="priority-highest"><i class="fal fa-arrow-up"></i>
                                         Highest</span>
                                 </div>
                             </template>

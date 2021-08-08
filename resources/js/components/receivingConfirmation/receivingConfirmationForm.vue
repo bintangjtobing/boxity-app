@@ -137,7 +137,7 @@
                     <div class="card-body">
                         <button @click="activeAddForm"
                             class="btn btn-success float-left btn-default btn-squared"><span><i
-                                    class="fas fa-plus-circle"></i></span>&nbsp; Add item</button>
+                                    class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
                                 <v-card-title>
@@ -145,14 +145,14 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" :loading="!receivingItemConfirmationData.length"
+                                <v-data-table :search="search" :loading="receivingItemConfirmationData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="receivingItemConfirmationData" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
-                                            <i class="fas fa-pen"></i></a>
+                                            <i class="fad fa-edit"></i></a>
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
-                                            <i class="fas fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="col-7 text-right">
                                     <a :href="`/report/receiving-confirmation/${receivingConfirmationData.id}`" class="btn btn-secondary float-right btn-warning btn-squared
-                                                px-30 mx-2"><i class="fas fa-print"></i>&nbsp;Print</a>
+                                                px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
                                     <button v-bind:disabled="checkedPO === false" v-on:click="submitHandle"
                                         v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
                                                 px-30">Update</button>

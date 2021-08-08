@@ -62,7 +62,7 @@
             <div class="notfound-social">
                 <a href="/facebook"><i class="fab fa-facebook"></i></a>
                 <a href="/instagram"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:support@btsa.co.id"><i class="fas fa-envelope"></i></a>
+                <a href="mailto:support@btsa.co.id"><i class="fal fa-envelope"></i></a>
             </div>
         </div>
     </div>

@@ -94,14 +94,14 @@
                                 <div class="justify-content-end">
                                     <button v-on:click="createTrack" type="submit"
                                         class="btn btn-success btn-default btn-squared px-30"><i
-                                            class="fas fa-check"></i>&nbsp;Submit track delivery</button>
+                                            class="fal fa-check"></i>&nbsp;Submit track delivery</button>
                                 </div>
                             </div>
                             <div class="form-group" v-if="tracks.order_status!='0'">
                                 <div class="justify-content-end">
                                     <button v-on:click="updateTrack" type="submit"
                                         class="btn btn-success btn-default btn-squared px-30"><i
-                                            class="fas fa-check"></i>&nbsp;Update track delivery</button>
+                                            class="fal fa-check"></i>&nbsp;Update track delivery</button>
                                 </div>
                             </div>
                         </div>

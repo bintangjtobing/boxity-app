@@ -36,10 +36,10 @@
                                 Gender <br>
                                 <b>
                                     @if ($candidate->jenis_kelamin=='Pria')
-                                    <span><i class="fas fa-mars"></i>&nbsp;
+                                    <span><i class="fal fa-mars"></i>&nbsp;
                                         Pria</span>
                                     @else
-                                    <span><i class="fas fa-venus"></i>&nbsp;
+                                    <span><i class="fal fa-venus"></i>&nbsp;
                                         Wanita</span>
                                     @endif
                                 </b><br><br>

@@ -62,7 +62,7 @@
                             </template>
                             <template v-slot:item.actions="{item}">
                                 <a v-on:click="terminateTrack(item.id)" v-if="item.order_status!='6'" class="remove">
-                                    <i class="fas fa-times"></i></a>
+                                    <i class="fal fa-times"></i></a>
                             </template>
                         </v-data-table>
                     </div>

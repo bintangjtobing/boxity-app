@@ -32,7 +32,7 @@
                                             quote</button>
                                         <button v-on:click="doneQuote" type="submit"
                                             class="btn btn-primary btn-default btn-squared px-30"
-                                            v-if="this.user.role == 'it'"><i class="fas fa-check"></i>&nbsp;
+                                            v-if="this.user.role == 'it'"><i class="fal fa-check"></i>&nbsp;
                                             Done</button>
                                     </div>
                                 </div>
