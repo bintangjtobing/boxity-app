@@ -931,7 +931,11 @@ class apiController extends Controller
     {
         $newGoods = new goodsReceip();
         $newGoods->userid = Auth::id();
-        $newGoods->receiverid = $request->receiverid;
+        if ($request->receiverId) {
+            $newGoods->receiverid = $request->receiverid;
+        } else {
+            $newGoods->receiverid = 0;
+        }
         $newGoods->typeOfGoods = $request->typeOfGoods;
         $newGoods->courier = $request->courier;
         $newGoods->receiptNumber = $request->receiptNumber;
