@@ -41,45 +41,31 @@
                                                     <div class="form-row">
                                                         <div class="col-lg-4">
                                                             <div class="form-group mb-10">
+                                                                <span>Warehouse code:</span>
                                                                 <input type="text" v-model="warehouse.warehouse_code"
-                                                                    placeholder="Warehouse Code" class="form-control">
+                                                                    class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <div class="form-group mb-10">
+                                                                <span>Warehouse name:</span>
                                                                 <input type="text" v-model="warehouse.warehouse_name"
-                                                                    placeholder="Warehouse Name" class="form-control">
+                                                                    class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group mt-1">
-                                                        <editor placeholder="Warehouse address here..."
-                                                            v-model="warehouse.address"
-                                                            api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
-                                                            :init="{
-                                                                height: 300,
-                                                                menubar: false,
-                                                                branding: false,
-                                                                toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
-                                                        }" />
+                                                        <span>Full address:</span>
+                                                        <textarea class="form-control" v-model="warehouse.address"
+                                                            cols="30" rows="5"></textarea>
                                                     </div>
                                                     <div class="form-group my-2">
-                                                        <editor placeholder="Remarks..." v-model="warehouse.remarks"
-                                                            api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
-                                                            :init="{
-                                                                height: 150,
-                                                                menubar: false,
-                                                                branding: false,
-                                                                toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
-                                                        }" />
+                                                        <span>Remarks</span>
+                                                        <textarea class="form-control" v-model="warehouse.remarks"
+                                                            cols="30" rows="5"></textarea>
                                                     </div>
                                                     <div class="form-group my-2">
+                                                        <span>Person in charge:</span>
                                                         <select v-model="warehouse.pic" id=""
                                                             class="form-control form-control-default">
                                                             <option value="" disabled>Select supervisor:</option>

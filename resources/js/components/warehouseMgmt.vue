@@ -24,9 +24,6 @@
                                 </v-card-title>
                                 <v-data-table :headers="headers" multi-sort :items="warehouseData" :items-per-page="10"
                                     class="elevation-1">
-                                    <template v-slot:item.address="{ item }">
-                                        <span v-html="item.address"></span>
-                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/warehouse/${item.id}`" class="edit">
                                             <i class="fas fa-pen"></i></router-link>
@@ -54,42 +51,29 @@
                                 <div class="form-row">
                                     <div class="col-lg-4">
                                         <div class="form-group mb-10">
-                                            <input type="text" v-model="warehouse.warehouse_code"
-                                                placeholder="Warehouse Code" class="form-control">
+                                            <span>Warehouse code:</span>
+                                            <input type="text" v-model="warehouse.warehouse_code" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
                                         <div class="form-group mb-10">
-                                            <input type="text" v-model="warehouse.warehouse_name"
-                                                placeholder="Warehouse Name" class="form-control">
+                                            <span>Warehouse name:</span>
+                                            <input type="text" v-model="warehouse.warehouse_name" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group mt-1">
-                                    <editor placeholder="Warehouse address here..." v-model="warehouse.address"
-                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 300,
-                                                                menubar: false,
-                                                                branding: false,
-                                                                toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
-                                                        }" />
+                                    <span>Full address:</span>
+                                    <textarea class="form-control" v-model="warehouse.address" cols="30"
+                                        rows="5"></textarea>
                                 </div>
                                 <div class="form-group my-2">
-                                    <editor placeholder="Remarks..." v-model="warehouse.remarks"
-                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 150,
-                                                                menubar: false,
-                                                                branding: false,
-                                                                toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
-                                                        }" />
+                                    <span>Remarks</span>
+                                    <textarea class="form-control" v-model="warehouse.remarks" cols="30"
+                                        rows="5"></textarea>
                                 </div>
                                 <div class="form-group my-2">
+                                    <span>Person in charge:</span>
                                     <select v-model="warehouse.pic" id="" class="form-control form-control-default">
                                         <option value="" disabled>Select supervisor:</option>
                                         <option v-for="users in user" :key="users.id" :value="users.id">
