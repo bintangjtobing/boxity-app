@@ -126,348 +126,277 @@
             </div>
         </header>
         <main class="main-content">
-            <aside class="sidebar" :class="sidebar ? `` : `collapsed`">
+            <aside class="sidebar" :class="sidebar ? `` : `collapsed overflow`">
                 <div class="sidebar__menu-group">
                     <ul class="sidebar_nav">
                         <div v-if="user.role!='customer'">
-                            <li class="menu-title m-top-15">
-                                <span>General Applications</span>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Version control"
-                                v-if="user.divisi == 'developer'">
-                                <router-link to="/version-control">
-                                    <span class="material-icons-outlined nav-icon">
-                                        build_circle
-                                    </span>
-                                    <span class="menu-text">Version control</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Issue center">
-                                <router-link to="/issues">
-                                    <span class="material-icons-outlined nav-icon">
-                                        contact_support
-                                    </span>
-                                    <span class="menu-text">Issue center</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Contact lists">
-                                <router-link to="/contact-list">
-                                    <span class="material-icons-outlined nav-icon">
-                                        contact_page
-                                    </span>
-                                    <span class="menu-text">Contact lists</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Notepad">
-                                <router-link to="/notepad">
-                                    <span class="material-icons-outlined nav-icon">
-                                        sticky_note_2
-                                    </span>
-                                    <span class="menu-text">Notepad</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Quote report">
-                                <router-link to="/quote">
-                                    <span class="material-icons-outlined nav-icon">
-                                        book
-                                    </span>
-                                    <span class="menu-text">Quote report</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Track delivery">
-                                <router-link to="/track-delivery">
-                                    <span class="material-icons-outlined nav-icon">
-                                        where_to_vote
-                                    </span>
-                                    <span class="menu-text">Track delivery</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'General Applications', icon: 'build_circle', listId:'menuCollapse1' }">
+                                    <ul id="menuCollapse1" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Version control"
+                                            v-if="user.divisi == 'developer'">
+                                            <router-link style="margin:0; width:100%" to="/version-control">
+                                                <span>Version control</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Issue center">
+                                            <router-link style="margin:0; width:100%" to="/issues">
+                                                <span>Issue center</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Contact lists">
+                                            <router-link style="margin:0; width:100%" to="/contact-list">
+                                                <span>Contact lists</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Notepad">
+                                            <router-link style="margin:0; width:100%" to="/notepad">
+                                                <span>Notepad</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Quote report">
+                                            <router-link style="margin:0; width:100%" to="/quote">
+                                                <span>Quote report</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Track delivery">
+                                            <router-link style="margin:0; width:100%" to="/track-delivery">
+                                                <span>Track delivery</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li class="menu-title m-top-15">
-                                <span>Associate</span>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Customers"
-                                v-if="user.role=='admin'">
-                                <router-link to="/customers">
-                                    <span class="material-icons-outlined nav-icon">
-                                        groups
-                                    </span>
-                                    <span class="menu-text">Customers</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Suppliers">
-                                <router-link to="/suppliers">
-                                    <span class="material-icons-outlined nav-icon">
-                                        groups
-                                    </span>
-                                    <span class="menu-text">Suppliers</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Person">
-                                <a href="#">
-                                    <span class="material-icons-outlined nav-icon">
-                                        groups
-                                    </span>
-                                    <span class="menu-text">Sales Person</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Users management"
-                                v-if="user.role=='admin'">
-                                <router-link to="/users-management">
-                                    <span class="material-icons-outlined nav-icon">
-                                        manage_accounts
-                                    </span>
-                                    <span class="menu-text">Users management</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Associate', icon: 'groups', listId:'menuCollapse2' }">
+                                    <ul id='menuCollapse2' style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Customers"
+                                            v-if="user.role=='admin'">
+                                            <router-link style="margin:0; width:100%" to="/customers">
+                                                <span>Customers</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Suppliers">
+                                            <router-link style="margin:0; width:100%" to="/suppliers">
+                                                <span>Suppliers</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Person">
+                                            <a href="#" style="margin:0; width:100%">
+                                                <span>Sales Person</span>
+                                                <span class="badge badge-primary menuItem">Soon</span>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Users management"
+                                            v-if="user.role=='admin'">
+                                            <router-link style="margin:0; width:100%" to="/users-management">
+                                                <span>Users management</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
                         <div v-if="user.role=='admin' || user.role=='hrdga'">
-                            <li class="menu-title m-top-15">
-                                <span>Human Resources Management</span>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Employee">
-                                <a href="#">
-                                    <span class="material-icons-outlined nav-icon">
-                                        groups
-                                    </span>
-                                    <span class="menu-text">Employee</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Job Vacancy">
-                                <router-link to="/career">
-                                    <span class="material-icons-outlined nav-icon">
-                                        work_outline
-                                    </span>
-                                    <span class="menu-text">Job Vacancy</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Candidate">
-                                <router-link to="/candidate">
-                                    <span class="material-icons-outlined nav-icon">
-                                        travel_explore
-                                    </span>
-                                    <span class="menu-text">Candidate</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Leave Request">
-                                <a href="#">
-                                    <span class="material-icons-outlined nav-icon">
-                                        local_cafe
-                                    </span>
-                                    <span class="menu-text">Leave Request</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Loan">
-                                <a href="#">
-                                    <span class="material-icons-outlined nav-icon">
-                                        credit_score
-                                    </span>
-                                    <span class="menu-text">Loan</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </a>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Human Resources Management', icon: 'person', listId:'menuCollapse3' }">
+                                    <ul id="menuCollapse3" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Employee">
+                                            <a href="#" style="margin:0; width:100%">
+                                                <span>Employee</span>
+                                                <span class="badge badge-primary menuItem">Soon</span>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Job Vacancy">
+                                            <router-link style="margin:0; width:100%" to="/career">
+                                                <span>Job Vacancy</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Candidate">
+                                            <router-link style="margin:0; width:100%" to="/candidate">
+                                                <span>Candidate</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Leave Request">
+                                            <a href="#" style="margin:0; width:100%">
+                                                <span>Leave Request</span>
+                                                <span class="badge badge-primary menuItem">Soon</span>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Loan">
+                                            <a href="#" style="margin:0; width:100%">
+                                                <span>Loan</span>
+                                                <span class="badge badge-primary menuItem">Soon</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li class="menu-title m-top-15">
-                                <span>Warehouse</span>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Warehouse', icon: 'inventory_2', listId:'menuCollapse4' }">
+                                    <ul id="menuCollapse4" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse">
+                                            <router-link style="margin:0; width:100%" :to="'/warehouse-list'">
+                                                <span>Warehouse List</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse List">
-                                <router-link :to="'/warehouse-list'">
-                                    <span class="material-icons-outlined nav-icon">
-                                        home_work
-                                    </span>
-                                    <span class="menu-text">Warehouse List</span>
-                                </router-link>
-                            </li>
-                            <li class="menu-title m-top-15">
-                                <span>Inventory Control</span>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Group">
-                                <router-link :to="'/stock-group'">
-                                    <span class="material-icons-outlined nav-icon">
-                                        inventory_2
-                                    </span>
-                                    <span class="menu-text">
-                                        Stock Group
-                                    </span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Item Group">
-                                <router-link :to="'/item-group'">
-                                    <span class="material-icons-outlined nav-icon">
-                                        inventory_2
-                                    </span>
-                                    <span class="menu-text">Item Group</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory Item">
-                                <router-link to="/inventory-item">
-                                    <span class="material-icons-outlined nav-icon">
-                                        category
-                                    </span>
-                                    <span class="menu-text">Inventory Item</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Inventory Control', icon: 'inventory_2', listId:'menuCollapse5' }">
+                                    <ul id="menuCollapse5" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Group">
+                                            <router-link style="margin:0; width:100%" :to="'/stock-group'">
+                                                <span>Stock Group</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Item Group">
+                                            <router-link style="margin:0; width:100%" :to="'/item-group'">
+                                                <span>Item Group</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory Item">
+                                            <router-link style="margin:0; width:100%" to="/inventory-item">
+                                                <span>Inventory Item</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
-                        <li class="menu-title m-top-15">
-                            <span>Receiving & Putaway</span>
-                        </li>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Order">
-                                <router-link to="/purchase/order">
-                                    <span class="material-icons-outlined nav-icon">
-                                        list_alt
-                                    </span>
-                                    <span class="menu-text">Purchase Order</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Invoice">
-                                <router-link to="/purchase/invoices">
-                                    <span class="material-icons-outlined nav-icon">
-                                        receipt
-                                    </span>
-                                    <span class="menu-text">Purchase Invoice</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Return">
-                                <router-link to="/purchase/return">
-                                    <span class="material-icons-outlined nav-icon">
-                                        assignment_return
-                                    </span>
-                                    <span class="menu-text">Purchase Return</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Request">
-                                <router-link to="/purchase/request">
-                                    <span class="material-icons-outlined nav-icon">
-                                        request_page
-                                    </span>
-                                    <span class="menu-text">Purchase Request</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Receiving & Putaway', icon: 'list_alt', listId:'menuCollapse6' }">
+                                    <ul id="menuCollapse6" style="padding: 0">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Order">
+                                            <router-link style="margin:0; width:100%" to="/purchase/order">
+                                                <span>Purchase Order</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Invoice">
+                                            <router-link style="margin:0; width:100%" to="/purchase/invoices">
+                                                <span>Purchase Invoice</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Return">
+                                            <router-link style="margin:0; width:100%" to="/purchase/return">
+                                                <span>Purchase Return</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Request">
+                                            <router-link style="margin:0; width:100%" to="/purchase/request">
+                                                <span>Purchase Request</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                                            <router-link style="margin:0; width:100%" to="/goods-receipt">
+                                                <span>Documents Receipt</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
-                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
-                            <router-link to="/goods-receipt">
-                                <span class="material-icons-outlined nav-icon">
-                                    feed
-                                </span>
-                                <span class="menu-text">Documents Receipt</span>
-                            </router-link>
-                        </li>
-                        <li class="menu-title m-top-15">
-                            <span>Dispatching</span>
-                        </li>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Order">
-                                <router-link to="/sales/order">
-                                    <span class="material-icons-outlined nav-icon">
-                                        list_alt
-                                    </span>
-                                    <span class="menu-text">Sales Order</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Invoice">
-                                <router-link to="/sales/invoices">
-                                    <span class="material-icons-outlined nav-icon">
-                                        receipt
-                                    </span>
-                                    <span class="menu-text">Sales Invoice</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Return">
-                                <router-link to="/sales/return">
-                                    <span class="material-icons-outlined nav-icon">
-                                        assignment_return
-                                    </span>
-                                    <span class="menu-text">Sales Return</span>
-                                    <span class="badge badge-primary menuItem">Soon</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Delivery Receipt">
-                                <router-link to="/delivery/receipt">
-                                    <span class="material-icons-outlined nav-icon">
-                                        request_page
-                                    </span>
-                                    <span class="menu-text">Delivery Receipt</span>
-                                    <span class="badge badge-secondary text-white menuItem">NEW</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Dispatching', icon: 'request_page', listId:'menuCollapse7' }">
+                                    <ul id="menuCollapse7" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Order">
+                                            <router-link style="margin:0; width:100%" to="/sales/order">
+                                                <span>Sales Order</span>
+                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Invoice">
+                                            <router-link style="margin:0; width:100%" to="/sales/invoices">
+                                                <span>Sales Invoice</span>
+                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Return">
+                                            <router-link style="margin:0; width:100%" to="/sales/return">
+                                                <span>Sales Return</span>
+                                                <span class="badge badge-primary menuItem">Soon</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Delivery Receipt">
+                                            <router-link style="margin:0; width:100%" to="/delivery/receipt">
+                                                <span>Delivery Receipt</span>
+                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                                            <router-link style="margin:0; width:100%" to="/document/delivery">
+                                                <span>Documents Delivery</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
-                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
-                            <router-link to="/document/delivery">
-                                <span class="material-icons-outlined nav-icon">
-                                    feed
-                                </span>
-                                <span class="menu-text">Documents Delivery</span>
-                            </router-link>
-                        </li>
+
                         <div v-if="user.role=='it' || user.role=='admin'">
-                            <li class="menu-title m-top-15">
-                                <span>Main Web Config</span>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Gallery">
-                                <router-link to="/gallery">
-                                    <span class="material-icons-outlined nav-icon">
-                                        photo_library
-                                    </span>
-                                    <span class="menu-text">Gallery</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Blog">
-                                <router-link to="/blog-management">
-                                    <span class="material-icons-outlined nav-icon">
-                                        article
-                                    </span>
-                                    <span class="menu-text">Blog</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Popup Window">
-                                <router-link to="/popup-management">
-                                    <span class="material-icons-outlined nav-icon">
-                                        preview
-                                    </span>
-                                    <span class="menu-text">Popup Window</span>
-                                </router-link>
-                            </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
-                                <router-link to="/user-guide">
-                                    <span class="material-icons-outlined nav-icon">
-                                        help
-                                    </span>
-                                    <span class="menu-text">User Guide</span>
-                                </router-link>
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Main Web Config', icon: 'language' }">
+                                    <ul id="menuCollapse8" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Gallery">
+                                            <router-link style="margin:0; width:100%" to="/gallery">
+                                                <span>Gallery</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Blog">
+                                            <router-link style="margin:0; width:100%" to="/blog-management">
+                                                <span>Blog</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Popup Window">
+                                            <router-link style="margin:0; width:100%" to="/popup-management">
+                                                <span>Popup Window</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
+                                            <router-link style="margin:0; width:100%" to="/user-guide">
+                                                <span>User Guide</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
                             </li>
                         </div>
-                        <li class="menu-title m-top-15">
-                            <span>Privacy & Others</span>
-                        </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Trace logs">
-                            <a :href="'/api/logs'" v-if="user.role=='admin'">
-                                <span class="material-icons-outlined nav-icon">
-                                    bug_report
-                                </span>
-                                <span class="menu-text">Trace logs</span>
-                            </a>
-                            <router-link to="/user-logs">
-                                <span class="material-icons-outlined nav-icon">
-                                    report
-                                </span>
-                                <span class="menu-text">Activity Log</span>
-                            </router-link>
-                        </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sign out">
-                            <a v-on:click="signOutConfirm" class="text-danger">
-                                <span class="material-icons-outlined nav-icon">
-                                    logout
-                                </span>
-                                <span class="menu-text">Sign out</span>
-                            </a>
+                        <li>
+                            <menuCollapse
+                                v-bind="{ isSidebar: sidebar, title: 'Privacy & Others', icon: 'settings',listId:'menuCollapse9' }">
+                                <ul id="menuCollapse9" style="padding: 0;">
+                                    <li data-bs-toggle="tooltip" data-bs-placement="right" title="Trace logs">
+                                        <a :href="'/api/logs'" v-show="user.role=='admin'" style="margin:0; width:100%">
+                                            <span>Trace logs</span>
+                                        </a>
+                                    </li>
+                                    <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
+                                        <router-link style="margin:0; width:100%" to="/user-logs">
+                                            <span>Activity Log</span>
+                                        </router-link>
+                                    </li>
+                                    <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sign out">
+                                        <a style="margin:0; width:100%" v-on:click="signOutConfirm" class="text-danger">
+                                            <span>Sign out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </menuCollapse>
                         </li>
                     </ul>
                 </div>
@@ -526,6 +455,9 @@
     import feather from 'feather-icons';
     import Swal from 'sweetalert2';
     export default {
+        components: {
+            menuCollapse: () => import("./item/menuCollapse.vue")
+        },
         data() {
             return {
                 publicPath: process.env.BASE_URL,
@@ -600,6 +532,10 @@
 </script>
 
 <style scoped>
+    .overflow {
+        overflow-y: unset;
+    }
+
     header,
     nav {
         height: 74px;

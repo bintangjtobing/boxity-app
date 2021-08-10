@@ -18,7 +18,7 @@
                     <i class="fal fa-file-alt"></i> Input Manual
                 </button>
                 <button class="btn btn-success col-6 col-sm-4 m-1" @click="inputOptions('invoice')">
-                    <i class="fal fa-file-invoice-dollar"></i>  Select From Invoice
+                    <i class="fal fa-file-invoice-dollar"></i> Select From Invoice
                 </button>
             </div>
             <!-- Select Invoice -->
@@ -39,36 +39,24 @@
                         </div>
                         <div class="col-lg-12" v-show="isShow.colapse">
                             <template>
-                                <v-data-table
-                                    v-model="selectedSalesInvoice"
-                                    :headers="headersSalesInvoice"
-                                    :items="salesInvoice"
-                                    item-key="si_number"
-                                    hide-default-footer
-                                    show-select
-                                    fixed-header
-                                    :single-expand="true"
-                                    :expanded.sync="expanded"
-                                    show-expand
-                                    style="max-height: 500px; overflow: auto"
-                                >
+                                <v-data-table v-model="selectedSalesInvoice" :headers="headersSalesInvoice"
+                                    :items="salesInvoice" item-key="si_number" hide-default-footer show-select
+                                    fixed-header :single-expand="true" :expanded.sync="expanded" show-expand
+                                    style="max-height: 500px; overflow: auto">
                                     <template v-slot:expanded-item="{ headers, item }">
                                         <td :colspan="headers.length">
                                             <template>
-                                                <v-data-table
-                                                    :headers="headersExpanded"
-                                                    :items="item.items"
-                                                    :items-per-page="5"
-                                                    hide-default-footer
-                                                    fixed-header
-                                                    style="max-height: 350px; overflow: auto"
-                                                ></v-data-table>
+                                                <v-data-table :headers="headersExpanded" :items="item.items"
+                                                    :items-per-page="5" hide-default-footer fixed-header
+                                                    style="max-height: 350px; overflow: auto"></v-data-table>
                                             </template>
                                         </td>
                                     </template>
                                 </v-data-table>
                             </template>
-                            <button v-on:click="addSelectedSalesInvoice" v-on:keyup.enter="addSelectedSalesInvoice" class="btn btn-success float-right btn-default btn-squared px-30" :disabled="isAddItemSalesInvoice">Add to lists</button>
+                            <button v-on:click="addSelectedSalesInvoice" v-on:keyup.enter="addSelectedSalesInvoice"
+                                class="btn btn-success float-right btn-default btn-squared px-30"
+                                :disabled="isAddItemSalesInvoice">Add to lists</button>
                         </div>
                     </div>
                 </div>
@@ -220,14 +208,16 @@
                                     </v-text-field>
                                 </v-card-title>
                                 <v-data-table :search="search" :loading="!itemDeliveryData.length"
-                                    loading-text="Data not found..." :headers="headers"
-                                    :items="itemDeliveryData" :items-per-page="10" class="elevation-1">
-                                    <template  v-slot:item.item.si_number="{item}">
+                                    loading-text="Data not found..." :headers="headers" :items="itemDeliveryData"
+                                    :items-per-page="10" class="elevation-1">
+                                    <template v-slot:item.item.si_number="{item}">
                                         <section v-if="item.si_number">
-                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>
+                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" :title="'Sales Invoice: '+item.si_number"></i>
                                         </section>
                                         <section v-else>
-                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Manual Input"></i>
+                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Manual Input"></i>
                                         </section>
                                     </template>
                                     <template v-slot:item.actions="{item}">
@@ -385,45 +375,48 @@
                         text: 'Invoice Date',
                         value: 'invoice_date'
                     },
-                    { text: '', value: 'data-table-expand' }
-                ],
-                headersExpanded: [{
-                        text: 'Item Name',
-                        value: 'item.item_name'
-                    }, {
-                        text: 'Quantity',
-                        value: 'qtyShipped'
-                    }, {
-                        text: 'Unit',
-                        value: 'unit'
+                    {
+                        text: '',
+                        value: 'data-table-expand'
                     }
                 ],
-                headers: [{
-                    text: '',
-                    value: 'item.si_number',
-                    align: 'center',
-                    filterable: false,
-                    sortable: false
-                },
-                {
-                    text: 'Item Code',
-                    value: 'item.item_code'
-                }, {
+                headersExpanded: [{
                     text: 'Item Name',
                     value: 'item.item_name'
                 }, {
-                    text: 'Qty Shipped',
+                    text: 'Quantity',
                     value: 'qtyShipped'
                 }, {
-                    text: 'UOM',
+                    text: 'Unit',
                     value: 'unit'
-                }, {
-                    text: 'Actions',
-                    value: 'actions',
-                    align: 'right',
-                    filterable: false,
-                    sortable: false
                 }],
+                headers: [{
+                        text: '',
+                        value: 'item.si_number',
+                        align: 'center',
+                        filterable: false,
+                        sortable: false
+                    },
+                    {
+                        text: 'Item Code',
+                        value: 'item.item_code'
+                    }, {
+                        text: 'Item Name',
+                        value: 'item.item_name'
+                    }, {
+                        text: 'Qty Shipped',
+                        value: 'qtyShipped'
+                    }, {
+                        text: 'UOM',
+                        value: 'unit'
+                    }, {
+                        text: 'Actions',
+                        value: 'actions',
+                        align: 'right',
+                        filterable: false,
+                        sortable: false
+                    }
+                ],
                 countItems: '0',
             }
         },
@@ -442,8 +435,7 @@
                 if (param === 'manual') {
                     this.isVisibleAddForm = false
                     this.isSelectInvoice = false
-                }
-                else {
+                } else {
                     this.isSelectInvoice = true
                     this.isVisibleAddForm = true
                 }
