@@ -201,15 +201,13 @@
                                                                 class="form-control">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2">
-                                                        <div class="form-group mt-4">
-                                                            <div class="justify-content-end">
-                                                                <button v-on:click="searchData"
-                                                                    v-on:keyup.enter="searchData"
-                                                                    class="btn btn-success btn-default btn-squared px-30"
-                                                                    :disabled="!isDisableSubmit">Search</button>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-lg-1 align-self-center mt-2">
+                                                        <button v-on:click="searchData"
+                                                            v-on:keyup.enter="searchData"
+                                                            class="btn btn-success btn-sm">Search</button>
+                                                    </div>
+                                                    <div class="col-lg-1 align-self-center mt-2">
+                                                        <a :href="`/api/report/item-history/${$route.params.id}?from=${range.fromDate}&until=${range.toDate}`" class="btn btn-warning btn-sm" target="_blank">Print</a>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">

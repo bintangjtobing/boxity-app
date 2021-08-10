@@ -90,9 +90,10 @@ class itemOnSalesController extends Controller
     {
         return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('created_by', Auth::id())->get());
     }
-    public function postItemSalesInvoiceSdr(Request $request) {
+    public function postItemSalesInvoiceSdr(Request $request)
+    {
         $data = [];
-        foreach ($request->all() as  $req ) {
+        foreach ($request->all() as  $req) {
             foreach ($req['items'] as $elm) {
                 $temp = [
                     'item_code' => $elm['item']['id'],
@@ -109,7 +110,7 @@ class itemOnSalesController extends Controller
             }
         }
         $result = itemsSales::insert($data);
-        return response()->json('MASUK'.$result, 200);
+        return response()->json('MASUK' . $result, 200);
     }
     public function postItemPurchaseSdr(Request $request)
     {

@@ -52,7 +52,6 @@
                                     show-expand
                                     style="max-height: 500px; overflow: auto"
                                 >
-                            
                                     <template v-slot:expanded-item="{ headers, item }">
                                         <td :colspan="headers.length">
                                             <template>
@@ -225,7 +224,7 @@
                                     :items="itemDeliveryData" :items-per-page="10" class="elevation-1">
                                     <template  v-slot:item.item.si_number="{item}">
                                         <section v-if="item.si_number">
-                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>  
+                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>
                                         </section>
                                         <section v-else>
                                             <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Manual Input"></i>
@@ -536,13 +535,12 @@
                         siNumber.push(elm.si_number)
                     }
                 });
-                const salesInvoice = await axios.get('/api/sales/invoice', { 
+                const salesInvoice = await axios.get('/api/sales/invoice', {
                     params: {
                         feature: 'deliveryReceipt',
                         si_number: siNumber
                     }
                 });
-                console.log(salesInvoice)
                 this.salesInvoice = salesInvoice.data;
                 this.$Progress.finish();
             },

@@ -207,6 +207,7 @@ Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
 Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
 Route::get('/sum/in/item-history/{id}', 'apiController@sumQtyInHistoryItem');
 Route::get('/sum/out/item-history/{id}', 'apiController@sumQtyOutHistoryItem');
+Route::get('/report/item-history/{id}', 'apiController@reportItemHistory');
 
 // Goods Item Transfer -> list item in one row goods transfer
 Route::get('/goods-item-transfer', 'apiController@getGoodsItemTransfer');
@@ -374,7 +375,7 @@ Route::delete('/delivery-receipt/{id}', 'salesController@deleteDeliveryReceiptBy
 Route::get('/count-delivery-receipt', 'salesController@countDeliveryReceipt');
 
 Route::get('/sdr/item-sales', 'itemOnSalesController@getItemSalesSdr');
-Route::post('/sdr/item-sales', 'itemOnSalesController@postItemSalesSdr');
+Route::post('/sdr/item-sales', 'itemOnSalesController@postItemPurchaseSdr');
 Route::post('/sdr/item-sales/sales-invoice', 'itemOnSalesController@postItemSalesInvoiceSdr');
 Route::post('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@postItemSalesBySdrNumber');
 Route::get('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@getItemSalesBySdrNumber');

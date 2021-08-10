@@ -55,6 +55,7 @@ use App\itemOndocumentsDelivery;
 use App\Mail\newDocumentDelivery;
 use App\itemsSales;
 use Mail;
+use PDF;
 
 class apiController extends Controller
 {
@@ -1736,6 +1737,70 @@ class apiController extends Controller
             $getSINumb = $getHistory[0]->itemOutId;
             return response()->json(itemsSales::where('item_code', $id)->where('si_status', 2)->sum('qtyShipped'));
         }
+    }
+
+    public function reportItemHistory($id, request $req)
+    {
+        $company = company_details::first();
+        $itemHistory = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'ASC')->get()->toArray();
+
+        function formatDate ($param) {
+            return date_create(date_format(date_create($param),"d-m-Y"));
+        }
+
+        $item = []; $n = 0;
+        foreach ($itemHistory as $elm) {
+            $n = $n + $elm['qtyIn'] - $elm['qtyOut'];
+            $data = [
+                "date" => date_format(date_create($elm['date']),"d-m-Y"),
+                "documentCode" => $elm['itemInId'] ?? $elm['itemOutId'],
+                "remark" => $elm['remarks'] ?? "",
+                "qtyIn" => $elm['qtyIn'],
+                "qtyOut" => $elm['qtyOut'],
+                "saldo" => $n,
+                "created_at" => $elm['created_at']
+            ];
+            array_push($item, $data);
+        }
+
+        if ($req->from != 'undefined' && $req->until != 'undefined' ) {
+            function filter ($array, $filter) {
+                return array_filter($array, function ($item) use ($filter) {
+                    return (formatDate($filter->from) <= formatDate($item['created_at']) && formatDate($item['created_at']) <= formatDate($filter->until));
+                });
+            }
+            $item = filter($item, $req);
+
+            $max = $req->until;
+            $min = $req->from;
+        }
+        else if ($req->from != 'undefined' && $req->until === 'undefined') {
+            function filter ($array, $filter) {
+                return array_filter($array, function ($item) use ($filter) {
+                    return (formatDate($filter->from) <= formatDate($item['created_at']));
+                });
+            }
+            $item = filter($item, $req);
+
+            $max = itemHistory::where('itemId', $id)->max('created_at');
+            $min = $req->from;
+        }
+        else {
+            $max = itemHistory::where('itemId', $id)->max('created_at');
+            $min = itemHistory::where('itemId', $id)->min('created_at');
+        }
+
+        $itemDetail = array_shift($itemHistory);
+        $data = [
+            "itemName" => $itemDetail['item']['item_name'],
+            "unit" => $itemDetail['item']['unit'],
+            "periode" => date_format(date_create($min),"d-m-Y")." s/d ".date_format(date_create($max),"d-m-Y"),
+            "items" => $item,
+            "image" => $company['logoblack']
+        ];
+
+        $pdf = PDF::loadView('vendor.invoices.templates.item-history', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
     }
 
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
