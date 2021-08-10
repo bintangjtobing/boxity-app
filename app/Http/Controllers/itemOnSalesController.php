@@ -88,9 +88,30 @@ class itemOnSalesController extends Controller
     // ITEM ON Delivery Receipt
     public function getItemSalesSdr()
     {
-        return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('sdr_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('created_by', Auth::id())->get());
     }
-    public function postItemSalesSdr(Request $request)
+    public function postItemSalesInvoiceSdr(Request $request) {
+        $data = [];
+        foreach ($request->all() as  $req ) {
+            foreach ($req['items'] as $elm) {
+                $temp = [
+                    'item_code' => $elm['item']['id'],
+                    "qtyShipped" => $elm['qtyShipped'],
+                    "unit" => $elm['unit'],
+                    "requested_by" => Auth::id(),
+                    "remarks" => $elm['remarks'],
+                    "sdr_status" => '1',
+                    "created_by" => Auth::id(),
+                    "updated_by" => Auth::id(),
+                    "si_number" => $req['si_number']
+                ];
+                array_push($data, $temp);
+            }
+        }
+        $result = itemsSales::insert($data);
+        return response()->json('MASUK'.$result, 200);
+    }
+    public function postItemPurchaseSdr(Request $request)
     {
         $itemsDelivering = new itemsSales();
         $itemsDelivering->item_code = $request->itemid;

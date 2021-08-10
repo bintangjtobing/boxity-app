@@ -24,6 +24,7 @@ class itemsSales extends Model
         'prequest_status',
         'preturn_status',
         'salesingId',
+        'isSalesInvoice',
         'created_by',
         'updated_by',
         'updated_by',

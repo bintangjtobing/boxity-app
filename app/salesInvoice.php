@@ -11,7 +11,11 @@ class salesInvoice extends Model
         'si_number', 'customer', 'invoice_date', 'toGL', 'status', 'created_by',
         'updated_by', 'remarks', 'reference_no', 'vehicle_no', 'drivers'
     ];
-    public function customers()
+    public function items()
+    {
+        return $this->hasMany('App\ItemsSales', 'salesingId', 'si_number');
+    }
+    public function customer()
     {
         return $this->belongsTo(User::class, 'customer');
     }

@@ -13,6 +13,67 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-12 row justify-content-center">
+                <button class="btn btn-primary col-6 col-sm-4 m-1" @click="inputOptions('manual')">
+                    <i class="fal fa-file-alt"></i> Input Manual
+                </button>
+                <button class="btn btn-success col-6 col-sm-4 m-1" @click="inputOptions('invoice')">
+                    <i class="fal fa-file-invoice-dollar"></i>  Select From Invoice
+                </button>
+            </div>
+            <!-- Select Invoice -->
+            <div class="col-lg-12" v-show="isSelectInvoice">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row justify-content-between align-items-center" @click="isShowing()">
+                            <div class="col-lg-6">
+                                <h5>Sales Invoices</h5>
+                                <p class="muted-text">Select to items on Delivery Receipts</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <span class="material-icons-outlined collapseArea" :class="classRotate(isShow.colapse)"
+                                    style="color:#ddd; font-size:2rem !important;">
+                                    expand_more
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" v-show="isShow.colapse">
+                            <template>
+                                <v-data-table
+                                    v-model="selectedSalesInvoice"
+                                    :headers="headersSalesInvoice"
+                                    :items="salesInvoice"
+                                    item-key="si_number"
+                                    hide-default-footer
+                                    show-select
+                                    fixed-header
+                                    :single-expand="true"
+                                    :expanded.sync="expanded"
+                                    show-expand
+                                    style="max-height: 500px; overflow: auto"
+                                >
+                            
+                                    <template v-slot:expanded-item="{ headers, item }">
+                                        <td :colspan="headers.length">
+                                            <template>
+                                                <v-data-table
+                                                    :headers="headersExpanded"
+                                                    :items="item.items"
+                                                    :items-per-page="5"
+                                                    hide-default-footer
+                                                    fixed-header
+                                                    style="max-height: 350px; overflow: auto"
+                                                ></v-data-table>
+                                            </template>
+                                        </td>
+                                    </template>
+                                </v-data-table>
+                            </template>
+                            <button v-on:click="addSelectedSalesInvoice" v-on:keyup.enter="addSelectedSalesInvoice" class="btn btn-success float-right btn-default btn-squared px-30" :disabled="isAddItemSalesInvoice">Add to lists</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Form Add -->
             <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
                 <div class="card mb-3">
@@ -159,9 +220,17 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" :loading="itemDeliveryData.length"
-                                    loading-text="Loading... Please wait..." :headers="headers"
+                                <v-data-table :search="search" :loading="!itemDeliveryData.length"
+                                    loading-text="Data not found..." :headers="headers"
                                     :items="itemDeliveryData" :items-per-page="10" class="elevation-1">
+                                    <template  v-slot:item.item.si_number="{item}">
+                                        <section v-if="item.si_number">
+                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>  
+                                        </section>
+                                        <section v-else>
+                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Manual Input"></i>
+                                        </section>
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
@@ -268,9 +337,12 @@
                     colapse: true,
                 },
                 // Page Info
+                expanded: [],
                 titleItemDescription: 'Add some items on Delivery Receipts.',
-                isVisibleAddForm: false,
+                isVisibleAddForm: true,
                 isVisibleModifyForm: true,
+                isSelectInvoice: false,
+                selectedSalesInvoice: [],
                 itemModify: {
                     itemid: '',
                     unit: '',
@@ -298,12 +370,43 @@
                 items: {},
                 users: {},
                 logged: {},
+                salesInvoice: [],
 
                 // Datatable
                 itemDeliveryData: [],
                 search: '',
                 key: 1,
+                headersSalesInvoice: [{
+                        text: 'Sales Invoice Code',
+                        value: 'si_number'
+                    }, {
+                        text: 'Customer Name',
+                        value: 'customer.customerName'
+                    }, {
+                        text: 'Invoice Date',
+                        value: 'invoice_date'
+                    },
+                    { text: '', value: 'data-table-expand' }
+                ],
+                headersExpanded: [{
+                        text: 'Item Name',
+                        value: 'item.item_name'
+                    }, {
+                        text: 'Quantity',
+                        value: 'qtyShipped'
+                    }, {
+                        text: 'Unit',
+                        value: 'unit'
+                    }
+                ],
                 headers: [{
+                    text: '',
+                    value: 'item.si_number',
+                    align: 'center',
+                    filterable: false,
+                    sortable: false
+                },
+                {
                     text: 'Item Code',
                     value: 'item.item_code'
                 }, {
@@ -330,7 +433,22 @@
             this.generatePONumber();
             this.loadLoggedUser();
         },
+        computed: {
+            isAddItemSalesInvoice: function () {
+                return (this.selectedSalesInvoice.length == 0);
+            }
+        },
         methods: {
+            inputOptions: async function (param) {
+                if (param === 'manual') {
+                    this.isVisibleAddForm = false
+                    this.isSelectInvoice = false
+                }
+                else {
+                    this.isSelectInvoice = true
+                    this.isVisibleAddForm = true
+                }
+            },
             classRotate: function (param) {
                 return param ? "rotate" : "";
             },
@@ -402,9 +520,30 @@
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
                 const itemDeliveryData = await axios.get('/api/sdr/item-sales');
-                this.itemDeliveryData = itemDeliveryData.data;
+                const itemDelivery = []
+                itemDeliveryData.data.forEach(elm => {
+                    if (elm.sdr_status == 1) {
+                        itemDelivery.push(elm);
+                    }
+                });
+                this.itemDeliveryData = itemDelivery;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
+                // SALES INVOICE
+                const siNumber = []
+                itemDeliveryData.data.forEach(elm => {
+                    if (elm.si_number != "" && !siNumber.includes(elm.si_number)) {
+                        siNumber.push(elm.si_number)
+                    }
+                });
+                const salesInvoice = await axios.get('/api/sales/invoice', { 
+                    params: {
+                        feature: 'deliveryReceipt',
+                        si_number: siNumber
+                    }
+                });
+                console.log(salesInvoice)
+                this.salesInvoice = salesInvoice.data;
                 this.$Progress.finish();
             },
             async modifyItemPurchasing(id) {
@@ -419,6 +558,19 @@
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = 'Modify Delivery Receipt Items';
                 window.scrollTo(0, 0);
+                this.$Progress.finish();
+            },
+            async addSelectedSalesInvoice() {
+                this.$Progress.start();
+                await axios.post('/api/sdr/item-sales/sales-invoice', this.selectedSalesInvoice).then(response => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add item on Delivery Receipt table',
+                    });
+                    this.selectedSalesInvoice = [];
+                });
+                this.loadData();
                 this.$Progress.finish();
             },
             async addToList() {

@@ -103,14 +103,17 @@ class salesController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
-    // SALES INVOICE
-    public function getSalesInvoice()
+    // Sales Invoices
+    public function getSalesInvoice(Request $request)
     {
-        if (Auth::user()->role == 'customer') {
-            return salesInvoice::where('created_by', Auth::id())->with('customers', 'createdby')->with('createdby')->orderBy('created_at', 'DESC')->get();
-        } else {
-            return salesInvoice::with('customers', 'createdby')->orderBy('created_at', 'DESC')->get();
+        $query = [];
+        if ($request->feature === 'deliveryReceipt') {
+            $query = salesInvoice::with('customer')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
         }
+        else {
+            $query = salesInvoice::with('customer')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        }
+        return response()->json($query);
     }
     public function postSalesInvoice(Request $request)
     {

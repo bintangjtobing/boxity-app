@@ -161,6 +161,14 @@
                                 <v-data-table :search="search" :loading="itemDeliveryData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemDeliveryData" :items-per-page="10" class="elevation-1">
+                                    <template  v-slot:item.item.si_number="{item}">
+                                        <section v-if="item.si_number">
+                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>  
+                                        </section>
+                                        <section v-else>
+                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Manual Input"></i>
+                                        </section>
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
@@ -322,6 +330,13 @@
                 search: '',
                 key: 1,
                 headers: [{
+                        text: '',
+                        value: 'item.si_number',
+                        align: 'center',
+                        filterable: false,
+                        sortable: false
+                    },
+                    {
                         text: 'Item Code',
                         value: 'item.item_code'
                     }, {

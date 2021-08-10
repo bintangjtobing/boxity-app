@@ -374,7 +374,8 @@ Route::delete('/delivery-receipt/{id}', 'salesController@deleteDeliveryReceiptBy
 Route::get('/count-delivery-receipt', 'salesController@countDeliveryReceipt');
 
 Route::get('/sdr/item-sales', 'itemOnSalesController@getItemSalesSdr');
-Route::post('/sdr/item-sales', 'itemOnSalesController@postItemPurchaseSdr');
+Route::post('/sdr/item-sales', 'itemOnSalesController@postItemSalesSdr');
+Route::post('/sdr/item-sales/sales-invoice', 'itemOnSalesController@postItemSalesInvoiceSdr');
 Route::post('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@postItemSalesBySdrNumber');
 Route::get('/sdr/item-sales/{sdr_number}', 'itemOnSalesController@getItemSalesBySdrNumber');
 Route::get('/sdr/item-saless/{id}', 'itemOnSalesController@getItemSalesSdrById');
