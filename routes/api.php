@@ -216,6 +216,28 @@ Route::patch('/goods-item-transfer/{id}', 'apiController@postGoodsItemTransferBy
 Route::delete('/goods-item-transfer/{id}', 'apiController@deleteGoodsItemTransferById');
 Route::get('/count-goods-item-transfer', 'apiController@countGoodsItemTransfer');
 
+///////////////// DOCUMENT DELIVERY ///////////////////////////////////
+// Document Delivery
+Route::get('/document/delivery', 'apiController@getDocumentsDelivery');
+Route::post('/document/delivery', 'apiController@postDocumentsDelivery');
+Route::get('/document/delivery/{ddr_number}', 'apiController@getDocumentsDeliveryByDdrNumber');
+Route::patch('/document/delivery/{ddr_number}', 'apiController@postDocumentsDeliveryByDdrNumber');
+Route::get('/taken/document/delivery/{ddr_number}', 'apiController@takenDocumentsDeliveryByDdrNumber');
+Route::delete('/documents-delivery/{id}', 'apiController@deleteDocumentsDeliveryById');
+Route::get('/count-document-delivery', 'apiController@countDocumentsDelivery');
+
+
+// Item on  Document Delivery
+Route::get('/ddr/item-document', 'itemOnSalesController@getItemDocumentDeliveryDDR');
+Route::post('/ddr/item-document', 'itemOnSalesController@postItemDocumentDeliveryDDR');
+Route::post('/ddr/item-document/{ddr_number}', 'itemOnSalesController@postItemDocumentDeliveryByDdrNumber');
+Route::get('/ddr/item-documents/{id}', 'itemOnSalesController@getItemDocumentDeliveryDDRById');
+Route::get('/ddr/item-document/{ddr_number}', 'itemOnSalesController@getItemDocumentDeliveryByDdrNumber');
+Route::patch('/ddr/item-document/{id}', 'itemOnSalesController@postItemDocumentDeliveryDDRById');
+Route::delete('/ddr/item-document/{id}', 'itemOnSalesController@deleteItemDocumentDeliveryDDRById');
+Route::get('/ddr/count-item-document', 'itemOnSalesController@countItemDocumentDeliveryDDR');
+///////////////// DOCUMENT DELIVERY END ///////////////////////////////////
+
 ///////////////// PURCHASE ORDER ///////////////////////////////////
 // Purchase Order
 Route::get('/purchase/order', 'purchasingController@getPurchaseOrder');

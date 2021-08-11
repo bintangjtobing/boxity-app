@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\documentsDelivery;
 use App\itemsSales;
+use App\itemOndocumentsDelivery;
 
 use App\Http\Controllers\Controller;
+use App\Mail\updateReceiptNumber;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class itemOnSalesController extends Controller
 {
@@ -86,7 +90,7 @@ class itemOnSalesController extends Controller
     {
         return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('sdr_status', 1)->where('created_by', Auth::id())->get());
     }
-    public function postItemPurchaseSdr(Request $request)
+    public function postItemSalesSdr(Request $request)
     {
         $itemsDelivering = new itemsSales();
         $itemsDelivering->item_code = $request->itemid;
@@ -145,6 +149,76 @@ class itemOnSalesController extends Controller
     public function countItemSalesSdr()
     {
         $ItemCount = DB::table('items_purchases')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
+    }
+
+    // ITEM ON DOCUMENTS DELIVERY
+    public function getItemDocumentDeliveryDDR()
+    {
+        return response()->json(itemOndocumentsDelivery::with('documentDelivery')->orderBy('created_at', 'DESC')->where('status', 1)->where('created_by', Auth::id())->get());
+    }
+    public function postItemDocumentDeliveryDDR(Request $request)
+    {
+        $ItemDelivering = new itemOndocumentsDelivery();
+        $ItemDelivering->type = $request->type;
+        $ItemDelivering->receiptNumber = $request->receiptNumber;
+        $ItemDelivering->destination = $request->destination;
+        $ItemDelivering->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $ItemDelivering->status = 1;
+        $ItemDelivering->created_by = Auth::id();
+        $ItemDelivering->save();
+        return response()->json($ItemDelivering, 200);
+    }
+    public function postItemDocumentDeliveryByDdrNumber($ddr_number, Request $request)
+    {
+        $ItemDelivering = new itemOndocumentsDelivery();
+        $ItemDelivering->type = $request->type;
+        $ItemDelivering->receiptNumber = $request->receiptNumber;
+        $ItemDelivering->destination = $request->destination;
+        $ItemDelivering->remarks = $request->remarks;
+
+        // po status 1 means stored at database but not with the purchase order id;
+        $ItemDelivering->status = 2;
+        $ItemDelivering->created_by = Auth::id();
+        $ItemDelivering->ddrId = $ddr_number;
+        $ItemDelivering->save();
+        return response()->json($ItemDelivering, 200);
+    }
+    public function getItemDocumentDeliveryDDRById($id)
+    {
+        return response()->json(itemOndocumentsDelivery::where('id', $id)->with('documentDelivery', 'createdBy')->first());
+    }
+    public function getItemDocumentDeliveryByDdrNumber($ddr_number)
+    {
+        return response()->json(itemOndocumentsDelivery::where('ddrId', $ddr_number)->with('documentDelivery')->orderBy('created_at', 'DESC')->get());
+    }
+    public function postItemDocumentDeliveryDDRById($id, Request $request)
+    {
+        $ItemDelivering = itemOndocumentsDelivery::find($id);
+        $ItemDelivering->type = $request->type;
+        $ItemDelivering->receiptNumber = $request->receiptNumber;
+        $ItemDelivering->destination = $request->destination;
+        $ItemDelivering->remarks = $request->remarks;
+        $ItemDelivering->save();
+
+        if ($ItemDelivering->receiptNumber) {
+            $documentRelated = documentsDelivery::where('ddr_number', $ItemDelivering->ddrId)->with('sender')->first();
+            Mail::to($documentRelated->sender->email)->send(new updateReceiptNumber($ItemDelivering, $documentRelated));
+        }
+        return response()->json($ItemDelivering, 200);
+        // return $documentRelated->sender->email;
+    }
+    public function deleteItemDocumentDeliveryDDRById($id)
+    {
+        return response()->json(itemOndocumentsDelivery::find($id)->delete());
+    }
+    public function countItemDocumentDeliveryDDR()
+    {
+        $ItemCount = DB::table('item_documents_deliveries')
             ->get()
             ->count();
         return response()->json($ItemCount);

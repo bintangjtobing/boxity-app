@@ -18,7 +18,7 @@
                 </div>
                 <div class="navbar-right">
                     <div v-show="!isMobile">
-                        <ul class="nav-right" >
+                        <ul class="nav-right">
                             <li>
                                 <button class="btn" onclick="turnOnDarkMode()"><span>
                                         <div id="sunmoon" class="fas fa-moon"></div>
@@ -75,7 +75,7 @@
                 </div>
             </nav>
             <div class="more" v-show="(isMore && isMobile)">
-                <ul class="nav-right" >
+                <ul class="nav-right">
                     <li>
                         <button class="btn" onclick="turnOnDarkMode()"><span>
                                 <div id="sunmoon" class="fas fa-moon"></div>
@@ -133,7 +133,8 @@
                             <li class="menu-title m-top-15">
                                 <span>General Applications</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Version control" v-if="user.divisi == 'developer'">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Version control"
+                                v-if="user.divisi == 'developer'">
                                 <router-link to="/version-control">
                                     <span class="material-icons-outlined nav-icon">
                                         build_circle
@@ -141,7 +142,7 @@
                                     <span class="menu-text">Version control</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Issue center">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Issue center">
                                 <router-link to="/issues">
                                     <span class="material-icons-outlined nav-icon">
                                         contact_support
@@ -149,7 +150,7 @@
                                     <span class="menu-text">Issue center</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Contact lists">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Contact lists">
                                 <router-link to="/contact-list">
                                     <span class="material-icons-outlined nav-icon">
                                         contact_page
@@ -157,7 +158,7 @@
                                     <span class="menu-text">Contact lists</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Notepad">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Notepad">
                                 <router-link to="/notepad">
                                     <span class="material-icons-outlined nav-icon">
                                         sticky_note_2
@@ -165,15 +166,7 @@
                                     <span class="menu-text">Notepad</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
-                                <router-link to="/goods-receipt">
-                                    <span class="material-icons-outlined nav-icon">
-                                        feed
-                                    </span>
-                                    <span class="menu-text">Goods receipt</span>
-                                </router-link>
-                            </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Quote report">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Quote report">
                                 <router-link to="/quote">
                                     <span class="material-icons-outlined nav-icon">
                                         book
@@ -181,7 +174,7 @@
                                     <span class="menu-text">Quote report</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Track delivery">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Track delivery">
                                 <router-link to="/track-delivery">
                                     <span class="material-icons-outlined nav-icon">
                                         where_to_vote
@@ -191,10 +184,11 @@
                             </li>
                         </div>
                         <div v-if="user.role=='customer' || user.role=='admin'">
-                            <li  class="menu-title m-top-15">
+                            <li class="menu-title m-top-15">
                                 <span>Associate</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Customers" v-if="user.role=='admin'">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Customers"
+                                v-if="user.role=='admin'">
                                 <router-link to="/customers">
                                     <span class="material-icons-outlined nav-icon">
                                         groups
@@ -202,7 +196,7 @@
                                     <span class="menu-text">Customers</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Suppliers">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Suppliers">
                                 <router-link to="/suppliers">
                                     <span class="material-icons-outlined nav-icon">
                                         groups
@@ -210,7 +204,7 @@
                                     <span class="menu-text">Suppliers</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Person">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Person">
                                 <a href="#">
                                     <span class="material-icons-outlined nav-icon">
                                         groups
@@ -219,7 +213,8 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </a>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Users management" v-if="user.role=='admin'">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Users management"
+                                v-if="user.role=='admin'">
                                 <router-link to="/users-management">
                                     <span class="material-icons-outlined nav-icon">
                                         manage_accounts
@@ -232,7 +227,7 @@
                             <li class="menu-title m-top-15">
                                 <span>Human Resources Management</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Employee">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Employee">
                                 <a href="#">
                                     <span class="material-icons-outlined nav-icon">
                                         groups
@@ -241,7 +236,7 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </a>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Job Vacancy">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Job Vacancy">
                                 <router-link to="/career">
                                     <span class="material-icons-outlined nav-icon">
                                         work_outline
@@ -249,7 +244,7 @@
                                     <span class="menu-text">Job Vacancy</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Candidate">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Candidate">
                                 <router-link to="/candidate">
                                     <span class="material-icons-outlined nav-icon">
                                         travel_explore
@@ -257,7 +252,7 @@
                                     <span class="menu-text">Candidate</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Leave Request">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Leave Request">
                                 <a href="#">
                                     <span class="material-icons-outlined nav-icon">
                                         local_cafe
@@ -266,7 +261,7 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </a>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Loan">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Loan">
                                 <a href="#">
                                     <span class="material-icons-outlined nav-icon">
                                         credit_score
@@ -280,7 +275,7 @@
                             <li class="menu-title m-top-15">
                                 <span>Warehouse</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse List">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse List">
                                 <router-link :to="'/warehouse-list'">
                                     <span class="material-icons-outlined nav-icon">
                                         home_work
@@ -289,10 +284,10 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  class="menu-title m-top-15">
+                            <li class="menu-title m-top-15">
                                 <span>Inventory Control</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Group">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Group">
                                 <router-link :to="'/stock-group'">
                                     <span class="material-icons-outlined nav-icon">
                                         inventory_2
@@ -303,7 +298,7 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Item Group">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Item Group">
                                 <router-link :to="'/item-group'">
                                     <span class="material-icons-outlined nav-icon">
                                         inventory_2
@@ -312,7 +307,7 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory Item">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory Item">
                                 <router-link to="/inventory-item">
                                     <span class="material-icons-outlined nav-icon">
                                         category
@@ -324,7 +319,7 @@
                             <li class="menu-title m-top-15">
                                 <span>Receiving & Putaway</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Order">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Order">
                                 <router-link to="/purchase/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
@@ -333,7 +328,7 @@
                                     <span class="badge badge-secondary menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Invoice">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Invoice">
                                 <router-link to="/purchase/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
@@ -342,7 +337,7 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Return">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Return">
                                 <router-link to="/purchase/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
@@ -351,7 +346,7 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Request">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Request">
                                 <router-link to="/purchase/request">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
@@ -360,10 +355,18 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                                <router-link to="/goods-receipt">
+                                    <span class="material-icons-outlined nav-icon">
+                                        feed
+                                    </span>
+                                    <span class="menu-text">Documents Receipt</span>
+                                </router-link>
+                            </li>
                             <li class="menu-title m-top-15">
                                 <span>Dispatching</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Order">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Order">
                                 <router-link to="/sales/order">
                                     <span class="material-icons-outlined nav-icon">
                                         list_alt
@@ -372,7 +375,7 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Invoice">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Invoice">
                                 <router-link to="/sales/invoices">
                                     <span class="material-icons-outlined nav-icon">
                                         receipt
@@ -381,7 +384,7 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Return">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Return">
                                 <router-link to="/sales/return">
                                     <span class="material-icons-outlined nav-icon">
                                         assignment_return
@@ -390,7 +393,7 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Delivery Receipt">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Delivery Receipt">
                                 <router-link to="/delivery/receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         request_page
@@ -399,12 +402,20 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                                <router-link to="/document/delivery">
+                                    <span class="material-icons-outlined nav-icon">
+                                        feed
+                                    </span>
+                                    <span class="menu-text">Documents Delivery</span>
+                                </router-link>
+                            </li>
                         </div>
                         <div v-if="user.role=='it' || user.role=='admin'">
                             <li class="menu-title m-top-15">
                                 <span>Main Web Config</span>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Gallery">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Gallery">
                                 <router-link to="/gallery">
                                     <span class="material-icons-outlined nav-icon">
                                         photo_library
@@ -412,7 +423,7 @@
                                     <span class="menu-text">Gallery</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Blog">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Blog">
                                 <router-link to="/blog-management">
                                     <span class="material-icons-outlined nav-icon">
                                         article
@@ -420,7 +431,7 @@
                                     <span class="menu-text">Blog</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Popup Window">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Popup Window">
                                 <router-link to="/popup-management">
                                     <span class="material-icons-outlined nav-icon">
                                         preview
@@ -428,7 +439,7 @@
                                     <span class="menu-text">Popup Window</span>
                                 </router-link>
                             </li>
-                            <li  data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
                                 <router-link to="/user-guide">
                                     <span class="material-icons-outlined nav-icon">
                                         help
@@ -440,7 +451,7 @@
                         <li class="menu-title m-top-15">
                             <span>Privacy & Others</span>
                         </li>
-                        <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Trace logs">
+                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Trace logs">
                             <a :href="'/api/logs'" v-if="user.role=='admin'">
                                 <span class="material-icons-outlined nav-icon">
                                     bug_report
@@ -454,7 +465,7 @@
                                 <span class="menu-text">Activity Log</span>
                             </router-link>
                         </li>
-                        <li  data-bs-toggle="tooltip" data-bs-placement="right" title="Sign out">
+                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sign out">
                             <a v-on:click="signOutConfirm" class="text-danger">
                                 <span class="material-icons-outlined nav-icon">
                                     logout
@@ -547,10 +558,10 @@
             window.removeEventListener('resize', this.handleResize);
         },
         methods: {
-            more () { 
-                this.isMore = !this.isMore 
+            more() {
+                this.isMore = !this.isMore
             },
-            handleResize () {
+            handleResize() {
                 var w = window.innerWidth;
                 this.isMobile = w > 768 ? false : true;
             },
@@ -593,45 +604,49 @@
 </script>
 
 <style scoped>
-    header, nav {
+    header,
+    nav {
         height: 74px;
     }
+
     .sidebar {
         /* scroll for Firefox */
         scrollbar-width: thin;
     }
+
     /* width */
     .sidebar::-webkit-scrollbar {
         width: 5px;
     }
+
     /* Track */
     .sidebar::-webkit-scrollbar-track {
-        background: #eee; 
+        background: #eee;
     }
-    
+
     /* Handle */
     .sidebar::-webkit-scrollbar-thumb {
-        background: #ccc; 
+        background: #ccc;
     }
 
     /* Handle on hover */
     .sidebar::-webkit-scrollbar-thumb:hover {
-        background: #b3b3b3; 
+        background: #b3b3b3;
     }
-    
+
     .sidebar.collapsed .sidebar__menu-group li a {
         border-radius: 0%;
     }
-    
+
     .nav-right .nav-author .dropdown-wrapper {
         min-width: 300px;
     }
-    
+
     .nav-right .nav-author img {
         width: 34px;
         height: 34px;
     }
-    
+
     .nav-right .nav-author__info {
         background: #f4f5f7;
         border-radius: 8px;
@@ -640,56 +655,56 @@
         align-items: center;
         padding: 20px 25px;
     }
-    
+
     .nav-right .nav-author__info .author-img {
         margin-right: 15px;
     }
-    
+
     .nav-right .nav-author__info .author-img img {
         max-width: 40px;
     }
-    
+
     .nav-right .nav-author__info h6 {
         font-weight: 500;
         font-size: 14px;
     }
-    
+
     .contents.expanded {
         transition: all 0.3s ease !important;
     }
-    
+
     .nav-right {
         list-style: none;
         display: flex;
         align-items: center;
         margin: 0 -12px;
     }
-    
+
     .nav-right>li {
         padding: 0 12px;
     }
-    
+
     .nav-right .nav-item-toggle {
         position: relative;
         color: #9299b8;
     }
-    
+
     .nav-right .nav-author__options ul {
         list-style: none;
         margin: 0;
         padding: 0 0 15px;
     }
-    
+
     .nav-right .nav-author__options ul li {
         padding: 0;
     }
-    
+
     .nav-right .nav-author__options ul li a:hover {
         background: rgba(95, 99, 242, 0.05);
         padding-left: 35px;
         color: #fa831c;
     }
-    
+
     .nav-right .nav-author__options ul li a {
         font-size: 14px;
         display: block;
@@ -697,7 +712,7 @@
         color: #9299b8;
         transition: all 0.3s ease;
     }
-    
+
     .nav-right .nav-author__signout {
         font-size: 13px;
         background: #f8f9fb;
@@ -707,11 +722,11 @@
         text-align: center;
         font-weight: 500;
     }
-    
+
     .nav-right .nav-author__signout svg {
         width: 15px;
     }
-    
+
     .more {
         width: 100%;
         height: 3em;
@@ -722,10 +737,11 @@
         justify-content: center;
         align-items: center;
     }
-    
+
     .more .nav-right .nav-author .dropdown-wrapper {
         top: 48px;
         right: -50%;
         min-width: 300px;
     }
+
 </style>

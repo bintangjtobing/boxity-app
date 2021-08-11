@@ -65,6 +65,9 @@ import trackForm from './components/trackForm.vue';
 import trackView from './components/trackView.vue';
 import notePad from './components/notePad.vue';
 import goodsReceipt from './components/goodsReceipt.vue';
+import documentsDelivery from './components/documentsDelivery.vue';
+import documentsDeliveryForm from './components/documentsDeliveryForm.vue';
+import documentsDeliveryAdd from './components/documentsDeliveryAdd.vue';
 import versionView from './components/versionView.vue';
 import userGuide from './components/userGuide.vue';
 import notFoundPage from './components/notFoundPage.vue';
@@ -248,6 +251,18 @@ const routes = [{
         name: 'goods-receipt',
         path: '/goods-receipt',
         component: goodsReceipt
+    }, {
+        name: 'DocumentsDelivery',
+        path: '/document/delivery',
+        component: documentsDelivery
+    }, {
+        name: 'DocumentsDeliveryAdd',
+        path: '/document/delivery/add',
+        component: documentsDeliveryAdd
+    }, {
+        name: 'detailDocumentsDelivery',
+        path: '/detail/document/delivery/:ddr_number',
+        component: documentsDeliveryForm,
     }, {
         name: 'versionView',
         path: '/v/:version',

@@ -49,6 +49,9 @@ use App\userLogs;
 use App\warehouseCustomer;
 use App\itemHistory;
 use App\itemsPurchase;
+use App\documentsDelivery;
+use App\itemOndocumentsDelivery;
+use App\Mail\newDocumentDelivery;
 use Mail;
 
 class apiController extends Controller
@@ -1716,6 +1719,7 @@ class apiController extends Controller
         // return response()->json(itemsPurchase::where('item_code', $id)->sum('qtyShipped'));
         return 0;
     }
+
     // tambah jumlah cuti disetiap tanggal yang sudah ditentukan
     public function plusOneEachTen()
     {
@@ -1738,5 +1742,102 @@ class apiController extends Controller
         } else {
             return response()->json(userLogs::with('user')->where('userId', Auth::id())->orderBy('created_at', 'DESC')->get());
         }
+    }
+
+    // DOCUMENTS DELIVERY
+    public function getDocumentsDelivery()
+    {
+        if (Auth::user()->role != 'customer' || Auth::user()->role != 'supplier') {
+            return documentsDelivery::where('created_by', Auth::id())->with('sender', 'createdBy', 'updatedBy')->orderBy('created_at', 'DESC')->get();
+        } else {
+            return documentsDelivery::with('sender', 'createdBy', 'updatedBy')->orderBy('created_at', 'DESC')->get();
+        }
+    }
+    public function postDocumentsDelivery(Request $request)
+    {
+        $deliveryDocOrd = new documentsDelivery();
+        $deliveryDocOrd->ddr_number = $request->ddr_number;
+        $deliveryDocOrd->senderName = Auth::id();
+        $deliveryDocOrd->courier = $request->courier;
+        $deliveryDocOrd->status = 1;
+        $deliveryDocOrd->created_by = Auth::id();
+        $deliveryDocOrd->updated_by = Auth::id();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new Documents Delivery ' . $deliveryDocOrd->ddr_number . '.';
+        $saveLogs->save();
+
+        $deliveryDocOrd->save();
+
+        $itemGet = DB::table('item_documents_deliveries')
+            ->where('status', '=', '1')
+            // PO Status 2, means having a Document Delivery ID
+            ->update(array('ddrId' => $deliveryDocOrd->ddr_number, 'status' => '2'));
+        $ddrGet = documentsDelivery::where('ddr_number', $deliveryDocOrd->ddr_number)->with('sender', 'createdBy', 'updatedBy')->first();
+        Mail::to('ga2@btsa.co.id')->send(new newDocumentDelivery($ddrGet));
+
+        return response()->json($deliveryDocOrd, 200);
+    }
+    public function getDocumentsDeliveryByDdrNumber($ddr_number)
+    {
+        return response()->json(documentsDelivery::where('ddr_number', $ddr_number)->with('sender', 'createdBy', 'updatedBy')->first());
+    }
+    public function postDocumentsDeliveryByDdrNumber($ddr_number, Request $request)
+    {
+        $documentsUpdate = DB::table('documents_deliveries')
+            ->where('ddr_number', '=', $ddr_number)
+            ->update(array(
+                'senderName' => $request->senderName,
+                'courier' => $request->courier,
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+            ));
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Update Documents Delivery ' . $ddr_number . '.';
+        $saveLogs->save();
+
+        return response()->json($documentsUpdate, 200);
+    }
+    public function takenDocumentsDeliveryByDdrNumber($ddr_number, Request $request)
+    {
+        // Update status to 1, means it is taken by courier
+        $statusDDR = documentsDelivery::where('ddr_number', $ddr_number)
+            ->update(array(
+                'status' => 1,
+                'courier' => $request->courier,
+            ));
+        return response()->json($statusDDR);
+    }
+    public function deleteDocumentsDeliveryById($id, Request $request)
+    {
+        $purchaseOrd = documentsDelivery::find($id);
+        $itemOnDDR = itemOndocumentsDelivery::where('ddrId', $purchaseOrd->ddr_number)->get();
+        foreach ($itemOnDDR as $itemDDRs) {
+            $itemDDRs->delete();
+        }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete Documents Delivery ' . $purchaseOrd->ddr_number . '.';
+        $saveLogs->save();
+
+        $purchaseOrd->delete();
+        return response()->json(201);
+    }
+    public function countDocumentsDelivery()
+    {
+        $ItemCount = DB::table('documents_deliveries')
+            ->get()
+            ->count();
+        return response()->json($ItemCount);
     }
 }

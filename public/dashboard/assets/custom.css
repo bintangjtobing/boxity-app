@@ -360,6 +360,11 @@ a {
     height: 34px;
 }
 
+.wh-34,
+.like-icon {
+    object-fit: cover;
+}
+
 .color-primary,
 .material-icons-outlined,
 .nav-icon {
