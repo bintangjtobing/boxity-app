@@ -316,9 +316,11 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li class="menu-title m-top-15">
-                                <span>Receiving & Putaway</span>
-                            </li>
+                        </div>
+                        <li class="menu-title m-top-15">
+                            <span>Receiving & Putaway</span>
+                        </li>
+                        <div v-if="user.role=='customer' || user.role=='admin'">
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Purchase Order">
                                 <router-link to="/purchase/order">
                                     <span class="material-icons-outlined nav-icon">
@@ -355,18 +357,19 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt"
-                                v-if="user.role=='user'">
-                                <router-link to="/goods-receipt">
-                                    <span class="material-icons-outlined nav-icon">
-                                        feed
-                                    </span>
-                                    <span class="menu-text">Documents Receipt</span>
-                                </router-link>
-                            </li>
-                            <li class="menu-title m-top-15">
-                                <span>Dispatching</span>
-                            </li>
+                        </div>
+                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                            <router-link to="/goods-receipt">
+                                <span class="material-icons-outlined nav-icon">
+                                    feed
+                                </span>
+                                <span class="menu-text">Documents Receipt</span>
+                            </router-link>
+                        </li>
+                        <li class="menu-title m-top-15">
+                            <span>Dispatching</span>
+                        </li>
+                        <div v-if="user.role=='customer' || user.role=='admin'">
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Sales Order">
                                 <router-link to="/sales/order">
                                     <span class="material-icons-outlined nav-icon">
@@ -403,16 +406,15 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
-                            <li v-if="user.role=='user'" data-bs-toggle="tooltip" data-bs-placement="right"
-                                title="Goods receipt">
-                                <router-link to="/document/delivery">
-                                    <span class="material-icons-outlined nav-icon">
-                                        feed
-                                    </span>
-                                    <span class="menu-text">Documents Delivery</span>
-                                </router-link>
-                            </li>
                         </div>
+                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                            <router-link to="/document/delivery">
+                                <span class="material-icons-outlined nav-icon">
+                                    feed
+                                </span>
+                                <span class="menu-text">Documents Delivery</span>
+                            </router-link>
+                        </li>
                         <div v-if="user.role=='it' || user.role=='admin'">
                             <li class="menu-title m-top-15">
                                 <span>Main Web Config</span>

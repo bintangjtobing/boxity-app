@@ -28,7 +28,7 @@
                                 </v-card-title>
                                 <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
                                     :items="goodsData" :search="search" :items-per-page="10" class="elevation-1">
-                                    <template v-slot:item.typeOfGoods="{ item }">
+                                    <template v-slot:[`item.typeOfGoods`]="{ item }">
                                         <div class="userDatatable-inline-title my-3">
                                             <a href="#" class="text-dark fw-500">
                                                 <h6 v-if="item.typeOfGoods == 1" title="Document">D</h6>
@@ -36,7 +36,7 @@
                                             </a>
                                         </div>
                                     </template>
-                                    <template v-slot:item.receiptNumber="{item}">
+                                    <template v-slot:[`item.receiptNumber`]="{item}">
                                         <div class="userDatatable-inline-title my-3">
                                             <h6>#{{item.receiptNumber}}</h6>
                                             <p class="pt-1 d-block mb-0">
@@ -45,13 +45,7 @@
                                             </p>
                                         </div>
                                     </template>
-                                    <template v-slot:item.receiver="{ item }">
-                                        <img class="rounded-circle wh-34"
-                                            :src="`/dashboard/img/author/profile/`+item.receiver.avatar"
-                                            alt="author">&nbsp;
-                                        {{item.receiver.name}}
-                                    </template>
-                                    <template v-slot:item.status="{ item }">
+                                    <template v-slot:[`item.status`]="{ item }">
                                         <span class="media-badge color-white bg-primary" v-if="item.status==0">Available
                                             at
                                             receiptionist</span>
@@ -60,7 +54,7 @@
                                         <span class="media-badge color-white bg-danger"
                                             v-if="item.status==2">Terminated</span>
                                     </template>
-                                    <template v-slot:item.actions="{item}">
+                                    <template v-slot:[`item.actions`]="{item}">
                                         <a href="#" v-on:click="receivedAction(item.id)" v-if="item.status==0"><span
                                                 style="color:blue;"><i class="far fa-check-circle"></i> Update
                                                 status</span></a>
@@ -209,7 +203,7 @@
                     value: 'receiptNumber'
                 }, {
                     text: 'Recipient',
-                    value: 'receiver'
+                    value: 'receiver.name'
                 }, {
                     text: 'Status',
                     value: 'status'
