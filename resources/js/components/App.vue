@@ -355,7 +355,8 @@
                                     <span class="badge badge-secondary text-white menuItem">NEW</span>
                                 </router-link>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt"
+                                v-if="user.role=='user'">
                                 <router-link to="/goods-receipt">
                                     <span class="material-icons-outlined nav-icon">
                                         feed
@@ -402,7 +403,8 @@
                                     <span class="badge badge-primary menuItem">Soon</span>
                                 </router-link>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Goods receipt">
+                            <li v-if="user.role=='user'" data-bs-toggle="tooltip" data-bs-placement="right"
+                                title="Goods receipt">
                                 <router-link to="/document/delivery">
                                     <span class="material-icons-outlined nav-icon">
                                         feed

@@ -935,9 +935,9 @@ class apiController extends Controller
         $newGoods = new goodsReceip();
         $newGoods->userid = Auth::id();
         if ($request->receiverId) {
-            $newGoods->receiverid = $request->receiverid;
-        } else {
             $newGoods->receiverid = 0;
+        } else {
+            $newGoods->receiverid = $request->receiverid;
         }
         $newGoods->typeOfGoods = $request->typeOfGoods;
         $newGoods->courier = $request->courier;
@@ -954,9 +954,10 @@ class apiController extends Controller
 
         $newGoods->save();
         $goods = User::find($newGoods->receiverid);
+        // return $goods->email;
         Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods));
-        // return response()->json($goods);
-        return response()->json($newGoods, 200);
+        return response()->json($goods);
+        // return response()->json($newGoods, 200);
     }
     public function getGoodsById($id, Request $req)
     {
