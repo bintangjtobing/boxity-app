@@ -19,9 +19,9 @@ class CreateCandidatesTable extends Migration
             $table->string('picture');
             $table->string('sumber_informasi');
             $table->string('nama_lengkap');
-            $table->bigInteger('noktp')->nullable();
-            $table->bigInteger('nonpwp')->nullable();
-            $table->bigInteger('nobpjs')->nullable();
+            $table->string('noktp')->nullable();
+            $table->string('nonpwp')->nullable();
+            $table->string('nobpjs')->nullable();
             $table->integer('anak_ke');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
