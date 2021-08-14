@@ -150,6 +150,22 @@
                                     <span class="menu-text">Issue center</span>
                                 </router-link>
                             </li>
+                            <li class="has-child">
+                                <a href="#" class="">
+                                    <span data-feather="mail" class="nav-icon"></span>
+                                    <span class="menu-text">Email</span>
+                                    <span class="toggle-icon"></span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a class="" href="inbox.html">Inbox</a>
+                                    </li>
+                                    <li>
+                                        <a class="" href="read-email.html">Read
+                                            Email</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Contact lists">
                                 <router-link to="/contact-list">
                                     <span class="material-icons-outlined nav-icon">
