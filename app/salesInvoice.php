@@ -15,7 +15,7 @@ class salesInvoice extends Model
     {
         return $this->hasMany('App\ItemsSales', 'salesingId', 'si_number');
     }
-    public function customer()
+    public function customers()
     {
         return $this->belongsTo(User::class, 'customer');
     }
