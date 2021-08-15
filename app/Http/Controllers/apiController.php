@@ -1019,40 +1019,7 @@ class apiController extends Controller
             ->get();
         return response()->json($album, 201);
     }
-
-
-    // Version Control API
-    public function getVersionControl()
-    {
-        return changeLog::orderBy('created_at', 'DESC')->get();
-    }
-    public function newVersion(Request $request)
-    {
-        $version = new changeLog();
-        $version->version = $request->title;
-        $version->description = $request->description;
-        $version->save();
-        return response()->json($version, 201);
-    }
-    public function getVersionData($version)
-    {
-        return response()->json(changeLog::where('version', $version)->get());
-    }
-
-    // User Guide API
-    public function userGuideGet()
-    {
-        return response()->json(userGuide::orderBy('created_at', 'DESC')->get());
-    }
-    public function newGuide(Request $request)
-    {
-        $guide = new userGuide();
-        $guide->title = $request->title;
-        $guide->description = $request->description;
-        $guide->save();
-
-        return response()->json($guide, 200);
-    }
+    // POP UP
     public function getPopup()
     {
         if (popupWindow::get()) {
@@ -1704,16 +1671,16 @@ class apiController extends Controller
     {
         $data = [];
         if (isset($req->fromDate) && isset($req->toDate)) {
-            $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+            $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
         else {
-            $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+            $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
-        
+
         foreach ($data as $elm) {
             $elm->itemNumber = $elm->detailItemIn['pi_number'] ?? $elm->detailItemOut['si_number'];
         }
-        
+
         return response()->json($data);
     }
     public function sumQtyInHistoryItem($id)

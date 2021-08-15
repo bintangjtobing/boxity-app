@@ -47,7 +47,7 @@
                     <div class="footer">
                         <?php $y = date('Y'); ?>
                         &copy; 2018-{{$y}}&nbsp;{{$company->company_id}}. All Rights Reserved.<br>
-                        Web App Version {{$version->version}}
+                        Web App Version 1.0.8
                     </div>
                 </div>
                 <div id="particles-js"></div>

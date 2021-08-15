@@ -133,15 +133,6 @@
                             <li class="menu-title m-top-15">
                                 <span>General Applications</span>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="Version control"
-                                v-if="user.divisi == 'developer'">
-                                <router-link to="/version-control">
-                                    <span class="material-icons-outlined nav-icon">
-                                        build_circle
-                                    </span>
-                                    <span class="menu-text">Version control</span>
-                                </router-link>
-                            </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" title="Issue center">
                                 <router-link to="/issues">
                                     <span class="material-icons-outlined nav-icon">
@@ -435,14 +426,6 @@
                                     <span class="menu-text">Popup Window</span>
                                 </router-link>
                             </li>
-                            <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
-                                <router-link to="/user-guide">
-                                    <span class="material-icons-outlined nav-icon">
-                                        help
-                                    </span>
-                                    <span class="menu-text">User Guide</span>
-                                </router-link>
-                            </li>
                         </div>
                         <li class="menu-title m-top-15">
                             <span>Privacy & Others</span>
@@ -496,9 +479,9 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <router-link :to="{ name: 'versionView', params: { version:version.version }}">
+                                        <a href="https://docs.boxity.id/platform/releases#v108">
                                             App
-                                            version {{version.version}}</router-link>
+                                            version 1.0.8</a>
                                     </li>
                                 </ul>
                             </div>
