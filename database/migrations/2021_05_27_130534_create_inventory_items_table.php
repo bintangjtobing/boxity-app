@@ -21,7 +21,7 @@ class CreateInventoryItemsTable extends Migration
             $table->integer('type')->nullable();
             $table->string('brand')->nullable();
             $table->string('price')->default('0')->nullable();
-            $table->integer('item_group')->index('item_group');
+            $table->integer('item_group')->default(0)->index('item_group');
             $table->string('width')->nullable();
             $table->string('length')->nullable();
             $table->string('thickness')->nullable();
