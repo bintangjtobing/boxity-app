@@ -371,7 +371,7 @@
                 this.count = data.data;
             },
             rndStr(len) {
-                let text = " "
+                let text = ""
                 let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
                 for (let i = 0; i < len; i++) {
