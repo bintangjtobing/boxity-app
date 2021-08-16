@@ -29,6 +29,7 @@ use App\jobvacancy;
 use App\Mail\AddComment;
 use App\Mail\addCommentToCreator;
 use App\Mail\addUser;
+use App\Mail\addCustomer;
 use App\Mail\closedIssue;
 use App\Mail\confirmUpdateIssue;
 use App\Mail\confirmUpdateProfile;
@@ -1249,6 +1250,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $customer->save();
+        Mail::to($customer->email)->send(new addCustomer($customer));
         return response()->json($customer, 201);
     }
     public function countCustomers()
@@ -1704,16 +1706,16 @@ class apiController extends Controller
     {
         $data = [];
         if (isset($req->fromDate) && isset($req->toDate)) {
-            $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+            $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
         else {
-            $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get(); 
+            $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
-        
+
         foreach ($data as $elm) {
             $elm->itemNumber = $elm->detailItemIn['pi_number'] ?? $elm->detailItemOut['si_number'];
         }
-        
+
         return response()->json($data);
     }
     public function sumQtyInHistoryItem($id)
