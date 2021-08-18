@@ -30,73 +30,73 @@
                             </div>
                         </div>
                         <div v-show="isShow.colapse">
-                        <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Item name:</span>
-                                    <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                        class="form-control form-control-default">
-                                        <option value="" disabled>Select item:</option>
-                                        <option v-for="items in items" :key="items.id" :value="items.id">
-                                            {{items.item_name}}</option>
-                                    </select>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Item name:</span>
+                                        <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
+                                            class="form-control form-control-default">
+                                            <option value="" disabled>Select item:</option>
+                                            <option v-for="items in items" :key="items.id" :value="items.id">
+                                                {{items.item_name}}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Quantity:</span>
-                                    <input type="number" v-model="itemAdd.qtyReturns" @change="onAddQtyInc"
-                                        @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                        class="form-control">
+                            <div class="form-row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity:</span>
+                                        <input type="number" v-model="itemAdd.qtyReturns" @change="onAddQtyInc"
+                                            @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Unit:</span>
+                                        <input type="text" v-model="itemAdd.unit" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Price:</span>
+                                        <input type="number" v-model="itemAdd.currentPrice" @change="onAddPriceChange"
+                                            @input="onAddPriceChange" class="form-control" min="0" max="9999999"
+                                            step="250" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Line total:</span>
+                                        <input type="number" v-model="itemAdd.price" class="form-control" min="0.00"
+                                            max="10000.00" step="0.01" readonly />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Unit:</span>
-                                    <input type="text" v-model="itemAdd.unit" id="" class="form-control" readonly>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Purpose:</span>
+                                        <input type="text" v-model="itemAdd.purpose" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Remarks:</span>
+                                        <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
+                                            rows="2"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Price:</span>
-                                    <input type="number" v-model="itemAdd.currentPrice" @change="onAddPriceChange"
-                                        @input="onAddPriceChange" class="form-control" min="0" max="9999999"
-                                        step="250" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Line total:</span>
-                                    <input type="number" v-model="itemAdd.price" class="form-control" min="0.00"
-                                        max="10000.00" step="0.01" readonly />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Purpose:</span>
-                                    <input type="text" v-model="itemAdd.purpose" id="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Remarks:</span>
-                                    <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
-                                        rows="2"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group my-2">
-                            <div class="row">
-                                <div class="col-12">
-                                    <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                            <div class="form-group my-2">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -118,74 +118,75 @@
                             </div>
                         </div>
                         <div v-show="isShow.colapse">
-                        <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Item name:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="text"
-                                        v-model="itemModify.item_name" id="" class="form-control" readonly>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Item name:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.item_name" id="" class="form-control" readonly>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Quantity:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="number"
-                                        v-model="itemModify.qtyReturns" @change="onModifyQtyInc" @input="onModifyQtyInc"
-                                        placeholder="0" id="" min="0" max="10000" step="1" class="form-control">
+                            <div class="form-row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.qtyReturns" @change="onModifyQtyInc"
+                                            @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Unit:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.unit" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Price:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.currentPrice" @change="onModifyPriceChange"
+                                            @input="onModifyPriceChange" class="form-control" min="0" max="9999999"
+                                            step="250" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Line total:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="number"
+                                            v-model="itemModify.price" class="form-control" min="0.00" max="10000.00"
+                                            step="0.01" readonly />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Unit:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="text" v-model="itemModify.unit"
-                                        id="" class="form-control" readonly>
+                            <div class="form-row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Purpose:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.purpose" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>Remarks:</span>
+                                        <textarea v-bind:disabled="checkedItem === false" v-model="itemModify.remarks"
+                                            class="form-control" id="" cols="30" rows="2"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Price:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="number"
-                                        v-model="itemModify.currentPrice" @change="onModifyPriceChange"
-                                        @input="onModifyPriceChange" class="form-control" min="0" max="9999999"
-                                        step="250" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Line total:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="number"
-                                        v-model="itemModify.price" class="form-control" min="0.00" max="10000.00"
-                                        step="0.01" readonly />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Purpose:</span>
-                                    <input v-bind:disabled="checkedItem === false" type="text"
-                                        v-model="itemModify.purpose" id="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Remarks:</span>
-                                    <textarea v-bind:disabled="checkedItem === false" v-model="itemModify.remarks"
-                                        class="form-control" id="" cols="30" rows="2"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group my-2">
-                            <div class="row">
-                                <div class="col-12">
-                                    <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                            <div class="form-group my-2">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
                                                 px-30" v-bind:disabled="checkedItem === false">Update item
-                                        list</button>
+                                            list</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -278,7 +279,7 @@
                                     </div>
                                 </div>
                                 <div class="col-7 text-right">
-                                    <a :href="`/report/purchase/return/${purchaseReturnData.id}`" class="btn btn-secondary float-right btn-warning btn-squared
+                                    <a :href="`/report/purchase/return/${purchaseReturnData.pr_number}`" class="btn btn-secondary float-right btn-warning btn-squared
                                                 px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
                                     <button v-bind:disabled="checkedPR === false" v-on:click="submitHandle"
                                         v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared

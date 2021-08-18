@@ -339,7 +339,7 @@
                                 </div>
                             </div>
                             <div class="col-7 text-right">
-                                <a :href="`/report/purchase/request/${purchaseRequestData.id}`" class="btn btn-secondary float-right btn-warning btn-squared
+                                <a :href="`/report/purchase/request/${purchaseRequestData.pre_number}`" class="btn btn-secondary float-right btn-warning btn-squared
                                                 px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
                                 <button v-bind:disabled="checkedPRE === false" v-on:click="submitHandle"
                                     v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
