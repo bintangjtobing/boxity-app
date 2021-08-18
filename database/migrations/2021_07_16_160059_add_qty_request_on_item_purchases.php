@@ -14,7 +14,6 @@ class AddQtyRequestOnItemPurchases extends Migration
     public function up()
     {
         Schema::table('items_purchases', function (Blueprint $table) {
-            $table->integer('qtyRequested')->default(0)->after('qtyShipped');
             $table->integer('qtyReturns')->default(0)->after('qtyRequested');;
         });
     }
