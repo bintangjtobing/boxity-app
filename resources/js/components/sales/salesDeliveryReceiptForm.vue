@@ -161,12 +161,14 @@
                                 <v-data-table :search="search" :loading="itemDeliveryData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemDeliveryData" :items-per-page="10" class="elevation-1">
-                                    <template  v-slot:item.item.si_number="{item}">
+                                    <template v-slot:item.item.si_number="{item}">
                                         <section v-if="item.si_number">
-                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip" data-bs-placement="top" :title="'Sales Invoice: '+item.si_number" ></i>  
+                                            <i class="fas fa-file-invoice-dollar text-primary" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" :title="'Sales Invoice: '+item.si_number"></i>
                                         </section>
                                         <section v-else>
-                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Manual Input"></i>
+                                            <i class="fas fa-file-alt text-success" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Manual Input"></i>
                                         </section>
                                     </template>
                                     <template v-slot:item.actions="{item}">
@@ -260,7 +262,7 @@
                                     </div>
                                 </div>
                                 <div class="col-7 text-right">
-                                    <a :href="`/report/delivery/receipt/${deliveryReceiptData.id}`" class="btn btn-secondary float-right btn-warning btn-squared
+                                    <a :href="`/report/delivery/receipt/${deliveryReceiptData.sdr_number}`" class="btn btn-secondary float-right btn-warning btn-squared
                                                 px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
                                     <button v-bind:disabled="checkedPI === false" v-on:click="submitHandle"
                                         v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
