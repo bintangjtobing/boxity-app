@@ -66,7 +66,7 @@ class apiController extends Controller
     {
         return response()->json(User::orderBy('name', 'asc')->get());
     }
-    public function deleteUser($id)
+    public function deleteUser($id, Request $request)
     {
         $getUser = User::find($id);
         $getUser->status = '2';
@@ -1281,7 +1281,7 @@ class apiController extends Controller
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Edit/update customer ' . $customer->id . ' on user management.';
+        $saveLogs->notes = 'Edit/update customer ' . $user->id . ' on user management.';
         $saveLogs->save();
 
         $user->save();
@@ -1707,8 +1707,7 @@ class apiController extends Controller
         $data = [];
         if (isset($req->fromDate) && isset($req->toDate)) {
             $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
-        }
-        else {
+        } else {
             $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
 
