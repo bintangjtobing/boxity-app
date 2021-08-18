@@ -19,9 +19,9 @@ class CreateItemSalesTable extends Migration
             $table->string('item_code')->index('item_code');
 
             // For general
-            $table->integer('qtyOrdered')->nullable();
-            $table->integer('qtyShipped')->nullable();
-            $table->integer('qtyReturns')->nullable();
+            $table->integer('qtyOrdered')->default(0)->nullable();
+            $table->integer('qtyShipped')->default(0)->nullable();
+            $table->integer('qtyReturns')->default(0)->nullable();
             $table->string('unit')->nullable();
             $table->string('price')->nullable();
             $table->string('purpose')->nullable();
