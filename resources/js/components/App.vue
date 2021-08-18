@@ -51,11 +51,11 @@
                                                 <li>
                                                     <router-link
                                                         :to="{ name: 'userProfileEdit', params: { username:user.username }}">
-                                                        <i data-feather="user"></i> Profile</router-link>
+                                                        <i class="fad fa-user-cog"></i> Profile</router-link>
                                                 </li>
                                                 <li>
                                                     <router-link to="/settings">
-                                                        <i data-feather="settings"></i> Settings</router-link>
+                                                        <i class="fad fa-cog"></i> Settings</router-link>
                                                 </li>
                                             </ul>
                                             <a v-on:click="signOutConfirm" class="nav-author__signout">
@@ -108,11 +108,11 @@
                                         <li>
                                             <router-link
                                                 :to="{ name: 'userProfileEdit', params: { username:user.username }}">
-                                                <i data-feather="user"></i> Profile</router-link>
+                                                <i class="fad fa-user-cog"></i> Profile</router-link>
                                         </li>
                                         <li>
                                             <router-link to="/settings">
-                                                <i data-feather="settings"></i> Settings</router-link>
+                                                <i class="fad fa-cog"></i> Settings</router-link>
                                         </li>
                                     </ul>
                                     <a v-on:click="signOutConfirm" class="nav-author__signout">
