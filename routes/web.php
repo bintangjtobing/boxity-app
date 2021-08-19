@@ -51,6 +51,9 @@ Route::get('/sign-out', function (Request $request) {
     Session::regenerate();
     return redirect('/tools');
 });
+Route::get('/21anniversary', function () {
+    return Redirect::to('https://infinitysolutions.co.id/assets/21anniversaryBTSA.mp4');
+});
 
 // Social Media Redirect
 Route::get('/facebook', function () {
