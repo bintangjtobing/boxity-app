@@ -318,7 +318,7 @@ class purchasingController extends Controller
             ];
             array_push($item, $data);
         }
-        if ($purchaseInvoice->warehouse == null) {
+        if ($purchaseInvoice->suppliers == null && $purchaseInvoice->warehouse == null) {
             $data = [
                 "companyName" => $company->company_name,
                 "companyAddress" => $company->address,
@@ -326,11 +326,11 @@ class purchasingController extends Controller
                 "companyEmail" => $company->email,
                 "warehouseName" => $customer->customerName,
                 "warehouseAddress" => $customer->customerAddress,
-                "supplierName" => $purchaseInvoice->suppliers->customerName,
-                "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
-                "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
-                "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
-                "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
+                "supplierName" => $customer->customerName,
+                "supplierAddress" => $customer->customerAddress,
+                "supplierNPWP" => $customer->customerNPWP,
+                "supplierEmail" => $customer->customerEmail,
+                "supplierPhone" => $customer->customerPhone,
                 "poNumber" => $purchaseInvoice->pi_number,
                 "orderDate" => $purchaseInvoice->invoice_date,
                 "remark" => $purchaseInvoice->remarks,
@@ -358,7 +358,7 @@ class purchasingController extends Controller
                 "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
                 "image" => $company->logoblack,
             ];
-        } else if ($purchaseInvoice->suppliers == null && $purchaseInvoice->warehouse == null) {
+        } else if ($purchaseInvoice->warehouse == null) {
             $data = [
                 "companyName" => $company->company_name,
                 "companyAddress" => $company->address,
@@ -366,11 +366,11 @@ class purchasingController extends Controller
                 "companyEmail" => $company->email,
                 "warehouseName" => $customer->customerName,
                 "warehouseAddress" => $customer->customerAddress,
-                "supplierName" => $customer->customerName,
-                "supplierAddress" => $customer->customerAddress,
-                "supplierNPWP" => $customer->customerNPWP,
-                "supplierEmail" => $customer->customerEmail,
-                "supplierPhone" => $customer->customerPhone,
+                "supplierName" => $purchaseInvoice->suppliers->customerName,
+                "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
+                "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
+                "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
+                "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
                 "poNumber" => $purchaseInvoice->pi_number,
                 "orderDate" => $purchaseInvoice->invoice_date,
                 "remark" => $purchaseInvoice->remarks,
