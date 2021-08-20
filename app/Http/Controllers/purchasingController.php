@@ -402,8 +402,8 @@ class purchasingController extends Controller
 
 
         $pdf = PDF::loadView('report.purchaseInvoice', $data)->setPaper('a4', 'potrait');
-        return $pdf->stream();
-        // return $customer;
+        // return $pdf->stream();
+        return $customer;
     }
 
     // PURCHASE REQUEST
