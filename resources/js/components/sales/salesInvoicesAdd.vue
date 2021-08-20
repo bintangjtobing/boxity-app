@@ -51,7 +51,7 @@ n<template>
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
+                                        <span>Qty Delivery Out:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -129,7 +129,7 @@ n<template>
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
+                                        <span>Qty Delivery Out:</span>
                                         <input type="number" v-model="itemModify.qtyShipped" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">

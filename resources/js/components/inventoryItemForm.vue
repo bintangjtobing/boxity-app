@@ -202,12 +202,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-1 align-self-center mt-2">
-                                                        <button v-on:click="searchData"
-                                                            v-on:keyup.enter="searchData"
+                                                        <button v-on:click="searchData" v-on:keyup.enter="searchData"
                                                             class="btn btn-success btn-sm">Search</button>
                                                     </div>
                                                     <div class="col-lg-1 align-self-center mt-2">
-                                                        <a :href="`/api/report/item-history/${$route.params.id}?from=${range.fromDate}&until=${range.toDate}`" class="btn btn-warning btn-sm" target="_blank">Print</a>
+                                                        <a :href="`/api/report/item-history/${$route.params.id}?from=${range.fromDate}&until=${range.toDate}`"
+                                                            class="btn btn-warning btn-sm" target="_blank">Print</a>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
@@ -258,8 +258,10 @@
                                                                         <v-data-table loading
                                                                             loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
-                                                                            multi-sort :items="historyItem"
-                                                                            :items-per-page="10" class="elevation-1">
+                                                                            multi-sort :sort-by="
+                                                                            invoiceDate" :sort-desc="false"
+                                                                            :items="historyItem" :items-per-page="10"
+                                                                            class="elevation-1">
                                                                             <template
                                                                                 v-slot:[`item.itemNumber`]="{item}">
                                                                                 <div v-if="item.type===1">
@@ -332,8 +334,8 @@
                     text: 'Document Type',
                     value: 'type'
                 }, {
-                    text: 'Date',
-                    value: 'date'
+                    text: 'Invoice Date',
+                    value: 'invoiceDate'
                 }, {
                     text: 'Qty In',
                     value: 'qtyIn'

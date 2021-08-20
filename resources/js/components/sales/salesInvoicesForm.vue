@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
                             <div class="col-lg-6">
-                                <h5>Items</h5>
+                                <h5>Add Items</h5>
                                 <p class="muted-text">{{ titleItemDescription }}</p>
                             </div>
                             <div class="col-lg-6 text-right">
@@ -46,7 +46,7 @@
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
+                                        <span>Qty Delivery Out:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" @change="onAddQtyInc"
                                             @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -124,7 +124,7 @@
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
+                                        <span>Qty Delivery Out:</span>
                                         <input v-bind:disabled="checkedItem === false" type="number"
                                             v-model="itemModify.qtyShipped" @change="onModifyQtyInc"
                                             @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
@@ -195,12 +195,12 @@
                                 <v-data-table :search="search" :loading="itemSalesingData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemSalesingData" :items-per-page="10" class="elevation-1">
-                                    <template v-slot:item.actions="{item}">
+                                    <!-- <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemSalesing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
                                         <a v-on:click="deleteItemSalesing(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
-                                    </template>
+                                    </template> -->
                                 </v-data-table>
                             </div>
                         </div>
@@ -303,15 +303,15 @@
         data() {
             return {
                 isShow: {
-                    colapse: true,
+                    colapse: false,
                 },
                 updateOnly: true,
                 checkedSI: false,
                 checkedItem: false,
                 // Page Info
                 titleItemDescription: 'Items on this Sales Invoice',
-                isVisibleAddForm: true,
-                isVisibleModifyForm: false,
+                isVisibleAddForm: false,
+                isVisibleModifyForm: true,
 
                 itemModify: {
                     itemid: '',
@@ -361,13 +361,14 @@
                     {
                         text: 'Unit',
                         value: 'unit'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        align: 'right',
-                        filterable: false,
-                        sortable: false
-                    }
+                    },
+                    // {
+                    //     text: 'Actions',
+                    //     value: 'actions',
+                    //     align: 'right',
+                    //     filterable: false,
+                    //     sortable: false
+                    // }
                 ],
                 countItems: '0',
             }
