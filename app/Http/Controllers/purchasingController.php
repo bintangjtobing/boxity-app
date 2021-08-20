@@ -297,115 +297,120 @@ class purchasingController extends Controller
             ->count();
         return response()->json($ItemCount);
     }
+    public function customersConnected()
+    {
+        if (Auth::user()->role == 'customer') {
+            return User::find(Auth::id());
+        } else {
+            return User::find(Auth::id());
+        }
+    }
     public function reportPI($pi_number)
     {
         $company = company_details::first();
-        if (Auth::user()->role == 'customer') {
-            $customer = Auth::id();
-        } else {
-            $customer = Auth::id();
+        $customer = $this->customersConnected();
+        $purchaseInvoice = purchaseInvoice::where('pi_number', $pi_number)->with('suppliers', 'warehouse')->first();
+        $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseInvoice->pi_number)->with('item')->get();
+
+
+        $item = [];
+        foreach ($itemPurchasing as $x) {
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
         }
-        // $purchaseInvoice = purchaseInvoice::where('pi_number', $pi_number)->with('suppliers', 'warehouse')->first();
-        // $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseInvoice->pi_number)->with('item')->get();
-
-        // $item = [];
-        // foreach ($itemPurchasing as $x) {
-        //     $data = [
-        //         "name" => $x->item->item_name,
-        //         "price" => $x->price,
-        //         "qty" => $x->qtyOrdered,
-        //         "remark" => $x->remarks,
-        //         "unit" => $x->unit,
-        //         "priceAmount" => $x->price * $x->qtyOrdered
-        //     ];
-        //     array_push($item, $data);
-        // }
-        // if ($purchaseInvoice->suppliers == null && $purchaseInvoice->warehouse == null) {
-        //     $data = [
-        //         "companyName" => $company->company_name,
-        //         "companyAddress" => $company->address,
-        //         "companyPhone" => $company->phone,
-        //         "companyEmail" => $company->email,
-        //         "warehouseName" => $customer->customerName,
-        //         "warehouseAddress" => $customer->customerAddress,
-        //         "supplierName" => $customer->customerName,
-        //         "supplierAddress" => $customer->customerAddress,
-        //         "supplierNPWP" => $customer->customerNPWP,
-        //         "supplierEmail" => $customer->customerEmail,
-        //         "supplierPhone" => $customer->customerPhone,
-        //         "poNumber" => $purchaseInvoice->pi_number,
-        //         "orderDate" => $purchaseInvoice->invoice_date,
-        //         "remark" => $purchaseInvoice->remarks,
-        //         "items" => $item,
-        //         "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
-        //         "image" => $company->logoblack,
-        //     ];
-        // } else if ($purchaseInvoice->suppliers == null) {
-        //     $data = [
-        //         "companyName" => $company->company_name,
-        //         "companyAddress" => $company->address,
-        //         "companyPhone" => $company->phone,
-        //         "companyEmail" => $company->email,
-        //         "warehouseName" => $purchaseInvoice->warehouse->warehouse_name,
-        //         "warehouseAddress" => $purchaseInvoice->warehouse->address,
-        //         "supplierName" => $customer->customerName,
-        //         "supplierAddress" => $customer->customerAddress,
-        //         "supplierNPWP" => $customer->customerNPWP,
-        //         "supplierEmail" => $customer->customerEmail,
-        //         "supplierPhone" => $customer->customerPhone,
-        //         "poNumber" => $purchaseInvoice->pi_number,
-        //         "orderDate" => $purchaseInvoice->invoice_date,
-        //         "remark" => $purchaseInvoice->remarks,
-        //         "items" => $item,
-        //         "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
-        //         "image" => $company->logoblack,
-        //     ];
-        // } else if ($purchaseInvoice->warehouse == null) {
-        //     $data = [
-        //         "companyName" => $company->company_name,
-        //         "companyAddress" => $company->address,
-        //         "companyPhone" => $company->phone,
-        //         "companyEmail" => $company->email,
-        //         "warehouseName" => $customer->customerName,
-        //         "warehouseAddress" => $customer->customerAddress,
-        //         "supplierName" => $purchaseInvoice->suppliers->customerName,
-        //         "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
-        //         "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
-        //         "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
-        //         "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
-        //         "poNumber" => $purchaseInvoice->pi_number,
-        //         "orderDate" => $purchaseInvoice->invoice_date,
-        //         "remark" => $purchaseInvoice->remarks,
-        //         "items" => $item,
-        //         "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
-        //         "image" => $company->logoblack,
-        //     ];
-        // } else {
-        //     $data = [
-        //         "companyName" => $company->company_name,
-        //         "companyAddress" => $company->address,
-        //         "companyPhone" => $company->phone,
-        //         "companyEmail" => $company->email,
-        //         "warehouseName" => $purchaseInvoice->warehouse->warehouse_name,
-        //         "warehouseAddress" => $purchaseInvoice->warehouse->address,
-        //         "supplierName" => $purchaseInvoice->suppliers->customerName,
-        //         "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
-        //         "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
-        //         "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
-        //         "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
-        //         "poNumber" => $purchaseInvoice->pi_number,
-        //         "orderDate" => $purchaseInvoice->invoice_date,
-        //         "remark" => $purchaseInvoice->remarks,
-        //         "items" => $item,
-        //         "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
-        //         "image" => $company->logoblack,
-        //     ];
-        // }
+        if ($purchaseInvoice->suppliers == null && $purchaseInvoice->warehouse == null) {
+            $data = [
+                "companyName" => $company->company_name,
+                "companyAddress" => $company->address,
+                "companyPhone" => $company->phone,
+                "companyEmail" => $company->email,
+                "warehouseName" => $customer->customerName,
+                "warehouseAddress" => $customer->customerAddress,
+                "supplierName" => $customer->customerName,
+                "supplierAddress" => $customer->customerAddress,
+                "supplierNPWP" => $customer->customerNPWP,
+                "supplierEmail" => $customer->customerEmail,
+                "supplierPhone" => $customer->customerPhone,
+                "poNumber" => $purchaseInvoice->pi_number,
+                "orderDate" => $purchaseInvoice->invoice_date,
+                "remark" => $purchaseInvoice->remarks,
+                "items" => $item,
+                "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
+                "image" => $company->logoblack,
+            ];
+        } else if ($purchaseInvoice->suppliers == null) {
+            $data = [
+                "companyName" => $company->company_name,
+                "companyAddress" => $company->address,
+                "companyPhone" => $company->phone,
+                "companyEmail" => $company->email,
+                "warehouseName" => $purchaseInvoice->warehouse->warehouse_name,
+                "warehouseAddress" => $purchaseInvoice->warehouse->address,
+                "supplierName" => $customer->customerName,
+                "supplierAddress" => $customer->customerAddress,
+                "supplierNPWP" => $customer->customerNPWP,
+                "supplierEmail" => $customer->customerEmail,
+                "supplierPhone" => $customer->customerPhone,
+                "poNumber" => $purchaseInvoice->pi_number,
+                "orderDate" => $purchaseInvoice->invoice_date,
+                "remark" => $purchaseInvoice->remarks,
+                "items" => $item,
+                "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
+                "image" => $company->logoblack,
+            ];
+        } else if ($purchaseInvoice->warehouse == null) {
+            $data = [
+                "companyName" => $company->company_name,
+                "companyAddress" => $company->address,
+                "companyPhone" => $company->phone,
+                "companyEmail" => $company->email,
+                "warehouseName" => $customer->customerName,
+                "warehouseAddress" => $customer->customerAddress,
+                "supplierName" => $purchaseInvoice->suppliers->customerName,
+                "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
+                "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
+                "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
+                "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
+                "poNumber" => $purchaseInvoice->pi_number,
+                "orderDate" => $purchaseInvoice->invoice_date,
+                "remark" => $purchaseInvoice->remarks,
+                "items" => $item,
+                "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
+                "image" => $company->logoblack,
+            ];
+        } else {
+            $data = [
+                "companyName" => $company->company_name,
+                "companyAddress" => $company->address,
+                "companyPhone" => $company->phone,
+                "companyEmail" => $company->email,
+                "warehouseName" => $purchaseInvoice->warehouse->warehouse_name,
+                "warehouseAddress" => $purchaseInvoice->warehouse->address,
+                "supplierName" => $purchaseInvoice->suppliers->customerName,
+                "supplierAddress" => $purchaseInvoice->suppliers->customerAddress,
+                "supplierNPWP" => $purchaseInvoice->suppliers->customerNPWP,
+                "supplierEmail" => $purchaseInvoice->suppliers->customerEmail,
+                "supplierPhone" => $purchaseInvoice->suppliers->customerPhone,
+                "poNumber" => $purchaseInvoice->pi_number,
+                "orderDate" => $purchaseInvoice->invoice_date,
+                "remark" => $purchaseInvoice->remarks,
+                "items" => $item,
+                "qrcode" => base64_encode(QrCode::format('svg')->size(70)->generate(url('/report/purchase/invoices/' . $pi_number))),
+                "image" => $company->logoblack,
+            ];
+        }
 
 
-        // $pdf = PDF::loadView('report.purchaseInvoice', $data)->setPaper('a4', 'potrait');
-        // return $pdf->stream();
-        return $customer;
+        $pdf = PDF::loadView('report.purchaseInvoice', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $customer;
     }
 
     // PURCHASE REQUEST
