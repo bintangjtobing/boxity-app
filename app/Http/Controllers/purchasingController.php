@@ -301,7 +301,7 @@ class purchasingController extends Controller
     {
         $company = company_details::first();
         if (Auth::user()->role == 'customer') {
-            $customer = User::find(Auth::id())->first();
+            $customer = Auth::id();
         }
         $purchaseInvoice = purchaseInvoice::where('pi_number', $pi_number)->with('suppliers', 'warehouse')->first();
         $itemPurchasing = itemsPurchase::where('purchasingId', $purchaseInvoice->pi_number)->with('item')->get();
