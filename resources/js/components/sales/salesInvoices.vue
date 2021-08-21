@@ -21,7 +21,7 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" :loading="salesInvoiceData.length" multi-sort
+                                <v-data-table :headers="headers" multi-sort
                                     :items="salesInvoiceData" :items-per-page="10" class="elevation-1"
                                     group-by="customers.customerName">
                                     <template v-slot:item.actions="{item}">

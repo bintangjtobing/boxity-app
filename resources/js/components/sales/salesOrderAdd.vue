@@ -78,9 +78,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
-                                        <span v-show="isShow.qtyItem" id="qtyItem">{{
-                      "(Quantity Item = " + qtyItem + ")"
-                    }}</span>
+                                        <span v-show="isShow.qtyItem" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemAdd.qtyOrdered" @input="onQtyInc"
                                             placeholder="" id="" min="0" max="10000" step="1" class="form-control"
                                             required :disabled="isDisable.input" />
