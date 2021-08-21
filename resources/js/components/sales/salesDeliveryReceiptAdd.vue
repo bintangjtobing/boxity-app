@@ -527,7 +527,7 @@
                         siNumber.push(elm.si_number)
                     }
                 });
-                const salesInvoice = await axios.get('/api/sales/invoice', {
+                const salesInvoice = await axios.get('/api/sales/invoices', {
                     params: {
                         feature: 'deliveryReceipt',
                         si_number: siNumber
