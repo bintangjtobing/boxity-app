@@ -318,10 +318,10 @@ class purchasingController extends Controller
             $data = [
                 "name" => $x->item->item_name,
                 "price" => $x->price,
-                "qty" => $x->qtyOrdered,
+                "qty" => $x->qtyShipped,
                 "remark" => $x->remarks,
                 "unit" => $x->unit,
-                "priceAmount" => $x->price * $x->qtyOrdered
+                "priceAmount" => $x->price * $x->qtyShipped
             ];
             array_push($item, $data);
         }
