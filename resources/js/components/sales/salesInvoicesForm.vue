@@ -34,25 +34,34 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
+                                        <selectSearch v-model="selected.item" v-bind="{
+                                            datas: items,
+                                            width: '100%' ,
+                                            name: 'item_name',
+                                            group: 'item_code',
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelected"/>
+                                        <!-- <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
                                             class="form-control form-control-default">
                                             <option value="" disabled>Select item:</option>
                                             <option v-for="items in items" :key="items.id" :value="items.id">
                                                 {{items.item_name}}</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
+                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" @change="onAddQtyInc"
                                             @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
+                                        <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
                                         <input type="text" v-model="itemAdd.unit" id="" class="form-control" readonly>
@@ -122,16 +131,18 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
+                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input v-bind:disabled="checkedItem === false" type="number"
                                             v-model="itemModify.qtyShipped" @change="onModifyQtyInc"
                                             @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
+                                        <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
                                         <input v-bind:disabled="checkedItem === false" type="text"
@@ -192,7 +203,7 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" :loading="itemSalesingData.length"
+                                <v-data-table :search="search"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemSalesingData" :items-per-page="10" class="elevation-1">
                                     <!-- <template v-slot:item.actions="{item}">
@@ -293,9 +304,11 @@
 <script>
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
+    import SelectSearch from "../item/selectSearch.vue";
     export default {
         components: {
-            'editor': Editor
+            'editor': Editor,
+            'selectSearch': SelectSearch,
         },
         title() {
             return `Sales Invoice`;
@@ -304,6 +317,10 @@
             return {
                 isShow: {
                     colapse: false,
+                    qty: false
+                },
+                selected:{
+                    item: ""
                 },
                 updateOnly: true,
                 checkedSI: false,
@@ -344,6 +361,7 @@
                 itemSalesingData: [],
                 search: '',
                 key: 1,
+                qtyItem: null,
                 headers: [{
                         text: 'Item Code',
                         value: 'item.item_code'
@@ -391,24 +409,23 @@
             },
             // on CHange Attribute
             async onItemSelected(event) {
-                const getId = event.target.value;
-                this.$Progress.start();
-                const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
-                this.itemAdd.itemid = getItemDataSelected.data.id;
-                this.$Progress.finish();
                 this.itemAdd = {
-                    unit: getItemDataSelected.data.unit,
-                    currentPrice: getItemDataSelected.data.price,
-                    itemid: getItemDataSelected.data.id,
+                    unit: event.unit,
+                    currentPrice: event.price,
+                    itemid: event.id,
                 }
+                this.selected.item = `${event.item_code} - ${event.item_name}`;
+                this.qtyItem = event.qty
             },
             onModifyQtyInc() {
+                this.isShow.qty = this.itemAdd.qtyShipped > this.qtyItem ? true : false;
                 this.itemModify.price = parseInt(this.itemModify.qtyShipped) * parseInt(this.itemModify.currentPrice);
             },
             onModifyPriceChange() {
                 this.itemModify.price = parseInt(this.itemModify.qtyShipped) * parseInt(this.itemModify.currentPrice);
             },
             onAddQtyInc() {
+                this.isShow.qty = this.itemAdd.qtyShipped > this.qtyItem ? true : false;
                 this.itemAdd.price = parseInt(this.itemAdd.qtyShipped) * parseInt(this.itemAdd.currentPrice);
             },
             onAddPriceChange() {
@@ -553,6 +570,14 @@
     .rotate {
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
+    }
+    
+    #qtyItem {
+        color: #ebdc31;
+    }
+    
+    #qty {
+        color: #f44444;
     }
 
 </style>
