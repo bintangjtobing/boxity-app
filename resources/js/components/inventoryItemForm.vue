@@ -259,7 +259,7 @@
                                                                             loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
                                                                             multi-sort :sort-by="
-                                                                            invoiceDate" :sort-desc="false"
+                                                                            invoiceDate" :sort-desc="true"
                                                                             :items="historyItem" :items-per-page="10"
                                                                             class="elevation-1">
                                                                             <template
