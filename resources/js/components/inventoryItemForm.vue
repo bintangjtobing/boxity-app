@@ -258,8 +258,8 @@
                                                                         <v-data-table loading
                                                                             loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
-                                                                            multi-sort :sort-by="
-                                                                            invoiceDate" :sort-desc="true"
+                                                                            multi-sort :sort-by.sync="
+                                                                            sortBy" :sort-desc.sync="sortDesc"
                                                                             :items="historyItem" :items-per-page="10"
                                                                             class="elevation-1">
                                                                             <template
@@ -325,6 +325,8 @@
 
                 // datatable
                 search: '',
+                sortBy: 'invoiceDate',
+                sortDesc: 'false',
                 key: 1,
                 historyItem: [],
                 headers: [{
