@@ -28,4 +28,7 @@ class itemHistory extends Model
     {
         return $this->belongsTo(salesInvoice::class, 'itemOutId', 'si_number');
     }
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+    ];
 }

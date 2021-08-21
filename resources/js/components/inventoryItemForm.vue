@@ -325,8 +325,8 @@
 
                 // datatable
                 search: '',
-                sortBy: 'invoiceDate',
-                sortDesc: 'false',
+                sortBy: ['invoiceDate', 'created_at'],
+                sortDesc: ['false', 'true'],
                 key: 1,
                 historyItem: [],
                 headers: [{
@@ -338,6 +338,9 @@
                 }, {
                     text: 'Invoice Date',
                     value: 'invoiceDate'
+                }, {
+                    text: 'Created Date',
+                    value: 'created_at'
                 }, {
                     text: 'Qty In',
                     value: 'qtyIn'
