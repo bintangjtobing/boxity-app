@@ -54,6 +54,8 @@ use App\documentsDelivery;
 use App\itemOndocumentsDelivery;
 use App\Mail\newDocumentDelivery;
 use App\itemsSales;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\approveIssueNotification;
 use Mail;
 use PDF;
 
@@ -374,6 +376,9 @@ class apiController extends Controller
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
+
+        // sendToTelegram
+        $issues->notify(new approveIssueNotification($issues));
 
         return response()->json($issues, 201);
         // return response()->json($issues);
