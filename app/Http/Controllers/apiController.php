@@ -378,7 +378,9 @@ class apiController extends Controller
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
 
         // sendToTelegram
-        $issues->notify(new approveIssueNotification($issues));
+        if ($issues->assigne->telegram_id) {
+            $issues->notify(new approveIssueNotification($issues));
+        }
 
         return response()->json($issues, 201);
         // return response()->json($issues);
