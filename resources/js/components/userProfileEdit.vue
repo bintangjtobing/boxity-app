@@ -47,14 +47,14 @@
                                                 <div class="form-row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="name1">name</label>
+                                                            <span for="name1">name</span>
                                                             <input type="text" class="form-control" id="name1"
                                                                 v-model="user.name">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label for="name1">username</label>
+                                                            <span for="name1">username</span>
                                                             <input type="text" class="form-control"
                                                                 v-model="user.username">
                                                         </div>
@@ -63,7 +63,7 @@
                                                 <div class="form-row">
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
-                                                            <label for="name2">Email</label>
+                                                            <span for="name2">Email</span>
                                                             <input type="email" class="form-control" id="name2"
                                                                 v-model="user.email" readonly>
                                                             <span><i>Request to IT for changes an email
@@ -72,14 +72,14 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
-                                                            <label for="name2">Mobile phone</label>
+                                                            <span for="name2">Mobile phone</span>
                                                             <input type="number" class="form-control"
                                                                 v-model="user.phone">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2">
                                                         <div class="form-group">
-                                                            <label for="">Gender</label>
+                                                            <span for="">Gender</span>
                                                             <select v-model="user.gender" id=""
                                                                 class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select">
                                                                 <option :value="`M`">Male</option>
@@ -90,9 +90,9 @@
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <div class="cityOption">
-                                                                <label>
+                                                                <span>
                                                                     Birth
-                                                                </label>
+                                                                </span>
                                                                 <input type="date" class="form-control"
                                                                     v-model="user.birth">
                                                             </div>
@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Bio</label>
+                                                    <span for="">Bio</span>
                                                     <textarea v-model="user.bio" id="" cols="30" rows="4"
                                                         class="form-control"
                                                         placeholder="Tell about yourself. Or you can add bio like your instagram account..."></textarea>
@@ -149,6 +149,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="my-3">
+                                                    <h3>Notifier:</h3>
+                                                    <div class="form-row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <span for="name1">Telegram ID:</span>
+                                                                <input type="text" class="form-control" id="name1"
+                                                                    v-model="user.telegram_id">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="button-group d-flex pt-25 justify-content-start">
                                                     <button type="submit"
                                                         class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2">Update
@@ -171,7 +183,7 @@
                                             <div class="form-row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label for="name1">Old Password</label>
+                                                        <span for="name1">Old Password</span>
                                                         <input type="password" class="form-control" id="oldPassword"
                                                             v-model="user.oldPassword">
                                                         <span class="text-danger error-password">
@@ -182,7 +194,7 @@
                                             <div class="form-row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label for="name1">Password</label>
+                                                        <span for="name1">Password</span>
                                                         <input type="password" class="form-control" id="name1"
                                                             v-model="user.password">
                                                         <span class="text-danger error-password">
@@ -193,7 +205,7 @@
                                             <div class="form-row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label for="name1">Confirm Password</label>
+                                                        <span for="name1">Confirm Password</span>
                                                         <input type="password" class="form-control"
                                                             v-model="user.confirmPassword">
                                                         <span class="text-danger error-password">
@@ -278,6 +290,7 @@
                 data.append('bio', this.user.bio);
                 data.append('facebook', this.user.facebook);
                 data.append('instagram', this.user.instagram);
+                data.append('telegram_id', this.user.telegram_id);
 
                 this.$Progress.start();
                 axios.post('/api/profile/' + this.user.id, data, config).then(response => {
