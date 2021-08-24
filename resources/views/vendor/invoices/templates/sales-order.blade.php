@@ -13,40 +13,53 @@
                 <td style="text-align: left;" id="logo">
                     <img src="{{ $image }}">
                 </td>
-                <td>
-                    <h2>{{ $companyName }}</h2>
-                    <div>{{ $companyAddress }}</div>
-                    <div>{{ $companyPhone }}</div>
-                    <div><a href=<?php echo "mailto:".$companyEmail ?>>{{ $companyEmail }}</a></div>
-                </td>
-                <td id="barcode">
-                    <img src="data:image/png;base64,{!! $qrcode !!}">
+                <td id="title">
+                    <span>SALES ORDER</span>
                 </td>
             </tr>
+        </table>
+        <hr/>
+        <table style="text-align: center !important;">
+            <tr style="font-size: 12px; color: #190902;">
+                <td>Invoice Date</td>
+                <td>Created Date</td>
+                <td>Invoice No.</td>
+            </tr>
+            <tr style="font-size: 15px; font-weight: 700; color: #F95B12;">
+                <td>16-Juni-2021</td>
+                <td>23-Agustus-2021</td>
+                <td>{{ $soNumber }}</td>
+            </tr>
+            <hr/>
         </table>
     </header>
     <main>
         <div id="details" class="clearfix">
             <div id="client">
-                <div class="to">INVOICE TO:</div>
-                <h2>{{ $customerName }}</h2>
-                <div class="address">{{ $customerAddress }}</div>
-                <div class="email"><a href=<?php echo "mailto:".$customerEmail ?>>{{ $customerEmail }}</a></div>
+                <div style="font-size:15px; font-weight:700; color: #F95B12;">DELIVER TO</div>
+                <div style="font-size: 12px; color: #190902;">{{ $customerName }}</div>
+                <div style="font-size: 10px; color: #190902;">{{ $customerAddress }}</div>
+                <br>
+                <div style="font-size: 12px; color: #190902;">021 - 5978 - 9900</div>
+                <div style="font-size: 12px; color: #190902;">{{ $customerEmail }}</div>
             </div>
             <div id="invoice">
-                <h1>{{ $soNumber }}</h1>
-                <div class="date">Order Date: {{ $orderDate }}</div>
-                <!-- <div class="date">Due Date: 30/06/2014</div> -->
+                <div style="font-size:15px; font-weight:700; color: #F95B12;">SUPPLIER</div>
+                <div style="font-size: 12px; color: #190902;">{{ $customerName }}</div>
+                <div style="font-size: 10px; color: #190902;">{{ $customerAddress }}</div>
+                <br>
+                <div style="font-size: 12px; color: #190902;">021 - 5978 - 9900</div>
+                <div style="font-size: 12px; color: #190902;">{{ $customerEmail }}</div>
             </div>
         </div>
         <table border="0" cellspacing="0" cellpadding="0">
             <thead>
-                <tr>
-                    <th class="desc">Description</th>
-                    <th class="price">Price</th>
-                    <th class="qty">Quantity</th>
-                    <th class="price">Unit</th>
-                    <th class="total">Sub Total</th>
+                <tr style="font-size: 15px; font-weight: 700 !important;">
+                    <th style="width: 25%;text-align: left">Item Description</th>
+                    <th style="width: auto;text-align: center">Qty/UOM</th>
+                    <th style="width: 20%;text-align: center">Price</th>
+                    <th style="width: auto; text-align: center">Remarks</th>
+                    <th style="width: 25%">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,14 +67,12 @@
             $i = 0; $total = 0;
             foreach ($items as $item) {
           ?>
-                <tr>
-                    <td class="desc">
-                        {{ $item['name'] }}{{ $item['remark'] }}
-                    </td>
-                    <td class="price">Rp. {{ number_format($item['price'],2) }}</td>
-                    <td class="qty">{{ $item['qty'] }}</td>
-                    <td class="unit">{{ $item['unit'] }}</td>
-                    <td class="total">Rp. {{ number_format($item['priceAmount'],2) }}</td>
+                <tr style="font-size: 12px; color: #190902;">
+                    <td style="width: 25%;text-align: left">{{ $item['name'] }}{{ $item['remark'] }}</td>
+                    <td style="width: auto;text-align: center">{{ $item['qty'] }}</td>
+                    <td style="width: 20%;text-align: center">Rp. {{ number_format($item['price'],2) }}</td>
+                    <td style="width: auto; text-align: center">{{ $item['unit'] }}</td>
+                    <td style="width: 25%;text-align: right">Rp. {{ number_format($item['priceAmount'],2) }}</td>
                 </tr>
                 <?php
               $total = $total+$item['priceAmount'];
@@ -69,21 +80,43 @@
             }
           ?>
             </tbody>
-            <tfoot>
+            <tfoot style="font-size: 12px; color: #190902;">
                 <tr>
-                    <td colspan="4">Total</td>
-                    <td>Rp. {{ number_format($total,2) }}</td>
+                    <td colspan="2" rowspan="3" style="text-align: left !important; vertical-align: top; ">
+                        <div style="font-size:15px; font-weight:700; color: #F95B12; margin: 0 0 7px 0">Payment Method</div>
+                        <div style="font-size: 12px; font-weight:700; color: #190902;">Bank Central Asia</div>
+                        <div style="font-size: 12px; color: #190902;">PT COMPANY TERDETEKSI</div>
+                        <div style="font-size: 12px; color: #190902;">365 123 4567</div>
+                    </td>
+                    <td></td>
+                    <td style="text-align: center !important">Sub Total</td>
+                    <td style="text-align: right !important">Rp. {{ number_format($total,2) }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="text-align: center !important">Tax Vat 10%</td>
+                    <td style="text-align: right !important">Rp. {{ number_format($total,2) }}</td>
+                </tr>
+                <tr style="font-size: 15px; font-weight: 700; color: #F95B12;">
+                    <td></td>
+                    <td style="text-align: center !important">Grand Total</td>
+                    <td style="text-align: right !important">Rp. {{ number_format($total,2) }}</td>
                 </tr>
             </tfoot>
         </table>
-        <div id="notices">
-            <div>Notes:</div>
-            <div class="notice">{{ $remark }}</div>
-        </div>
+        <br>
+        <table id="note">
+            <tr>
+                <td style="width:80% !important; vertical-align: top;">
+                    <div style="font-size:15px; font-weight:700; color: #F95B12;">NOTES</div>
+                    <div style="font-size: 12px; color: #190902;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
+                </td>
+                <td id="barcode">
+                    <img src="data:image/png;base64,{!! $qrcode !!}">
+                </td>
+            </tr>
+        </table>
     </main>
-    <footer>
-        Invoice was created on a computer and is valid without the signature and seal.
-    </footer>
 </body>
 
 </html>
@@ -125,21 +158,15 @@
     body {
         position: relative;
         height: 21cm;
-        margin: 0 auto;
+        /* margin: 0 auto; */
         color: #777;
         background: #FFFFFF;
         font-family: 'Lato', sans-serif;
     }
 
-    #invoice .to,
-    #client .to {
-        margin: 0 0 10px 0;
-    }
-
     header {
         padding: 0 0 10px;
         margin-bottom: 20px;
-        border-bottom: 1px solid #AAAAAA;
     }
 
     header table td {
@@ -161,7 +188,19 @@
     }
 
     #logo img {
-        height: 60px;
+        height: 75px;
+    }
+    
+    #title span {
+        font-size: 32px;
+        font-weight: 700;
+        color: #F95B12;
+    }
+    
+    #subHeader {
+        text-align: center !important;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
     }
 
     #company {
@@ -177,8 +216,6 @@
 
     #client {
         width: 40%;
-        padding-right: 6px;
-        border-right: 6px solid #f35e00;
         float: right;
         text-align: right;
     }
@@ -187,23 +224,6 @@
         width: 100%;
         float: left;
         text-align: left;
-    }
-
-    #client .to {
-        font-size: .85rem;
-        color: #777777;
-    }
-
-    #client .address,
-    #client .email {
-        font-size: .85rem;
-    }
-
-    #company h2,
-    #client h2,
-    #invoice h2 {
-        font-size: 1.2rem;
-        font-weight: bolder;
     }
 
     #invoice .address {
@@ -234,13 +254,7 @@
         border-spacing: 0;
         margin-bottom: 20px;
     }
-
-    table th,
-    table td {
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid #FFFFFF;
-    }
+    
 
     table th {
         white-space: nowrap;
@@ -261,56 +275,38 @@
 
     thead tr {
         background: #f35e00;
-        color: #fff;
+    }
+    
+    main thead th {
+        padding: 13px 20px !important;
+        color: #FFF;
+        text-align:center !important;
+    }
+    
+    main tbody tr:nth-child(odd) {
+        background: #FEDED0;
+    }
+    
+    main tbody tr:nth-child(even) {
+        background: #FDBDA0;
+    }
+    
+    main tbody td {
+        padding: 13px 20px !important;
     }
 
-    tbody {
-        background: rgb(246, 246, 246);
+    main tfoot td {
+        padding: 7px 20px !important;
+    }
+    
+    main #note tr{
+        background: #FFF;
     }
 
-    thead tr th {
-        font-weight: 700;
-        font-size: .90rem;
+    main #note td {
+        text-align: left;
     }
-
-    thead tr .price,
-    thead tr .total {
-        text-align: right;
-    }
-
-    tbody tr .desc {
-        color: #777;
-    }
-
-    tbody tr {
-        color: #777;
-    }
-
-    table tfoot td {
-        padding: 10px 20px;
-        background: #FFFFFF;
-        border-bottom: none;
-        font-size: .90rem;
-        white-space: nowrap;
-        border-top: 1px solid #AAAAAA;
-    }
-
-    table tfoot tr:first-child td {
-        border-top: none;
-    }
-
-    table tfoot tr:last-child td {
-        color: #fff;
-        font-size: .90rem;
-        font-weight: 700;
-        border-top: 1px solid #fff;
-        background: #f35e00;
-    }
-
-    table tfoot tr td:first-child {
-        border: none;
-    }
-
+    
     #notices {
         padding-left: 6px;
         border-left: 6px solid #f35e00;
