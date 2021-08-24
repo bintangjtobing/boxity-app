@@ -54,6 +54,11 @@ use App\documentsDelivery;
 use App\itemOndocumentsDelivery;
 use App\Mail\newDocumentDelivery;
 use App\itemsSales;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\approveIssueNotification;
+use App\Notifications\closedIssueNotify;
+use App\Notifications\updateProfileNotifier;
+use App\Notifications\updateProfileFromAdminNotifier;
 use Mail;
 use PDF;
 
@@ -152,6 +157,7 @@ class apiController extends Controller
 
         $user->save();
         Mail::to($user->email)->send(new addUser($user));
+
         return response()->json($user, 201);
     }
     public function countUsers()
@@ -191,6 +197,12 @@ class apiController extends Controller
 
         $user->save();
         Mail::to($user->email)->send(new confirmUpdateIssue($user));
+
+        // sendToTelegram
+        if ($user->telegram_id) {
+            $user->notify(new updateProfileFromAdminNotifier($user));
+        }
+
         return response()->json($user);
     }
     //
@@ -222,6 +234,11 @@ class apiController extends Controller
         if ($issue->status = '1') {
             $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
             Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
+
+            // sendToTelegram
+            if ($issues->assigne->telegram_id) {
+                $issues->notify(new approveIssueNotification($issues));
+            }
         }
         return response()->json($issue, 201);
     }
@@ -375,6 +392,11 @@ class apiController extends Controller
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
 
+        // sendToTelegram
+        if ($issues->assigne->telegram_id) {
+            $issues->notify(new approveIssueNotification($issues));
+        }
+
         return response()->json($issues, 201);
         // return response()->json($issues);
         // return new makeNewIssue($issues);
@@ -395,6 +417,13 @@ class apiController extends Controller
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         $sendTo = $issues->user->email;
         Mail::to($sendTo)->send(new closedIssue($issues));
+
+        // sendToTelegram
+        if ($issues->user->telegram_id) {
+            $issues->notify(new closedIssueNotify($issues));
+        }
+
+
         return response()->json($issues, 201);
         // return new closedIssue($issues);
         // return response()->json($issues);
@@ -570,6 +599,7 @@ class apiController extends Controller
         $profile->email = $request->email;
         $profile->phone = $request->phone;
         $profile->gender = $request->gender;
+        $profile->telegram_id = $request->telegram_id;
         if (!$request->birth) {
             $profile->birth = '0000-00-00';
         } else {
@@ -596,6 +626,12 @@ class apiController extends Controller
 
         $profile->save();
         Mail::to($profile->email)->send(new confirmUpdateProfile($profile));
+
+        // sendToTelegram
+        if ($profile->telegram_id) {
+            $profile->notify(new updateProfileNotifier($profile));
+        }
+
         return response()->json($profile, 201);
         // return response($filename);
     }

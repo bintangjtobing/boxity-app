@@ -17,3 +17,4 @@ public/dashboard/img/author/profile
 public/storage
 .vscode/settings.json
 public/imagePublic/
+composer.lock
