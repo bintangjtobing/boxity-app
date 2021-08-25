@@ -14,7 +14,7 @@
                     <img src="{{ $image }}">
                 </td>
                 <td id="title">
-                    <span>SALES ORDER</span>
+                    <span>{{ $title }}</span>
                 </td>
             </tr>
         </table>
@@ -26,8 +26,8 @@
                 <td>Invoice No.</td>
             </tr>
             <tr style="font-size: 15px; font-weight: 700; color: #F95B12;">
-                <td>16-Juni-2021</td>
-                <td>23-Agustus-2021</td>
+                <td>{{ $orderDate }}</td>
+                <td>{{ $createdAt }}</td>
                 <td>{{ $soNumber }}</td>
             </tr>
             <hr/>
@@ -76,6 +76,8 @@
                 </tr>
                 <?php
               $total = $total+$item['priceAmount'];
+              $taxVat = $total * $tax/100;
+              $grandTotal = $total + $taxVat;
               $i++;
             }
           ?>
@@ -94,29 +96,46 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="text-align: center !important">Tax Vat 10%</td>
-                    <td style="text-align: right !important">Rp. {{ number_format($total,2) }}</td>
+                    <td style="text-align: center !important">Tax Vat {{ $tax }}%</td>
+                    <td style="text-align: right !important">Rp. {{ number_format($taxVat,2) }}</td>
                 </tr>
                 <tr style="font-size: 15px; font-weight: 700; color: #F95B12;">
                     <td></td>
                     <td style="text-align: center !important">Grand Total</td>
-                    <td style="text-align: right !important">Rp. {{ number_format($total,2) }}</td>
+                    <td style="text-align: right !important">Rp. {{ number_format($grandTotal,2) }}</td>
                 </tr>
             </tfoot>
         </table>
         <br>
+    </main>
+    <footer>
         <table id="note">
             <tr>
-                <td style="width:80% !important; vertical-align: top;">
+                <td style="width:80% !important;">
                     <div style="font-size:15px; font-weight:700; color: #F95B12;">NOTES</div>
                     <div style="font-size: 12px; color: #190902;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
                 </td>
-                <td id="barcode">
+                <td id="barcode" style="text-align: right !important;">
                     <img src="data:image/png;base64,{!! $qrcode !!}">
                 </td>
             </tr>
         </table>
-    </main>
+        <br>
+        <table style="width: 50%; text-align:left !important">
+            <tr style="font-size: 12px; color: #190902;">
+                <td>Diketahui Oleh</td>
+                <td>Disetujui Oleh</td>
+            </tr>
+            <tr>
+                <td style="height: 30px"></td>
+                <td style="height: 30px"></td>
+            </tr>
+            <tr style="font-size: 12px; color: #190902;">
+                <td>Hello World</td>
+                <td>Hello World</td>
+            </tr>
+        </table>
+    </footer>
 </body>
 
 </html>
@@ -299,11 +318,11 @@
         padding: 7px 20px !important;
     }
     
-    main #note tr{
+    footer #note tr{
         background: #FFF;
     }
 
-    main #note td {
+    footer #note td {
         text-align: left;
     }
     
@@ -319,11 +338,8 @@
     footer {
         color: #777777;
         width: 100%;
-        height: 30px;
         position: absolute;
         bottom: 0;
-        border-top: 1px solid #AAAAAA;
-        padding: 8px 0;
         text-align: center;
     }
 
