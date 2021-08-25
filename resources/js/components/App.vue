@@ -346,7 +346,6 @@
                                 </menuCollapse>
                             </li>
                         </div>
-
                         <div v-if="user.role=='it' || user.role=='admin'">
                             <li>
                                 <menuCollapse

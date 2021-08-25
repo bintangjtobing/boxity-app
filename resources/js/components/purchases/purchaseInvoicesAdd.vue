@@ -1,4 +1,4 @@
-n<template>
+<template>
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
@@ -35,7 +35,7 @@ n<template>
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                            class="form-control form-control-default">
+                                            class="form-control form-control-default" :disabled="isWriteForm">
                                             <option value="" disabled>Select item:</option>
                                             <option v-for="items in items" :key="items.id" :value="items.id">
                                                 {{items.item_name}}</option>
@@ -54,14 +54,14 @@ n<template>
                                         <span>Quantity Ordered:</span>
                                         <input type="number" v-model="itemAdd.qtyOrdered" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                            class="form-control">
+                                            class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Quantity Shipped:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
-                                            max="10000" step="1" class="form-control">
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -74,8 +74,8 @@ n<template>
                                     <div class="form-group">
                                         <span>Price:</span>
                                         <input type="number" v-model="itemAdd.currentPrice" @change="onPriceChange"
-                                            @input="onPriceChange" class="form-control" min="0" max="9999999"
-                                            step="250" />
+                                            @input="onPriceChange" class="form-control" min="0" max="9999999" step="250"
+                                            :disabled="isWriteForm" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -90,14 +90,16 @@ n<template>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Purpose:</span>
-                                        <input type="text" v-model="itemAdd.purpose" id="" class="form-control">
+                                        <input type="text" v-model="itemAdd.purpose" id="" class="form-control"
+                                            :disabled="isWriteForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Remarks:</span>
                                         <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
-                                            rows="2"></textarea>
+                                            rows="2" :disabled="isWriteForm">
+                                            </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +107,7 @@ n<template>
                                 <div class="row">
                                     <div class="col-12">
                                         <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
-                                                px-30">Add to lists</button>
+                                                px-30" :disabled="isWriteForm">Add to lists</button>
                                     </div>
                                 </div>
                             </div>
@@ -145,14 +147,14 @@ n<template>
                                         <span>Quantity Ordered:</span>
                                         <input type="number" v-model="itemModify.qtyOrdered" @change="onModifyQtyInc"
                                             @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                            class="form-control">
+                                            class="form-control" :disabled="isModifyForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Quantity Shipped:</span>
                                         <input type="number" v-model="itemModify.qtyShipped" placeholder="0" id=""
-                                            min="0" max="10000" step="1" class="form-control">
+                                            min="0" max="10000" step="1" class="form-control" :disabled="isModifyForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -167,7 +169,8 @@ n<template>
                                         <span>Price:</span>
                                         <input type="number" v-model="itemModify.currentPrice"
                                             @change="onModifyPriceChange" @input="onModifyPriceChange"
-                                            class="form-control" min="0" max="9999999" step="250" />
+                                            class="form-control" min="0" max="9999999" step="250"
+                                            :disabled="isModifyForm" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -182,13 +185,15 @@ n<template>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Purpose:</span>
-                                        <input type="text" v-model="itemModify.purpose" id="" class="form-control">
+                                        <input type="text" v-model="itemModify.purpose" id="" class="form-control"
+                                            :disabled="isModifyForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Used by:</span>
-                                        <select v-model="itemModify.used_by" class="form-control form-control-default">
+                                        <select v-model="itemModify.used_by" class="form-control form-control-default"
+                                            :disabled="isModifyForm">
                                             <option value="" disabled>Select user:</option>
                                             <option v-for="users in users" :key="users.id" :value="users.id">
                                                 {{users.name}}</option>
@@ -199,7 +204,7 @@ n<template>
                                     <div class="form-group">
                                         <span>Remarks:</span>
                                         <textarea v-model="itemModify.remarks" class="form-control" id="" cols="30"
-                                            rows="2"></textarea>
+                                            rows="2" :disabled="isModifyForm"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -335,6 +340,8 @@ n<template>
                 isShow: {
                     colapse: true,
                 },
+                isWriteForm: false,
+                isModifyForm: false,
                 // Page Info
                 titleItemDescription: 'Add some items on Purchase Invoices.',
                 isVisibleAddForm: false,
@@ -460,8 +467,8 @@ n<template>
                 this.itemModify.price = parseInt(this.itemModify.qtyOrdered) * parseInt(this.itemModify.currentPrice);
             },
             async modifyItemList() {
+                this.isModifyForm = true;
                 this.$Progress.start();
-                console.log('Item :', this.itemModify);
                 await axios.patch('/api/pi/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
                     Swal.fire({
                         icon: 'success',
@@ -484,6 +491,7 @@ n<template>
                 this.isVisibleAddForm = false,
                     this.isVisibleModifyForm = true,
                     this.$Progress.finish();
+                this.isModifyForm = false;
             },
             async loadData() {
                 this.$Progress.start();
@@ -514,6 +522,7 @@ n<template>
                 this.$Progress.finish();
             },
             async addToList() {
+                this.isWriteForm = true;
                 this.$Progress.start();
                 await axios.post('/api/pi/item-purchase', this.itemAdd).then(response => {
                     Swal.fire({
@@ -534,6 +543,7 @@ n<template>
                     }
                 });
                 this.loadData();
+                this.isWriteForm = false;
                 this.$Progress.finish();
             },
             async modifyItemPurchase() {

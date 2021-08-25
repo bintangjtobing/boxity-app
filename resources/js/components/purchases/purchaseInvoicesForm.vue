@@ -34,8 +34,8 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                            class="form-control form-control-default">
+                                        <select :disabled="isWriteForm" v-model="itemAdd.itemid"
+                                            @change="onItemSelected($event)" class="form-control form-control-default">
                                             <option value="" disabled>Select item:</option>
                                             <option v-for="items in items" :key="items.id" :value="items.id">
                                                 {{items.item_name}}</option>
@@ -47,16 +47,16 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Quantity Ordered:</span>
-                                        <input type="number" v-model="itemAdd.qtyOrdered" @change="onAddQtyInc"
-                                            @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                            class="form-control">
+                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.qtyOrdered"
+                                            @change="onAddQtyInc" @input="onAddQtyInc" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Quantity Shipped:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
-                                            max="10000" step="1" class="form-control">
+                                            max="10000" step="1" :disabled="isWriteForm" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -68,7 +68,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Price:</span>
-                                        <input type="number" v-model="itemAdd.currentPrice" @change="onAddPriceChange"
+                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.currentPrice"
+                                            @change="onAddPriceChange"
                                             @input="onAddPriceChange" class="form-control" min="0" max="9999999"
                                             step="250" />
                                     </div>
@@ -85,13 +86,15 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Purpose:</span>
-                                        <input type="text" v-model="itemAdd.purpose" id="" class="form-control">
+                                        <input type="text" :disabled="isWriteForm" v-model="itemAdd.purpose" id=""
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Remarks:</span>
-                                        <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
+                                        <textarea v-model="itemAdd.remarks" :disabled="isWriteForm" class="form-control"
+                                            id="" cols="30"
                                             rows="2"></textarea>
                                     </div>
                                 </div>
@@ -341,6 +344,7 @@
         },
         data() {
             return {
+                isWriteForm: false,
                 isShow: {
                     colapse: false,
                 },
@@ -522,6 +526,7 @@
                 this.$Progress.finish();
             },
             async addToList() {
+                this.isWriteForm = true;
                 this.$Progress.start();
                 // console.log(this.itemAdd);
                 await axios.post('/api/pi/item-purchase/' + this.$route.params.pi_number, this.itemAdd).then(
@@ -547,6 +552,7 @@
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
                 this.loadData();
+                this.isWriteForm = false;
                 this.$Progress.finish();
             },
             async submitHandle() {
