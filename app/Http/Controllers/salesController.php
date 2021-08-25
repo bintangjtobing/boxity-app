@@ -437,17 +437,20 @@ class salesController extends Controller
         }
 
         $data = [
+            "title" => "SALES ORDER",
             "companyName" => $company->company_name,
             "companyAddress" => $company->address,
             "companyPhone" => $company->phone,
             "companyEmail" => $company->email,
             "soNumber" => $salesOrder->so_number,
-            "orderDate" => $salesOrder->order_date,
+            "orderDate" => $this->format_date($salesOrder->order_date),
+            "createdAt" => $this->format_date($salesOrder->created_at),
             "remark" => $salesOrder->remarks,
             "customerName" => $salesOrder->customers->customerName,
             "customerAddress" => $salesOrder->customers->customerAddress,
             "customerEmail" => $salesOrder->customers->customerEmail,
             "items" => $item,
+            "tax" => 10,
             "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/' . $id))),
             "image" => $company->logoblack,
         ];
@@ -497,4 +500,30 @@ class salesController extends Controller
         return $pdf->stream();
         // return $getSales;
     }
+    
+    function format_date($date){
+        $date = date_format(date_create($date),"d-m-Y");
+        $moon = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $temp = explode('-', $date);
+        
+        // variabel temp 0 = date
+        // variabel temp 1 = moon
+        // variabel temp 2 = tahun
+     
+        return $temp[0] . ' ' . $moon[ (int)$temp[1] ] . ' ' . $temp[2];
+    }
+     
 }
