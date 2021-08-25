@@ -75,9 +75,6 @@
                     <td style="width: 25%;text-align: right">Rp. {{ number_format($item['priceAmount'],2) }}</td>
                 </tr>
                 <?php
-              $total = $total+$item['priceAmount'];
-              $taxVat = $total * $tax/100;
-              $grandTotal = $total + $taxVat;
               $i++;
             }
           ?>
@@ -106,7 +103,16 @@
                 </tr>
             </tfoot>
         </table>
-        <br>
+        <table id="counted">
+            <tr>
+                <td style="font-size: 15px; font-weight: 700; color: #F95B12;">Terbilang</td>
+            </tr>
+            <tr>
+                <td style="font-size: 12px; font-weight: 700; color: #190902;"><i>{{ $counted }}</i></td>
+            </tr>
+            <!-- <span style="font-size: 15px; font-weight: 700; color: #F95B12;">Terbilang</span>
+            <span style="font-size: 12px; font-weight: 700; color: #190902;">{{ $counted }}</span> -->
+        </table>
     </main>
     <footer>
         <table id="note">
@@ -316,6 +322,12 @@
 
     main tfoot td {
         padding: 7px 20px !important;
+    }
+    
+    main #counted td {
+        padding: 0 !important;
+        background: #FFF;
+        text-align: left;
     }
     
     footer #note tr{
