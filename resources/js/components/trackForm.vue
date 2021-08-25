@@ -98,7 +98,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-success btn-default btn-squared px-30">submit</button>
+                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -134,17 +134,21 @@
         },
         methods: {
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/track-delivery', this.order).then(response => {
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New order track.',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.$router.push('/track-delivery');
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

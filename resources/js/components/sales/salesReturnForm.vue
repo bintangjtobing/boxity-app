@@ -139,7 +139,7 @@
                                                     </div>
                                                     <div class="button-group d-flex pt-25">
                                                         <button type="submit"
-                                                            class="btn btn-primary btn-default btn-squared text-capitalize">Update
+                                                            class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
                                                     </div>
                                                 </form>
@@ -160,8 +160,9 @@
                                                     <!-- Insert Code here -->
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
-                                                                class="btn btn-success btn-default btn-squared px-30"
+                                                            <button v-on:click="handleSubmit"
+                                                                v-on:keyup.enter="handleSubmit" type="submit"
+                                                                class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>
                                                     </div>
@@ -199,17 +200,20 @@
         },
         methods: {
             async loadDataInventoryItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
 
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
                 this.inventoryOpt = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
                 await axios.patch('/api/inventory-item/' + this.$route.params.id, this.inventorydata);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

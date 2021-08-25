@@ -28,10 +28,10 @@
                                 <div class="form-row justify-content-end">
                                     <div class="layout-button mt-25">
                                         <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30">update
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30">update
                                             quote</button>
                                         <button v-on:click="doneQuote" type="submit"
-                                            class="btn btn-primary btn-default btn-squared px-30"
+                                            class="btn btn-primary-boxity btn-default btn-squared px-30"
                                             v-if="this.user.role == 'it'"><i class="fal fa-check"></i>&nbsp;
                                             Done</button>
                                     </div>
@@ -62,31 +62,41 @@
         },
         methods: {
             async loadDataQuote() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/quote/' + this.$route.params.id);
                 this.quotes = resp.data[0];
 
                 // Load user logged in
                 const respUser = await axios.get('/getUserLoggedIn');
                 this.user = respUser.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/quote/' + this.$route.params.id, this.quotes);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update job vacancy.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/quote');
             },
             async doneQuote() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/quote/approved/' + this.$route.params.id);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/quote');
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

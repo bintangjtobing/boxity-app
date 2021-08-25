@@ -51,7 +51,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password'];
-    
+
     public function permissions()
     {
         return $this->hasMany(UserPermissions::class, 'user_id', 'id');

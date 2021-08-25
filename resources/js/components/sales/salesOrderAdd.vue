@@ -25,6 +25,49 @@
             </div>
         </div>
         <div class="row">
+            <!-- Form Sales Order -->
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <span>SO number:</span>
+                                    <input type="text" v-model="salesOrderData.so_number" readonly
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <span>Customer:</span>
+                                    <selectSearch v-model="selected.so" v-bind="{
+                          datas: customersGet,
+                          width: '100%',
+                          name: 'company_name',
+                          placeholder: 'Select Customer',
+                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <span>Order date:</span>
+                                    <input type="date" v-model="salesOrderData.order_date" class="form-control"
+                                        placeholder="Brand" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <span>Remarks:</span>
+                                    <textarea class="form-control" v-model="salesOrderData.remarks" cols="30"
+                                        rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Form Add -->
             <div class="col-lg-12" :class="{ unvisible: isVisibleAddForm }">
                 <div class="card mb-3">
@@ -45,16 +88,17 @@
                             <div class="form-row">
                                 <div class="col-lg-12">
                                     <div class="form-row">
-                                        <div class="form-group col-lg-5">
+                                        <div class="form-group col-lg-6">
                                             <span>From warehouse:</span>
                                             <selectSearch v-model="selected.warehouse" v-bind="{
                           datas: warehouse,
                           width: '100%',
                           name: 'warehouse_name',
-                          placeholder: 'Select Item',
+                          isDisable: isDisable.warehouseSelected,
+                          placeholder: 'Select Warehouse',
                         }" @dataSelected="onWarehouseSelected"></selectSearch>
                                         </div>
-                                        <div class="form-group col-lg-5">
+                                        <div class="form-group col-lg-6">
                                             <span>Item name:</span>
                                             <selectSearch v-model="selected.item" v-bind="{
                           datas: items,
@@ -78,7 +122,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
-                                        <span v-show="isShow.qtyItem" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span v-show="isShow.qtyItem"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemAdd.qtyOrdered" @input="onQtyInc"
                                             placeholder="" id="" min="0" max="10000" step="1" class="form-control"
                                             required :disabled="isDisable.input" />
@@ -289,7 +334,7 @@
                                     </v-text-field>
                                 </v-card-title>
                                 <v-data-table :search="search" :headers="headers" :items="itemSalesData"
-                                    :items-per-page="10" class="elevation-1">
+                                    group-by="warehouse.warehouse_name" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{ item }">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
@@ -302,61 +347,16 @@
                     </div>
                 </div>
             </div>
-            <!-- Form Sales Order -->
-            <div class="col-lg-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <span>SO number:</span>
-                                    <input type="text" v-model="salesOrderData.so_number" readonly
-                                        class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <span>Customer:</span>
-                                    <selectSearch v-model="selected.so" v-bind="{
-                      datas: customer,
-                      width: '100%',
-                      name: 'customerName',
-                      placeholder: 'Select Item',
-                    }" @dataSelected="onItemSelectedSO"></selectSearch>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <span>Order date:</span>
-                                    <input type="date" v-model="salesOrderData.order_date" class="form-control"
-                                        placeholder="Brand" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <span>Remarks:</span>
-                                    <textarea class="form-control" v-model="salesOrderData.remarks" cols="30"
-                                        rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group my-2">
-                            <div class="row">
-                                <div class="col-12">
-                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="
+            <div class="col-lg-12  my-3">
+                <div class="form-group">
+                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="
                       btn btn-success
                       float-right
                       btn-default btn-squared
                       px-30
                     " :disabled="btndisableSO">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
@@ -394,6 +394,7 @@
                 },
                 itemAdd: {
                     warehouseid: "",
+                    customerid: "",
                     itemid: "",
                     qtyOrdered: "0",
                     unit: "",
@@ -417,6 +418,7 @@
                 items: {},
                 users: {},
                 warehouse: {},
+                customersGet: {},
 
                 // Datatable
                 itemSalesData: [],
@@ -425,6 +427,10 @@
                 headers: [{
                         text: "Item Code",
                         value: "item.item_code",
+                    },
+                    {
+                        text: 'From Customer',
+                        value: 'customer.company_name'
                     },
                     {
                         text: "Item Name",
@@ -467,12 +473,14 @@
                 isDisable: {
                     select: true,
                     input: true,
+                    warehouseSelected: true,
                 },
             };
         },
         created() {
             this.loadData();
             this.generateSONumber();
+            this.loadCustomers();
         },
         computed: {
             btndisable: function () {
@@ -480,10 +488,7 @@
                     !this.itemAdd.warehouseid ||
                     !this.itemAdd.itemid ||
                     this.itemAdd.qtyOrdered === "" ||
-                    this.itemAdd.qtyOrdered > this.qtyItem ||
-                    !this.itemAdd.currentPrice ||
-                    !this.itemAdd.purpose ||
-                    !this.itemAdd.used_by
+                    this.itemAdd.qtyOrdered > this.qtyItem
                 );
             },
             btndisableModify: function () {
@@ -492,15 +497,14 @@
                     !this.itemModify.itemid ||
                     this.itemModify.qtyOrdered === "" ||
                     this.itemModify.qtyOrdered > this.qtyItem ||
-                    !this.itemModify.currentPrice ||
-                    !this.itemModify.purpose ||
-                    !this.itemModify.used_by
+                    !this.itemModify.currentPrice
                 );
             },
             btndisableSO: function () {
                 return (
                     this.salesOrderData.customer === "" ||
-                    this.salesOrderData.order_date === ""
+                    this.salesOrderData.order_date === "" ||
+                    this.itemSalesData.length === ""
                 );
             },
         },
@@ -511,15 +515,22 @@
             isShowing: function () {
                 this.isShow.colapse = !this.isShow.colapse;
             },
-            onWarehouseSelected(param) {
+            async onWarehouseSelected(param) {
                 this.itemAdd.warehouseid = param.id;
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
                 this.isDisable.select = false;
+                const itemData = await axios.get('/api/inventory-item/w/' + param.id);
+                this.items = itemData.data;
             },
-            onItemSelectedSO(param) {
+            async onCustomerSelected(param) {
+                this.itemAdd.customerid = param.id;
+                this.selected.so = param.company_name;
                 this.salesOrderData.customer = param.id;
-                this.selected.so = param.customerName;
+                this.isDisable.warehouseSelected = false;
+                const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
+                this.warehouse = warehouseData.data;
+                // console.log(param);
             },
             onItemSelectedUsed(param) {
                 this.itemAdd.used_by = param.id;
@@ -549,13 +560,16 @@
                 this.isDisable.input = false;
                 this.isShow.qty = false;
                 const getId = value.id;
-                this.$Progress.start();
+                console.log(value)
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const {
                     data: itemData
                 } = await axios.get(
                     "/api/inventory-item/" + getId
                 );
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.itemAdd.unit = itemData.unit;
                 this.itemAdd.currentPrice = itemData.price;
                 this.itemAdd.itemid = itemData.id;
@@ -587,7 +601,8 @@
                     parseInt(this.itemModify.currentPrice);
             },
             async modifyItemList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios
                     .patch("/api/item-sales/" + this.itemModify.id, this.itemModify)
                     .then((response) => {
@@ -613,25 +628,29 @@
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
                 this.selected.usedBy = "";
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const resp = await axios.get("/api/customers");
                 this.customer = resp.data;
                 const itemSalesData = await axios.get("/api/item-sales");
                 this.itemSalesData = itemSalesData.data;
-                const itemsData = await axios.get("/api/inventory-item");
-                this.items = itemsData.data;
-                const warehouseData = await axios.get("/api/warehouse");
-                this.warehouse = warehouseData.data;
                 const contactUsers = await axios.get("/api/contact-list");
                 this.users = contactUsers.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
+            },
+            async loadCustomers() {
+                const customerData = await axios.get("/api/customers");
+                this.customersGet = customerData.data;
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get("/api/item-sales/" + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
@@ -648,10 +667,12 @@
                 this.isShow.qtyItem = true;
                 this.qtyItem = resp.data.item.qty;
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post("/api/item-sales", this.itemAdd).then((response) => {
                     Swal.fire({
                         icon: "success",
@@ -681,10 +702,12 @@
                     select: true,
                     input: true,
                 };
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios
                     .post("/api/sales/order", this.salesOrderData)
                     .then((response) => {
@@ -703,7 +726,8 @@
                         const genSONumber = this.rndStr(5);
                         this.salesOrderData.so_number = genSONumber;
                         this.$router.push("/sales/order");
-                        this.$Progress.finish();
+                        // this.$Progress.finish();
+                        this.$isLoading(false);
                     })
                     .catch((error) => {
                         this.$Progress.fail();
@@ -722,6 +746,7 @@
                     });
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: "Delete item sales order?",
                     showCancelButton: true,
@@ -729,7 +754,8 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                    this.$isLoading(true);
                     await axios.delete("/api/item-sales/" + id);
                     this.loadData();
                     await Swal.fire({
@@ -737,7 +763,8 @@
                         title: "Successfully Deleted",
                         text: "Success deleted current item.",
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }
             },
         },

@@ -72,10 +72,12 @@
         },
         methods: {
             async selectContact(user) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/list-contact/' + user.id);
                 this.selected = user;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$emit('selected', user);
             },
         },

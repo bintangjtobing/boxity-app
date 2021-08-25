@@ -106,10 +106,12 @@
         },
         methods: {
             async loadDataTrack() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/track-delivery/get');
                 this.tracks = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             orderCreatedExp() {
                 Swal.fire({
@@ -175,6 +177,7 @@
                 });
             },
             async terminateTrack(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     icon: 'warning',
                     title: 'Are you sure want to terminate track?',
@@ -183,16 +186,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.patch('/api/track-deliverys/' + id);
                     // console.log('200')
                     this.loadDataTrack();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully terminated',
                         text: 'Success terminated current track'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

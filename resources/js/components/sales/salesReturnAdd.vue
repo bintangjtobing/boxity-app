@@ -124,7 +124,7 @@
                             <div class="form-group my-2">
                                 <div class="justify-content-end">
                                     <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                        class="btn btn-success btn-default btn-squared px-30"
+                                        class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                         data-dismiss="modal">Submit</button>
                                 </div>
                             </div>
@@ -156,17 +156,20 @@
         },
         methods: {
             async loadDataInventoryItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
 
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
                 this.inventoryOpt = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
                 await axios.patch('/api/inventory-item/' + this.$route.params.id, this.inventorydata);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

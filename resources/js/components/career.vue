@@ -55,6 +55,9 @@
                 </div>
             </div>
         </div>
+        <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? You can see and learn from
+            <a href="https://help.boxity.id/human-resources-management/job-vacancy" target="_blank">Help and
+                Documentation</a>'s page.</span>
     </div>
 </template>
 <script>
@@ -74,16 +77,19 @@
         },
         methods: {
             async loadCareers() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/career');
                 this.careers = resp.data;
                 if (resp.data.description > 20) {
                     let desc = resp.data.description.substring(0, 17) + '...';
                     this.careers.description = desc;
                 }
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteCareer(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete job vacancy?',
                     showCancelButton: true,
@@ -91,15 +97,18 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('api/career/' + id);
                     this.loadCareers();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current job vacancy'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

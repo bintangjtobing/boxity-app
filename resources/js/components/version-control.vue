@@ -52,7 +52,7 @@
                                                         <div class="form-row justify-content-end">
                                                             <div class="layout-button mt-25">
                                                                 <button type="submit"
-                                                                    class="btn btn-success btn-default btn-squared px-30">submit
+                                                                    class="btn btn-secondary-boxity btn-default btn-squared px-30">submit
                                                                     new changelog</button>
                                                             </div>
                                                         </div>
@@ -120,13 +120,16 @@
         },
         methods: {
             async loadVerControl() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/version-control');
                 this.vControl = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/version-control', this.version).then(response => {
                     this.version = {
                         title: '',
@@ -138,9 +141,11 @@
                         title: 'Congratulations',
                         text: 'Success New change log.',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                   document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

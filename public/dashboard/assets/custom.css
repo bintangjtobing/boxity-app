@@ -23,8 +23,20 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(249, 91, 18, 1) 100%);
 }
 
+.footer-wrapper {
+    padding-left: 295px !important;
+}
+
 .text-danger {
     font-size: 12px !important;
+}
+
+.contents {
+    padding: 65px 15px 72px 305px !important;
+}
+
+.sidebar {
+    width: 300px !important;
 }
 
 /* .modal-backdrop {
@@ -314,12 +326,16 @@ a {
 }
 
 .edit:hover {
-    background-color: #f1c40f;
+    background-color: rgba(243, 118, 73);
 }
 
 .remove:hover {
     background-color: #c0392b;
     color: #fff !important;
+}
+
+a {
+    color: rgba(243, 118, 73);
 }
 
 .pasfoto {
@@ -440,6 +456,59 @@ a {
     margin-left: 20px;
 }
 
+/* button */
+.btn-primary-boxity:hover {
+    color: #fff !important;
+    background-color: rgba(243, 118, 73);
+    border-color: rgba(243, 118, 73);
+}
+
+.btn-primary-boxity {
+    color: #fff !important;
+    background-color: rgba(240, 101, 50);
+    border-color: rgba(240, 101, 50);
+}
+
+.btn-secondary-boxity:hover {
+    color: #fff !important;
+    background-color: rgba(32, 50, 71);
+    border-color: rgba(32, 50, 71);
+}
+
+.btn-secondary-boxity {
+    color: #fff !important;
+    background-color: rgba(32, 50, 71, .8) !important;
+    border-color: rgba(32, 50, 71, .8) !important;
+}
+
+.btn-secondary-outline-boxity {
+    background-color: #fff;
+    border: 1px solid rgba(240, 101, 50);
+    color: rgba(240, 101, 50);
+}
+
+.btn-secondary-outline-boxity:hover {
+    background-color: rgba(240, 101, 50);
+    color: #fff;
+}
+
+.btn-disabled-outline-boxity {
+    border: 1px solid #c1c7ca;
+    background: #f4f6f6;
+    color: var(--ag-header-foreground-color, var(--ag-secondary-foreground-color, rgba(0, 0, 0, 0.54))) !important;
+}
+
+.btn-disabled-outline-boxity:hover {
+    background-color: #c1c7ca;
+    color: #fff !important;
+}
+
+.btn-disabled-boxity {
+    background-color: #c1c7ca;
+    pointer-events: none;
+    color: #fff !important;
+}
+
 /* Responsive Design */
 /*
   ##Device = Desktops
@@ -508,4 +577,18 @@ a {
         max-width: 140px !important;
     }
 
+}
+
+body.swal2-shown>[aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(10px);
+}
+
+.nav-right .nav-author img[data-v-332fccf4] {
+    object-fit: cover;
+}
+
+.sidebar__menu-group ul.sidebar_nav li>a {
+    font-size: 14px !important;
+    padding: 6.05px 20px !important;
 }

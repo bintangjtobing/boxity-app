@@ -39,7 +39,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-success btn-default btn-squared px-30">submit
+                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit
                                                 new issue</button>
                                         </div>
                                     </div>
@@ -123,9 +123,11 @@
             }
         },
         created() {
-            this.$Progress.start();
+            // this.$Progress.start();
+                this.$isLoading(true);
             this.assigneeGet();
-            this.$Progress.finish();
+            // this.$Progress.finish();
+                this.$isLoading(false);
         },
         methods: {
             onUserSelected(param) {
@@ -149,17 +151,21 @@
                         payload[field] = this.issue[field];
                     }
                 });
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/issue', payload).then(response => {
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New issue.',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.$router.push('/issues');
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

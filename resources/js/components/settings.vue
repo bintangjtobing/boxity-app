@@ -123,7 +123,7 @@
                                                     <div class="button-group d-flex flex-wrap pt-30 mb-15"
                                                         v-if="user.divisi == 'developer'">
                                                         <button @click="saveCompany"
-                                                            class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
+                                                            class="btn btn-primary-boxity btn-default btn-squared mr-15 text-capitalize">save
                                                             information
                                                         </button>
                                                     </div>
@@ -160,7 +160,7 @@
                                                     <div class="button-group d-flex flex-wrap pt-30 mb-15"
                                                         v-if="user.divisi == 'developer'">
                                                         <button @click="saveMetaCompany(company.id)"
-                                                            class="btn btn-primary btn-default btn-squared mr-15 text-capitalize">save
+                                                            class="btn btn-primary-boxity btn-default btn-squared mr-15 text-capitalize">save
                                                             meta information
                                                         </button>
                                                     </div>
@@ -198,21 +198,23 @@
         },
         methods: {
             async loadCompany() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/company-details');
                 if (resp.data.length < 1) {
                     this.isReadOnly = false;
-                    console.log('tidak ada data')
+                    // console.log('tidak ada data')
                 } else {
                     this.company = resp.data[0];
                     this.isReadOnly = true;
-                    console.log(resp.data[0]);
+                    // console.log(resp.data[0]);
                 }
 
                 // Load logged user
                 const respUser = await axios.get('/getUserLoggedIn');
                 this.user = respUser.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             fileUpload(e) {
                 this.imageLocation = e.target.files[0];
@@ -224,17 +226,22 @@
             },
             async saveCompany(event) {
                 event.preventDefault();
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/company-details', this.company).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success save the company details',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.loadCompany();
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -250,8 +257,11 @@
                 });
             },
             async saveMetaCompany(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/meta/company-details/' + id, this.company).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -268,7 +278,8 @@
                             error,
                     });
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             }
         },
     }

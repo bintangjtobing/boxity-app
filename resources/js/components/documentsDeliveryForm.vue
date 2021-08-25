@@ -77,7 +77,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30" v-bind:disabled="checkedItem === false">Update item
                                             list</button>
                                     </div>
@@ -165,7 +165,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <button @click="activeAddForm"
-                            class="btn btn-success float-left btn-default btn-squared"><span><i
+                            class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fas fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -268,7 +268,7 @@
                                 </div>
                                 <div class="col-7 text-right">
                                     <button v-bind:disabled="checkedDDR === false" v-on:click="submitHandle"
-                                        v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
+                                        v-on:keyup.enter="submitHandle" class="btn btn-primary-boxity float-right btn-default btn-squared
                                                 px-30">Update</button>
                                 </div>
                             </div>
@@ -407,7 +407,8 @@
                 this.isVisibleModifyForm = true;
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const itemOnDeliveryData = await axios.get('/api/ddr/item-document/' + this.$route.params
                     .ddr_number);
@@ -417,21 +418,27 @@
                 this.documentDeliveryData = deliveryData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/ddr/item-documents/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.titleItemDescription = 'Modify Document Delivery Items';
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/ddr/item-document/' + this.itemModify.id, this.itemModify).then(
                     response => {
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Congratulations',
@@ -447,13 +454,17 @@
                             this.checkedItem = false;
                     });
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // console.log(this.itemAdd);
                 await axios.post('/api/ddr/item-document/' + this.$route.params.ddr_number, this.itemAdd).then(
                     response => {
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Congratulations',
@@ -471,21 +482,26 @@
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/document/delivery/' + this.$route.params.ddr_number, this
                         .documentDeliveryData)
                     .then(response => {
                         this.loadData();
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Congratulations',
                             text: 'Success update Document Delivery information.',
                         });
                         this.checkedDDR = false;
-                        this.$Progress.finish();
+                        // this.$Progress.finish();
+                this.$isLoading(false);
                     }).catch(error => {
                         this.$Progress.fail();
                         Swal.fire({
@@ -504,6 +520,7 @@
                 // console.log('data click', [this.documentDeliveryData, this.itemOnDeliveryData])
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete item Document Delivery?',
                     showCancelButton: true,
@@ -511,15 +528,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/ddr/item-document/' + id);
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

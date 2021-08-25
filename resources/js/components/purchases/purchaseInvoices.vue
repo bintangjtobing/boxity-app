@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Invoice<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/purchase/invoices/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/purchase/invoices/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Invoice</router-link>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                                 </v-card-title>
                                 <v-data-table :search="search" loading loading-text="Loading... Please wait..."
                                     :headers="headers" multi-sort :items="purchaseInvoiceItem" :items-per-page="10"
-                                    class="elevation-1" group-by="suppliers.customerName" group-expanded>
+                                    class="elevation-1" group-by="warehouse.warehouse_name" group-expanded>
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/purchase/invoices/${item.pi_number}`" target="_blank"
                                             class="view">
@@ -61,26 +61,21 @@
                 key: 1,
                 purchaseInvoiceItem: [],
                 headers: [{
-                        text: 'PI #',
-                        value: 'pi_number'
-                    }, {
-                        text: 'Deliver to',
-                        value: 'warehouse.warehouse_name'
-                    }, {
-                        text: 'Delivery Date',
-                        value: 'invoice_date'
-                    },
-                    {
-                        text: 'Supplier',
-                        value: 'suppliers.customerName'
-                    }, {
-                        text: 'Actions',
-                        value: 'actions',
-                        align: 'right',
-                        filterable: false,
-                        sortable: false
-                    }
-                ],
+                    text: 'PI #',
+                    value: 'pi_number'
+                }, {
+                    text: 'Deliver to',
+                    value: 'warehouse.warehouse_name'
+                }, {
+                    text: 'Delivery Date',
+                    value: 'invoice_date'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    align: 'right',
+                    filterable: false,
+                    sortable: false
+                }],
                 // end datatable
                 countItems: '0',
             }
@@ -90,14 +85,17 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/purchase/invoices');
                 this.purchaseInvoiceItem = resp.data;
                 const count = await axios.get('/api/count-purchase-invoice');
                 this.countItems = count.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deletePurchaseInvoiceItem(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data item?',
                     showCancelButton: true,
@@ -107,6 +105,7 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/purchases-invoices/' + id);
                     this.loadItem();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',

@@ -13,7 +13,7 @@
 
                         </div>
                         <div class="chat-type-text__btn">
-                            <button type="button" :click="send" class="border-0 btn-primary wh-50 p-10 rounded-circle">
+                            <button type="button" :click="send" class="border-0 btn-primary-boxity wh-50 p-10 rounded-circle">
                                 <i class="far fa-paper-plane"></i></button>
                         </div>
                     </div>

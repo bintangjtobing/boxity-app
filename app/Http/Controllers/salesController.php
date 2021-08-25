@@ -33,13 +33,13 @@ class salesController extends Controller
     // Sales Order
     public function getSalesOrder()
     {
-        return response()->json(salesOrder::with('customer')->with('createdby')->orderBy('created_at', 'DESC')->get());
+        return response()->json(salesOrder::with('customers')->with('createdby')->orderBy('created_at', 'DESC')->get());
     }
 
     public function getSalesOrderById($id)
     {
         try {
-            $salesOrder = salesOrder::where('id', $id)->with('customer')->first();
+            $salesOrder = salesOrder::where('id', $id)->with('customers')->first();
         } catch (\Throwable $th) {
             return response()->json($th);
         }
@@ -417,10 +417,10 @@ class salesController extends Controller
         return response()->json($ItemCount);
     }
 
-    public function reportSalesOrder($id)
+    public function reportSalesOrder($so_number)
     {
         $company = company_details::first();
-        $salesOrder = salesOrder::where('id', $id)->with('customers')->first();
+        $salesOrder = salesOrder::where('so_number', $so_number)->with('customers')->first();
         $itemSales = itemsSales::where('salesingId', $salesOrder->so_number)->with('item')->get();
 
         $item = [];
@@ -437,9 +437,12 @@ class salesController extends Controller
             ];
             array_push($item, $data);
         }
-        
+
         $tax = 10;
         $taxVat = $total * $tax/100;
+
+        $tax = 10;
+        $taxVat = $total * $tax / 100;
 
         $data = [
             "title" => "SALES ORDER",
@@ -459,8 +462,8 @@ class salesController extends Controller
             "total" => $total,
             'taxVat' => $taxVat,
             'grandTotal' => $total + $taxVat,
-            'counted' => $this->penyebut($total + $taxVat)." Rupiah",
-            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/' . $id))),
+            'counted' => $this->penyebut($total + $taxVat) . " Rupiah",
+            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/sales-order/' . $so_number))),
             "image" => $company->logoblack,
         ];
 
@@ -509,10 +512,11 @@ class salesController extends Controller
         return $pdf->stream();
         // return $getSales;
     }
-    
-    function format_date($date){
-        $date = date_format(date_create($date),"d-m-Y");
-        $moon = array (
+
+    function format_date($date)
+    {
+        $date = date_format(date_create($date), "d-m-Y");
+        $moon = array(
             1 =>   'Januari',
             'Februari',
             'Maret',
@@ -527,39 +531,40 @@ class salesController extends Controller
             'Desember'
         );
         $temp = explode('-', $date);
-        
+
         // variabel temp 0 = date
         // variabel temp 1 = moon
         // variabel temp 2 = tahun
-     
-        return $temp[0] . ' ' . $moon[ (int)$temp[1] ] . ' ' . $temp[2];
+
+        return $temp[0] . ' ' . $moon[(int)$temp[1]] . ' ' . $temp[2];
     }
-    
-    function penyebut($nilai) {
-		$nilai = abs($nilai);
-		$huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
-		$temp = "";
-		if ($nilai < 12) {
-			$temp = " ". $huruf[$nilai];
-		} else if ($nilai <20) {
-			$temp = $this->penyebut($nilai - 10). " Belas";
-		} else if ($nilai < 100) {
-			$temp = $this->penyebut($nilai/10)." Puluh". $this->penyebut($nilai % 10);
-		} else if ($nilai < 200) {
-			$temp = " Seratus" . $this->penyebut($nilai - 100);
-		} else if ($nilai < 1000) {
-			$temp = $this->penyebut($nilai/100) . " Ratus" . $this->penyebut($nilai % 100);
-		} else if ($nilai < 2000) {
-			$temp = " Seribu" . $this->penyebut($nilai - 1000);
-		} else if ($nilai < 1000000) {
-			$temp = $this->penyebut($nilai/1000) . " Ribu" . $this->penyebut($nilai % 1000);
-		} else if ($nilai < 1000000000) {
-			$temp = $this->penyebut($nilai/1000000) . " Juta" . $this->penyebut($nilai % 1000000);
-		} else if ($nilai < 1000000000000) {
-			$temp = $this->penyebut($nilai/1000000000) . " Milyar" . $this->penyebut(fmod($nilai,1000000000));
-		} else if ($nilai < 1000000000000000) {
-			$temp = $this->penyebut($nilai/1000000000000) . " Trilyun" . $this->penyebut(fmod($nilai,1000000000000));
-		}     
-		return $temp;
-	}
+
+    function penyebut($nilai)
+    {
+        $nilai = abs($nilai);
+        $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+        $temp = "";
+        if ($nilai < 12) {
+            $temp = " " . $huruf[$nilai];
+        } else if ($nilai < 20) {
+            $temp = $this->penyebut($nilai - 10) . " Belas";
+        } else if ($nilai < 100) {
+            $temp = $this->penyebut($nilai / 10) . " Puluh" . $this->penyebut($nilai % 10);
+        } else if ($nilai < 200) {
+            $temp = " Seratus" . $this->penyebut($nilai - 100);
+        } else if ($nilai < 1000) {
+            $temp = $this->penyebut($nilai / 100) . " Ratus" . $this->penyebut($nilai % 100);
+        } else if ($nilai < 2000) {
+            $temp = " Seribu" . $this->penyebut($nilai - 1000);
+        } else if ($nilai < 1000000) {
+            $temp = $this->penyebut($nilai / 1000) . " Ribu" . $this->penyebut($nilai % 1000);
+        } else if ($nilai < 1000000000) {
+            $temp = $this->penyebut($nilai / 1000000) . " Juta" . $this->penyebut($nilai % 1000000);
+        } else if ($nilai < 1000000000000) {
+            $temp = $this->penyebut($nilai / 1000000000) . " Milyar" . $this->penyebut(fmod($nilai, 1000000000));
+        } else if ($nilai < 1000000000000000) {
+            $temp = $this->penyebut($nilai / 1000000000000) . " Trilyun" . $this->penyebut(fmod($nilai, 1000000000000));
+        }
+        return $temp;
+    }
 }

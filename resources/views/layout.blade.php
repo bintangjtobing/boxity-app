@@ -28,6 +28,11 @@
     <div id="app"></div>
     <div class="overlay-dark-sidebar"></div>
     <div class="customizer-overlay"></div>
+    <audio volume="1" src="https://res.cloudinary.com/boxity-id/video/upload/v1630482149/assets/success_elj2sh.mp3"
+        id="ding"></audio>
+    <audio src="https://res.cloudinary.com/boxity-id/video/upload/v1630483423/assets/fail_ak10ql.mp3"
+        id="failding"></audio>
+    <audio src="https://res.cloudinary.com/boxity-id/video/upload/v1630486546/assets/info_ltlu4q.mp3" id="info"></audio>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-3.5.1.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-ui.js')!!}"></script>
@@ -96,7 +101,7 @@
         });
 
     </script>
-    
+
 </body>
 
 </html>

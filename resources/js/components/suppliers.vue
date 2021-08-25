@@ -3,125 +3,92 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
-                    <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                        <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Suppliers</h4>
-                            <span class="sub-title ml-sm-25 pl-sm-25">{{count}} Suppliers</span>
-                        </div>
-                    </div>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Suppliers
+                    </h2>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer">
-                            <i class="las la-plus fs-16"></i>New Suppliers</a>
+                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newSupplier">
+                            <i class="las la-plus fs-16"></i>New supplier</a>
                         <!-- Modal -->
-                        <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newCustomer"
+                        <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newSupplier"
                             role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New Suppliers</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New supplier</h6>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <i class="fal fa-times"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form>
-                                                <div class="form-group">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <input type="text" required v-model="user.customerCode"
-                                                                class="form-control" placeholder="Supplier Code "
-                                                                autofocus>
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.customerCode }}</span>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <input type="text" required v-model="user.name"
-                                                                class="form-control" placeholder="Person in charge ">
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.name }}</span>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <input type="text" required v-model="user.customerName"
-                                                                class="form-control"
-                                                                placeholder="Supplier Name (PT/CV/UD/Ext.)">
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.customerName }}</span>
-                                                        </div>
-                                                    </div>
+                                            <div class="form-row">
+                                                <div class="col-lg-4">
+                                                    <span>Supplier code:</span>
+                                                    <input type="text" class="form-control" required
+                                                        v-model="user.supplier_code" autofocus>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="email" required v-model="user.email"
-                                                        class="form-control" placeholder="Email">
-                                                    <span class="text-danger error-password">
-                                                        {{ errors.email }}</span>
+                                                <div class="col-lg-8">
+                                                    <span>Supplier name:</span>
+                                                    <input type="text" v-model="user.supplier_name"
+                                                        class="form-control">
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-6">
-                                                            <input type="password" required v-model="user.password"
-                                                                class="form-control" id="password"
-                                                                placeholder="Password" readonly>
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.password }}</span>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="password" required
-                                                                v-model="user.confirmPassword" id="verifyPassword"
-                                                                class="form-control" placeholder="Verify password"
-                                                                readonly>
-                                                            <span class="text-danger error-password">
-                                                                {{ errors.confirmPassword }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-lg-6">
+                                                    <span>Address:</span>
+                                                    <textarea class="form-control" v-model="user.address" id=""
+                                                        rows="2"></textarea>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="form-row">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <input type="text" v-model="user.customerAddress" id=""
-                                                                    class="form-control" placeholder="Full Address">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <input type="text" v-model="user.customerCity" id=""
-                                                                    class="form-control" placeholder="Domisili">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <input type="number" v-model="user.customerPhone" id=""
-                                                                    class="form-control" placeholder="Phone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <input type="url" v-model="user.customerWebsite"
-                                                                    class="form-control" id=""
-                                                                    placeholder="Website, started from `https://` or `http://`">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <input type="number" v-model="user.customerNPWP" id=""
-                                                                    class="form-control" placeholder="NPWP">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-lg-4">
+                                                    <span>NPWP:</span>
+                                                    <input type="text" v-model="user.npwp" class="form-control">
                                                 </div>
-                                                <div class="button-group d-flex pt-25">
-                                                    <button v-on:click="handleSubmit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize"
-                                                        data-dismiss="modal">Submit
-                                                    </button>
-                                                    <button class="btn btn-light btn-default btn-squared fw-400
+                                                <div class="col-lg-2">
+                                                    <span>City:</span>
+                                                    <input type="text" v-model="user.city" class="form-control"
+                                                        placeholder="City">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <span>Phone number:</span>
+                                                    <input type="tel" v-model="user.phone" class="form-control">
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span>Email:</span>
+                                                    <input type="email" v-model="user.email" class="form-control">
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <span>Site:</span>
+                                                    <input type="url" v-model="user.site" class="form-control">
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span>Bank:</span>
+                                                    <select class="form-control form-control-default"
+                                                        v-model="user.bank_code">
+                                                        <option value="">Select bank code:</option>
+                                                        <option v-for="bank in bank" :key="bank.id"
+                                                            v-bind:value="bank.code">
+                                                            {{bank.code}} - {{bank.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span>Bank account:</span>
+                                                    <input type="number" v-model="user.bank_account"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <span>Bank account holder:</span>
+                                                    <input type="text" v-model="user.bank_name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="button-group d-flex pt-25">
+                                                <button v-on:click="handleSubmit"
+                                                    class="btn btn-primary-boxity btn-default btn-squared text-capitalize"
+                                                    data-dismiss="modal">Add new
+                                                </button>
+                                                <button class="btn btn-light btn-default btn-squared fw-400
                                                         text-capitalize b-light color-light" aria-label="Close"
-                                                        data-dismiss="modal">cancel
-                                                    </button>
-                                                </div>
-                                            </form>
+                                                    data-dismiss="modal">cancel
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,19 +106,36 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="members"
-                            :items-per-page="10" class="elevation-1" :search="search">
+                        <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
+                            :items="members" :items-per-page="10" class="elevation-1" :search="search"
+                            :expanded.sync="expanded" show-expand>
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/detail/supplier/${item.id}`" class="edit">
-                                    <i class="fad fa-edit"></i></router-link>
+                                    <i class="fad fa-eye"></i></router-link>
                                 <a v-on:click="deleteData(item.id)" class="remove">
                                     <i class="fad fa-trash"></i></a>
+                            </template>
+                            <template v-slot:item.email="{item}">
+                                <a :href="`mailto:`+item.email">{{item.email}}</a>
+                            </template>
+                            <template v-slot:expanded-item="{ headers, item }">
+                                <td :colspan="headers.length">
+                                    <b>More info about {{item.supplier_name}}:</b> <br>
+                                    Address: {{item.address}} <br>
+                                    City: {{item.city}} <br>
+                                    Phone number: {{item.phone}} <br>
+                                    NPWP: {{item.npwp}} <br>
+                                    Site: <a :href="item.site">{{item.site}}</a>
+                                </td>
                             </template>
                         </v-data-table>
                     </div>
                 </div>
             </div>
         </div>
+        <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? You can see and learn from
+            <a href="https://help.boxity.id/associate/suppliers" target="_blank">Help and
+                Documentation</a>'s page.</span>
     </div>
 </template>
 <script>
@@ -163,24 +147,18 @@
         },
         data() {
             return {
+                bank: {},
+                expanded: [],
                 members: [],
+                loading: true,
                 search: '',
                 key: 1,
                 headers: [{
-                    text: 'Supplier Code',
-                    value: 'customerCode'
-                }, {
-                    text: 'Supplier Name',
-                    value: 'customerName'
-                }, {
-                    text: 'Billing Address',
-                    value: 'customerAddress'
+                    text: 'Company Name',
+                    value: 'supplier_name'
                 }, {
                     text: 'Email',
-                    value: 'customerEmail'
-                }, {
-                    text: 'City',
-                    value: 'customerCity'
+                    value: 'email'
                 }, {
                     text: 'Actions',
                     value: 'actions',
@@ -188,170 +166,100 @@
                     sortable: false
                 }],
                 count: 0,
-                user: {},
-                errors: {
-                    name: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
+                user: {
+                    bank_code: '',
                 },
             };
         },
         mounted() {
             this.loadSuppliers();
-            this.generatePassword();
         },
         created() {
             this.countSuppliers();
         },
         methods: {
-            generatePassword() {
-                const genPass = this.rndStr(8);
-                this.user.password = genPass;
-                this.user.confirmPassword = genPass;
-            },
             loadSuppliers() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 axios.get("api/suppliers")
                     .then(res => {
                         this.members = res.data;
+                        this.loading = false;
                     });
-                this.$Progress.finish();
+                axios.get('/api/bank').then(resp => {
+                    this.bank = resp.data;
+                });
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteData(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
-                    title: 'Delete supplier?',
+                    title: 'Delete company?',
                     showCancelButton: true,
                     cancelButtonColor: '#d33',
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
-                    await axios.delete('api/suppliers/' + id);
+                    // this.$Progress.start();
+                this.$isLoading(true);
+                    await axios.delete('/api/suppliers/' + id);
                     this.loadSuppliers();
                     this.countSuppliers();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
-                        text: 'Success deleted current suppliers'
+                        text: 'Success deleted current company'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
-            },
-            validatePassword() {
-                const {
-                    password,
-                    confirmPassword
-                } = this.user;
-
-                if (!_.isEmpty(password)) {
-                    if (password.length < 8) {
-                        this.errors = {
-                            ...this.errors,
-                            password: 'Min have 8 characters or more.',
-                        };
-                        return false;
-                    }
-                    if (_.isNil(confirmPassword) || confirmPassword.length < 8) {
-                        this.errors = {
-                            ...this.errors,
-                            confirmPassword: 'Min have 8 characters or more.',
-                        };
-                        return false;
-                    }
-                    if (password !==
-                        confirmPassword) {
-                        this.errors = {
-                            ...this.errors,
-                            confirmPassword: 'Password does not match!',
-                        };
-                        return false;
-                    }
-                    this.errors = {
-                        ...this.errors,
-                        password: '',
-                        confirmPassword: '',
-                    };
-                }
-                return true;
-            },
-            async validateData() {
-                const isPasswordValid = this.validatePassword();
-                if (!isPasswordValid) return false;
-
-                const {
-                    data
-                } = await axios.post('/api/users/check-user-data', this.user);
-                if (data.existingEmail) {
-                    this.errors = {
-                        ...this.errors,
-                        email: 'Email already exists!',
-                    };
-                } else {
-                    this.errors = {
-                        ...this.errors,
-                        email: ''
-                    };
-                }
-                if (data.existingName) {
-                    this.errors = {
-                        ...this.errors,
-                        name: 'Name already exists!',
-                    };
-                } else {
-                    this.errors = {
-                        ...this.errors,
-                        name: ''
-                    };
-                }
-                return !data.existingEmail && !data.existingName;
             },
             async handleSubmit(event) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 event.preventDefault();
 
-                const isValid = await this.validateData();
-                if (!isValid) return false;
-
                 const payload = {};
-                _.forEach(['name', 'email', 'customerCode', 'customerName', 'customerAddress',
-                        'customerCity', 'customerPhone', 'customerEmail', 'customerWebsite', 'customerNPWP'
+                _.forEach(['supplier_name', 'supplier_code', 'address', 'city', 'phone', 'email', 'npwp', 'site',
+                        'bank_code', 'bank_account', 'bank_name'
                     ],
                     (field) => {
                         if (this.user[field]) {
                             payload[field] = this.user[field];
                         }
                     });
-                if (!_.isEmpty(this.user.password)) {
-                    payload.password = this.user.password;
-                }
+                // console.log(this.user);
                 await axios.post('/api/suppliers', payload).then(response => {
                     this.loadSuppliers();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success New supplier',
+                        text: 'Success new company.',
                     });
                     this.user = {
-                        name: '',
+                        supplier_name: '',
+                        supplier_name: '',
+                        address: '',
+                        city: '',
+                        phone: '',
                         email: '',
-                        password: '',
-                        confirmPassword: '',
-                        customerCode: '',
-                        customerName: '',
-                        customerAddress: '',
-                        customerCity: '',
-                        customerPhone: '',
-                        customerEmail: '',
-                        customerWebsite: '',
-                        customerNPWP: '',
+                        npwp: '',
+                        site: '',
+                        bank_code: '',
+                        bank_account: '',
+                        bank_name: '',
                     };
-                    const genPass = this.rndStr(8);
-                    this.user.password = genPass;
-                    this.user.confirmPassword = genPass;
                     this.countSuppliers();
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
+                    this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -370,15 +278,6 @@
                 const data = await axios.get('/api/count-suppliers');
                 this.count = data.data;
             },
-            rndStr(len) {
-                let text = ""
-                let chars = "abcdefghijklmnopqrstuvwxyz1234567890"
-
-                for (let i = 0; i < len; i++) {
-                    text += chars.charAt(Math.floor(Math.random() * chars.length))
-                }
-                return text
-            }
         },
     }
 

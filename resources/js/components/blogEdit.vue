@@ -54,7 +54,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-success btn-default btn-squared px-30">submit</button>
+                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -87,20 +87,25 @@
         },
         methods: {
             async loadDataBlog() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/blogs/' + this.$route.params.id);
                 this.blog = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/blogs/' + this.$route.params.id, this.blog);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update blog.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/blog-management');
             }
         },

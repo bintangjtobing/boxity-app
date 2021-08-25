@@ -13,7 +13,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import vuetify from './plugins/vuetify.js';
 import 'feather-icons';
 import moment from 'moment';
-import VueProgressBar from 'vue-progressbar'
+import VueProgressBar from 'vue-progressbar';
+import loading from 'vuejs-loading-screen'
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -31,6 +32,12 @@ const options = {
     autoRevert: true,
     inverse: false
 };
+Vue.use(loading, {
+    bg: '#e3e1e1',
+    icon: 'fad fa-spinner fa-pulse',
+    size: 2,
+    icon_color: 'rgb(249, 91, 18)',
+})
 Vue.use(VueProgressBar, options);
 
 import App from './components/App.vue';
@@ -77,7 +84,7 @@ import settings from './components/settings.vue';
 import customers from './components/customers.vue';
 import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
-import supplierForm from './components/supplierForm.vue';
+import supplierForm from './components/suppliersForm.vue';
 import warehouseMgmt from './components/warehouseMgmt.vue';
 import popupWindow from './components/popupWindow.vue';
 import warehouseForm from './components/warehouseForm.vue';
@@ -465,7 +472,10 @@ const routes = [{
         component: permissionRole
     }
 ]
-
+Vue.filter('toDecimal', num => {
+    const number = (num / 1).toFixed(0).replace('.', '.');
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+});
 const router = new VueRouter({
     mode: 'history',
     routes: routes,

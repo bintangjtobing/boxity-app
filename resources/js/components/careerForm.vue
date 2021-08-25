@@ -3,7 +3,8 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">new job vacancy <span>- {{job.title}}</span></h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">new job vacancy <span>- {{job.title}}</span>
+                    </h2>
                 </div>
             </div>
         </div>
@@ -90,7 +91,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-success btn-default btn-squared px-30">submit</button>
+                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +125,8 @@
         },
         methods: {
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/career', {
                     title: this.job.title,
                     location: this.job.location,
@@ -132,15 +134,18 @@
                     partof: this.job.part,
                     desc: this.job.description
                 }).then(response => {
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New job vacancy.',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.$router.push('/career');
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

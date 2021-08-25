@@ -102,11 +102,13 @@
         },
         methods: {
             async loadDataUser() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/u/' + this.$route.params.username);
                 this.title.name = resp.data.name;
                 this.users = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             }
         },
     }

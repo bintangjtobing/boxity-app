@@ -17,7 +17,7 @@ class salesInvoice extends Model
     }
     public function customers()
     {
-        return $this->belongsTo(User::class, 'customer');
+        return $this->belongsTo(customers::class, 'customer');
     }
     public function createdby()
     {

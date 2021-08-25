@@ -18,7 +18,7 @@ class itemOnSalesController extends Controller
 {
     public function getItemSales()
     {
-        return response()->json(itemsSales::where('so_status', 1)->where('created_by', Auth::id())->with('item', 'used', 'usedBy', 'requestedBy')->get(), 200);
+        return response()->json(itemsSales::where('so_status', 1)->where('created_by', Auth::id())->with('item', 'used', 'usedBy', 'requestedBy', 'customer', 'warehouse')->get(), 200);
     }
 
     public function getItemSalesById($id)
@@ -40,7 +40,6 @@ class itemOnSalesController extends Controller
             ]);
 
         $itemsSales = new itemsSales();
-        $itemsSales->warehouseId = $request->warehouseid;
         $itemsSales->item_code = $request->itemid;
         $itemsSales->qtyOrdered = $request->qtyOrdered;
         $itemsSales->qtyShipped = '0';
@@ -90,9 +89,10 @@ class itemOnSalesController extends Controller
     {
         return response()->json(itemsSales::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('created_by', Auth::id())->get());
     }
-    public function postItemSalesInvoiceSdr(Request $request) {
+    public function postItemSalesInvoiceSdr(Request $request)
+    {
         $data = [];
-        foreach ($request->all() as  $req ) {
+        foreach ($request->all() as  $req) {
             foreach ($req['items'] as $elm) {
                 $temp = [
                     'item_code' => $elm['item']['id'],
@@ -109,7 +109,7 @@ class itemOnSalesController extends Controller
             }
         }
         $result = itemsSales::insert($data);
-        return response()->json('MASUK'.$result, 200);
+        return response()->json('MASUK' . $result, 200);
     }
     public function postItemPurchaseSdr(Request $request)
     {
@@ -194,6 +194,10 @@ class itemOnSalesController extends Controller
         $itemSalesing->unit = $request->unit;
         $itemSalesing->price = $request->price;
         $itemSalesing->remarks = $request->remarks;
+        $itemSalesing->customerId = $request->customerid;
+        $itemSalesing->warehouseId = $request->warehouseid;
+        $itemSalesing->driver_name = $request->driver_name;
+        $itemSalesing->driver_nopol = $request->driver_nopol;
 
         // po status 1 means stored at database but not with the purchase order id;
         $itemSalesing->si_status = '1';
@@ -216,6 +220,9 @@ class itemOnSalesController extends Controller
         $itemSalesing->unit = $request->unit;
         $itemSalesing->price = $request->price;
         $itemSalesing->remarks = $request->remarks;
+        $itemSalesing->driver_name = $request->driver_name;
+        $itemSalesing->driver_nopol = $request->driver_nopol;
+
 
         $itemSalesing->si_status = '2';
         $itemSalesing->salesingId = $si_number;
@@ -235,7 +242,7 @@ class itemOnSalesController extends Controller
     }
     public function getItemSalesSIById($id)
     {
-        return response()->json(itemsSales::where('id', $id)->with('item', 'requestedBy')->first());
+        return response()->json(itemsSales::where('id', $id)->with('item', 'warehouse', 'customer', 'requestedBy')->first());
     }
     public function getItemSalesBySiNumber($si_number)
     {
@@ -253,6 +260,9 @@ class itemOnSalesController extends Controller
         $itemSalesing->qtyShipped = $request->qtyShipped;
         $itemSalesing->price = $request->price;
         $itemSalesing->remarks = $request->remarks;
+        $itemSalesing->driver_name = $request->driver_name;
+        $itemSalesing->driver_nopol = $request->driver_nopol;
+
         $itemSalesing->updated_by = Auth::id();
         $itemSalesing->save();
         return response()->json($itemPurchase, 200);

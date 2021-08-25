@@ -13,3 +13,4 @@ class spaController extends Controller
         return view('layout', ['company' => $company]);
     }
 }
+    

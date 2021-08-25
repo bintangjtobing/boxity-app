@@ -157,13 +157,17 @@
                                                                 <span for="name1">Telegram ID:</span>
                                                                 <input type="text" class="form-control" id="name1"
                                                                     v-model="user.telegram_id">
+                                                                <span><a href="https://help.boxity.id/notifier/telegram-notificaion"
+                                                                        target="_blank"><i
+                                                                            class="fad fa-info-circle"></i> How can
+                                                                        you get your ID's telegram?</a></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="button-group d-flex pt-25 justify-content-start">
                                                     <button type="submit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2">Update
+                                                        class="btn btn-primary-boxity btn-default btn-squared text-capitalize radius-md shadow2">Update
                                                         details
                                                     </button>
                                                 </div>
@@ -216,7 +220,7 @@
                                             </div>
                                             <div class="button-group d-flex pt-25 justify-content-start">
                                                 <button v-on:click="updatePassword" v-on:keyup.enter="updatePassword"
-                                                    class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2"
+                                                    class="btn btn-primary-boxity btn-default btn-squared text-capitalize radius-md shadow2"
                                                     type="submit">Update
                                                     password
                                                 </button>
@@ -258,12 +262,14 @@
         },
         methods: {
             async loadDataUser() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/u/' + this.$route.params.username);
                 this.user = resp.data;
                 this.user.facebook = '';
                 this.user.instagram = '';
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             fileUpload(e) {
                 this.imageLocation = e.target.files[0];
@@ -292,17 +298,20 @@
                 data.append('instagram', this.user.instagram);
                 data.append('telegram_id', this.user.telegram_id);
 
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 axios.post('/api/profile/' + this.user.id, data, config).then(response => {
-                    console.log(response);
+                    // console.log(response);
                 });
                 this.loadDataUser();
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Update your data succced.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             gatherFormData() {
                 return data;
@@ -369,10 +378,13 @@
                 const isValid = await this.validateData();
                 if (!isValid) return false;
                 // const pass = this.user.password;
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 axios.patch('/api/profile/password-update/' + this.user.id, this.user);
                 this.loadDataUser();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

@@ -46,10 +46,12 @@
         },
         methods: {
             async loadJob() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/blogs/' + this.$route.params.id);
                 this.blogs = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
         },
     }

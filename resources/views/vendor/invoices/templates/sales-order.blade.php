@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Report Sales Order</title>
+    <title>Report Sales Order - {{$soNumber}}</title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
                 </td>
             </tr>
         </table>
-        <hr/>
+        <hr />
         <table style="text-align: center !important;">
             <tr style="font-size: 12px; color: #190902;">
                 <td>Invoice Date</td>
@@ -30,7 +30,7 @@
                 <td>{{ $createdAt }}</td>
                 <td>{{ $soNumber }}</td>
             </tr>
-            <hr/>
+            <hr />
         </table>
     </header>
     <main>
@@ -82,7 +82,8 @@
             <tfoot style="font-size: 12px; color: #190902;">
                 <tr>
                     <td colspan="2" rowspan="3" style="text-align: left !important; vertical-align: top; ">
-                        <div style="font-size:15px; font-weight:700; color: #F95B12; margin: 0 0 7px 0">Payment Method</div>
+                        <div style="font-size:15px; font-weight:700; color: #F95B12; margin: 0 0 7px 0">Payment Method
+                        </div>
                         <div style="font-size: 12px; font-weight:700; color: #190902;">Bank Central Asia</div>
                         <div style="font-size: 12px; color: #190902;">PT COMPANY TERDETEKSI</div>
                         <div style="font-size: 12px; color: #190902;">365 123 4567</div>
@@ -108,7 +109,7 @@
                 <td style="font-size: 15px; font-weight: 700; color: #F95B12;">Terbilang</td>
             </tr>
             <tr>
-                <td style="font-size: 12px; font-weight: 700; color: #190902;"><i>{{ $counted }}</i></td>
+                <td style="font-size: 12px; font-weight: 400; color: #190902;"><i>{{ $counted }}</i></td>
             </tr>
             <!-- <span style="font-size: 15px; font-weight: 700; color: #F95B12;">Terbilang</span>
             <span style="font-size: 12px; font-weight: 700; color: #190902;">{{ $counted }}</span> -->
@@ -119,7 +120,9 @@
             <tr>
                 <td style="width:80% !important;">
                     <div style="font-size:15px; font-weight:700; color: #F95B12;">NOTES</div>
-                    <div style="font-size: 12px; color: #190902;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </div>
+                    <div style="font-size: 12px; color: #190902;">Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
+                        1500s, </div>
                 </td>
                 <td id="barcode" style="text-align: right !important;">
                     <img src="data:image/png;base64,{!! $qrcode !!}">
@@ -215,13 +218,11 @@
     #logo img {
         height: 75px;
     }
-    
     #title span {
         font-size: 32px;
         font-weight: 700;
         color: #F95B12;
     }
-    
     #subHeader {
         text-align: center !important;
         border-top: 1px solid black;
@@ -279,7 +280,7 @@
         border-spacing: 0;
         margin-bottom: 20px;
     }
-    
+
 
     table th {
         white-space: nowrap;
@@ -301,21 +302,21 @@
     thead tr {
         background: #f35e00;
     }
-    
+
     main thead th {
         padding: 13px 20px !important;
         color: #FFF;
-        text-align:center !important;
+        text-align: center !important;
     }
-    
+
     main tbody tr:nth-child(odd) {
         background: #FEDED0;
     }
-    
+
     main tbody tr:nth-child(even) {
         background: #FDBDA0;
     }
-    
+
     main tbody td {
         padding: 13px 20px !important;
     }
@@ -323,21 +324,21 @@
     main tfoot td {
         padding: 7px 20px !important;
     }
-    
+
     main #counted td {
         padding: 0 !important;
         background: #FFF;
         text-align: left;
     }
-    
-    footer #note tr{
+
+    footer #note tr {
         background: #FFF;
     }
 
     footer #note td {
         text-align: left;
     }
-    
+
     #notices {
         padding-left: 6px;
         border-left: 6px solid #f35e00;

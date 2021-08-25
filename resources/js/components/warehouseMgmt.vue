@@ -7,7 +7,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addWarehouse"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Warehouse</a>
                         </div>
                     </div>
@@ -23,10 +23,17 @@
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
                                 <v-data-table :headers="headers" :search="search" multi-sort :items="warehouseData"
-                                    :items-per-page="10" class="elevation-1">
+                                    :items-per-page="10" class="elevation-1" :expanded.sync="expanded" show-expand>
+                                    <template v-slot:expanded-item="{ headers, item }">
+                                        <td :colspan="headers.length">
+                                            <b>More info about {{item.warehouse_name}}:</b> <br>
+                                            Address: <span v-html="item.address"></span> <br>
+                                            Remarks: {{item.remarks}} <br>
+                                        </td>
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/warehouse/${item.id}`" class="edit">
-                                            <i class="fad fa-edit"></i></router-link>
+                                            <i class="fad fa-eye"></i></router-link>
                                         <a v-on:click="deleteWarehouse(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
@@ -83,7 +90,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -113,18 +120,12 @@
                 },
                 // datatable
                 search: '',
+                expanded: [],
                 key: 1,
                 warehouseData: [],
                 headers: [{
-                    text: 'Warehouse Code',
-                    value: 'warehouse_code'
-                }, {
                     text: 'Name',
                     value: 'warehouse_name'
-                }, {
-                    text: 'Address',
-                    filterable: false,
-                    value: 'address'
                 }, {
                     text: 'Actions',
                     value: 'actions',
@@ -136,10 +137,12 @@
             }
         },
         created() {
-            this.$Progress.start();
+            // this.$Progress.start();
+                this.$isLoading(true);
             this.loadWarehouse();
             this.loadUser();
-            this.$Progress.finish();
+            // this.$Progress.finish();
+                this.$isLoading(false);
         },
         methods: {
             async loadWarehouse() {
@@ -151,9 +154,11 @@
                 this.user = resp.data;
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/warehouse', this.warehouse).then(response => {
                     this.loadWarehouse();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -166,9 +171,11 @@
                         remarks: '',
                         pic: '',
                     };
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -184,6 +191,7 @@
                 });
             },
             async deleteWarehouse(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data warehouse?',
                     showCancelButton: true,
@@ -191,15 +199,18 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/warehouse/' + id);
                     this.loadWarehouse();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current warehouse.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

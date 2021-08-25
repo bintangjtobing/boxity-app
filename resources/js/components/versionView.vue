@@ -65,14 +65,16 @@
         },
         methods: {
             async loadDataVersion() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/version-control/' + this.$route.params.version);
                 this.version = resp.data[0];
 
                 // Load version
                 const respVersion = await axios.get('/api/version-control');
                 this.vControl = respVersion.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async seeVersion(version) {
                 const getVer = await axios.get('/api/version-control/' + version);

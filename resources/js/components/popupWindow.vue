@@ -34,7 +34,7 @@
                                                         <div class="form-row justify-content-end">
                                                             <div class="layout-button mt-25">
                                                                 <button type="submit"
-                                                                    class="btn btn-success btn-default btn-squared px-30">Save
+                                                                    class="btn btn-secondary-boxity btn-default btn-squared px-30">Save
                                                                     popup</button>
                                                             </div>
                                                         </div>
@@ -90,27 +90,33 @@
         },
         methods: {
             async loadPopup() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/popup-management');
                 this.popupCurrent = resp.data[0];
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/popup-management', this.popup).then(response => {
                     this.popup = {
                         url: '',
                         title: ''
                     }
                     this.loadPopup();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New popup.',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

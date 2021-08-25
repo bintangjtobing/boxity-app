@@ -12,7 +12,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addInventoryItem"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Inventory Item</a>
                         </div>
                     </div>
@@ -29,7 +29,10 @@
                                 </v-card-title>
                                 <v-data-table loading loading-text="Loading... Please wait..." :search="search"
                                     :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
-                                    class="elevation-1" group-by="item_group.name">
+                                    class="elevation-1" group-by="warehouse.warehouse_name">
+                                    <template v-slot:item.qty="{ item }">
+                                        {{item.qty|toDecimal}}
+                                    </template>
                                     <template v-slot:item.type="{ item }">
                                         <span v-if="item.type=='1'">Stock</span>
                                         <span v-if="item.type=='2'">Non Stock</span>
@@ -64,6 +67,33 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span>For Customer:</span>
+                                            <select v-model="inventorydata.customerId"
+                                                class="form-control form-control-default"
+                                                v-on:change="selectCustomer($event)">
+                                                <option value="" disabled>Select Customer Connected</option>
+                                                <option v-for="customers in customers" :key="customers.id"
+                                                    :value="customers.id">
+                                                    {{customers.company_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span>In Warehouse:</span>
+                                            <select v-model="inventorydata.warehouseid"
+                                                class="form-control form-control-default"
+                                                @change="selectWarehouse($event)" :disabled="warehouseSelect">
+                                                <option value="" disabled>Select Warehouse</option>
+                                                <option v-for="warehouses in warehouses"
+                                                    :key="warehouses.warehouse_detail.id"
+                                                    :value="warehouses.warehouse_detail.id">
+                                                    {{warehouses.warehouse_detail.warehouse_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <span>Item Code:</span>
@@ -181,7 +211,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -210,12 +240,17 @@
                     type: '',
                     addInventoryItem: '',
                     item_group: '',
+                    customerId: '',
+                    warehouseid: '',
                 },
                 // datatable
                 search: '',
                 key: 1,
                 inventoryItem: [],
                 headers: [{
+                    text: 'Customer',
+                    value: 'customer.company_name'
+                }, {
                     text: 'Item Code',
                     value: 'item_code'
                 }, {
@@ -244,7 +279,10 @@
                 }],
                 // end datatable
                 inventoryOpt: {},
+                customers: {},
+                warehouses: {},
                 countItems: '0',
+                warehouseSelect: true,
             }
         },
         created() {
@@ -252,21 +290,30 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/inventory-item');
                 this.inventoryItem = resp.data;
+
                 const count = await axios.get('/api/count-item-group');
                 this.countItems = count.data;
 
                 // Load item group
                 const respItemGroup = await axios.get('/api/item-group');
                 this.inventoryOpt = respItemGroup.data;
-                this.$Progress.finish();
+
+                const respCust = await axios.get('/api/customers');
+                this.customers = respCust.data;
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/inventory-item', this.inventorydata).then(response => {
                     this.loadItem();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -285,9 +332,11 @@
                         gr_weight: '',
                         volume: '',
                     };
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -303,6 +352,7 @@
                 });
             },
             async deleteInventoryItem(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data item?',
                     showCancelButton: true,
@@ -312,6 +362,8 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/inventory-item/' + id);
                     this.loadItem();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
@@ -319,6 +371,14 @@
                     });
                 }
             },
+            async selectCustomer(event) {
+                this.warehouseSelect = false;
+                const warehouseData = await axios.get('/api/warehouse-customer/' + event.target.value);
+                this.warehouses = warehouseData.data;
+            },
+            selectWarehouse(event) {
+                console.log(event.target.value)
+            }
         },
     }
 

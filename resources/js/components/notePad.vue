@@ -16,7 +16,7 @@
                             <div class="card border-0">
                                 <div class="card-body px-15 pt-30">
                                     <div class="px-3">
-                                        <a href="#" class="btn btn-primary btn-default btn-rounded btn-block"
+                                        <a href="#" class="btn btn-primary-boxity btn-default btn-rounded btn-block"
                                             data-toggle="modal" data-target="#noteModal"> <span
                                                 data-feather="plus"></span>
                                             Add Note</a>
@@ -207,7 +207,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -245,59 +245,75 @@
         },
         methods: {
             async loadNote() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad');
                 this.notes = resp.data;
                 this.title = '- all data';
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async favoriteData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad/favorite');
                 this.notes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.title = '- favorite data';
             },
             async personalData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad/personal');
                 this.notes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.title = '- personal data';
             },
             async workData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad/work');
                 this.notes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.title = '- work data';
             },
             async socialData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad/social');
                 this.notes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.title = '- social data';
             },
             async importantData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/notepad/important');
                 this.notes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.title = '- important data';
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/notepad', this.note).then(response => {
                     this.loadNote();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New notepad',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -313,6 +329,7 @@
                 });
             },
             async deleteNotepad(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     icon: 'warning',
                     title: 'Are you sure want to delete this notepad?',
@@ -321,23 +338,29 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/notepad/' + id);
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.loadNote();
                 }
             },
             async favoriteNotepad(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/notepad/favorite/' + id);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 // console.log('200')
                 this.loadNote();
             },
             async unFavoriteNotepad(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/notepad/unfavorite/' + id);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 // console.log('200')
                 this.loadNote();
             },

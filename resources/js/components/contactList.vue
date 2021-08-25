@@ -2,24 +2,9 @@
     <div>
         <div class="row mt-4">
             <div class="col-12">
-                <div class="contact-breadcrumb">
-
-                    <div class="breadcrumb-main add-contact justify-content-sm-between ">
-                        <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                            <div class="d-flex align-items-center add-contact__title justify-content-center mr-sm-25">
-                                <h4 class="text-capitalize fw-500 breadcrumb-title">Contacts</h4>
-                                <span class="sub-title ml-sm-25 pl-sm-25"></span>
-                            </div>
-
-                            <!-- <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                <i class="fal fa-search"></i>
-                                <input class="form-control mr-sm-2 border-0 box-shadow-none" type="search"
-                                    placeholder="Search by Name" aria-label="Search">
-                            </form> -->
-
-                        </div>
-                    </div>
-
+                <div class="breadcrumb-main">
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Contacts
+                    </h2>
                 </div>
             </div>
         </div>
@@ -57,6 +42,10 @@
                 </div>
             </div>
         </div>
+        <span class="mb-3"><i class="fad fa-info-circle"></i> Having a trouble? you can see and learn from
+            <a href="https://help.boxity.id/general-applications/user-contact-list" target="_blank">Help
+                and
+                Documentation</a>'s page.</span>
     </div>
 </template>
 <script>
@@ -74,10 +63,12 @@
         },
         methods: {
             async loadContact() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/contact-list');
                 this.users = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
         },
     }

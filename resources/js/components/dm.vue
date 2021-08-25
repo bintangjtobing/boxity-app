@@ -45,12 +45,12 @@
                 const res = await axios.get('/getUserLoggedIn');
                 const idGet = res.data.id;
                 Echo.private('messages.' + idGet).notification((notification) => {
-                        console.log('test' + notification.type); //This never logs
+                        // console.log('test' + notification.type); //This never logs
                     })
                     .listen('newMessage', (e) => {
                         this.handleIncoming(e.message);
                         if (Notification.permission === "granted") {
-                            console.log('This browser does support desktop notification' + status);
+                            // console.log('This browser does support desktop notification' + status);
                             Push.create("New message here!", {
                                 body: 'Click to see the new message.',
                                 link: '/direct-message',
@@ -68,8 +68,7 @@
                             Notification.requestPermission(function (permission) {
                                 // If the user accepts, let's create a notification
                                 if (permission === "granted") {
-                                    console.log('This browser does support desktop notification' +
-                                        status);
+                                    // console.log('This browser does support desktop notification' + status);
                                     Push.create("New message here!", {
                                         body: 'Click to see the new message.',
                                         link: '/direct-message',

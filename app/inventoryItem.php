@@ -23,6 +23,8 @@ class inventoryItem extends Model
         'volume',
         'price',
         'customerId',
+        'userid',
+        'warehouseid'
     ];
     public function itemGroup()
     {
@@ -30,6 +32,14 @@ class inventoryItem extends Model
     }
     public function customer()
     {
-        return $this->belongsTo(User::class, 'customerId');
+        return $this->belongsTo(customers::class, 'customerId');
+    }
+    public function warehouse()
+    {
+        return $this->belongsTo(warehouseList::class, 'warehouseid');
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'userid');
     }
 }

@@ -26,6 +26,11 @@ class itemsPurchase extends Model
         'purchasingId',
         'created_by',
         'updated_by',
+        'supplierId',
+        'warehouseId',
+        'customerId',
+        'driver_name',
+        'driver_nopol'
     ];
     public function item()
     {
@@ -34,6 +39,18 @@ class itemsPurchase extends Model
     public function requestedBy()
     {
         return $this->belongsTo(User::class, 'requested_by');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(suppliers::class, 'supplierId');
+    }
+    public function warehouse()
+    {
+        return $this->belongsTo(warehouseList::class, 'warehouseId');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(customers::class, 'customerId');
     }
     public function used()
     {

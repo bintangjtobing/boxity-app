@@ -10,7 +10,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // LOGS VIEWER
 Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/check-company', 'purchasingController@getCompany');
-
+Route::get('/check-company-warehouse', 'apiController@customerRelateWarehouse');
 Route::get('/test-pdf', function () {
     $pdf = App::make('dompdf.wrapper');
     $pdf->loadHTML('<h1>Test</h1>');
@@ -33,6 +33,9 @@ Route::post('/users/check-user-data', 'apiController@checkUserData');
 // get user list without user logged in
 Route::get('/userGetWithOutLoggedIn', 'apiController@userGetWithOutLoggedIn');
 Route::get('/assignees', 'apiController@getAssignee');
+
+// BANK LISTS
+Route::get('/bank', 'apiController@getBankList');
 
 // Issue API
 Route::post('/issue', 'apiController@addNewIssue');
@@ -147,6 +150,16 @@ Route::post('/customers', 'apiController@addCustomer');
 Route::get('/count-customers', 'apiController@countCustomers');
 Route::patch('/customers/{id}', 'apiController@updateCustomer');
 
+// User in Customer
+Route::get('/user-customer/{id}', 'apiController@getUserCustomer');
+Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomer');
+Route::get('/customer-warehouse/{id}', 'apiController@getCustomerWarehouse');
+Route::post('/user-customer/{id}', 'apiController@postUserCustomer');
+// Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomerById');
+Route::delete('/user-customer/{id}', 'apiController@deleteUserCustomerById');
+Route::patch('/user-customer/{id}', 'apiController@postUserCustomerById');
+Route::get('/users-customer/connect', 'apiController@getUserOnCustomers');
+
 // Suppliers API
 Route::get('/suppliers', 'apiController@getSuppliers');
 Route::get('/suppliers/{id}', 'apiController@getSuppliersbyId');
@@ -165,6 +178,7 @@ Route::patch('/warehouse/{id}', 'apiController@postWarehouseById');
 
 // Warehouse Customer
 Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomer');
+Route::get('/warehouse-customers/{id}', 'apiController@getWarehouseCustomers');
 Route::post('/warehouse-customer/{id}', 'apiController@postWarehouseCustomer');
 // Route::get('/warehouse-customer/{id}', 'apiController@getWarehouseCustomerById');
 Route::delete('/warehouse-customer/{id}', 'apiController@deleteWarehouseCustomerById');
@@ -193,6 +207,7 @@ Route::get('/inventory-item/{id}', 'apiController@getInventoryItemById');
 Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
 Route::get('/count-inventory-item', 'apiController@countInventoryItem');
 Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
+Route::get('/inventory-item/w/{id}/{customerid}', 'apiController@getInventoryByWarehouse');
 
 // History Ittem
 Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
@@ -317,7 +332,6 @@ Route::post('/sales/order', 'salesController@postSalesOrder');
 Route::get('/sales/order/{id}', 'salesController@getSalesOrderById');
 Route::patch('/sales/order/{id}', 'salesController@postSalesOrderById');
 Route::delete('/sales/order/{id}', 'salesController@deleteSalesOrderById');
-Route::get('/report/sales-order/{id}', 'salesController@reportSalesOrder');
 Route::get('/count-sales-order', 'salesController@countSalesOrder');
 
 ///////////////// SALES INVOICE ///////////////////////////////////

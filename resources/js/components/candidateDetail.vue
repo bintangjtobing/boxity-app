@@ -106,10 +106,12 @@
         },
         methods: {
             async loadCandidate() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/candidates/' + this.$route.params.id);
                 this.candidates = resp.data[0];
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             }
         },
     }

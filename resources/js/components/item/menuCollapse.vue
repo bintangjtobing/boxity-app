@@ -2,7 +2,7 @@
         <section>
             <div class="button" @click="show" :style="isSidebar ? `` : `height: 42px `" @mouseover="content = true"
                 @mouseleave="content = false">
-                <span class="material-icons-outlined nav-icon icon" style="color: #eda260"
+                <span class="material-icons-outlined nav-icon icon" style="font-size: 14px; color: rgba(0,0,0,.2)"
                     :style="routerLink ? `margin: 0 14px 0 0` : `margin: 0 10px 0 0`">{{ icon }}</span>
                 <span class="menu menu-text">{{ title }}</span>
             </div>
@@ -76,7 +76,7 @@
             color: #262729;
             display: flex;
             align-items: center;
-            padding: 10px 2rem;
+            padding: 10px 1.25rem;
             position: relative;
         }
 
@@ -103,9 +103,10 @@
         }
 
         .menu {
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 600;
+            color: #f06532;
+            text-transform: capitalize;
         }
 
         .expandable {

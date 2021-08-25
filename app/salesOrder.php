@@ -11,13 +11,9 @@ class salesOrder extends Model
         'so_number', 'customer', 'order_date', 'status', 'created_by',
         'updated_by', 'remarks'
     ];
-    public function customer()
-    {
-        return $this->belongsTo(User::class, 'customer');
-    }
     public function customers()
     {
-        return $this->belongsTo(User::class, 'customer');
+        return $this->belongsTo(customers::class, 'customer');
     }
     public function createdby()
     {

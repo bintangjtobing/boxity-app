@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="button-group d-flex pt-25">
                                     <button type="submit"
-                                        class="btn btn-primary btn-default btn-squared text-capitalize">Update
+                                        class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                     </button>
                                 </div>
                             </form>
@@ -106,6 +106,7 @@
             },
             async handleSubmit() {
                 await axios.patch('/api/warehouse/' + this.$route.params.id, this.warehouse);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',

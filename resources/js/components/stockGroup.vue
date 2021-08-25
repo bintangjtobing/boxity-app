@@ -8,7 +8,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addStockGroup"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Stock Group</a>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -137,19 +137,24 @@
         },
         methods: {
             async loadStockGroup() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/stock-group');
                 this.stockGroupData = resp.data;
 
                 // LoadUser
                 const count = await axios.get('/api/count-stock-group');
                 this.countStocks = count.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/stock-group', this.stockgroup).then(response => {
                     this.loadStockGroup();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -165,6 +170,7 @@
                     };
                 }).catch(error => {
                     this.$Progress.fail();
+                   document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -178,9 +184,11 @@
                         }
                     });
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteStockGroup(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data stock group?',
                     showCancelButton: true,
@@ -190,6 +198,8 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/stock-group/' + id);
                     this.loadStockGroup();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',

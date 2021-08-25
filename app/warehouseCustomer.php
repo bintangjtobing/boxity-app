@@ -16,7 +16,7 @@ class warehouseCustomer extends Model
     }
     public function customerDetail()
     {
-        return $this->belongsTo(User::class, 'customer_id');
+        return $this->belongsTo(customers::class, 'customer_id');
     }
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',

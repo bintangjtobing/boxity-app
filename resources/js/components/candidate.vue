@@ -44,6 +44,9 @@
 
             </div>
         </div>
+        <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? You can see and learn from
+            <a href="https://help.boxity.id/human-resources-management/candidate" target="_blank">Help and
+                Documentation</a>'s page.</span>
     </div>
 </template>
 <script>
@@ -87,16 +90,19 @@
         },
         methods: {
             async loadCandidates() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const res = await axios.get('/api/candidates');
                 this.candidates = res.data;
                 axios.get("/api/users")
                     .then(resp => {
                         this.members = resp.data;
                     });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteData(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data candidate?',
                     showCancelButton: true,
@@ -104,15 +110,18 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/candidates/' + id);
                     this.loadCandidates();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current candidates'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

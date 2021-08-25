@@ -97,7 +97,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Update item
                                             list</button>
                                     </div>
@@ -266,7 +266,7 @@
                         <div class="form-group my-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-success float-right btn-default btn-squared
+                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Save</button>
                                 </div>
                             </div>
@@ -387,9 +387,11 @@
             // on CHange Attribute
             async onItemSelected(event) {
                 const getId = event.target.value;
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.itemAdd = {
                     unit: getItemDataSelected.data.unit,
                     currentPrice: getItemDataSelected.data.price,
@@ -409,9 +411,12 @@
                 this.itemModify.price = parseInt(this.itemModify.qtyReturns) * parseInt(this.itemModify.currentPrice);
             },
             async modifyItemList() {
-                this.$Progress.start();
-                console.log('Item :', this.itemModify);
+                // this.$Progress.start();
+                this.$isLoading(true);
+                // console.log('Item :', this.itemModify);
                 await axios.patch('/api/pr/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -430,10 +435,12 @@
                 this.loadData();
                 this.isVisibleAddForm = false,
                     this.isVisibleModifyForm = true,
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const resp = await axios.get('/api/suppliers');
                 this.supplier = resp.data;
@@ -445,10 +452,12 @@
                 this.items = itemsData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/pr/item-purchases/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
@@ -460,11 +469,15 @@
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/pr/item-purchase', this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -481,11 +494,15 @@
                     }
                 });
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchase() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/pr/item-purchase/' + this.itemAdd.id, this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -505,12 +522,16 @@
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/purchase/return', this.purchaseReturnData).then(response => {
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -523,9 +544,11 @@
                     const genPONumber = this.rndStr(5);
                     this.purchaseReturnData.pr_number = genPONumber;
                     this.$router.push('/purchase/return');
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                   document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -542,6 +565,7 @@
                 // console.log('data click', [this.purchaseReturnData, this.itemPurchasingData])
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete item Purchase Return?',
                     showCancelButton: true,
@@ -549,15 +573,18 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/pr/item-purchase/' + id);
                     this.loadData();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

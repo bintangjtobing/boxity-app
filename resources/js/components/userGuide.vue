@@ -7,7 +7,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#userguideModal"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="la la-plus"></i> Add New</a>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <div class="justify-content-end">
                                     <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                        class="btn btn-success btn-default btn-squared px-30"
+                                        class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                         data-dismiss="modal">Submit</button>
                                 </div>
                             </div>
@@ -138,23 +138,29 @@
         },
         methods: {
             async loadGuide() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/user-guide');
                 this.base = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/user-guide', this.guide).then(response => {
                     this.loadGuide();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New guide',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

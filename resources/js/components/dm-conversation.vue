@@ -82,7 +82,7 @@
                 }).then((response) => {
                     this.$emit('new', response.data);
                 })
-                console.log(text);
+                // console.log(text);
             }
         },
     }

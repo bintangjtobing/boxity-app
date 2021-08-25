@@ -67,8 +67,9 @@
                                                     </div>
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
-                                                                class="btn btn-success btn-default btn-squared px-30"
+                                                            <button v-on:click="handleSubmit"
+                                                                v-on:keyup.enter="handleSubmit" type="submit"
+                                                                class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>
                                                     </div>
@@ -90,8 +91,9 @@
                                                     <!-- Insert Code here -->
                                                     <div class="form-group my-2">
                                                         <div class="justify-content-end">
-                                                            <button v-on:click="handleSubmit" v-on:keyup.enter="handleSubmit" type="submit"
-                                                                class="btn btn-success btn-default btn-squared px-30"
+                                                            <button v-on:click="handleSubmit"
+                                                                v-on:keyup.enter="handleSubmit" type="submit"
+                                                                class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                                                 data-dismiss="modal">Submit</button>
                                                         </div>
                                                     </div>
@@ -128,20 +130,25 @@
         },
         methods: {
             async loadDataWarehouse() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/stock-group/' + this.$route.params.id);
                 this.stockgroup = response.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/stock-group/' + this.$route.params.id, this.stockgroup);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update stock group data',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/stock-group');
             },
         },

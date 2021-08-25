@@ -38,7 +38,7 @@ class itemOnPurchasingController extends Controller
     // ITEM ON PURCHASE ORDER
     public function getItemPurchasePO()
     {
-        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
     }
     public function postItemPurchasePO(Request $request)
     {
@@ -137,7 +137,7 @@ class itemOnPurchasingController extends Controller
     // ITEM ON PURCHASE INVOICES
     public function getItemPurchasePI()
     {
-        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('pi_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy', 'warehouse', 'customer')->orderBy('created_at', 'DESC')->where('pi_status', 1)->where('created_by', Auth::id())->get());
     }
     public function postItemPurchasePI(Request $request)
     {
@@ -157,6 +157,11 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->warehouseid = $request->warehouseid;
+        $ItemPurchasing->customerid = $request->customerid;
+        $ItemPurchasing->driver_name = $request->driver_name;
+        $ItemPurchasing->driver_nopol = $request->driver_nopol;
+
 
         // po status 1 means stored at database but not with the purchase order id;
         $ItemPurchasing->pi_status = '1';
@@ -183,6 +188,9 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->driver_name = $request->driver_name;
+        $ItemPurchasing->driver_nopol = $request->driver_nopol;
+
 
         $ItemPurchasing->pi_status = '2';
         $ItemPurchasing->purchasingId = $pi_number;
@@ -202,7 +210,7 @@ class itemOnPurchasingController extends Controller
     }
     public function getItemPurchasePIById($id)
     {
-        return response()->json(itemsPurchase::where('id', $id)->with('item', 'usedBy', 'requestedBy')->first());
+        return response()->json(itemsPurchase::where('id', $id)->with('item', 'requestedBy', 'warehouse', 'customer')->first());
     }
     public function getItemPurchaseByPiNumber($pi_number)
     {
@@ -224,6 +232,8 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->driver_name = $request->driver_name;
+        $ItemPurchasing->driver_nopol = $request->driver_nopol;
         $ItemPurchasing->updated_by = Auth::id();
         $ItemPurchasing->save();
         return response()->json($itemPurchase, 200);
@@ -244,7 +254,7 @@ class itemOnPurchasingController extends Controller
     // ITEM ON PURCHASE REQUEST
     public function getItemPurchasePRE()
     {
-        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('prequest_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->where('prequest_status', 1)->where('created_by', Auth::id())->get());
     }
     public function postItemPurchasePRE(Request $request)
     {
@@ -314,7 +324,7 @@ class itemOnPurchasingController extends Controller
     // ITEM ON PURCHASE RETURN
     public function getItemPurchasePR()
     {
-        return response()->json(itemsPurchase::with('item')->with('usedBy')->with('requestedBy')->orderBy('created_at', 'DESC')->where('preturn_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->where('preturn_status', 1)->where('created_by', Auth::id())->get());
     }
     public function postItemPurchasePR(Request $request)
     {

@@ -14,10 +14,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12 row justify-content-center">
-                <button class="btn btn-primary col-6 col-sm-4 m-1" @click="inputOptions('manual')">
+                <button class="btn btn-primary-boxity col-6 col-sm-4 m-1" @click="inputOptions('manual')">
                     <i class="fal fa-file-alt"></i> Input Manual
                 </button>
-                <button class="btn btn-success col-6 col-sm-4 m-1" @click="inputOptions('invoice')">
+                <button class="btn btn-secondary-boxity col-6 col-sm-4 m-1" @click="inputOptions('invoice')">
                     <i class="fal fa-file-invoice-dollar"></i> Select From Invoice
                 </button>
             </div>
@@ -55,7 +55,7 @@
                                 </v-data-table>
                             </template>
                             <button v-on:click="addSelectedSalesInvoice" v-on:keyup.enter="addSelectedSalesInvoice"
-                                class="btn btn-success float-right btn-default btn-squared px-30"
+                                class="btn btn-secondary-boxity float-right btn-default btn-squared px-30"
                                 :disabled="isAddItemSalesInvoice">Add to lists</button>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Update item
                                             list</button>
                                     </div>
@@ -299,7 +299,7 @@
                         <div class="form-group my-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-success float-right btn-default btn-squared
+                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Save</button>
                                 </div>
                             </div>
@@ -471,9 +471,11 @@
             // on CHange Attribute
             async onItemSelected(event) {
                 const getId = event.target.value;
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.itemAdd = {
                     unit: getItemDataSelected.data.unit,
                     currentPrice: getItemDataSelected.data.price,
@@ -481,9 +483,12 @@
                 }
             },
             async modifyItemList() {
-                this.$Progress.start();
-                console.log('Item :', this.itemModify);
+                // this.$Progress.start();
+                this.$isLoading(true);
+                // console.log('Item :', this.itemModify);
                 await axios.patch('/api/sdr/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -501,10 +506,12 @@
                 this.loadData();
                 this.isVisibleAddForm = false,
                     this.isVisibleModifyForm = true,
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
@@ -534,10 +541,12 @@
                     }
                 });
                 this.salesInvoice = salesInvoice.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/sdr/item-saless/' + id);
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
@@ -548,11 +557,15 @@
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = 'Modify Delivery Receipt Items';
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addSelectedSalesInvoice() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/sdr/item-sales/sales-invoice', this.selectedSalesInvoice).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -561,11 +574,15 @@
                     this.selectedSalesInvoice = [];
                 });
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/sdr/item-sales', this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -581,11 +598,15 @@
                     }
                 });
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchase() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/sdr/item-sales/' + this.itemAdd.id, this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -604,12 +625,16 @@
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/delivery/receipt', this.deliveryReceiptData).then(response => {
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -623,9 +648,11 @@
                     const genPINumber = this.rndStr(5);
                     this.deliveryReceiptData.sdr_number = genPINumber;
                     this.$router.push('/delivery/receipt');
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                   document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -642,6 +669,7 @@
                 // console.log('data click', [this.deliveryReceiptData, this.itemDeliveryData])
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete item Delivery Receipt?',
                     showCancelButton: true,
@@ -649,15 +677,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/sdr/item-sales/' + id);
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

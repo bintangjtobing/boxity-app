@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Request<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/purchase/request/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/purchase/request/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Request</router-link>
                         </div>
                     </div>
@@ -150,12 +150,14 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/purchase/request');
                 this.purchaseRequestItem = resp.data;
                 const count = await axios.get('/api/count-purchase-request');
                 this.countItems = count.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async getUser() {
                 // Load user logged in
@@ -163,6 +165,7 @@
                 this.user = res.data;
             },
             async deletePurchaseRequestItem(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data item?',
                     showCancelButton: true,
@@ -172,6 +175,8 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/purchases/request/' + id);
                     this.loadItem();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
@@ -182,6 +187,8 @@
             },
             async makePurchaseOrder(pre_number) {
                 const resp = await axios.get('/api/copy/purchase/request/' + pre_number);
+                document.getElementById('ding').play();
+
                 await Swal.fire({
                     icon: 'success',
                     title: 'Successfully Created PO',
@@ -213,6 +220,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios.get('/api/approve/purchase/request/' + pre_number);
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Success approve!',

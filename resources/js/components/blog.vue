@@ -52,7 +52,7 @@
                                                 </div>
                                                 <div class="button-group d-flex pt-25">
                                                     <button v-on:click="handleSubmit"
-                                                        class="btn btn-primary btn-default btn-squared text-capitalize"
+                                                        class="btn btn-primary-boxity btn-default btn-squared text-capitalize"
                                                         data-dismiss="modal">submit
                                                     </button>
                                                     <button class="btn btn-light btn-default btn-squared fw-400
@@ -149,12 +149,15 @@
         },
         methods: {
             async loadBlogs() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/blogs');
                 this.blogs = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteBlog(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete blog?',
                     showCancelButton: true,
@@ -162,21 +165,26 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('api/blogs/' + id);
                     this.loadBlogs();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted blog'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/blogs', this.blog).then(response => {
                     this.loadBlogs();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -187,9 +195,11 @@
                         description: '',
                         category: '',
                     }
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

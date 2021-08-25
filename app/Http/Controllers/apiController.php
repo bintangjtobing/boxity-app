@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
+use App\customers;
 use App\album_photos;
 use App\albums;
 use App\blog;
@@ -48,6 +49,7 @@ use Illuminate\Support\Facades\Date;
 use App\popupWindow;
 use App\userLogs;
 use App\warehouseCustomer;
+use App\companiesPic;
 use App\itemHistory;
 use App\itemsPurchase;
 use App\documentsDelivery;
@@ -60,6 +62,9 @@ use App\Notifications\closedIssueNotify;
 use App\Notifications\updateProfileNotifier;
 use App\Notifications\updateProfileFromAdminNotifier;
 use App\Permission;
+use App\suppliers;
+use App\bank;
+use App\Http\Middleware\EncryptCookies;
 use Mail;
 use PDF;
 
@@ -77,6 +82,10 @@ class apiController extends Controller
         $user['permission'] = $permission ?? [];
 
         return $user;
+    }
+    public function customerRelateWarehouse()
+    {
+        return companiesPic::where('user_id', Auth::id())->get();
     }
     public function getUsers()
     {
@@ -214,7 +223,7 @@ class apiController extends Controller
         $saveLogs->notes = 'Edit/update user ' . $user->username . ' from user management.';
         $saveLogs->save();
 
-        DB::table('users_permissions')->where("user_id",$user->id)->delete();
+        DB::table('users_permissions')->where("user_id", $user->id)->delete();
         foreach ($request->selected as $value) {
             $usersPermissionsQuery = [
                 "user_id" => $user->id,
@@ -990,7 +999,7 @@ class apiController extends Controller
         if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
             return response()->json(goodsReceip::with('receiver')->orderBy('created_at', 'DESC')->get());
         } else {
-            return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->get());
+            return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->orderBy('created_at', 'DESC')->get());
         }
     }
     public function countGoods()
@@ -1085,6 +1094,13 @@ class apiController extends Controller
             ->get();
         return response()->json($album, 201);
     }
+
+    // BANK LISTS
+    public function getBankList()
+    {
+        return bank::orderBy('name', 'ASC')->get();
+    }
+
     // POP UP
     public function getPopup()
     {
@@ -1229,206 +1245,226 @@ class apiController extends Controller
     // CUSTOMERS API CONTROLLER
     public function getCustomers()
     {
-        return response()->json(User::where('role', 'customer')->orderBy('name', 'asc')->get());
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        if ($getUserIdOnCustomer) {
+            $customer = DB::table('companies')
+                ->join('companies_pic', 'companies.id', '=', 'companies_pic.company_id')
+                ->join('users', 'companies_pic.user_id', '=', 'users.id')
+                ->where('companies_pic.user_id', '=', Auth::id())
+                ->orderBy('companies.company_name', 'ASC')
+                ->select('companies.*')
+                ->get();
+            return $customer;
+        } else {
+            return response()->json(customers::orderBy('created_at', 'DESC')->get());
+        }
+        // return $getUserIdOnCustomer;
     }
     public function getCustomerbyId($id)
     {
-        return response()->json(User::find($id));
+        return response()->json(customers::find($id));
     }
     public function deleteCustomer($id)
     {
-        $getUser = User::find($id);
+        $getCustomers = customers::find($id);
         // $getUser->status = '2';
-        $getUser->delete();
+        $getCustomers->delete();
         return response()->json([], 204);
     }
     public function addCustomer(Request $request)
     {
-        $customer = new User();
+        $customer = new customers();
         // User Section
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->username = strtolower($request->name);
-        $customer->role = 'customer';
-        $customer->department = '-';
-        $customer->status = '1';
-        $customer->divisi = '-';
-        $customer->gender = '-';
-        $customer->organisation = '-';
-        $customer->phone = '-';
-        $customer->avatar = '7.jpg';
-        $customer->cover = '-';
-        $customer->password = Hash::make($request->password);
-        $customer->unpassword = $request->password;
-        $customer->createdBy = Auth::id();
-        $customer->logip = $request->ip();
-        $customer->lastLogin = '0';
-
-        // Customer Section
-        $customer->customerCode = $request->customerCode;
-        $customer->customerName = $request->customerName;
-        $customer->customerAddress = $request->customerAddress;
-        $customer->customerCity = $request->customerCity;
-        $customer->customerPhone = $request->customerPhone;
-        $customer->customerEmail = $request->email;
-        $customer->customerWebsite = $request->customerWebsite;
-        $customer->customerNPWP = $request->customerNPWP;
+        foreach ([
+            'company_name', 'company_code', 'address', 'city', 'phone', 'email', 'npwp', 'site', 'bank_code', 'bank_account', 'bank_name'
+        ] as $field) {
+            if (isset($request->{$field})) {
+                $customer->{$field} = $request->{$field};
+            }
+        }
 
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Add new customer ' . $customer->id . ' to user management.';
+        $saveLogs->notes = 'Add new customer ' . $customer->id . ' .';
         $saveLogs->save();
 
         $customer->save();
-        Mail::to($customer->email)->send(new addCustomer($customer));
+        // Mail::to($customer->email)->send(new addCustomer($customer));
         return response()->json($customer, 201);
     }
     public function countCustomers()
     {
-        $userCount = DB::table('users')
-            ->where('role', '=', 'customer')
+        $userCount = DB::table('companies')
             ->get()
             ->count();
         return response()->json($userCount);
     }
     public function updateCustomer($id, Request $request)
     {
-        $user = User::find($id);
+        $customers = customers::find($id);
         foreach ([
-            'name', 'email', 'customerCode', 'customerName', 'customerAddress',
-            'customerCity', 'customerPhone', 'customerEmail', 'customerWebsite', 'customerNPWP'
+            'company_name', 'company_code', 'address', 'city', 'phone', 'email', 'npwp', 'site', 'bank_code', 'bank_account', 'bank_name'
         ] as $field) {
             if (isset($request->{$field})) {
-                $user->{$field} = $request->{$field};
+                $customers->{$field} = $request->{$field};
             }
-        }
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-            $user->unpassword = $request->password;
         }
 
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Edit/update customer ' . $user->id . ' on user management.';
+        $saveLogs->notes = 'Edit/update customer ' . $customers->id . ' .';
         $saveLogs->save();
 
-        $user->save();
-        return response()->json($user);
+        $customers->save();
+        return response()->json($customers);
     }
+
+    // User Customer
+    public function getUserCustomer($id)
+    {
+        return response()->json(companiesPic::where('company_id', $id)->with('companyDetail', 'userDetail')->orderBy('created_at', 'DESC')->get());
+        // return response($id);
+    }
+    public function postUserCustomer(Request $request, $id)
+    {
+        $warehouse = new companiesPic();
+        $warehouse->company_id = $id;
+        $warehouse->user_id = $request->user_id;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add user list to company ' . $warehouse->warehouse_name . '.';
+        $saveLogs->save();
+
+        $warehouse->save();
+        return response()->json($warehouse, 200);
+    }
+    public function getUserCustomerById($id)
+    {
+        return response()->json(companiesPic::find($id));
+    }
+    public function deleteUserCustomerById($id)
+    {
+        return response()->json(companiesPic::find($id)->delete());
+    }
+    public function postUserCustomerById($id, Request $request)
+    {
+        $warehouse = companiesPic::find($id);
+        $warehouse->company_id = $id;
+        $warehouse->user_id = $request->user_id;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Edit/update customer list to company ' . $warehouse->warehouse_name . '.';
+        $saveLogs->save();
+
+        $warehouse->save();
+        return response()->json($warehouse, 201);
+    }
+    public function getUserOnCustomers()
+    {
+        $userGet = DB::table('users')
+            ->join('companies_pic', 'users.id', '=', 'companies_pic.user_id')
+            ->join('companies', 'companies_pic.company_id', '=', 'companies.id')
+            ->select('companies_pic.*', 'users.*', 'companies.*')
+            ->where('users.id', '=', Auth::id())
+            ->get();
+        return response()->json($userGet);
+        // return response('200');
+    }
+
 
     // SUPPLIERS API CONTROLLER
     public function getSuppliers()
     {
-        return response()->json(User::where('role', 'supplier')->orderBy('name', 'asc')->get());
+        return response()->json(suppliers::orderBy('supplier_name', 'asc')->get());
     }
     public function getSuppliersbyId($id)
     {
-        return response()->json(User::find($id));
+        return response()->json(suppliers::find($id));
     }
     public function deleteSuppliers($id)
     {
-        $getUser = User::find($id);
+        $getSuppliers = suppliers::find($id);
         // $getUser->status = '2';
-        $getUser->delete();
+        $getSuppliers->delete();
         return response()->json([], 204);
     }
     public function addSuppliers(Request $request)
     {
-        $customer = new User();
-        // User Section
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->username = strtolower($request->name);
-        $customer->role = 'supplier';
-        $customer->department = '-';
-        $customer->status = '1';
-        $customer->divisi = '-';
-        $customer->gender = '-';
-        $customer->organisation = '-';
-        $customer->phone = '-';
-        $customer->avatar = '-';
-        $customer->cover = '-';
-        $customer->password = Hash::make($request->password);
-        $customer->unpassword = $request->password;
-        $customer->createdBy = Auth::id();
-        $customer->logip = $request->ip();
-        $customer->lastLogin = '0';
-
-        // Customer Section
-        $customer->customerCode = $request->customerCode;
-        $customer->customerName = $request->customerName;
-        $customer->customerAddress = $request->customerAddress;
-        $customer->customerCity = $request->customerCity;
-        $customer->customerPhone = $request->customerPhone;
-        $customer->customerEmail = $request->email;
-        $customer->customerWebsite = $request->customerWebsite;
-        $customer->customerNPWP = $request->customerNPWP;
-
+        $supplier = new suppliers();
+        foreach ([
+            'supplier_name', 'supplier_code', 'address', 'city', 'phone', 'email', 'npwp', 'site', 'bank_code', 'bank_account', 'bank_name'
+        ] as $field) {
+            if (isset($request->{$field})) {
+                $supplier->{$field} = $request->{$field};
+            }
+        }
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Add new supplier ' . $customer->id . ' to user management.';
+        $saveLogs->notes = 'Add new supplier ' . $supplier->id . ' .';
         $saveLogs->save();
 
-        $customer->save();
-        return response()->json($customer, 201);
+        $supplier->save();
+        return response()->json($supplier, 201);
     }
     public function countSuppliers()
     {
-        $userCount = DB::table('users')
-            ->where('role', '=', 'supplier')
+        $userCount = DB::table('suppliers')
             ->get()
             ->count();
         return response()->json($userCount);
     }
     public function updateSuppliers($id, Request $request)
     {
-        $user = User::find($id);
+        $supplier = suppliers::find($id);
         foreach ([
-            'name', 'email', 'customerCode', 'customerName', 'customerAddress',
-            'customerCity', 'customerPhone', 'customerEmail', 'customerWebsite', 'customerNPWP'
+            'supplier_name', 'supplier_code', 'address', 'city', 'phone', 'email', 'npwp', 'site', 'bank_code', 'bank_account', 'bank_name'
         ] as $field) {
             if (isset($request->{$field})) {
-                $user->{$field} = $request->{$field};
+                $supplier->{$field} = $request->{$field};
             }
-        }
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-            $user->unpassword = $request->password;
         }
 
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Edit/update customer ' . $user->id . ' on user management.';
+        $saveLogs->notes = 'Edit/update supplier ' . $supplier->id . ' .';
         $saveLogs->save();
 
-        $user->save();
+        $supplier->save();
         return response()->json($user);
     }
 
     // Warehouse
     public function getWarehouse()
     {
-        if (Auth::user()->role == 'customer') {
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
+        if ($getUserIdOnCustomer && Auth::user()->role != 'admin') {
             // If logged user is having role as CUSTOMER
             // then warehouse shows that having this ID CUSTOMER
             $warehouse = DB::table('warehouse_lists')
                 ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
-                ->join('users', 'warehouse_lists.created_by', '=', 'users.id')
-                ->where('warehouse_customers.customer_id', '=', Auth::id())
+                ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
+                // ->where('warehouse_customers.customer_id', '=', Auth::id())
                 ->orderBy('warehouse_lists.warehouse_name', 'ASC')
                 ->get();
             return $warehouse;
         } else {
             return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
         }
+        // return $getUserIdOnCustomer;
     }
     public function postWarehouse(Request $request)
     {
@@ -1488,8 +1524,40 @@ class apiController extends Controller
     // Warehouse Customer
     public function getWarehouseCustomer($id)
     {
-        return response()->json(warehouseCustomer::where('warehouse_id', $id)->with('warehouseDetail')->with('customerDetail')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role != 'admin') {
+            return response()->json(warehouseCustomer::where('customer_id', $id)->with('warehouseDetail', 'customerDetail')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(warehouseCustomer::Where('customer_id', $id)->with('warehouseDetail', 'customerDetail')->orderBy('created_at', 'DESC')->get());
+        }
         // return response($id);
+    }
+    public function getWarehouseCustomers($id)
+    {
+        if (Auth::user()->role != 'admin') {
+            $getCustWarehouse = DB::table('warehouse_customers')
+                ->join('warehouse_lists', 'warehouse_customers.warehouse_id', '=', 'warehouse_lists.id')
+                ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
+                ->where('warehouse_customers.customer_id', $id)
+                ->select('warehouse_customers.warehouse_id as id', 'warehouse_lists.warehouse_name', 'companies.company_name', 'warehouse_customers.customer_id')
+                ->get();
+            return $getCustWarehouse;
+        } else {
+            $getCustWarehouse = DB::table('warehouse_customers')
+                ->join('warehouse_lists', 'warehouse_customers.warehouse_id', '=', 'warehouse_lists.id')
+                ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
+                ->select('warehouse_customers.warehouse_id as id', 'warehouse_lists.warehouse_name', 'companies.company_name', 'warehouse_customers.customer_id')
+                ->get();
+            return $getCustWarehouse;
+        }
+        // return response($id);
+    }
+    public function getCustomerWarehouse($id)
+    {
+        if (Auth::user()->role != 'admin') {
+            return response()->json(warehouseCustomer::where('warehouse_id', $id)->with('warehouseDetail', 'customerDetail')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(warehouseCustomer::Where('warehouse_id', $id)->with('warehouseDetail', 'customerDetail')->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function postWarehouseCustomer(Request $request, $id)
     {
@@ -1535,11 +1603,11 @@ class apiController extends Controller
     // Stock Group
     public function getStockGroup()
     {
-        if (Auth::user()->role == 'customer') {
-            return response()->json(stockGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
-        } else {
-            return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
-        }
+        // if (Auth::user()->role == 'customer') {
+        //     return response()->json(stockGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
+        // } else {
+        return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
+        // }
     }
     public function postStockGroup(Request $request)
     {
@@ -1657,10 +1725,32 @@ class apiController extends Controller
     // Inventory Item
     public function getInventoryItem()
     {
-        if (Auth::user()->role == 'customer') {
-            return response()->json(inventoryItem::where('customerId', Auth::id())->with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
+        if (Auth::user()->role != 'admin') {
+            $item = [];
+            for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
+                $data = [
+                    'companyId' => $getUserIdOnCustomer[$i]->company_id
+                ];
+                array_push($item, $data);
+            }
+            $res = inventoryItem::whereIn('customerid', $item)->with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get();
+            return response()->json($res);
         } else {
-            return response()->json(inventoryItem::with('itemGroup')->with('customer')->orderBy('created_at', 'DESC')->get());
+            return response()->json(inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function getInventoryByWarehouse($id, $customerid)
+    {
+
+        if (Auth::user()->role != 'admin') {
+            $getDataItem = DB::table('inventory_items')
+                ->join('warehouse_lists', 'inventory_items.warehouseid', '=', 'warehouse_lists.id')
+                ->where('inventory_items.warehouseid', $id)
+                ->where('inventory_items.customerId', $customerid)
+                ->select('inventory_items.*', 'warehouse_lists.warehouse_name', 'warehouse_lists.warehouse_code')
+                ->get();
+            return $getDataItem;
         }
     }
     public function postInventoryItem(Request $request)
@@ -1679,7 +1769,9 @@ class apiController extends Controller
         $inventory->gr_weight = $request->gr_weight;
         $inventory->volume = $request->volume;
         $inventory->unit = $request->unit;
-        $inventory->customerId = Auth::id();
+        $inventory->customerId = $request->customerId;
+        $inventory->userid = Auth::id();
+        $inventory->warehouseid = $request->warehouseid;
 
         // Save to logs
         $saveLogs = new userLogs();

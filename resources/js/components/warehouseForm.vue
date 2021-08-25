@@ -76,7 +76,7 @@
                                                     </div>
                                                     <div class="button-group d-flex pt-25">
                                                         <button type="submit"
-                                                            class="btn btn-primary btn-default btn-squared text-capitalize">Update
+                                                            class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
                                                     </div>
                                                 </form>
@@ -106,7 +106,7 @@
                                                                 <option v-for="customerList in customerList"
                                                                     :key="customerList.id"
                                                                     v-bind:value="customerList.id">
-                                                                    {{customerList.customerName}}</option>
+                                                                    {{customerList.company_name}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -115,7 +115,7 @@
                                                     <div class="justify-content-end">
                                                         <button v-on:click="addCustomerToWarehouse"
                                                             v-on:keyup.enter="addCustomerToWarehouse"
-                                                            class="btn btn-success btn-default btn-squared px-30">Add
+                                                            class="btn btn-secondary-boxity btn-default btn-squared px-30">Add
                                                             to list</button>
                                                     </div>
                                                 </div>
@@ -178,7 +178,7 @@
                 warehouseCustomerList: [],
                 headers: [{
                     text: 'Customer Name',
-                    value: 'customer_detail.customerName'
+                    value: 'customer_detail.company_name'
                 }, {
                     text: 'Data Added',
                     value: 'created_at'
@@ -206,7 +206,8 @@
         },
         methods: {
             async loadDataWarehouse() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/warehouse/' + this.$route.params.id);
                 this.warehouse = response.data;
 
@@ -217,28 +218,37 @@
                 // Load customer
                 const respCust = await axios.get('/api/customers');
                 this.customerList = respCust.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadCustomerWarehouse() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load customer warehouse
-                const custList = await axios.get('/api/warehouse-customer/' + this.$route.params.id);
+                const custList = await axios.get('/api/customer-warehouse/' + this.$route.params.id);
                 this.warehouseCustomerList = custList.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/warehouse/' + this.$route.params.id, this.warehouse);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update warehouse data',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/warehouse-list');
             },
             async addCustomerToWarehouse() {
                 await axios.post('/api/warehouse-customer/' + this.$route.params.id, this.warehouseCust);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
@@ -248,9 +258,11 @@
                     customerId: '',
                 }
                 this.loadCustomerWarehouse();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteWarehouseCustomerList(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data customer on warehouse?',
                     showCancelButton: true,
@@ -258,15 +270,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                    this.$isLoading(true);
                     await axios.delete('/api/warehouse-customer/' + id);
                     this.loadCustomerWarehouse();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current customer.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }
             },
         },

@@ -7,7 +7,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">gallery</h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link :to="`/gallery/new`" class="btn btn-sm btn-primary btn-add">
+                            <router-link :to="`/gallery/new`" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="la la-plus"></i> New album</router-link>
                         </div>
                     </div>
@@ -57,10 +57,12 @@
         },
         methods: {
             async loadAlbum() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/album');
                 this.album = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
         },
     }

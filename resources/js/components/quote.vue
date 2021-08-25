@@ -121,12 +121,15 @@
         },
         methods: {
             async loadQuotes() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/quote/get');
                 this.quotes = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deletequote(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete quote?',
                     showCancelButton: true,
@@ -134,15 +137,18 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('api/quote/' + id);
                     this.loadQuotes();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current quote'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },

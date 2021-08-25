@@ -31,15 +31,40 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Customer:</span>
+                                        <selectSearch v-model="selected.customer" v-bind="{
+                          datas: customersGet,
+                          width: '100%',
+                          name: 'company_name',
+                          placeholder: 'Select Customer',
+                          isDisable: isDisable.customerSelected,
+                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>From warehouse:</span>
+                                        <selectSearch v-model="selected.warehouse" v-bind="{
+                          datas: warehouse,
+                          width: '100%',
+                          name: 'warehouse_name',
+                          isDisable: isDisable.warehouseSelected,
+                          placeholder: 'Select Warehouse',
+                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <selectSearch v-model="selected.item" v-bind="{
                                             datas: items,
                                             width: '100%' ,
                                             name: 'item_name',
-                                            group: 'item_code',
+                                            group: 'warehouse_code',
                                             placeholder: 'Select Item',
+                          isDisable: isDisable.select,
                                         }" @dataSelected="onItemSelected" />
                                         <span class="float-right"><abbr title="Add new item">Don't see the item you're
                                                 looking for?</abbr>
@@ -52,7 +77,7 @@
                             <div class="form-row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <span>Qty Delivery Out:</span>
+                                        <span>Qty Out <i class="far fa-sign-out"></i>:</span>
                                         <span v-show="qtyItem != null"
                                             id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" :disabled="isWriteForm" v-model="itemAdd.qtyShipped"
@@ -84,7 +109,21 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Driver Name:</span>
+                                        <input type="text" v-model="itemAdd.driver_name" placeholder="Driver's name"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Vehicle No:</span>
+                                        <input type="text" v-model="itemAdd.driver_nopol" class="form-control"
+                                            placeholder="ex: BK 0000 ABC">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <span>Remarks:</span>
                                         <textarea v-model="itemAdd.remarks" :disabled="isWriteForm" class="form-control"
@@ -95,7 +134,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
                                     </div>
                                 </div>
@@ -122,7 +161,21 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Customer selected:</span>
+                                        <input type="text" v-model="itemModify.customer" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>From Warehouse:</span>
+                                        <input type="text" v-model="itemModify.warehouse" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <input type="text" v-model="itemModify.item_name" id="" class="form-control"
@@ -133,8 +186,9 @@
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span>Qty Out <i class="far fa-sign-out"></i>:</span>
+                                        <span v-show="qtyItem != null"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemModify.qtyShipped" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -165,7 +219,21 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Driver Name:</span>
+                                        <input type="text" v-model="itemModify.driver_name" placeholder="Driver's name"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Vehicle No:</span>
+                                        <input type="text" v-model="itemModify.driver_nopol" class="form-control"
+                                            placeholder="ex: BK 0000 ABC">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <span>Remarks:</span>
                                         <textarea v-model="itemModify.remarks" class="form-control" id="" cols="30"
@@ -176,7 +244,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Update item
                                             list</button>
                                     </div>
@@ -197,13 +265,24 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" loading-text="Data not found..." :headers="headers"
-                                    :items="itemSalesingData" :items-per-page="10" class="elevation-1">
+                                <v-data-table show-expand :expanded.sync="expanded" :search="search"
+                                    loading-text="Data not found..." :headers="headers" :items="itemSalesingData"
+                                    :items-per-page="10" class="elevation-1">
+                                    <template v-slot:item.qtyShipped="{item}">
+                                        {{item.qtyShipped|toDecimal}} / {{item.unit}}
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
+                                    </template>
+                                    <template v-slot:expanded-item="{ headers, item }">
+                                        <td :colspan="headers.length">
+                                            More info about <b>{{ item.item.item_name }}</b> <br>
+                                            Delivered by <b>{{item.driver_name}}</b> with police number
+                                            <b>{{item.driver_nopol}}</b>
+                                        </td>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -229,7 +308,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select customer:</option>
                                         <option v-for="customer in customer" :key="customer.id" :value="customer.id">
-                                            {{customer.customerName}}</option>
+                                            {{customer.company_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -268,7 +347,7 @@
                         <div class="form-group my-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-success float-right btn-default btn-squared
+                                    <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Save</button>
                                 </div>
                             </div>
@@ -293,6 +372,7 @@
         },
         data() {
             return {
+                expanded: [],
                 isWriteForm: false,
                 isShow: {
                     qtyItem: false,
@@ -302,7 +382,7 @@
                 selected: {
                     item: "",
                     usedBy: "",
-                    so: "",
+                    customer: "",
                 },
                 // Page Info
                 titleItemDescription: 'Add some items on Sales Invoices.',
@@ -317,6 +397,8 @@
                     remarks: '',
                 },
                 itemAdd: {
+                    customerid: null,
+                    warehouseid: null,
                     itemid: '',
                     qtyShipped: '0',
                     unit: '',
@@ -359,12 +441,20 @@
                     }
                 ],
                 countItems: '0',
+                customersGet: {},
+                isDisable: {
+                    select: true,
+                    input: true,
+                    warehouseSelected: true,
+                    customerSelected: false,
+                },
             }
         },
         created() {
             this.loadData();
             this.generatePONumber();
             this.loadLoggedUser();
+            this.loadCustomers();
         },
         methods: {
             classRotate: function (param) {
@@ -376,6 +466,10 @@
             generatePONumber() {
                 const genPINumber = this.rndStr(5);
                 this.salesInvoiceData.si_number = genPINumber;
+            },
+            async loadCustomers() {
+                const respCust = await axios.get("/api/customers");
+                this.customersGet = respCust.data;
             },
             rndStr(len) {
                 let blank = "";
@@ -401,9 +495,37 @@
                     unit: event.unit,
                     currentPrice: event.price,
                     itemid: event.id,
+                    ...this.itemAdd
                 }
-                this.selected.item = `${event.item_code} - ${event.item_name}`;
+                this.selected.item = `[${event.warehouse_code}][${event.item_code}] - ${event.item_name}`;
                 this.qtyItem = event.qty
+            },
+            async onWarehouseSelected(param) {
+                const idWarehouseGet = param.id;
+                const getWarehouseDataSelected = await axios.get('/api/warehouse/' + idWarehouseGet);
+                this.itemAdd.warehouseid = getWarehouseDataSelected.data.id;
+                console.log('warehouse id selected: ', this.itemAdd.warehouseid);
+                this.itemModify.warehouseid = param.id;
+                this.selected.warehouse = param.warehouse_name;
+                this.isDisable.select = false;
+                const itemDataGet = await axios.get('/api/inventory-item/w/' + param.id + '/' + this.itemAdd
+                    .customerid);
+                this.items = itemDataGet.data;
+            },
+            async onCustomerSelected(param) {
+                const idCustGet = param.id;
+                const getCustDataSelected = await axios.get('/api/customers/' + idCustGet);
+                this.itemAdd = {
+                    customerid: getCustDataSelected.data.id,
+                }
+                console.log('customer id selected: ', this.itemAdd.customerid);
+                // console.log(this.itemAdd.customerid);
+                this.selected.customer = param.company_name;
+                this.salesInvoiceData.customer = param.id;
+                this.isDisable.warehouseSelected = false;
+                const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
+                this.warehouse = warehouseData.data;
+                // console.log(param);
             },
             onQtyInc() {
                 this.isShow.qty = this.itemAdd.qtyShipped > this.qtyItem ? true : false;
@@ -420,8 +542,11 @@
                 this.itemModify.price = parseInt(this.itemModify.qtyShipped) * parseInt(this.itemModify.currentPrice);
             },
             async modifyItemList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/si/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -442,10 +567,12 @@
                 this.loadData();
                 this.isVisibleAddForm = false,
                     this.isVisibleModifyForm = true,
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
@@ -455,27 +582,37 @@
                 this.itemSalesingData = itemSalesingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/si/item-saless/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
                 this.itemModify.item_name = resp.data.item.item_name;
-                this.itemModify.used_by = resp.data.used_by.id;
+                this.itemModify.warehouse = resp.data.warehouse.warehouse_name;
+                this.itemModify.customer = resp.data.customer.company_name;
+                if (this.itemModify.used_by) {
+                    this.itemModify.used_by = resp.data.used_by.id;
+                }
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = 'Modify Sales Invoice Items';
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
                 this.isWriteForm = true;
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/si/item-sales', this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -495,11 +632,15 @@
                 });
                 this.loadData();
                 this.isWriteForm = false;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchase() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/si/item-sales/' + this.itemAdd.id, this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -521,12 +662,16 @@
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/sales/invoices', this.salesInvoiceData).then(response => {
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -539,9 +684,11 @@
                     const genPINumber = this.rndStr(5);
                     this.salesInvoiceData.si_number = genPINumber;
                     this.$router.push('/sales/invoices');
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -558,6 +705,7 @@
                 // console.log('data click', [this.salesInvoiceData, this.itemSalesingData])
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete item Sales Invoice?',
                     showCancelButton: true,
@@ -565,15 +713,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                    this.$isLoading(true);
                     await axios.delete('/api/si/item-sales/' + id);
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }
             },
         },
@@ -585,11 +737,19 @@
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
     }
-    
+
     #qtyItem {
         color: #ebdc31;
     }
-    
+
+    #qty {
+        color: #f44444;
+    }
+
+    #qtyItem {
+        color: #ebdc31;
+    }
+
     #qty {
         color: #f44444;
     }

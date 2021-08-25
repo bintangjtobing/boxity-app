@@ -167,7 +167,7 @@
                                                     </div>
                                                     <div class="button-group d-flex pt-25">
                                                         <button type="submit"
-                                                            class="btn btn-primary btn-default btn-squared text-capitalize">Update
+                                                            class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
                                                     </div>
                                                 </form>
@@ -203,7 +203,7 @@
                                                     </div>
                                                     <div class="col-lg-1 align-self-center mt-2">
                                                         <button v-on:click="searchData" v-on:keyup.enter="searchData"
-                                                            class="btn btn-success btn-sm">Search</button>
+                                                            class="btn btn-secondary-boxity btn-sm">Search</button>
                                                     </div>
                                                     <div class="col-lg-1 align-self-center mt-2">
                                                         <a :href="`/api/report/item-history/${$route.params.id}?from=${range.fromDate}&until=${range.toDate}`"
@@ -287,6 +287,12 @@
                                                                                 <div v-if="item.type===2">
                                                                                     <span>Sales Invoice</span>
                                                                                 </div>
+                                                                            </template>
+                                                                            <template v-slot:[`item.qtyIn`]="{item}">
+                                                                                {{item.qtyIn|toDecimal}}
+                                                                            </template>
+                                                                            <template v-slot:[`item.qtyOut`]="{item}">
+                                                                                {{item.qtyOut|toDecimal}}
                                                                             </template>
                                                                         </v-data-table>
                                                                     </div>
@@ -376,30 +382,35 @@
         },
         methods: {
             async loadDataInventoryItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
 
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
                 this.inventoryOpt = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadHistoryItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load customer warehouse
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
                 this.historyItem = historyList.data;
                 const qtyInSum = await axios.get('/api/sum/in/item-history/' + this.$route.params.id);
                 this.sumQtyIn = qtyInSum.data;
-                this.inventorydata.qty = qtyInSum.data;
+                this.inventorydata.qty = (qtyInSum.data) | toDecimal;
                 const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
                 this.sumQtyOut = qtyOutSum.data;
                 this.countQty = this.sumQtyIn - this.sumQtyOut;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
                 await axios.patch('/api/inventory-item/' + this.$route.params.id, this.inventorydata);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
@@ -408,10 +419,10 @@
                 this.$router.push('/inventory-item');
             },
             async searchData() {
-                console.log(this.range.fromDate, ">", this.range.toDate)
-                console.log(this.range.fromDate > this.range.toDate)
-                console.log(this.range.fromDate, "<", this.range.toDate)
-                console.log(this.range.fromDate < this.range.toDate)
+                // console.log(this.range.fromDate, ">", this.range.toDate)
+                // console.log(this.range.fromDate > this.range.toDate)
+                // console.log(this.range.fromDate, "<", this.range.toDate)
+                // console.log(this.range.fromDate < this.range.toDate)
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id, {
                     params: {
                         fromDate: this.range.fromDate,

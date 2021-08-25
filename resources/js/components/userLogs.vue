@@ -63,7 +63,8 @@
         },
         methods: {
             async loadUserLogs() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resMember = await axios.get('/api/user-logs');
                 this.members = resMember.data;
             },

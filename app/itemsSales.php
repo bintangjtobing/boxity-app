@@ -28,10 +28,18 @@ class itemsSales extends Model
         'created_by',
         'updated_by',
         'updated_by',
+        'customerId',
+        'driver_name',
+        'driver_nopol'
+
     ];
     public function warehouse()
     {
         return $this->belongsTo(warehouseList::class, 'warehouseId');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(customers::class, 'customerId');
     }
     public function item()
     {

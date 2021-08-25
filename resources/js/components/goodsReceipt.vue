@@ -8,7 +8,7 @@
                         v-if="member.role == 'hrdga' || member.role=='admin'">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#goodsReceiptModal"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add goods receipt</a>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -233,25 +233,31 @@
                 this.selected.receiverid = param.name;
             },
             async loadGoods() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/goods-receipt');
                 this.goodsData = resp.data;
                 const respMember = await axios.get('/getUserLoggedIn');
                 this.member = respMember.data;
                 const respUser = await axios.get('/api/contact-list');
                 this.user = respUser.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/goods-receipt', this.goods).then(response => {
                     this.loadGoods();
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New good receipt',
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.goods = {
                         courier: '',
                         typeOfGoods: '',
@@ -261,6 +267,7 @@
                     };
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -276,14 +283,18 @@
                 });
             },
             async receivedAction(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/goods-receipt/' + id);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Enjoy your packet/document!',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.loadGoods();
             },
         },

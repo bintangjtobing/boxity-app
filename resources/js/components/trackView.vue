@@ -3,7 +3,8 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main mb-2">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Order track detail <span>#{{tracks.order_id}}</span>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Order track detail
+                        <span>#{{tracks.order_id}}</span>
                     </h2>
                     Order created at {{tracks.created_at}}
                 </div>
@@ -93,14 +94,14 @@
                             <div class="form-group" v-if="tracks.order_status=='0'">
                                 <div class="justify-content-end">
                                     <button v-on:click="createTrack" type="submit"
-                                        class="btn btn-success btn-default btn-squared px-30"><i
+                                        class="btn btn-secondary-boxity btn-default btn-squared px-30"><i
                                             class="fal fa-check"></i>&nbsp;Submit track delivery</button>
                                 </div>
                             </div>
                             <div class="form-group" v-if="tracks.order_status!='0'">
                                 <div class="justify-content-end">
                                     <button v-on:click="updateTrack" type="submit"
-                                        class="btn btn-success btn-default btn-squared px-30"><i
+                                        class="btn btn-secondary-boxity btn-default btn-squared px-30"><i
                                             class="fal fa-check"></i>&nbsp;Update track delivery</button>
                                 </div>
                             </div>
@@ -178,27 +179,37 @@
         },
         methods: {
             async loadDataTrack() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/track-delivery/' + this.$route.params.id);
                 this.tracks = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async createTrack() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/track-delivery/' + this.$route.params.id, this.track);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success create new track delivery.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/track-delivery');
             },
             async updateTrack() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/track-delivery/' + this.$route.params.id, this.track).then(response => {
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                     this.$router.push('/track-delivery');
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -206,6 +217,7 @@
                     });
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',

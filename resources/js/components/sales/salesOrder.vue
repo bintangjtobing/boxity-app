@@ -8,7 +8,7 @@
                     </h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/sales/order/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/sales/order/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Sales Order</router-link>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
                                 <v-data-table :search="search" :headers="headers" multi-sort :items="inventoryItem"
-                                    :items-per-page="10" class="elevation-1" group-by="customer.name">
+                                    :items-per-page="10" class="elevation-1" group-by="customers.company_name">
                                     <template v-slot:[`item.status`]="{item}">
                                         <div v-if="item.status===0">
                                             <span class="rounded-pill userDatatable-content-status color-warning
@@ -57,7 +57,7 @@
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">
-                                        <a :href="`/api/report/sales-order/${item.id}`" target="_blank" class="view">
+                                        <a :href="`/report/sales/order/${item.so_number}`" target="_blank" class="view">
                                             <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
@@ -121,13 +121,16 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get("/api/sales/order");
                 this.inventoryItem = resp.data;
 
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteInventoryItem(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: "Delete data item?",
                     showCancelButton: true,

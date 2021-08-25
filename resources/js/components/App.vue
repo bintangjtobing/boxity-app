@@ -19,31 +19,38 @@
                 <div class="navbar-right">
                     <div v-show="!isMobile">
                         <ul class="nav-right">
-                            <li>
+                            <!-- <li>
                                 <button class="btn" onclick="turnOnDarkMode()"><span>
                                         <div id="sunmoon" class="fas fa-moon"></div>
                                     </span></button>
-                            </li>
-                            <li class="nav-message" v-if="user.role!='customer'">
+                            </li> -->
+                            <!-- <li class="nav-message" v-if="user.role!='customer'">
                                 <div class="dropdown-custom">
                                     <a href="/direct-message" class="nav-item-toggle">
                                         <i data-feather="send"></i></a>
+                                </div>
+                            </li> -->
+                            <li class="nav-support">
+                                <div class="dropdown-custom">
+                                    <a href="https://help.boxity.id" target="_blank" class="nav-item-toggle">
+                                        <span style="font-size: 1.35rem;"><i class="fal fa-question-circle"></i></span>
+                                    </a>
                                 </div>
                             </li>
                             <li class="nav-author">
                                 <div class="dropdown-custom">
                                     <a href="javascript:;" class="nav-item-toggle"><img
-                                            v-bind:src="`dashboard/img/author/profile/`+user.avatar"
-                                            alt="User" class="rounded-circle"> {{user.name}}</a>
+                                            v-bind:src="`dashboard/img/author/profile/`+user.avatar" alt="User"
+                                            class="rounded-circle"></a>
                                     <div class="dropdown-wrapper">
                                         <div class="nav-author__info">
                                             <div class="author-img" v-if="user.role!='customer'">
-                                                <img :src="`dashboard/img/author/profile/`+user.avatar"
-                                                    alt="User" class="rounded-circle">
+                                                <img :src="`dashboard/img/author/profile/`+user.avatar" alt="User"
+                                                    class="rounded-circle">
                                             </div>
                                             <div>
                                                 <h6>{{user.name}}</h6>
-                                                <span>{{user.customerName}}</span>
+                                                <span>{{user.email}}</span>
                                             </div>
                                         </div>
                                         <div class="nav-author__options">
@@ -90,13 +97,13 @@
                     <li class="nav-author">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle"><img
-                                    v-bind:src="`dashboard/img/author/profile/`+user.avatar"
-                                    alt="User" class="rounded-circle"> {{user.name}}</a>
+                                    v-bind:src="`dashboard/img/author/profile/`+user.avatar" alt="User"
+                                    class="rounded-circle"> {{user.name}}</a>
                             <div class="dropdown-wrapper">
                                 <div class="nav-author__info">
                                     <div class="author-img" v-if="user.role!='customer'">
-                                        <img :src="`dashboard/img/author/profile/`+user.avatar"
-                                            alt="User" class="rounded-circle">
+                                        <img :src="`dashboard/img/author/profile/`+user.avatar" alt="User"
+                                            class="rounded-circle">
                                     </div>
                                     <div>
                                         <h6>{{user.name}}</h6>
@@ -136,11 +143,6 @@
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'General Applications', icon: 'build_circle', listId:'menuCollapse1' }">
                                     <ul id="menuCollapse1" style="padding: 0;">
-                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Version control">
-                                            <router-link style="margin:0; width:100%" to="/version-control">
-                                                <span>Version control</span>
-                                            </router-link>
-                                        </li>
                                         <li v-if="permission.includes('ViewIssue')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Issue center">
                                             <router-link style="margin:0; width:100%" to="/issues">
@@ -347,14 +349,14 @@
                                             data-bs-placement="right" title="Sales Order">
                                             <router-link style="margin:0; width:100%" to="/sales/order">
                                                 <span>Sales Order</span>
-                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+
                                             </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewSalesInvoice')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Sales Invoice">
                                             <router-link style="margin:0; width:100%" to="/sales/invoices">
                                                 <span>Sales Invoice</span>
-                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+
                                             </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewSalesReturn')" data-bs-toggle="tooltip"
@@ -368,7 +370,7 @@
                                             data-bs-placement="right" title="Delivery Receipt">
                                             <router-link style="margin:0; width:100%" to="/delivery/receipt">
                                                 <span>Delivery Receipt</span>
-                                                <span class="badge badge-secondary text-white menuItem">NEW</span>
+
                                             </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewDocumetsDelivery')" data-bs-toggle="tooltip"
@@ -418,11 +420,6 @@
                                                 <span>Popup Window</span>
                                             </router-link>
                                         </li>
-                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="User Guide">
-                                            <router-link style="margin:0; width:100%" to="/user-guide">
-                                                <span>User Guide</span>
-                                            </router-link>
-                                        </li>
                                     </ul>
                                 </menuCollapse>
                             </li>
@@ -464,8 +461,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="footer-copyright">
-                                <p>&copy; Copyright -<a href="/" target="_blank"><abbr
-                                            title="PT BERLIAN TRANSTAR ABADI">{{company.company_name}}</abbr></a> |
+                                <p>&copy; Copyright -<a href="/"
+                                        target="_blank"><abbr>{{company.company_name}}</abbr></a> |
                                     Partner with <abbr title="PT BENUA SOLUSI TEKNOLOGI"><a
                                             href="https://infinitysolutions.co.id" target="_blank">Infinity
                                             Solutions</a></abbr>
@@ -476,7 +473,7 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <a href="https://docs.boxity.id/platform/releases#v108">
+                                        <a href="https://help.boxity.id/platform/releases#v108" target="_blank">
                                             App
                                             version 1.0.8</a>
                                     </li>

@@ -12,7 +12,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap" v-if="countItems">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addItemGroup"
-                                class="btn btn-sm btn-primary btn-add">
+                                class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Goods Transfer</a>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                 <div class="form-group my-2">
                                     <div class="justify-content-end">
                                         <button v-on:click="submitHandle" v-on:keyup.enter="submitHandle" type="submit"
-                                            class="btn btn-success btn-default btn-squared px-30"
+                                            class="btn btn-secondary-boxity btn-default btn-squared px-30"
                                             data-dismiss="modal">Submit</button>
                                     </div>
                                 </div>
@@ -167,6 +167,7 @@
             async submitHandle() {
                 await axios.post('/api/item-group', this.itemgroup).then(response => {
                     this.loadItemGroup();
+                    document.getElementById('ding').play();
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

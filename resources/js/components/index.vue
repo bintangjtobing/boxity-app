@@ -67,7 +67,7 @@
                             </div>
                             <div class="card-short-actions">
                                 <div class="content-installed content-action">
-                                    <router-link :to="'/issues'" type="button" class="btn btn-outline-primary">
+                                    <router-link :to="'/issues'" type="button" class="btn btn-secondary-outline-boxity">
                                         <span>Open</span>
                                     </router-link>
                                 </div>
@@ -98,7 +98,8 @@
                             </div>
                             <div class="card-short-actions">
                                 <div class="content-installed content-action">
-                                    <router-link :to="'/goods-receipt'" type="button" class="btn btn-outline-primary">
+                                    <router-link :to="'/goods-receipt'" type="button"
+                                        class="btn btn-secondary-outline-boxity">
                                         <span>Open</span>
                                     </router-link>
                                 </div>
@@ -130,7 +131,8 @@
                             </div>
                             <div class="card-short-actions">
                                 <div class="content-installed content-action">
-                                    <router-link :to="'/notepad'" type="button" class="btn btn-outline-primary">
+                                    <router-link :to="'/notepad'" type="button"
+                                        class="btn btn-secondary-outline-boxity">
                                         <span>Open</span>
                                     </router-link>
                                 </div>
@@ -260,7 +262,8 @@
         },
         methods: {
             async svIssue() {
-                this.$Progress.start();
+                // // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/count-solved-issue');
                 this.solvedIssue = resp.data;
 
@@ -271,7 +274,8 @@
                 // Pending Issue
                 const pending = await axios.get('/api/count-pending-issue');
                 this.pendingIssue = pending.data;
-                this.$Progress.finish();
+                // // this.$Progress.finish();
+                this.$isLoading(false);
             },
         },
     }

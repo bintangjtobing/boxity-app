@@ -110,13 +110,15 @@
         },
         methods: {
             async loadIssues() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/issue/closed');
                 if (resp) {
                     this.loading = true;
                 }
                 this.issues = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             dateFromCreated() {
                 return timeago.format(created_at);

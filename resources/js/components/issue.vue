@@ -21,7 +21,7 @@
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     <router-link :to="`/new-issue`"
-                                        class="btn btn-primary btn-default btn-squared btn-shadow-primary"
+                                        class="btn btn-primary-boxity btn-default btn-squared btn-shadow-primary"
                                         type="button">Create
                                         Issue
                                     </router-link>
@@ -174,6 +174,9 @@
                     </div>
                 </div>
             </div>
+            <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? you can see and learn from
+                <a href="https://help.boxity.id/general-applications/issue-center" target="_blank">Help and
+                    Documentation</a>'s page.</span>
         </div>
     </div>
 </template>
@@ -235,14 +238,16 @@
         },
         methods: {
             async loadIssues() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/issue');
                 this.issues = resp.data;
 
                 // Get issue from user logged in
                 const respy = await axios.get('/api/issue/created');
                 this.fromYou = respy.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             dateFromCreated() {
                 return timeago.format(created_at);
@@ -268,6 +273,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         axios.patch('/api/issue/approved/' + id);
+                        document.getElementById('ding').play();
                         Swal.fire({
                             icon: 'success',
                             title: 'Success approve!',

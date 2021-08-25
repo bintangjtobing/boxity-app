@@ -40,7 +40,7 @@
                                             name: 'item_name',
                                             group: 'item_code',
                                             placeholder: 'Select Item',
-                                        }" @dataSelected="onItemSelected"/>
+                                        }" @dataSelected="onItemSelected" />
                                         <!-- <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
                                             class="form-control form-control-default">
                                             <option value="" disabled>Select item:</option>
@@ -54,7 +54,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span v-show="qtyItem != null"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" @change="onAddQtyInc"
                                             @input="onAddQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -95,7 +96,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30">Add to lists</button>
                                     </div>
                                 </div>
@@ -134,7 +135,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span v-show="qtyItem != null"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input v-bind:disabled="checkedItem === false" type="number"
                                             v-model="itemModify.qtyShipped" @change="onModifyQtyInc"
                                             @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
@@ -179,7 +181,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-success float-right btn-default btn-squared
+                                        <button v-on:click="modifyItemList" v-on:keyup.enter="modifyItemList" class="btn btn-secondary-boxity float-right btn-default btn-squared
                                                 px-30" v-bind:disabled="checkedItem === false">Update item
                                             list</button>
                                     </div>
@@ -194,7 +196,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <button @click="activeAddForm"
-                            class="btn btn-success float-left btn-default btn-squared"><span><i
+                            class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
@@ -203,9 +205,9 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search"
-                                    loading-text="Loading... Please wait..." :headers="headers"
-                                    :items="itemSalesingData" :items-per-page="10" class="elevation-1">
+                                <v-data-table :search="search" loading-text="Loading... Please wait..."
+                                    :headers="headers" :items="itemSalesingData" :items-per-page="10"
+                                    class="elevation-1">
                                     <!-- <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemSalesing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
@@ -290,7 +292,7 @@
                                     <a :href="`/report/sales/invoices/${salesInvoiceData.si_number}`" class="btn btn-secondary float-right btn-warning btn-squared
                                                 px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
                                     <button v-bind:disabled="checkedSI === false" v-on:click="submitHandle"
-                                        v-on:keyup.enter="submitHandle" class="btn btn-primary float-right btn-default btn-squared
+                                        v-on:keyup.enter="submitHandle" class="btn btn-primary-boxity float-right btn-default btn-squared
                                                 px-30">Update</button>
                                 </div>
                             </div>
@@ -319,7 +321,7 @@
                     colapse: false,
                     qty: false
                 },
-                selected:{
+                selected: {
                     item: ""
                 },
                 updateOnly: true,
@@ -438,7 +440,8 @@
                 this.isVisibleModifyForm = true;
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
@@ -453,10 +456,12 @@
                 this.items = itemsData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemSalesing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/si/item-saless/' + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
@@ -465,11 +470,15 @@
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = 'Modify Sales Invoice Items';
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/si/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
+                    document.getElementById('ding').play();
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -486,13 +495,17 @@
                     this.checkedItem = false;
                 });
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // console.log(this.itemAdd);
                 await axios.post('/api/si/item-sales/' + this.$route.params.si_number, this.itemAdd).then(
                     response => {
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Congratulations',
@@ -511,21 +524,26 @@
                 this.isVisibleAddForm = true;
                 this.isVisibleModifyForm = false;
                 this.loadData();
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/sales/invoices/' + this.$route.params.si_number, this
                         .salesInvoiceData)
                     .then(response => {
                         this.loadData();
+                        document.getElementById('ding').play();
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Congratulations',
                             text: 'Success update Sales Invoice information.',
                         });
                         this.checkedSI = false;
-                        this.$Progress.finish();
+                        // this.$Progress.finish();
+                this.$isLoading(false);
                     }).catch(error => {
                         this.$Progress.fail();
                         Swal.fire({
@@ -544,6 +562,7 @@
                 // console.log('data click', [this.salesInvoiceData, this.itemSalesingData])
             },
             async deleteItemSalesing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete item Sales Invoice?',
                     showCancelButton: true,
@@ -551,15 +570,19 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                this.$isLoading(true);
                     await axios.delete('/api/si/item-sales/' + id);
                     this.loadData();
+                    document.getElementById('ding').play();
+
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current item.'
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                this.$isLoading(false);
                 }
             },
         },
@@ -571,11 +594,11 @@
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
     }
-    
+
     #qtyItem {
         color: #ebdc31;
     }
-    
+
     #qty {
         color: #f44444;
     }

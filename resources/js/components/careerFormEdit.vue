@@ -90,7 +90,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-success btn-default btn-squared px-30">submit</button>
+                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,13 +127,16 @@
         },
         methods: {
             async loadDataCareer() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/career/' + this.$route.params.id);
                 this.job = resp.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 await axios.patch('/api/career/' + this.$route.params.id, {
                     title: this.job.title,
                     location: this.job.location,
@@ -141,12 +144,14 @@
                     partof: this.job.part,
                     desc: this.job.description
                 });
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update job vacancy.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/career/' + this.$route.params.id);
             }
         },

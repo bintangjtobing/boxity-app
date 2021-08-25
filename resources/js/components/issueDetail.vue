@@ -116,7 +116,7 @@
                                                     placeholder="Leave a comment. Press `CTRL + ENTER` to send the comment."
                                                     @keydown.enter="handleComment"></textarea>
                                                 <button type="submit"
-                                                    class="btn btn-primary btn-lg btn-squared btn-shadow-primary fw-400 mr-1">
+                                                    class="btn btn-primary-boxity btn-lg btn-squared btn-shadow-primary fw-400 mr-1">
                                                     Comment</button>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="vertical-form my-3" v-if="user.role=='head' || user.role=='hrdga' && issues.status==0">
                     <div class="form-group">
-                        <button v-on:click="approveIssue" type="submit" class="btn btn-primary btn-default btn-squared">
+                        <button v-on:click="approveIssue" type="submit" class="btn btn-primary-boxity btn-default btn-squared">
                             Approve issue</button>
                     </div>
                 </div>
@@ -214,11 +214,13 @@
             },
         },
         created() {
+            this.$isLoading(true);
             this.loadDataIssue();
+            this.$isLoading(false);
         },
         methods: {
             async loadDataIssue() {
-                this.$Progress.start();
+                // this.$Progress.start();
                 const response = await axios.get('/api/issue/' + this.$route.params.id);
                 const countComment = await axios.get('/api/count-comment/' + this.$route.params.id);
                 this.issues = response.data[0];
@@ -245,22 +247,27 @@
                 } else {
                     this.approver.name = approverProc.data[0].name;
                 }
-                this.$Progress.finish();
+                // this.$Progress.finish();
             },
             async deleteData(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.delete('/api/issue/delete-comment/' + id);
                 this.loadDataIssue();
+                document.getElementById('ding').play();
+
                 await Swal.fire({
                     icon: 'success',
                     title: 'Successfully Deleted',
                     text: 'Success deleted comment'
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleComment(event) {
                 event.preventDefault();
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post('/api/issue/add-comment', {
                     comment: this.comment.desc,
                     issueid: this.issues.id
@@ -268,9 +275,11 @@
                     this.loadDataIssue();
                     this.comment = {};
                     this.Hidden = false;
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -286,26 +295,34 @@
                 });
             },
             async approveIssue() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/issue/approved/' + this.$route.params.id);
                 this.loadDataIssue();
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success approve and open this issue.',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/issues');
             },
             async closeIssue() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/issue/closed/' + this.$route.params.id);
+                document.getElementById('ding').play();
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Issue done and closed!',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/issues');
             }
         },

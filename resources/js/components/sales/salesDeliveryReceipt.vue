@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Delivery Receipt<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/delivery/receipt/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/delivery/receipt/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Delivery Receipt</router-link>
                         </div>
                     </div>
@@ -108,14 +108,17 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/delivery/receipt');
                 this.purchaseInvoiceItem = resp.data;
                 const count = await axios.get('/api/count-delivery-receipt');
                 this.countItems = count.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deletePurchaseInvoiceItem(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data item?',
                     showCancelButton: true,
@@ -125,6 +128,7 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/delivery-receipt/' + id);
                     this.loadItem();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',

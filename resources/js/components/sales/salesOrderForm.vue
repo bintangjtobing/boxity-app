@@ -278,7 +278,7 @@
             <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm" class="btn btn-success float-left btn-default btn-squared">
+                        <button @click="activeAddForm" class="btn btn-secondary-boxity float-left btn-default btn-squared">
                             <span><i class="fal fa-plus-circle"></i></span>&nbsp; Add item
                         </button>
                         <div class="
@@ -329,7 +329,7 @@
                                     <selectSearch v-model="selected.so" v-bind="{
                       datas: customer,
                       width: '100%',
-                      name: 'customerName',
+                      name: 'company_name',
                       isDisable: !isEdit,
                       placeholder: 'Select Item',
                     }" @dataSelected="onItemSelectedSO"></selectSearch>
@@ -399,7 +399,7 @@
             selectSearch: SelectSearch,
         },
         title() {
-            return `New Purchase Order`;
+            return `New Sales Order`;
         },
         data() {
             return {
@@ -578,13 +578,15 @@
                 this.isDisable.input = false;
                 this.isShow.qty = false;
                 const getId = value.id;
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const {
                     data: itemData
                 } = await axios.get(
                     "/api/inventory-item/" + getId
                 );
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.itemAdd.unit = itemData.unit;
                 this.itemAdd.currentPrice = itemData.price;
                 this.itemAdd.itemid = itemData.id;
@@ -616,7 +618,8 @@
                     parseInt(this.itemModify.currentPrice);
             },
             async modifyItemList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios
                     .patch("/api/item-sales/" + this.itemModify.id, this.itemModify)
                     .then((response) => {
@@ -642,10 +645,12 @@
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
                 this.selected.usedBy = "";
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async loadData() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 // Load data relation
                 const dataSalesOrder = await axios.get(
                     `/api/sales/order/${this.$route.params.so_id}`
@@ -663,10 +668,12 @@
                 this.warehouse = warehouseData.data;
                 const contactUsers = await axios.get("/api/contact-list");
                 this.users = contactUsers.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get("/api/item-sales/" + id);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
@@ -683,10 +690,12 @@
                 this.isShow.qtyItem = true;
                 this.qtyItem = resp.data.item.qty;
                 window.scrollTo(0, 0);
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async addToList() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.post("/api/item-sales", this.itemAdd).then((response) => {
                     Swal.fire({
                         icon: "success",
@@ -714,10 +723,12 @@
                     select: true,
                     input: true,
                 };
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async submitHandle() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios
                     .patch(
                         `/api/sales/order/${this.dataSalesOrder.id}`,
@@ -737,7 +748,8 @@
                             remarks: "",
                         };
                         this.$router.push("/sales/order");
-                        this.$Progress.finish();
+                        // this.$Progress.finish();
+                        this.$isLoading(false);
                     })
                     .catch((error) => {
                         this.$Progress.fail();
@@ -756,6 +768,7 @@
                     });
             },
             async deleteItemPurchasing(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: "Delete item sales order?",
                     showCancelButton: true,
@@ -763,7 +776,8 @@
                     confirmButtonText: `Delete`,
                 });
                 if (result.isConfirmed) {
-                    this.$Progress.start();
+                    // this.$Progress.start();
+                    this.$isLoading(true);
                     await axios.delete("/api/item-sales/" + id);
                     this.loadData();
                     await Swal.fire({
@@ -771,7 +785,8 @@
                         title: "Successfully Deleted",
                         text: "Success deleted current item.",
                     });
-                    this.$Progress.finish();
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
                 }
             },
         },

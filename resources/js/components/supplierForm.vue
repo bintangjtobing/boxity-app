@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="button-group d-flex pt-25">
                                     <button type="submit"
-                                        class="btn btn-primary btn-default btn-squared text-capitalize">Update
+                                        class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                     </button>
                                 </div>
                             </form>
@@ -126,10 +126,12 @@
         },
         methods: {
             async loadDataUser() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const response = await axios.get('/api/suppliers/' + this.$route.params.id);
                 this.user = response.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async handleSubmit() {
                 const payload = {};
@@ -143,14 +145,17 @@
                 if (!_.isEmpty(this.user.password)) {
                     payload.password = this.user.password;
                 }
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 await axios.patch('/api/suppliers/' + this.$route.params.id, payload);
+                document.getElementById('ding').play();
                 Swal.fire({
                     icon: 'success',
                     title: 'Congratulations',
                     text: 'Success update customer data',
                 });
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
                 this.$router.push('/suppliers');
             },
         },

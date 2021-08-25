@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Sales Invoices<br></h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <router-link to="/sales/invoices/add" class="btn btn-sm btn-primary btn-add">
+                            <router-link to="/sales/invoices/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Sales Invoices</router-link>
                         </div>
                     </div>
@@ -21,9 +21,8 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table :headers="headers" multi-sort
-                                    :items="salesInvoiceData" :items-per-page="10" class="elevation-1"
-                                    group-by="customers.customerName">
+                                <v-data-table :headers="headers" multi-sort :items="salesInvoiceData"
+                                    :items-per-page="10" class="elevation-1" group-by="customers.company_name">
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/sales/invoices/${item.si_number}`" target="_blank"
                                             class="view">
@@ -67,7 +66,7 @@
                     value: 'invoice_date'
                 }, {
                     text: 'Customer',
-                    value: 'customers.customerName'
+                    value: 'customers.company_name'
                 }, {
                     text: 'Actions',
                     value: 'actions',
@@ -84,14 +83,17 @@
         },
         methods: {
             async loadItem() {
-                this.$Progress.start();
+                // this.$Progress.start();
+                this.$isLoading(true);
                 const resp = await axios.get('/api/sales/invoices');
                 this.salesInvoiceData = resp.data;
                 const count = await axios.get('/api/count-sales-invoice');
                 this.countItems = count.data;
-                this.$Progress.finish();
+                // this.$Progress.finish();
+                this.$isLoading(false);
             },
             async deleteSalesInvoiceData(id) {
+                document.getElementById('failding').play();
                 const result = await Swal.fire({
                     title: 'Delete data sales invoices?',
                     showCancelButton: true,
@@ -101,6 +103,7 @@
                 if (result.isConfirmed) {
                     await axios.delete('/api/sales-invoices/' + id);
                     this.loadItem();
+                    document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
