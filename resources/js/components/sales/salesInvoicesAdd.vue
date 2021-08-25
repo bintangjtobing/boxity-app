@@ -1,4 +1,4 @@
-n<template>
+<template>
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
@@ -34,13 +34,13 @@ n<template>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <selectSearch v-model="selected.item" v-bind="{
+                                        <selectSearch :disabled="isWriteForm" v-model="selected.item" v-bind="{
                                             datas: items,
                                             width: '100%' ,
                                             name: 'item_name',
                                             group: 'item_code',
                                             placeholder: 'Select Item',
-                                        }" @dataSelected="onItemSelected"/>
+                                        }" @dataSelected="onItemSelected" />
                                         <span class="float-right"><abbr title="Add new item">Don't see the item you're
                                                 looking for?</abbr>
                                             <router-link :to="'/inventory-item'">
@@ -53,10 +53,11 @@ n<template>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
-                                        <input type="number" v-model="itemAdd.qtyShipped" @change="onQtyInc"
-                                            @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                            class="form-control">
+                                        <span v-show="qtyItem != null"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.qtyShipped"
+                                            @change="onQtyInc" @input="onQtyInc" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control">
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
                                     </div>
                                 </div>
@@ -69,16 +70,16 @@ n<template>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Price:</span>
-                                        <input type="number" v-model="itemAdd.currentPrice" @change="onPriceChange"
-                                            @input="onPriceChange" class="form-control" min="0" max="9999999"
-                                            step="250" />
+                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.currentPrice"
+                                            @change="onPriceChange" @input="onPriceChange" class="form-control" min="0"
+                                            max="9999999" step="250" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Line total:</span>
-                                        <input type="number" v-model="itemAdd.price" class="form-control" min="0.00"
-                                            max="10000.00" step="0.01" readonly />
+                                        <input type="number" v-model="itemAdd.price" :disabled="isWriteForm"
+                                            class="form-control" min="0.00" max="10000.00" step="0.01" readonly />
                                     </div>
                                 </div>
                             </div>
@@ -86,8 +87,8 @@ n<template>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Remarks:</span>
-                                        <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
-                                            rows="2"></textarea>
+                                        <textarea v-model="itemAdd.remarks" :disabled="isWriteForm" class="form-control"
+                                            id="" cols="30" rows="2"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +134,8 @@ n<template>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span v-show="qtyItem != null"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemModify.qtyShipped" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -196,8 +198,7 @@ n<template>
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search"
-                                    loading-text="Data not found..." :headers="headers"
+                                <v-data-table :search="search" loading-text="Data not found..." :headers="headers"
                                     :items="itemSalesingData" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
@@ -293,6 +294,7 @@ n<template>
         },
         data() {
             return {
+                isWriteForm: false,
                 isShow: {
                     qtyItem: false,
                     colapse: true,
@@ -472,6 +474,7 @@ n<template>
                 this.$Progress.finish();
             },
             async addToList() {
+                this.isWriteForm = true;
                 this.$Progress.start();
                 await axios.post('/api/si/item-sales', this.itemAdd).then(response => {
                     Swal.fire({
@@ -492,6 +495,7 @@ n<template>
                     }
                 });
                 this.loadData();
+                this.isWriteForm = false;
                 this.$Progress.finish();
             },
             async modifyItemPurchase() {
@@ -582,11 +586,11 @@ n<template>
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
     }
-    
+
     #qtyItem {
         color: #ebdc31;
     }
-    
+
     #qty {
         color: #f44444;
     }
