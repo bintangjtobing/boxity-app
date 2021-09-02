@@ -1018,7 +1018,7 @@ class apiController extends Controller
         $fileDocument = FileDocument::create([
             'file' => $imageName,
         ]);
-        return response()->json($fileDocumFent, 201);
+        return response()->json($fileDocument, 201);
     }
 
     // Gallery API
