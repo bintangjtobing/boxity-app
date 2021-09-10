@@ -349,6 +349,18 @@
                         <div v-if="user.role=='it' || user.role=='admin'">
                             <li>
                                 <menuCollapse
+                                    v-bind="{ isSidebar: sidebar, title: 'Permissions & Role', icon: 'manage_accounts', listId:'menuCollapse13' }">
+                                    <ul id="menuCollapse13" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse">
+                                            <router-link style="margin:0; width:100%" :to="'/permission-role'">
+                                                <span>Permissions & Role</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </li>
+                            <li>
+                                <menuCollapse
                                     v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Main Web Config', icon: 'language' }">
                                     <ul id="menuCollapse8" style="padding: 0;">
                                         <li data-bs-toggle="tooltip" data-bs-placement="right" title="Gallery">
