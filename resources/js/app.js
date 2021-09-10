@@ -36,6 +36,7 @@ Vue.use(VueProgressBar, options);
 import App from './components/App.vue';
 import Index from './components/index.vue';
 import UserLists from './components/user-lists.vue';
+import UserAdd from './components/userAdd.vue';
 import Career from './components/career.vue';
 import Candidate from './components/candidate.vue';
 import candidateDetail from './components/candidateDetail.vue';
@@ -121,6 +122,8 @@ import receivingConfirmation from './components/receivingConfirmation/receivingC
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
 import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
 
+import permissionRole from './components/permissionRole.vue';
+
 // membuat router
 const routes = [{
         name: 'home',
@@ -134,6 +137,10 @@ const routes = [{
         name: 'user',
         path: '/users-management',
         component: UserLists
+    },{
+        name: 'user',
+        path: '/users-management/add',
+        component: UserAdd
     },
     {
         name: 'contact lists',
@@ -452,6 +459,10 @@ const routes = [{
         name: 'popup-window',
         path: '/popup-management',
         component: popupWindow
+    }, {
+        name: 'permission-role',
+        path: '/permission-role',
+        component: permissionRole
     }
 ]
 
