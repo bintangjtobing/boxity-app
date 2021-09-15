@@ -42,14 +42,14 @@
                   <tbody v-for="item in items" :key="item.role">
                     <tr
                       v-for="(permission, index) in item.permissions"
-                      :key="permission"
+                      :key="index"
                     >
                       <td v-if="index == 0" :rowspan="item.permissions.length" style="text-align:center">{{ item.role }}</td>
-                      <td>{{ permission }}</td>
+                      <td>{{ permission.permission }}</td>
                       <td v-if="index == 0" :rowspan="item.permissions.length" style="text-align:center">
                         <a @click="fillRoleEditData(item)" data-toggle="modal" data-target="#updateModal" class="edit">
                           <em class="fas fa-pencil"></em></a>
-                        <a data-toggle="modal" data-target="#deleteModal" class="remove">
+                        <a @click="deleteRolePermission(item, false)" data-toggle="modal" data-target="#deleteModal" class="remove">
                           <em class="fas fa-trash"></em></a>
                       </td>
                     </tr>
@@ -99,7 +99,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success">Save changes</button>
+            <button @click="createRolePermission" type="button" class="btn btn-success" data-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
                     <div class="form-group">
                         <span>Permissions Name:</span>
                         <div v-for="i in permissionInputEdit" :key="i">
-                          <input v-model="roleEditData.permissions[i-1]"  type="text" class="form-control" placeholder="e.g: Create User"/>
+                          <input v-model="roleEditData.permissions[i-1].permission"  type="text" class="form-control" placeholder="e.g: Create User"/>
                           <br/>
                         </div>
                         <div style="color: #c0c0c0" class="font-weight-light">
@@ -142,7 +142,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success">Save changes</button>
+            <button @click="updateRolePermission" type="button" class="btn btn-success">Save changes</button>
           </div>
         </div>
       </div>
@@ -163,8 +163,8 @@
             <h5>Are you sure to delet this data?</h5>
             <br>
             <div class="row justify-content-center">
-              <button class="btn btn-danger">Yes</button>
-              <button class="btn btn-light"  data-dismiss="modal">No</button>
+              <button @click="deleteRolePermission(null, true)" class="btn btn-danger">Yes</button>
+              <button class="btn btn-light" data-dismiss="modal">No</button>
             </div>
           </div>
         </div>
@@ -173,6 +173,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
@@ -188,21 +189,12 @@ export default {
       ],
       items: [
         {
-          role: 'admin',
-          permissions: [
-            "Edit Gambar", "Edit User", "Create user", "Delete User"
-          ]
-        },
-        {
-          role: 'user',
-          permissions: [
-            "List Data"
-          ]
-        },
-        {
-          role: 'officer',
-          permissions: [
-            "List Data", "Edit User"
+          role: '',
+          permissions: [ 
+            {
+              permissionId: 0,
+              permission: ''
+            }
           ]
         }
       ],
@@ -215,8 +207,12 @@ export default {
         permissions: []
       },
       permissionInput: 1,
-      permissionInputEdit: 0
+      permissionInputEdit: 0,
+      tempDelete: {}
     };
+  },
+  created() {
+    this.getRolePermission();
   },
   computed: {
     
@@ -224,16 +220,115 @@ export default {
   methods: {
     permissionInputAction: function (param, create) {
       if (create) {
-        this.permissionInput = param ? this.permissionInput + 1 : this.permissionInput - 1
+        if (param) { 
+          this.permissionInput = this.permissionInput + 1
+        } 
+        else { 
+          this.permissionInput = this.permissionInput - 1 
+          this.roleData.permissions.pop()
+        }
       }
       else {
-        this.permissionInputEdit = param ? this.permissionInputEdit + 1 : this.permissionInputEdit - 1
+        if(param) {
+          this.permissionInputEdit = this.permissionInputEdit + 1 
+          this.roleEditData.permissions[this.permissionInputEdit - 1] = {
+            permission: '',
+            permissionId: 0
+          };
+        }
+        else {
+          this.permissionInputEdit = this.permissionInputEdit - 1
+          this.roleEditData.permissions.pop()
+        }
       }
-      
     },
-    fillRoleEditData: function (param) {
+    fillRoleEditData: function (param) { 
       this.roleEditData = param;
       this.permissionInputEdit = param.permissions.length;
+    },
+    async getRolePermission() {
+      const rolePermission = await axios.get('/api/role-permissions?isFormat=true');
+      this.items = rolePermission.data;
+    },
+    async createRolePermission() {
+      this.$Progress.start();
+      await axios.post("/api/role-permissions", this.roleData)
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+                title: "Congratulations",
+                text: "Success New sales order",
+            });
+            location.reload();
+        })
+        .catch((error) => {
+            this.$Progress.fail();
+            Swal.fire({
+                icon: "warning",
+                title: "Something wrong.",
+                confirmButtonText: `Ok`,
+                html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If it still exist, you can contact our developer. <br><br>Error message: ` + error,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        });
+    },
+    async updateRolePermission() {
+      this.$Progress.start();
+      await axios.patch("/api/role-permissions/update", this.roleEditData)
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+                title: "Congratulations",
+                text: "Success New sales order",
+            });
+            location.reload();
+        })
+        .catch((error) => {
+            this.$Progress.fail();
+            Swal.fire({
+                icon: "warning",
+                title: "Something wrong.",
+                confirmButtonText: `Ok`,
+                html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If it still exist, you can contact our developer. <br><br>Error message: ` + error,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        });
+    },
+    async deleteRolePermission(param, isDelete) {
+      if (!isDelete) {
+        this.tempDelete = param;
+      }
+      else {
+        this.$Progress.start();
+        await axios.delete("/api/role-permissions/delete/" + this.tempDelete.roleId)
+          .then((response) => {
+            Swal.fire({
+              icon: "success",
+                  title: "Congratulations",
+                  text: "Success delete permission",
+              });
+              location.reload();
+          })
+          .catch((error) => {
+              this.$Progress.fail();
+              Swal.fire({
+                  icon: "warning",
+                  title: "Something wrong.",
+                  confirmButtonText: `Ok`,
+                  html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If it still exist, you can contact our developer. <br><br>Error message: ` + error,
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      location.reload();
+                  }
+              });
+          });
+      }
     }
   },
 };
