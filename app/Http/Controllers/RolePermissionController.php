@@ -56,6 +56,11 @@ class RolePermissionController extends Controller
                 array_push($data, $value);
             }
         }
+        else {
+            foreach ($rolePermissions as $value) {
+                $value->IDpermission = $value->roleSlug . '.' . $value->permissionSlug;
+            }
+        }
         
         $data = $data ?? $rolePermissions;
         return response()->json($data, 200);
@@ -143,13 +148,13 @@ class RolePermissionController extends Controller
     }
     
     public function deleteRolePermissions ($roleId) {
-        DB::table('roles')->where('id', $roleId)->delete();
-        
         $dataPermissionId = DB::table('roles_permissions')->where('role_id', $roleId)->select('permissions_id')->get()->all();
         foreach ($dataPermissionId as $value) {
             DB::table('permissions')->where('id', $value->permissions_id)->delete();
         }
-        DB::table('roles_permissions')->where('role_id', $roleId)->delete();
-        return response()->json($roleId, 200);
+        
+        DB::table('roles')->where('id', $roleId)->delete();
+        $result = DB::table('roles_permissions')->where('role_id', $roleId)->delete();
+        return response()->json($result, 200);
     }
 }

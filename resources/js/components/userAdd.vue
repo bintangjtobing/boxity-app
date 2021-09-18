@@ -35,11 +35,12 @@
               <div class="col-lg-3">
                 <div class="form-group">
                   <span>Gender:</span>
-                  <input
-                    v-model="userData.gender"
-                    type="text"
-                    class="form-control"
-                  />
+                  <select v-model="userData.gender" required id="select-tag"
+                    class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
+                    <option disabled value="">Select gender:</option>
+                    <option v-bind:value="`M`">Male</option>
+                    <option v-bind:value="`F`">Female</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -129,13 +130,13 @@
                   ></v-text-field>
                 </v-card-title>
                 <v-data-table
-                  v-model="selected"
+                  v-model="userData.selected"
                   :search="search"
                   :headers="headers"
                   :items="items.permissions"
                   hide-default-footer
                   group-by="roleName"
-                  item-key="name"
+                  item-key="permissionId"
                   loading-text="No data available"
                   show-select
                   class="elevation-1"
@@ -148,6 +149,7 @@
     </div>
     <div class="col-lg-12">
       <button
+        @click="createUser"
         class="btn btn-success float-right btn-default btn-squared px-30"
         :disabled="!isSubmit"
       >
@@ -158,6 +160,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
@@ -166,33 +169,22 @@ export default {
         colapse2: true,
       },
       search: "",
-      selected: [],
       items: {
         permissions: [
           {
-            permissionsId: "UserManagement.CreateUser",
-            name: "create user",
-            roleName: "UserManagement",
-          },
-          {
-            permissionsId: "UserManagement.DeleteUser",
-            name: "delete user",
-            roleName: "UserManagement",
-          },
-          {
-            permissionsId: "UserManagement.EditUser",
-            name: "edit user",
-            roleName: "UserManagement",
-          },
+            IDpermission: "",
+            permissionName: "",
+            roleName: "",
+          }
         ],
       },
       headers: [
         {
           text: "Permission ID",
           sortable: false,
-          value: "permissionsId",
+          value: "IDpermission",
         },
-        { text: "Permission Name", sortable: false, value: "name" },
+        { text: "Permission Name", sortable: false, value: "permissionName" },
       ],
       userData: {
         name: "",
@@ -200,9 +192,13 @@ export default {
         gender: "",
         password: "",
         passwordVerify: "",
+        selected: []
       },
       isAutoGenerate: false,
     };
+  },
+  created() {
+    this.getRolePermission();
   },
   computed: {
     isPasswordSame: function () {
@@ -216,8 +212,9 @@ export default {
       return (
         this.userData.name &&
         this.userData.email &&
-        this.userData.gemder &&
-        this.isPasswordSame
+        this.userData.gender &&
+        this.isPasswordSame &&
+        this.userData.selected.length > 0
       );
     },
   },
@@ -248,55 +245,44 @@ export default {
       }
       return text;
     },
-    // async handleSubmit() {
-    //     const isValid = await this.validateData();
-    //     if (!isValid) return false;
-    //     this.hideModal();
-    //     const payload = {};
-    //     _.forEach(['name', 'role', 'department', 'divisi', 'gender', 'email'], (field) => {
-    //         if (this.user[field]) {
-    //             payload[field] = this.user[field];
-    //         }
-    //     });
-    //     if (!_.isEmpty(this.user.password)) {
-    //         payload.password = this.user.password;
-    //     }
-    //     this.$Progress.start();
-    //     await axios.post('/api/users', payload).then(response => {
-    //         this.loadUsers();
-    //         Swal.fire({
-    //             icon: 'success',
-    //             title: 'Congratulations',
-    //             text: 'Success New user',
-    //         });
-    //         this.user = {
-    //             gender: '',
-    //             role: '',
-    //             department: '',
-    //             divisi: '',
-    //             name: '',
-    //             email: '',
-    //         };
-    //         const genPass = this.rndStr(8);
-    //         this.user.password = genPass;
-    //         this.user.confirmPassword = genPass;
-    //         this.$Progress.finish();
-    //     }).catch(error => {
-    //         this.$Progress.fail();
-    //         Swal.fire({
-    //             icon: 'warning',
-    //             title: 'Something wrong.',
-    //             confirmButtonText: `Ok`,
-    //             html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-    //     it still exist, you can contact our developer. <br><br>Error message: ` +
-    //                 error,
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 location.reload();
-    //             }
-    //         });
-    //     });
-    // }
+    async getRolePermission() {
+      const rolePermission = await axios.get('/api/role-permissions');
+      this.items.permissions = rolePermission.data;
+    },
+    async createUser() {
+      this.userData.role = this.userData.selected[0].roleName;
+      
+      // DUMMY
+      this.userData.department = "developer"
+      this.userData.divisi = "developer"
+      // END-DUMMY
+      
+      this.$Progress.start();
+      await axios.post('/api/users', this.userData)
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+              title: "Congratulations",
+              text: "Success delete permission",
+            });
+            this.$router.push('/users-management');
+          this.$Progress.finish();
+        }).catch(error => {
+          this.$Progress.fail();
+          Swal.fire({
+              icon: 'warning',
+              title: 'Something wrong.',
+              confirmButtonText: `Ok`,
+              html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+      it still exist, you can contact our developer. <br><br>Error message: ` +
+                  error,
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  location.reload();
+              }
+          });
+      });
+    }
   },
 };
 </script>

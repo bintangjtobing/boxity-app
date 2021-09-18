@@ -51,6 +51,11 @@ class User extends Authenticatable
     ];
 
     protected $hidden = ['password'];
+    
+    public function permissions()
+    {
+        return $this->hasMany(UserPermissions::class, 'user_id', 'id');
+    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -66,5 +71,13 @@ class User extends Authenticatable
     public function scopeOnlyTelegramId(Builder $query)
     {
         return $query->where('telegram_id', '!=', null);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('withPermissions', function (Builder $builder) {
+            $builder->with(['permissions']);
+        });
     }
 }

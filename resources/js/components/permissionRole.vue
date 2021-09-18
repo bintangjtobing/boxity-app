@@ -313,7 +313,7 @@ export default {
                   title: "Congratulations",
                   text: "Success delete permission",
               });
-              location.reload();
+              // location.reload();
           })
           .catch((error) => {
               this.$Progress.fail();

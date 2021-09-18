@@ -96,6 +96,21 @@
         });
 
     </script>
+    
+     <?php 
+    use App\Permission;
+    
+    $permission = [];
+    $user = auth()->user();
+    foreach ($user->permissions as  $value) {
+        $query = Permission::where('id', $value['permission_id'])->select('slug')->first();
+        array_push($permission, $query->slug);
+    }
+    ?>
+    <script>
+        window.Permission = {!! json_encode($permission) !!}
+    </script>
+    
 </body>
 
 </html>
