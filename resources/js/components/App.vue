@@ -169,7 +169,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div v-if="user.role=='customer' || user.role=='admin'">
+                        <div v-if="user.role=='customer' || user.role=='admin' || permission.includes(`approve-issue`)">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Associate', icon: 'groups', listId:'menuCollapse2' }">
@@ -238,7 +238,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div v-if="user.role=='customer' || user.role=='admin'">
+                        <div v-if="user.role=='customer' || user.role=='admin' || permission.includes('coba')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Warehouse', icon: 'inventory_2', listId:'menuCollapse4' }">
@@ -479,7 +479,8 @@
                 countGoods: '0',
                 sidebar: true,
                 isMore: false,
-                isMobile: false
+                isMobile: false,
+                permission: []
             }
         },
         mounted() {
@@ -488,6 +489,7 @@
             this.versionGet();
             this.companyGet();
             this.$Progress.finish();
+            this.permission = [...Permission]
         },
         created() {
             window.addEventListener('resize', this.handleResize);

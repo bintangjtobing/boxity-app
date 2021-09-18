@@ -156,6 +156,15 @@ class apiController extends Controller
         $saveLogs->save();
 
         $user->save();
+        
+        foreach ($request->selected as $value) {
+            $usersPermissionsQuery = [
+                "user_id" => $user->id,
+                "permission_id" => $value['permissionId']
+            ];
+            DB::table('users_permissions')->insert($usersPermissionsQuery);
+        }
+        
         Mail::to($user->email)->send(new addUser($user));
 
         return response()->json($user, 201);
