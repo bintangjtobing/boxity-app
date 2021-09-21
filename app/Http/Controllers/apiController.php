@@ -59,6 +59,7 @@ use App\Notifications\approveIssueNotification;
 use App\Notifications\closedIssueNotify;
 use App\Notifications\updateProfileNotifier;
 use App\Notifications\updateProfileFromAdminNotifier;
+use App\Permission;
 use Mail;
 use PDF;
 
@@ -66,7 +67,16 @@ class apiController extends Controller
 {
     public function getLoggedUser()
     {
-        return User::find(Auth::id());
+        $user = User::find(Auth::id());
+        
+        $permission = [];
+        foreach ($user->permissions as  $value) {
+            $query = Permission::where('id', $value['permission_id'])->select('slug')->first();
+            array_push($permission, $query->slug);
+        }
+        $user['permission'] = $permission ?? [];
+        
+        return $user;
     }
     public function getUsers()
     {

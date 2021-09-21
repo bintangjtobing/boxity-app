@@ -126,12 +126,6 @@
             hideModal() {
                 document.getElementById('closeModal').click();
             },
-            generatePassword() {
-                const genPass = this.rndStr(8);
-                console.log(genPass);
-                this.user.password = genPass;
-                this.user.confirmPassword = genPass;
-            },
             async loadUsers() {
                 this.$Progress.start();
                 const resMember = await axios.get('/api/users');

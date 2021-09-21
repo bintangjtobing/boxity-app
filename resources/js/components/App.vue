@@ -238,7 +238,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div v-if="user.role=='customer' || user.role=='admin' || permission.includes('coba')">
+                        <div v-if="user.role=='customer' || user.role=='admin' || permission.includes('update-issue')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Warehouse', icon: 'inventory_2', listId:'menuCollapse4' }">
@@ -489,7 +489,6 @@
             this.versionGet();
             this.companyGet();
             this.$Progress.finish();
-            this.permission = [...Permission]
         },
         created() {
             window.addEventListener('resize', this.handleResize);
@@ -514,8 +513,11 @@
                 this.company = resp.data[0];
             },
             async userGet() {
+                localStorage.removeItem("permissions")
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
+                localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
+                this.permission = JSON.parse(localStorage.getItem('permissions'));
             },
             async versionGet() {
                 const resp = await axios.get('/api/version-control');
