@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="userDatatable adv-table-table global-shadow border p-30 bg-white radius-xl w-100 mb-30">
-            <div class="table-responsive">
+            <div>
               <v-card-title>
                 <v-text-field
                   v-model="search"
@@ -33,7 +33,6 @@
                 :headers="headerArray"
                 :items="items"
                 :search="search"
-                hide-default-footer
                 item-key="name"
                 class="elevation-1"
               >
@@ -249,6 +248,7 @@ export default {
     async getRolePermission() {
       const rolePermission = await axios.get('/api/role-permissions?isFormat=true');
       this.items = rolePermission.data;
+      console.log(this.items)
     },
     async createRolePermission() {
       this.$Progress.start();

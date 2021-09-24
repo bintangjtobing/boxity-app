@@ -134,12 +134,10 @@
                   :search="search"
                   :headers="headers"
                   :items="items.permissions"
-                  hide-default-footer
                   group-by="roleName"
                   item-key="permissionId"
                   loading-text="No data available"
                   show-select
-                  class="elevation-1"
                 />
               </v-card>
             </template>
