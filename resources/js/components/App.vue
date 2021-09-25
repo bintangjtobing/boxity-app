@@ -129,7 +129,9 @@
             <aside class="sidebar" :class="sidebar ? `` : `collapsed overflow`">
                 <div class="sidebar__menu-group">
                     <ul class="sidebar_nav">
-                        <div>
+                        <div v-if="permission.includes('ViewIssue') || permission.includes('ViewContactLists') ||
+                            permission.includes('ViewNotepad') || permission.includes('ViewQuoteReport') ||
+                            permission.includes('ViewTrackDelivery')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'General Applications', icon: 'build_circle', listId:'menuCollapse1' }">
@@ -139,31 +141,31 @@
                                                 <span>Version control</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewIssue')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewIssue')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Issue center">
                                             <router-link style="margin:0; width:100%" to="/issues">
                                                 <span>Issue center</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewContactLists')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewContactLists')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Contact lists">
                                             <router-link style="margin:0; width:100%" to="/contact-list">
                                                 <span>Contact lists</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewNotepad')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewNotepad')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Notepad">
                                             <router-link style="margin:0; width:100%" to="/notepad">
                                                 <span>Notepad</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewQuoteReport')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewQuoteReport')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Quote report">
                                             <router-link style="margin:0; width:100%" to="/quote">
                                                 <span>Quote report</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewTrackDelivery')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewTrackDelivery')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Track delivery">
                                             <router-link style="margin:0; width:100%" to="/track-delivery">
                                                 <span>Track delivery</span>
@@ -173,31 +175,32 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewUsers') || permission.includes('ViewCustomers') ||
+                            permission.includes('ViewSuppliers') || permission.includes('ViewSalesPerson')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Associate', icon: 'groups', listId:'menuCollapse2' }">
                                     <ul id='menuCollapse2' style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewCustomers')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewCustomers')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Customers">
                                             <router-link style="margin:0; width:100%" to="/customers">
                                                 <span>Customers</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewSuppliers')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewSuppliers')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Suppliers">
                                             <router-link style="margin:0; width:100%" to="/suppliers">
                                                 <span>Suppliers</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewSalesPerson')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewSalesPerson')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Sales Person">
                                             <a href="#" style="margin:0; width:100%">
                                                 <span>Sales Person</span>
                                                 <span class="badge badge-primary menuItem">Soon</span>
                                             </a>
                                         </li>
-                                        <li v-if="permissions.includes('ViewUsers')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewUsers')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Users management">
                                             <router-link style="margin:0; width:100%" to="/users-management">
                                                 <span>Users management</span>
@@ -207,38 +210,40 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewEmployee') || permission.includes('ViewJobVacancy') ||
+                            permission.includes('ViewCandidate') || permission.includes('ViewLeaveRequest') ||
+                            permission.includes('ViewLoan')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Human Resources Management', icon: 'person', listId:'menuCollapse3' }">
                                     <ul id="menuCollapse3" style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewEmployee')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewEmployee')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Employee">
                                             <a href="#" style="margin:0; width:100%">
                                                 <span>Employee</span>
                                                 <span class="badge badge-primary menuItem">Soon</span>
                                             </a>
                                         </li>
-                                        <li v-if="permissions.includes('ViewJobVacancy')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewJobVacancy')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Job Vacancy">
                                             <router-link style="margin:0; width:100%" to="/career">
                                                 <span>Job Vacancy</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewCandidate')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewCandidate')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Candidate">
                                             <router-link style="margin:0; width:100%" to="/candidate">
                                                 <span>Candidate</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewLeaveRequest')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewLeaveRequest')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Leave Request">
                                             <a href="#" style="margin:0; width:100%">
                                                 <span>Leave Request</span>
                                                 <span class="badge badge-primary menuItem">Soon</span>
                                             </a>
                                         </li>
-                                        <li v-if="permissions.includes('ViewLoan')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewLoan')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Loan">
                                             <a href="#" style="margin:0; width:100%">
                                                 <span>Loan</span>
@@ -249,12 +254,13 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewWarehouse') || permission.includes('ViewStockGroup') ||
+                            permission.includes('ViewItemGroup') || permission.includes('ViewInventoryItem')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Warehouse', icon: 'inventory_2', listId:'menuCollapse4' }">
                                     <ul id="menuCollapse4" style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewWarehouse')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewWarehouse')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Warehouse">
                                             <router-link style="margin:0; width:100%" :to="'/warehouse-list'">
                                                 <span>Warehouse List</span>
@@ -267,19 +273,19 @@
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Inventory Control', icon: 'inventory_2', listId:'menuCollapse5' }">
                                     <ul id="menuCollapse5" style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Stock Group">
                                             <router-link style="margin:0; width:100%" :to="'/stock-group'">
                                                 <span>Stock Group</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewItemGroup')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewItemGroup')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Item Group">
                                             <router-link style="margin:0; width:100%" :to="'/item-group'">
                                                 <span>Item Group</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewInventoryItem')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewInventoryItem')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Inventory Item">
                                             <router-link style="margin:0; width:100%" to="/inventory-item">
                                                 <span>Inventory Item</span>
@@ -289,36 +295,38 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewPurchaseOrder') || permission.includes('ViewPurchaseInvoice') ||
+                            permission.includes('ViewPurchaseReturn') || permission.includes('ViewPurchaseRequest') ||
+                            permission.includes('ViewDocumentsReceipt')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Receiving & Putaway', icon: 'list_alt', listId:'menuCollapse6' }">
                                     <ul id="menuCollapse6" style="padding: 0">
-                                        <li v-if="permissions.includes('ViewPurchaseOrder')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewPurchaseOrder')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Purchase Order">
                                             <router-link style="margin:0; width:100%" to="/purchase/order">
                                                 <span>Purchase Order</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewPurchaseInvoice')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewPurchaseInvoice')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Purchase Invoice">
                                             <router-link style="margin:0; width:100%" to="/purchase/invoices">
                                                 <span>Purchase Invoice</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewPurchaseReturn')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewPurchaseReturn')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Purchase Return">
                                             <router-link style="margin:0; width:100%" to="/purchase/return">
                                                 <span>Purchase Return</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewPurchaseRequest')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewPurchaseRequest')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Purchase Request">
                                             <router-link style="margin:0; width:100%" to="/purchase/request">
                                                 <span>Purchase Request</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewDocumentsReceipt')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewDocumentsReceipt')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Goods receipt">
                                             <router-link style="margin:0; width:100%" to="/goods-receipt">
                                                 <span>Documents Receipt</span>
@@ -328,40 +336,42 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewSalesOrder') || permission.includes('ViewSalesInvoice') ||
+                            permission.includes('ViewSalesReturn') || permission.includes('ViewDeliveryReceipt') ||
+                            permission.includes('ViewDocumetsDelivery')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Dispatching', icon: 'request_page', listId:'menuCollapse7' }">
                                     <ul id="menuCollapse7" style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewSalesOrder')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewSalesOrder')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Sales Order">
                                             <router-link style="margin:0; width:100%" to="/sales/order">
                                                 <span>Sales Order</span>
                                                 <span class="badge badge-secondary text-white menuItem">NEW</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewSalesInvoice')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewSalesInvoice')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Sales Invoice">
                                             <router-link style="margin:0; width:100%" to="/sales/invoices">
                                                 <span>Sales Invoice</span>
                                                 <span class="badge badge-secondary text-white menuItem">NEW</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewSalesReturn')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewSalesReturn')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Sales Return">
                                             <router-link style="margin:0; width:100%" to="/sales/return">
                                                 <span>Sales Return</span>
                                                 <span class="badge badge-primary menuItem">Soon</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewDeliveryReceipt')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewDeliveryReceipt')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Delivery Receipt">
                                             <router-link style="margin:0; width:100%" to="/delivery/receipt">
                                                 <span>Delivery Receipt</span>
                                                 <span class="badge badge-secondary text-white menuItem">NEW</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewDocumetsDelivery')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewDocumetsDelivery')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Goods receipt">
                                             <router-link style="margin:0; width:100%" to="/document/delivery">
                                                 <span>Documents Delivery</span>
@@ -371,12 +381,14 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewPermissionRole') || permission.includes('ViewGallery') ||
+                            permission.includes('ViewBlog') || permission.includes('ViewPopupWindow')">
                             <li>
                                 <menuCollapse v-bind="{ isSidebar: sidebar, title: 'Permissions & Role', icon: 'manage_accounts',
-                                    listId:'menuCollapse13' }" v-if="permissions.includes('ViewPermissionsRole')">
+                                    listId:'menuCollapse13' }">
                                     <ul id="menuCollapse13" style="padding: 0;">
-                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse">
+                                        <li v-if="permission.includes('ViewPermissionRole')" data-bs-toggle=" tooltip"
+                                            data-bs-placement="right" title="Warehouse">
                                             <router-link style="margin:0; width:100%" :to="'/permission-role'">
                                                 <span>Permissions & Role</span>
                                             </router-link>
@@ -388,19 +400,19 @@
                                 <menuCollapse
                                     v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Main Web Config', icon: 'language' }">
                                     <ul id="menuCollapse8" style="padding: 0;">
-                                        <li v-if="permissions.includes('ViewGallery')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewGallery')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Gallery">
                                             <router-link style="margin:0; width:100%" to="/gallery">
                                                 <span>Gallery</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewBlog')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewBlog')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Blog">
                                             <router-link style="margin:0; width:100%" to="/blog-management">
                                                 <span>Blog</span>
                                             </router-link>
                                         </li>
-                                        <li v-if="permissions.includes('ViewPopupWindow')" data-bs-toggle="tooltip"
+                                        <li v-if="permission.includes('ViewPopupWindow')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Popup Window">
                                             <router-link style="margin:0; width:100%" to="/popup-management">
                                                 <span>Popup Window</span>
@@ -508,15 +520,17 @@
                 sidebar: true,
                 isMore: false,
                 isMobile: false,
-                permissions: []
+                permission: []
             }
         },
         mounted() {
             feather.replace();
-            this.userGet();
             this.versionGet();
             this.companyGet();
             this.$Progress.finish();
+        },
+        beforeMount() {
+            this.userGet();
         },
         created() {
             window.addEventListener('resize', this.handleResize);
@@ -545,7 +559,7 @@
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
                 localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
-                this.permissions = JSON.parse(localStorage.getItem('permissions'));
+                this.permission = JSON.parse(localStorage.getItem('permissions'));
             },
             async versionGet() {
                 const resp = await axios.get('/api/version-control');
