@@ -11,27 +11,10 @@
 |
 */
 
-use App\candidates;
 use App\Http\Controllers\spaController;
 use App\userLogs;
 use Illuminate\Http\Request;
 
-Route::get('/clear-cache', function () {
-    $exitCode = Artisan::call('cache:clear');
-    return redirect('/');
-});
-Route::get('/config-cache', function () {
-    $exitCode = Artisan::call('config:cache');
-    return redirect('/');
-});
-Route::get('/optimize-clear', function () {
-    $exitCode = Artisan::call('optimize:clear');
-    return redirect('/');
-});
-Route::get('/clear-view', function () {
-    $exitCode = Artisan::call('view:clear');
-    return redirect('/');
-});
 Route::get('/sign-out', function (Request $request) {
     header("cache-Control: no-store, no-cache, must-revalidate");
     header("cache-Control: post-check=0, pre-check=0", false);
@@ -51,31 +34,6 @@ Route::get('/sign-out', function (Request $request) {
     Session::regenerate();
     return redirect('/tools');
 });
-Route::get('/21anniversary', function () {
-    return Redirect::to('https://infinitysolutions.co.id/assets/21anniversaryBTSA.mp4');
-});
-
-// Social Media Redirect
-Route::get('/facebook', function () {
-    return Redirect::to('https://facebook.com/BTSALogistics');
-});
-Route::get('/instagram', function () {
-    return Redirect::to('https://www.instagram.com/btsalogistics');
-});
-Route::get('/youtube', function () {
-    return Redirect::to('https://www.youtube.com/c/BTSALogisticsYourReliableLogisticsPartner');
-});
-Route::get('/wikipedia', function () {
-    return Redirect::to('https://id.wikipedia.org/wiki/Pengguna:Btsalogistics');
-});
-
-// Candidate proses
-Route::prefix('candidate')->group(function () {
-    Route::get('/get-provinsi', 'webpageController@getprovinsi');
-    Route::get('/get-domisili/{province_id}', 'webpageController@getdomisili');
-    Route::get('/get-kecamatan/{id}', 'webpageController@getkecamatan');
-    Route::get('/get-kelurahan/{id}', 'webpageController@getkelurahan');
-});
 
 // Auth url
 Route::get('/login', function () {
@@ -90,21 +48,6 @@ Route::get('/ask-reset-password', 'authController@askReset');
 Route::get('/reset-password/{id}', 'authController@resetPassword');
 Route::post('/reset-password/{id}', 'authController@processResetPassword');
 
-// Homepage Data
-Route::get('/', 'webpageController@index');
-Route::get('/connect', 'webpageController@connect');
-Route::get('/tentang-kami', 'webpageController@tentangkami');
-Route::get('/blog', 'webpageController@blog');
-Route::get('/galeri', 'webpageController@galeri');
-Route::get('/karir', 'webpageController@karir');
-Route::get('/karir/detail/{title}', 'webpageController@getKarirDetail');
-Route::get('/karir/daftar/{title}/{csrf_token}', 'webpageController@formRegisterKarir');
-Route::post('/karir/daftar/{title}/apply', 'webpageController@applyKarir');
-Route::get('/generatePDF/{id}', function ($id) {
-    $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
-    return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
-});
-
 // REPORTING PDF
 Route::get('/report/purchase/order/{po_number}', 'purchasingController@reportPO');
 Route::get('/report/purchase/invoices/{pi_number}', 'purchasingController@reportPI');
@@ -113,9 +56,6 @@ Route::get('/report/purchase/request/{pre_number}', 'purchasingController@report
 Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr');
 Route::get('/report/test', 'purchasingController@reportTest');
 Route::get('/report/sales/invoices/{si_number}', 'salesController@reportSI');
-
-// View details blog
-Route::get('/blog/v/{title}', 'webpageController@viewBlog');
 
 // Dashboard data url
 // Route::get('/tool', function () {
