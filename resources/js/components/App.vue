@@ -6,7 +6,7 @@
             <nav class="navbar navbar-light">
                 <div class="navbar-left">
                     <a @click="sidebarToggle" class="sidebar-toggle">
-                        <img class="svg" src="https://btsa.co.id/dashboard/img/svg/bars.svg" alt="img"></a>
+                        <img class="svg" src="dashboard/img/svg/bars.svg" alt="img"></a>
                     <a class="navbar-brand" href="/">
                         <img class="svg dark" :src="company.logoblack" alt="company-logo">
                         <img class="light" :src="company.logo" alt="company-logo">
@@ -33,12 +33,12 @@
                             <li class="nav-author">
                                 <div class="dropdown-custom">
                                     <a href="javascript:;" class="nav-item-toggle"><img
-                                            v-bind:src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
+                                            v-bind:src="`dashboard/img/author/profile/`+user.avatar"
                                             alt="User" class="rounded-circle"> {{user.name}}</a>
                                     <div class="dropdown-wrapper">
                                         <div class="nav-author__info">
                                             <div class="author-img" v-if="user.role!='customer'">
-                                                <img :src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
+                                                <img :src="`dashboard/img/author/profile/`+user.avatar"
                                                     alt="User" class="rounded-circle">
                                             </div>
                                             <div>
@@ -90,12 +90,12 @@
                     <li class="nav-author">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle"><img
-                                    v-bind:src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
+                                    v-bind:src="`dashboard/img/author/profile/`+user.avatar"
                                     alt="User" class="rounded-circle"> {{user.name}}</a>
                             <div class="dropdown-wrapper">
                                 <div class="nav-author__info">
                                     <div class="author-img" v-if="user.role!='customer'">
-                                        <img :src="`https://btsa.co.id/dashboard/img/author/profile/`+user.avatar"
+                                        <img :src="`dashboard/img/author/profile/`+user.avatar"
                                             alt="User" class="rounded-circle">
                                     </div>
                                     <div>
