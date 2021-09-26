@@ -66,6 +66,34 @@ class RolePermissionController extends Controller
         return response()->json($data, 200);
     }
     
+    public function getUserPermissionsById ($id, Request $request) {
+        $permissionId = [];
+        $permission = DB::table('users_permissions')->where("user_id", $id)->get();
+        foreach ($permission as  $value) {
+            array_push($permissionId, $value->permission_id);
+        }
+        
+        $rolePermissions = DB::table('roles_permissions')->whereIn('permissions_id', $permissionId)
+            ->join('roles', 'roles.id', '=', 'roles_permissions.role_id')
+            ->join('permissions', 'permissions.id', '=', 'roles_permissions.permissions_id')
+            ->select( 
+                'roles.id as roleId',
+                'roles.name as roleName',
+                'roles.slug as roleSlug',
+                'permissions.id as permissionId',
+                'permissions.name as permissionName',
+                'permissions.slug as permissionSlug',
+              )
+            ->get()->all();
+        
+        foreach ($rolePermissions as $value) {
+            $value->IDpermission = $value->roleSlug . '.' . $value->permissionSlug;
+        }
+        
+        $data = $data ?? $rolePermissions;
+        return response()->json($data, 200);
+    }
+    
     // ACTION
     public function insertRolePermission (Request $request) {
         $schema = $request->validate([
