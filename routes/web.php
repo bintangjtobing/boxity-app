@@ -32,7 +32,7 @@ Route::get('/sign-out', function (Request $request) {
     Session::flush();
     auth()->logout();
     Session::regenerate();
-    return redirect('/tools');
+    return redirect('/');
 });
 
 // Auth url

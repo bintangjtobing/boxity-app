@@ -9,7 +9,7 @@
                         <div class="error-page__title">404</div>
                         <h5 class="fw-500">Sorry! the page you are looking for doesn't exist.</h5>
                         <div class="content-center mt-30">
-                            <router-link to="/tools" class="btn btn-primary btn-default btn-squared px-30">Return Home
+                            <router-link to="/" class="btn btn-primary btn-default btn-squared px-30">Return Home
                             </router-link>
                         </div>
                     </div>

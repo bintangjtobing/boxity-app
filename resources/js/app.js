@@ -124,7 +124,7 @@ import receivingConfirmationAdd from './components/receivingConfirmation/receivi
 // membuat router
 const routes = [{
         name: 'home',
-        path: '/tools',
+        path: '/',
         component: Index
     }, {
         name: 'userLogs',

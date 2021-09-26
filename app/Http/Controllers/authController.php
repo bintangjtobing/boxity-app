@@ -96,7 +96,7 @@ class authController extends Controller
                 $saveLogs->notes = 'Logged in to system.';
                 $saveLogs->save();
 
-                return redirect('/tools');
+                return redirect('/');
             }
             return back()->with('gagal', ' Please check your auth status or your input!');
         }

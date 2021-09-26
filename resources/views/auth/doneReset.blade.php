@@ -25,7 +25,7 @@
                             <h4 class="card-title text-center mt-5">Yeay! You have been successfully reset your
                                 password!
                             </h4>
-                            <span><a href="/tools">Back to login</a></span>
+                            <span><a href="/">Back to login</a></span>
                         </div>
                     </div>
                     <div class="footer">
@@ -165,6 +165,7 @@
             });
 
         });
+
     </script>
 </body>
 

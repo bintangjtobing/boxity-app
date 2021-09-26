@@ -7,7 +7,7 @@
                 <div class="navbar-left">
                     <a @click="sidebarToggle" class="sidebar-toggle">
                         <img class="svg" src="https://btsa.co.id/dashboard/img/svg/bars.svg" alt="img"></a>
-                    <a class="navbar-brand" href="/tools">
+                    <a class="navbar-brand" href="/">
                         <img class="svg dark" :src="company.logoblack" alt="company-logo">
                         <img class="light" :src="company.logo" alt="company-logo">
                     </a>
