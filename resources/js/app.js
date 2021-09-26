@@ -127,7 +127,7 @@ import permissionRole from './components/permissionRole.vue';
 // membuat router
 const routes = [{
         name: 'home',
-        path: '/tools',
+        path: '/',
         component: Index
     }, {
         name: 'userLogs',
