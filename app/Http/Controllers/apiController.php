@@ -213,6 +213,15 @@ class apiController extends Controller
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update user ' . $user->username . ' from user management.';
         $saveLogs->save();
+        
+        DB::table('users_permissions')->where("user_id",$user->id)->delete();
+        foreach ($request->selected as $value) {
+            $usersPermissionsQuery = [
+                "user_id" => $user->id,
+                "permission_id" => $value['permissionId']
+            ];
+            DB::table('users_permissions')->insert($usersPermissionsQuery);
+        }
 
         $user->save();
         Mail::to($user->email)->send(new confirmUpdateIssue($user));
