@@ -263,50 +263,6 @@ export default {
     }
   },
 };
-/*
-import Swal from 'sweetalert2';
-    export default {
-        title() {
-            return 'Update user data';
-        },
-        data() {
-            return {
-                user: {},
-                errors: {},
-            }
-        },
-        created() {
-            this.loadDataUser();
-        },
-        methods: {
-            async loadDataUser() {
-                this.$Progress.start();
-                const response = await axios.get('/api/users/' + this.$route.params.id);
-                this.user = response.data;
-                this.$Progress.finish();
-            },
-            async handleSubmit() {
-                const payload = {};
-                _.forEach(['name', 'role', 'department', 'divisi', 'gender', 'email', 'status'], (field) => {
-                    if (this.user[field]) {
-                        payload[field] = this.user[field];
-                    }
-                });
-                if (!_.isEmpty(this.user.password)) {
-                    payload.password = this.user.password;
-                }
-                this.$Progress.start();
-                await axios.patch('/api/users/' + this.$route.params.id, payload);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Congratulations',
-                    text: 'Success update user data',
-                });
-                this.$Progress.finish();
-                this.$router.push('/users-management');
-            },
-        },
-    }*/
 </script>
 
 <style scoped>
