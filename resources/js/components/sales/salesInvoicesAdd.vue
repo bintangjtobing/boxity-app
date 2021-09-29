@@ -34,7 +34,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <selectSearch :disabled="isWriteForm" v-model="selected.item" v-bind="{
+                                        <selectSearch v-model="selected.item" v-bind="{
                                             datas: items,
                                             width: '100%' ,
                                             name: 'item_name',
@@ -134,8 +134,7 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
-                                        <span v-show="qtyItem != null"
-                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <span v-show="qtyItem != null" id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
                                         <input type="number" v-model="itemModify.qtyShipped" @change="onQtyInc"
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
@@ -585,6 +584,14 @@
     .rotate {
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
+    }
+    
+    #qtyItem {
+        color: #ebdc31;
+    }
+    
+    #qty {
+        color: #f44444;
     }
 
     #qtyItem {
