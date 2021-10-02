@@ -20,19 +20,16 @@ class authController extends Controller
 {
     public function index()
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->first();
         $company = company_details::first();
-        return view('auth.login', ['version' => $version, 'company' => $company]);
+        return view('auth.login', ['company' => $company]);
     }
     public function forgotPassword()
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->first();
         $company = company_details::first();
-        return view('auth.forgot', ['version' => $version, 'company' => $company]);
+        return view('auth.forgot', ['company' => $company]);
     }
     public function askReset(Request $request)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->first();
         $company = company_details::first();
 
         $email = $request->email;
@@ -46,19 +43,17 @@ class authController extends Controller
         $saveLogs->save();
 
         Mail::to($email)->send(new askReset($user));
-        return view('auth.doneForgot', ['company' => $company, 'version' => $version]);
+        return view('auth.doneForgot', ['company' => $company]);
     }
     public function resetPassword($id)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->first();
         $company = company_details::first();
 
         $user = User::where('id', $id)->get();
-        return view('auth.reset', ['user' => $user[0], 'company' => $company, 'version' => $version]);
+        return view('auth.reset', ['user' => $user[0], 'company' => $company]);
     }
     public function processResetPassword($id, Request $request)
     {
-        $version = changeLog::orderBy('created_at', 'DESC')->first();
         $company = company_details::first();
 
         $users = User::where('id', $id)->get();
@@ -74,7 +69,7 @@ class authController extends Controller
         $saveLogs->save();
 
         Mail::to($user->email)->send(new doneReset($user));
-        return view('auth.doneReset', ['company' => $company, 'version' => $version]);
+        return view('auth.doneReset', ['company' => $company]);
     }
     public function loginProcess(Request $request)
     {

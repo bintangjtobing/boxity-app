@@ -476,9 +476,9 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <router-link :to="{ name: 'versionView', params: { version:version.version }}">
+                                        <a href="https://docs.boxity.id/platform/releases#v108">
                                             App
-                                            version {{version.version}}</router-link>
+                                            version 1.0.8</a>
                                     </li>
                                 </ul>
                             </div>

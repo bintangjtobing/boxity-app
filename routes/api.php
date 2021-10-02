@@ -119,18 +119,9 @@ Route::get('/documents/{id}', 'apiController@getDocument');
 Route::post('/album', 'apiController@addGallery');
 Route::get('/album', 'apiController@getAlbum');
 
-// Version control api
-Route::get('/version-control', 'apiController@getVersionControl');
-Route::post('/version-control', 'apiController@newVersion');
-Route::get('/version-control/{version}', 'apiController@getVersionData');
-
 // Popup Window api
 Route::get('/popup-management', 'apiController@getPopup');
 Route::post('/popup-management', 'apiController@postPopup');
-
-// User Guide API
-Route::get('/user-guide', 'apiController@userGuideGet');
-Route::post('/user-guide', 'apiController@newGuide');
 
 // Candidate API
 Route::get('/candidates', 'apiController@getCandidate');
