@@ -201,7 +201,7 @@ class apiController extends Controller
     }
     public function getContactList()
     {
-        return response()->json(User::where('divisi', '!=', 'developer')->where('role', '!=', 'customer')->where('role', '!=', 'supplier')->orderBy('name', 'asc')->get());
+        return response()->json(User::orderBy('name', 'asc')->get());
     }
     public function updateUser($id, Request $request)
     {
@@ -1831,8 +1831,7 @@ class apiController extends Controller
         $data = [];
         if (isset($req->fromDate) && isset($req->toDate)) {
             $data = itemHistory::where('itemId', $id)->whereBetween('date', [$req->fromDate, $req->toDate])->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
-        }
-        else {
+        } else {
             $data = itemHistory::where('itemId', $id)->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'DESC')->get();
         }
 
