@@ -151,9 +151,10 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('api/users/' + id);
                     this.loadUsers();
+                    this.$isLoading(false);
                     document.getElementById('ding').play();
                     await Swal.fire({
                         icon: 'success',
@@ -161,7 +162,6 @@
                         text: 'Success terminate current user.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
                 }
             },
             validatePassword() {
@@ -267,7 +267,7 @@
                     this.user.password = genPass;
                     this.user.confirmPassword = genPass;
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
                     document.getElementById('failding').play();

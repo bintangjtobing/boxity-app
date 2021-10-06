@@ -203,11 +203,20 @@ Route::delete('/item-group/{id}', 'apiController@deleteItemGroupById');
 // Inventory Item
 // Upload image
 Route::post('/inventory-item/images', 'apiController@imagesInventoryItemStore')->name('dropzoneImages');
+Route::delete('/inventory-item/images/{id}', 'apiController@imagesInventoryItemStoreDelete');
+Route::post('/inventory-item/images/{id}', 'apiController@imagesInventoryItemStoreWithId')->name('dropzoneImages');
+Route::get('/inventory-item/null', function () {
+    $file = DB::table('inventory-items-images')
+        ->whereNull('itemid')
+        ->get();
+    return $file;
+});
 // Route::get('/documents/{id}', 'apiController@getDocument');
 Route::post('/album', 'apiController@addGallery');
 Route::get('/album', 'apiController@getAlbum');
 
 Route::get('/inventory-item', 'apiController@getInventoryItem');
+Route::get('/inventory-item/album/{id}', 'apiController@getImageInventoryItem');
 Route::post('/inventory-item', 'apiController@postInventoryItem');
 Route::get('/inventory-item/{id}', 'apiController@getInventoryItemById');
 Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');

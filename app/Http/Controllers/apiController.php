@@ -66,6 +66,7 @@ use App\suppliers;
 use App\bank;
 use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Mail;
 use PDF;
 
@@ -1772,10 +1773,6 @@ class apiController extends Controller
         $inventory->userid = Auth::id();
         $inventory->warehouseid = $request->warehouseid;
 
-        $file = DB::table('inventory-items-images')
-            ->whereNull('itemid')
-            ->update(array('itemid' => $inventory->id));
-
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
@@ -1784,11 +1781,19 @@ class apiController extends Controller
         $saveLogs->save();
 
         $inventory->save();
+        $file = DB::table('inventory-items-images')
+            ->whereNull('itemid')
+            ->update(array('itemid' => $inventory->id));
         return response()->json($inventory, 200);
     }
     public function getInventoryItemById($id)
     {
         return response()->json(inventoryItem::find($id));
+    }
+    public function getImageInventoryItem($id)
+    {
+        $getImg = imagesInventoryItem::where('itemid', $id)->get();
+        return response()->json($getImg);
     }
     public function postInventoryItemById($id, Request $request)
     {
@@ -1829,12 +1834,26 @@ class apiController extends Controller
     }
     public function imagesInventoryItemStore(Request $request)
     {
-        $doc = $request->file('file');
-        $imageName = time() . '-' .  $request->file->getClientOriginalName();
-        $fileName = $request->file->getClientOriginalName();
-        $request->file->move(public_path('storage/inventory-item/'), $imageName);
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/inventory-item'
+        ])->getSecurePath();
         $images = imagesInventoryItem::create([
-            'file' => $imageName,
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function imagesInventoryItemStoreDelete($id)
+    {
+        return response()->json(imagesInventoryItem::find($id)->delete());
+    }
+    public function imagesInventoryItemStoreWithId(Request $request, $id)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/inventory-item'
+        ])->getSecurePath();
+        $images = imagesInventoryItem::create([
+            'file' => $uploadFile,
+            'itemid' => $id,
         ]);
         return response()->json($images, 201);
     }

@@ -93,6 +93,7 @@ import stockGroupForm from './components/stockGroupForm.vue';
 import itemGroup from './components/itemGroup.vue';
 import itemGroupForm from './components/itemGroupForm.vue';
 import inventoryItem from './components/inventoryItem.vue';
+import inventoryItemAdd from './components/inventoryItemAdd.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
 
@@ -144,7 +145,7 @@ const routes = [{
         name: 'user',
         path: '/users-management',
         component: UserLists
-    },{
+    }, {
         name: 'user',
         path: '/users-management/add',
         component: UserAdd
@@ -341,6 +342,10 @@ const routes = [{
         name: 'inventoryItem',
         path: '/inventory-item',
         component: inventoryItem
+    }, {
+        name: 'inventoryItemAdd',
+        path: '/inventory-item/add',
+        component: inventoryItemAdd
     }, {
         name: 'detailInventoryItem',
         path: '/detail/inventory-item/:id',

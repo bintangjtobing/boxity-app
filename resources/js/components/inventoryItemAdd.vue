@@ -220,6 +220,7 @@
                 dropzoneOptions: {
                     url: '/api/inventory-item/images',
                     thumbnailWidth: 200,
+                    maxFilesize: 2, // MB
                     addRemoveLinks: true,
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'

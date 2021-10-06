@@ -27,6 +27,10 @@
                                     role="tab" aria-controls="v-pills-history" aria-selected="true">Activites &
                                     History</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="v-pills-image-tab" data-toggle="pill" href="#v-pills-image"
+                                    role="tab" aria-controls="v-pills-image" aria-selected="true">Item Images</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="v-pills-tabContent">
@@ -307,24 +311,66 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade  show" id="v-pills-image" role="tabpanel"
+                            aria-labelledby="v-pills-image-tab">
+                            <div class="row mx-4">
+                                <div class="col-lg-4 itemImage" v-for="image in imgs" :key="image.id">
+                                    <a :href="image.file" target="_blank"><img :src="image.file"></a>
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-12 text-center">
+                                            <a v-on:click="deleteThisImage(image.id)"
+                                                class="btn btn-danger-boxity btn-block"><i
+                                                    class="fad fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center mb-3" v-if="addItemBtn">
+                                    <a v-on:click="itemImageAdds"><span class="itemImageAdd"><i
+                                                class="fad fa-plus fa-2x"></i></span></a>
+                                </div>
+                                <div class="col-lg-12 text-center" v-if="addItemImages">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <vue-dropzone useCustomSlot ref="itemImageAddOnId" id="dropzone"
+                                                :options="dropzoneOptions" @vdropzone-complete="afterComplete"
+                                                class="dropzone">
+                                                <div class="dropzone-custom-content">
+                                                    <h3 class="dropzone-custom-title">Drag and drop to upload
+                                                        attachment!</h3>
+                                                    <div class="subtitle">...or click to select a file from your
+                                                        computer</div>
+                                                </div>
+                                            </vue-dropzone>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </template>
 <script>
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
+    import vue2Dropzone from 'vue2-dropzone';
     export default {
         components: {
-            'editor': Editor
+            'editor': Editor,
+            vueDropzone: vue2Dropzone,
         },
         title() {
             return `Inventory item data`;
         },
         data() {
             return {
+                addItemBtn: true,
+                addItemImages: false,
                 inventorydata: {},
                 inventoryOpt: {},
                 range: {},
@@ -335,6 +381,7 @@
                 sortDesc: ['false', 'true'],
                 key: 1,
                 historyItem: [],
+                imgs: {},
                 headers: [{
                     text: 'Document #',
                     value: 'itemNumber'
@@ -366,6 +413,15 @@
                 sumQtyOut: 0,
                 countQty: '-',
                 beginningQty: '-',
+                // TODO: callback to save the ids of the uploaded file
+                dropzoneOptions: {
+                    url: '/api/inventory-item/images/' + this.$route.params.id,
+                    thumbnailWidth: 200,
+                    maxFilesize: 2, // MB
+                    addRemoveLinks: true,
+                    autoDiscover: false,
+                    dictRemoveFile: 'REMOVE'
+                },
             }
         },
         created() {
@@ -381,6 +437,10 @@
             }
         },
         methods: {
+            async loadImageItem() {
+                const imgLists = await axios.get('/api/inventory-item/album/' + this.$route.params.id);
+                this.imgs = imgLists.data;
+            },
             async loadDataInventoryItem() {
                 // this.$Progress.start();
                 this.$isLoading(true);
@@ -397,6 +457,9 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 // Load customer warehouse
+                const imgList = await axios.get('/api/inventory-item/album/' + this.$route.params.id);
+                this.imgs = imgList.data;
+                console.log(this.imgs);
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
                 this.historyItem = historyList.data;
                 const qtyInSum = await axios.get('/api/sum/in/item-history/' + this.$route.params.id);
@@ -433,6 +496,48 @@
                     }
                 });
                 this.historyItem = historyList.data;
+            },
+            itemImageAdds() {
+                // console.log('jalan');
+                this.addItemBtn = false;
+                this.addItemImages = true;
+            },
+            afterComplete() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully!',
+                    text: 'Success add image on this items.'
+                });
+                this.addItemBtn = true;
+                this.addItemImages = false;
+                this.loadImageItem();
+                this.$refs.itemImageAddOnId.removeAllFiles()
+                // this.$router.go();
+            },
+            async deleteThisImage(id) {
+                document.getElementById('failding').play();
+                const result = await Swal.fire({
+                    icon: 'info',
+                    title: 'Delete',
+                    text: 'Delete this item?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Delete`,
+                });
+                if (result.isConfirmed) {
+                    // this.$Progress.start();
+                    this.$isLoading(true);
+                    await axios.delete('/api/inventory-item/images/' + id);
+                    this.$isLoading(false);
+                    this.loadImageItem();
+                    document.getElementById('ding').play();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Delete',
+                        text: 'Success delete current image.'
+                    });
+                    // this.$Progress.finish();
+                }
             }
         },
     }
