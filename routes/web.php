@@ -14,6 +14,7 @@
 use App\Http\Controllers\spaController;
 use App\userLogs;
 use Illuminate\Http\Request;
+use App\candidates;
 
 Route::get('/sign-out', function (Request $request) {
     header("cache-Control: no-store, no-cache, must-revalidate");
@@ -60,6 +61,11 @@ Route::get('/report/sales/invoices/{si_number}', 'salesController@reportSI');
 Route::get('/report/sales/order/{so_number}', 'salesController@reportSalesOrder');
 Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr');
 
+// Reporting PDF
+Route::get('/generate/pdf/{id}', function ($id) {
+    $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
+    return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
+});
 // Dashboard data url
 // Route::get('/tool', function () {
 //     return Redirect::to('/tools');

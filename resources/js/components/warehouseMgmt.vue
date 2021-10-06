@@ -138,16 +138,17 @@
         },
         created() {
             // this.$Progress.start();
-                this.$isLoading(true);
+            this.$isLoading(true);
             this.loadWarehouse();
             this.loadUser();
             // this.$Progress.finish();
-                this.$isLoading(false);
+            this.$isLoading(false);
         },
         methods: {
             async loadWarehouse() {
                 const resp = await axios.get('/api/warehouse');
                 this.warehouseData = resp.data;
+                console.log(this.warehouseData)
             },
             async loadUser() {
                 const resp = await axios.get('/api/contact-list');
@@ -172,7 +173,7 @@
                         pic: '',
                     };
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
                     document.getElementById('failding').play();
@@ -200,7 +201,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/warehouse/' + id);
                     this.loadWarehouse();
                     document.getElementById('ding').play();
@@ -210,7 +211,7 @@
                         text: 'Success deleted current warehouse.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

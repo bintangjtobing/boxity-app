@@ -289,10 +289,10 @@
                                                                                 </div>
                                                                             </template>
                                                                             <template v-slot:[`item.qtyIn`]="{item}">
-                                                                                {{item.qtyIn|toDecimal}}
+                                                                                {{item.qtyIn}}
                                                                             </template>
                                                                             <template v-slot:[`item.qtyOut`]="{item}">
-                                                                                {{item.qtyOut|toDecimal}}
+                                                                                {{item.qtyOut}}
                                                                             </template>
                                                                         </v-data-table>
                                                                     </div>
@@ -401,10 +401,13 @@
                 this.historyItem = historyList.data;
                 const qtyInSum = await axios.get('/api/sum/in/item-history/' + this.$route.params.id);
                 this.sumQtyIn = qtyInSum.data;
-                this.inventorydata.qty = (qtyInSum.data) | toDecimal;
+                this.inventorydata.qty = qtyInSum.data;
                 const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
                 this.sumQtyOut = qtyOutSum.data;
                 this.countQty = this.sumQtyIn - this.sumQtyOut;
+                console.log('qtyIn', this.sumQtyIn);
+                console.log('qtyOut', this.sumQtyOut);
+                console.log('count', this.countQty);
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

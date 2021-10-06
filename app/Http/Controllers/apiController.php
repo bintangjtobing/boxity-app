@@ -65,6 +65,7 @@ use App\Permission;
 use App\suppliers;
 use App\bank;
 use App\Http\Middleware\EncryptCookies;
+use App\imagesInventoryItem;
 use Mail;
 use PDF;
 
@@ -1452,8 +1453,6 @@ class apiController extends Controller
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if ($getUserIdOnCustomer && Auth::user()->role != 'admin') {
-            // If logged user is having role as CUSTOMER
-            // then warehouse shows that having this ID CUSTOMER
             $warehouse = DB::table('warehouse_lists')
                 ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
                 ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
@@ -1773,6 +1772,10 @@ class apiController extends Controller
         $inventory->userid = Auth::id();
         $inventory->warehouseid = $request->warehouseid;
 
+        $file = DB::table('inventory-items-images')
+            ->whereNull('itemid')
+            ->update(array('itemid' => $inventory->id));
+
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
@@ -1824,7 +1827,17 @@ class apiController extends Controller
     {
         return response()->json(inventoryItem::find($id)->delete());
     }
-
+    public function imagesInventoryItemStore(Request $request)
+    {
+        $doc = $request->file('file');
+        $imageName = time() . '-' .  $request->file->getClientOriginalName();
+        $fileName = $request->file->getClientOriginalName();
+        $request->file->move(public_path('storage/inventory-item/'), $imageName);
+        $images = imagesInventoryItem::create([
+            'file' => $imageName,
+        ]);
+        return response()->json($images, 201);
+    }
     // History item
     public function getHistoryItemById($id, Request $req)
     {
@@ -1845,17 +1858,18 @@ class apiController extends Controller
     public function sumQtyInHistoryItem($id)
     {
         $getHistory = itemHistory::where('itemId', $id)->get();
-        if (!$getHistory) {
+        if ($getHistory->isEmpty()) {
             return '0';
         } else {
             $getPINum = $getHistory[0]->itemInId;
             return response()->json(itemsPurchase::where('item_code', $id)->where('pi_status', 2)->sum('qtyShipped'));
         }
+        // return $getHistory;
     }
     public function sumQtyOutHistoryItem($id)
     {
         $getHistory = itemHistory::where('itemId', $id)->get();
-        if (!$getHistory) {
+        if ($getHistory->isEmpty()) {
             return '0';
         } else {
             $getSINumb = $getHistory[0]->itemOutId;

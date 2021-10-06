@@ -64,8 +64,7 @@
                                 <h3>Tentang saya</h3> <br><span v-html="candidates.about"></span>
                             </div>
                             <div class="col-lg-3 text-left">
-                                <a href="" target="_blank"><img class="pasfoto"
-                                        :src="`/storage/file/`+candidates.nama_lengkap+`/`+candidates.picture"
+                                <a href="" target="_blank"><img class="pasfoto" :src="candidates.picture"
                                         style="width: 113.3px; height: 151.1px; object-fit:cover;"></a>
                                 <br><br>
                                 <p>
@@ -73,12 +72,11 @@
                                     <b>{{candidates.email}}</b><br><br>
                                     Nomor HP <br>
                                     <b>{{candidates.nohp}}</b><br><br>
-                                    <a :href="`/storage/file/`+candidates.nama_lengkap+`/`+candidates.supported_file"
-                                        download class="rounded-pill userDatatable-content-status color-primary
+                                    <a :href="candidates.supported_file" download class="rounded-pill userDatatable-content-status color-primary
                                                 bg-opacity-primary active">
                                         <i class="fal fa-paperclip"></i> &nbsp;Supported Document
                                     </a>
-                                    <a :href="`/generatePDF/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
+                                    <a :href="`/generate/pdf/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active mt-1">
                                         <i class="fad fa-print"></i> &nbsp;Print/Export to PDF
                                     </a>
