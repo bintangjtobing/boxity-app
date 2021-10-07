@@ -73,7 +73,7 @@
                                     Nomor HP <br>
                                     <b>{{candidates.nohp}}</b><br><br>
                                     <a :href="candidates.supported_file" download class="rounded-pill userDatatable-content-status color-primary
-                                                bg-opacity-primary active">
+                                                bg-opacity-primary active" target="_blank">
                                         <i class="fal fa-paperclip"></i> &nbsp;Supported Document
                                     </a>
                                     <a :href="`/generate/pdf/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
