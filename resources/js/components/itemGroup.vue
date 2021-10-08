@@ -7,9 +7,8 @@
                     </h2>
                     <div class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
-                            <a href="#" data-toggle="modal" data-target="#addItemGroup"
-                                class="btn btn-sm btn-primary-boxity btn-add">
-                                <i class="las la-plus fs-16"></i>Add Item Group</a>
+                            <router-link to="/item-group/add" class="btn btn-sm btn-primary-boxity btn-add">
+                                <i class="las la-plus fs-16"></i>Add Item Group</router-link>
                         </div>
                     </div>
                 </div>
@@ -27,7 +26,8 @@
                                     multi-sort :items="itemGroupData" :items-per-page="10" class="elevation-1"
                                     :search="search">
                                     <template v-slot:item.remarks="{ item }">
-                                        <span v-html="item.remarks"></span>
+                                        <span v-html="item.remarks" class="d-inline-block text-truncate"
+                                            style="max-width: 230px;"></span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/item-group/${item.id}`" class="edit">
@@ -172,7 +172,7 @@
                     };
                 }).catch(error => {
                     this.$Progress.fail();
-                   document.getElementById('failding').play();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -199,7 +199,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/item-group/' + id);
                     this.loadItemGroup();
                     document.getElementById('ding').play();
@@ -210,7 +210,7 @@
                         text: 'Success deleted current item group.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

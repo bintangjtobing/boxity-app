@@ -74,14 +74,26 @@
                                 </div>
                                 <div class="form-group mt-2">
                                     <div class="form-row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <span>Brand:</span>
                                                 <input type="text" v-model="inventorydata.brand" class="form-control"
                                                     placeholder="Brand">
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <span>Group:</span>
+                                                <select v-model="inventorydata.stock_group"
+                                                    class="form-control form-control-default">
+                                                    <option value="" disabled>Select group item</option>
+                                                    <option v-for="inventoryGroup in inventoryGroup"
+                                                        :key="inventoryGroup.id" :value="inventoryGroup.id">
+                                                        {{inventoryGroup.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <span>Category:</span>
                                                 <select v-model="inventorydata.item_group"
@@ -93,7 +105,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-1">
                                             <div class="form-group">
                                                 <span>Unit:</span>
                                                 <input type="text" v-model="inventorydata.unit" class="form-control"
@@ -207,10 +219,12 @@
                     type: '',
                     addInventoryItem: '',
                     item_group: '',
+                    stock_group: '',
                     customerId: '',
                     warehouseid: '',
                 },
                 inventoryOpt: {},
+                inventoryGroup: {},
                 customers: {},
                 warehouses: {},
                 warehouseSelect: true,
@@ -237,6 +251,8 @@
                 // Load item group
                 const respItemGroup = await axios.get('/api/item-group');
                 this.inventoryOpt = respItemGroup.data;
+                const respGroup = await axios.get('/api/stock-group');
+                this.inventoryGroup = respGroup.data;
 
                 const respCust = await axios.get('/api/customers');
                 this.customers = respCust.data;

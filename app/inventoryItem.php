@@ -30,6 +30,10 @@ class inventoryItem extends Model
     {
         return $this->belongsTo(itemGroup::class, 'item_group');
     }
+    public function stockGroup()
+    {
+        return $this->belongsTo(stockGroup::class, 'stock_group');
+    }
     public function customer()
     {
         return $this->belongsTo(customers::class, 'customerId');

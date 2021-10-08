@@ -91,11 +91,13 @@ import warehouseForm from './components/warehouseForm.vue';
 import stockGroup from './components/stockGroup.vue';
 import stockGroupForm from './components/stockGroupForm.vue';
 import itemGroup from './components/itemGroup.vue';
+import itemGroupAdd from './components/itemGroupAdd.vue';
 import itemGroupForm from './components/itemGroupForm.vue';
 import inventoryItem from './components/inventoryItem.vue';
 import inventoryItemAdd from './components/inventoryItemAdd.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
+import subscrips from './components/subscriptions.vue';
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -335,6 +337,10 @@ const routes = [{
         path: '/item-group',
         component: itemGroup
     }, {
+        name: 'itemGroupAdd',
+        path: '/item-group/add',
+        component: itemGroupAdd
+    }, {
         name: 'detailItemGroup',
         path: '/detail/item-group/:id',
         component: itemGroupForm,
@@ -475,6 +481,10 @@ const routes = [{
         name: 'permission-role',
         path: '/permission-role',
         component: permissionRole
+    }, {
+        name: 'subscriptions',
+        path: '/subscriptions',
+        component: subscrips
     }
 ]
 Vue.filter('toDecimal', num => {

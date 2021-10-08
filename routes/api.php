@@ -196,6 +196,12 @@ Route::patch('/stock-group/{id}', 'apiController@postStockGroupById');
 Route::delete('/stock-group/{id}', 'apiController@deleteStockGroupById');
 
 // Item Group
+// Upload image
+Route::post('/item-group/images', 'apiController@imagesInItemGroupStore')->name('dropzoneImages');
+Route::delete('/item-group/images/{id}', 'apiController@imagesInItemGroupStoreDelete');
+Route::post('/item-group/images/{id}', 'apiController@imagesInItemGroupStoreWithId')->name('dropzoneImages');
+Route::get('/item-group/album/{id}', 'apiController@getImageInItemGroup');
+
 Route::get('/item-group', 'apiController@getItemGroup');
 Route::post('/item-group', 'apiController@postItemGroup');
 Route::get('/item-group/{id}', 'apiController@getItemGroupById');
@@ -421,3 +427,9 @@ Route::get('/user-permissions/{id}', 'RolePermissionController@getUserPermission
 Route::post('/role-permissions', 'RolePermissionController@insertRolePermission');
 Route::patch('/role-permissions/update', 'RolePermissionController@updateRolePermissions');
 Route::delete('/role-permissions/delete/{roleId}', 'RolePermissionController@deleteRolePermissions');
+
+// Subscriptions
+Route::get('/subscriptions', 'apiController@getSubscriptions');
+
+// Inbox
+Route::get('/inbox', 'apiController@getInbox');

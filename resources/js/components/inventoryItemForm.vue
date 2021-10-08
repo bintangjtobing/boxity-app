@@ -320,7 +320,7 @@
                         <div class="tab-pane fade  show" id="v-pills-image" role="tabpanel"
                             aria-labelledby="v-pills-image-tab">
                             <div class="row mx-4">
-                                <div class="col-lg-4 itemImage" v-for="image in imgs" :key="image.id">
+                                <div class="col-lg-4 text-center itemImage" v-for="image in imgs" :key="image.id">
                                     <a :href="image.file" target="_blank"><img :src="image.file"></a>
                                     <div class="row justify-content-center">
                                         <div class="col-lg-12 text-center">

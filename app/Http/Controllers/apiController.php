@@ -65,8 +65,11 @@ use App\Permission;
 use App\suppliers;
 use App\bank;
 use App\BankCompany;
+use App\inboxMessage;
+use App\subscription;
 use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
+use App\imagesItemGroup;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Mail;
 use PDF;
@@ -1705,6 +1708,9 @@ class apiController extends Controller
         $saveLogs->save();
 
         $itemGroup->save();
+        $file = DB::table('images_item_groups')
+            ->whereNull('itemGroupId')
+            ->update(array('itemGroupId' => $itemGroup->id));
         return response()->json($itemGroup, 200);
     }
     public function getItemGroupById($id)
@@ -1739,6 +1745,36 @@ class apiController extends Controller
     public function deleteItemGroupById($id)
     {
         return response()->json(itemGroup::find($id)->delete());
+    }
+    public function imagesInItemGroupStore(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/item-group'
+        ])->getSecurePath();
+        $images = imagesItemGroup::create([
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function imagesInItemGroupStoreDelete($id)
+    {
+        return response()->json(imagesItemGroup::find($id)->delete());
+    }
+    public function imagesInItemGroupStoreWithId(Request $request, $id)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/item-group'
+        ])->getSecurePath();
+        $images = imagesItemGroup::create([
+            'file' => $uploadFile,
+            'itemGroupId' => $id,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function getImageInItemGroup($id)
+    {
+        $getImg = imagesItemGroup::where('itemGroupId', $id)->get();
+        return response()->json($getImg);
     }
 
     // Inventory Item
@@ -2100,5 +2136,17 @@ class apiController extends Controller
             ->get()
             ->count();
         return response()->json($ItemCount);
+    }
+
+    // Subscriptions
+    public function getSubscriptions()
+    {
+        return response()->json(subscription::orderBy('email', 'ASC')->get());
+    }
+
+    // Inbox
+    public function getInbox()
+    {
+        return response()->json(inboxMessage::orderBy('created_at', 'DESC')->get());
     }
 }
