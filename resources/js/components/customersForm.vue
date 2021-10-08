@@ -13,6 +13,12 @@
             </div>
         </div>
         <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
                     <div class="ap-tab-wrapper border-bottom ">
@@ -268,6 +274,13 @@
             this.loadUserCompany();
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1);
+            },
+            routerRefresh() {
+                this.loadDataUser();
+                this.loadUserCompany();
+            },
             async loadDataUser() {
                 // this.$Progress.start();
                 this.$isLoading(true);
@@ -352,7 +365,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/user-customer/' + id);
                     this.loadUserCompany();
                     document.getElementById('ding').play();
@@ -362,7 +375,7 @@
                         text: 'Success deleted current customer.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

@@ -516,6 +516,30 @@ a {
     color: #fff !important;
 }
 
+.btn-circle-light-boxity {
+    background: rgb(255, 255, 255);
+    height: 40px;
+    width: 30px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 8px;
+    box-shadow: 0 5px 20px rgba(146, 153, 184, 0.03);
+}
+
+.btn-circle-light-boxity:hover {
+    background: rgba(255, 255, 255, .9);
+}
+
+.fa-center {
+    line-height: inherit !important;
+    vertical-align: middle;
+}
+
+.fa-arrow-left,
+.fa-sync {
+    margin-left: 8px;
+}
+
 /* Responsive Design */
 /*
   ##Device = Desktops

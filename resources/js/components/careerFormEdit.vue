@@ -7,6 +7,12 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
         <form @submit.prevent="handleSubmit">
             <div class="row">
                 <div class="col-lg-8">
@@ -126,6 +132,14 @@
             this.loadDataCareer();
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1)
+            },
+            routerRefresh() {
+                this.$isLoading(true);
+                this.loadDataCareer();
+                this.$isLoading(false);
+            },
             async loadDataCareer() {
                 // this.$Progress.start();
                 this.$isLoading(true);

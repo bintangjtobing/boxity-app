@@ -35,6 +35,12 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
         <div class="row my-4">
             <div class="col-lg-9">
                 <div class="card card-Vertical card-default card-md mb-4">
@@ -175,7 +181,8 @@
                 </div>
                 <div class="vertical-form my-3" v-if="user.role=='head' || user.role=='hrdga' && issues.status==0">
                     <div class="form-group">
-                        <button v-on:click="approveIssue" type="submit" class="btn btn-primary-boxity btn-default btn-squared">
+                        <button v-on:click="approveIssue" type="submit"
+                            class="btn btn-primary-boxity btn-default btn-squared">
                             Approve issue</button>
                     </div>
                 </div>
@@ -219,6 +226,14 @@
             this.$isLoading(false);
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1)
+            },
+            routerRefresh() {
+                this.$isLoading(true);
+                this.loadDataIssue();
+                this.$isLoading(false);
+            },
             async loadDataIssue() {
                 // this.$Progress.start();
                 const response = await axios.get('/api/issue/' + this.$route.params.id);

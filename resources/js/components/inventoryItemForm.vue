@@ -13,6 +13,12 @@
             </div>
         </div>
         <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
                     <div class="ap-tab-wrapper border-bottom ">
@@ -325,11 +331,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" v-if="this.imgs > 1">
                                 <div class="col-lg-12 text-center mb-3" v-if="addItemBtn">
                                     <a v-on:click="itemImageAdds"><span class="itemImageAdd"><i
                                                 class="fad fa-plus fa-2x"></i></span></a>
                                 </div>
+                            </div>
+                            <div class="row" v-else>
+                                <div class="col-lg-12 text-center my-2" v-if="noImageHere">
+                                    <!-- Start: error page -->
+                                    <div class="min-vh-100 content-center">
+                                        <div class="error-page text-center">
+                                            <img src="https://res.cloudinary.com/boxity-id/image/upload/v1633661884/404_qggjfd.svg"
+                                                alt="404" class="svg">
+                                            <h5 class="fw-500">Sorry! This item has no images here...</h5>
+                                            <div class="content-center mt-30">
+                                                <a @click="itemImageAdds" href="#"
+                                                    class="btn btn-primary-boxity btn-default btn-squared px-30">+ Add
+                                                    Image</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End: error page -->
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-12 text-center" v-if="addItemImages">
                                     <div class="form-group">
                                         <div class="form-group">
@@ -370,6 +396,7 @@
         data() {
             return {
                 addItemBtn: true,
+                noImageHere: true,
                 addItemImages: false,
                 inventorydata: {},
                 inventoryOpt: {},
@@ -437,6 +464,15 @@
             }
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1)
+            },
+            routerRefresh() {
+                this.$isLoading(true);
+                this.loadDataInventoryItem();
+                this.loadHistoryItem();
+                this.$isLoading(false);
+            },
             async loadImageItem() {
                 const imgLists = await axios.get('/api/inventory-item/album/' + this.$route.params.id);
                 this.imgs = imgLists.data;
@@ -500,6 +536,7 @@
             itemImageAdds() {
                 // console.log('jalan');
                 this.addItemBtn = false;
+                this.noImageHere = false;
                 this.addItemImages = true;
             },
             afterComplete() {

@@ -13,6 +13,12 @@
             </div>
         </div>
         <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
+        <div class="row">
             <!-- Form Add -->
             <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
                 <div class="card mb-3">
@@ -398,6 +404,15 @@
             this.loadLoggedUser();
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1)
+            },
+            routerRefresh() {
+                this.$isLoading(true);
+                this.loadData();
+                this.loadLoggedUser();
+                this.$isLoading(false);
+            },
             classRotate: function (param) {
                 return param ? "rotate" : "";
             },
@@ -543,7 +558,7 @@
                         });
                         this.checkedSI = false;
                         // this.$Progress.finish();
-                this.$isLoading(false);
+                        this.$isLoading(false);
                     }).catch(error => {
                         this.$Progress.fail();
                         Swal.fire({
@@ -571,7 +586,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/si/item-sales/' + id);
                     this.loadData();
                     document.getElementById('ding').play();
@@ -582,7 +597,7 @@
                         text: 'Success deleted current item.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

@@ -12,6 +12,12 @@
             </div>
         </div>
         <div class="row">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <div class="card card-vertical card-default card-md mb-4">
                     <div class="card-body pb-md-30">
@@ -125,6 +131,14 @@
             this.loadDataUser();
         },
         methods: {
+            routerBack() {
+                this.$router.go(-1)
+            },
+            routerRefresh() {
+                this.$isLoading(true);
+                this.loadDataUser();
+                this.$isLoading(false);
+            },
             async loadDataUser() {
                 // this.$Progress.start();
                 this.$isLoading(true);
