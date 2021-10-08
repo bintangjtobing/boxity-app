@@ -64,7 +64,7 @@
                                                         <option value="">Select bank code:</option>
                                                         <option v-for="bank in bank" :key="bank.id"
                                                             v-bind:value="bank.code">
-                                                            {{bank.code}} - {{bank.name}}
+                                                            {{bank.name}} - {{bank.code}}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -206,7 +206,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/customers/' + id);
                     this.loadCustomers();
                     this.countCustomers();
@@ -217,7 +217,7 @@
                         text: 'Success deleted current company'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
             async handleSubmit(event) {
@@ -258,7 +258,7 @@
                     };
                     this.countCustomers();
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
                     document.getElementById('failding').play();

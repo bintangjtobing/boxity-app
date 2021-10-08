@@ -143,6 +143,10 @@ class roleSeed extends Seeder
             'name' => 'Popup Window',
             'slug' => 'PopupWindow'
         ]);
+        DB::table('roles')->insert([
+            'name' => 'Subscriptions',
+            'slug' => 'Subscriptions'
+        ]);
 
 
         // Create Permissions
@@ -687,6 +691,11 @@ class roleSeed extends Seeder
         DB::table('permissions')->insert([
             'name' => 'Delete PopupWindow',
             'slug' => 'DeletePopupWindow'
+        ]);
+        // Subscriptions
+        DB::table('permissions')->insert([
+            'name' => 'View Subscriptions',
+            'slug' => 'ViewSubscriptions'
         ]);
     }
 }

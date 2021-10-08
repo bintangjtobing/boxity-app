@@ -420,6 +420,12 @@
                                                 <span>Popup Window</span>
                                             </router-link>
                                         </li>
+                                        <li v-if="permission.includes('ViewSubscriptions')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Subscriptions">
+                                            <router-link style="margin:0; width:100%" to="/subscriptions">
+                                                <span>Subscriptions</span>
+                                            </router-link>
+                                        </li>
                                     </ul>
                                 </menuCollapse>
                             </li>
@@ -548,8 +554,8 @@
                 this.sidebar = !this.sidebar;
             },
             async companyGet() {
-                const resp = await axios.get('/api/company-details');
-                this.company = resp.data[0];
+                const resp = await axios.get('/api/company-details/1');
+                this.company = resp.data;
             },
             async userGet() {
                 localStorage.removeItem("permissions")

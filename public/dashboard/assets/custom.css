@@ -192,6 +192,10 @@ td {
     font-size: 14px;
 }
 
+.header-top {
+    z-index: 1000;
+}
+
 .btn span,
 .btn i {
     margin-right: 0 !important;

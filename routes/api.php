@@ -138,9 +138,12 @@ Route::get('/list-contact/{id}', 'apiController@getListContactById');
 Route::post('/chat/send', 'apiController@sendChat');
 
 // Company Details
-Route::get('/company-details', 'apiController@getCompanyDetails');
+Route::get('/company-details/1', 'apiController@getCompanyDetails');
 Route::post('/company-details', 'apiController@saveCompanyDetails');
-Route::post('/meta/company-details/{id}', 'apiController@saveMetaCompanyDetails');
+Route::post('/meta/company-details/1', 'apiController@saveMetaCompanyDetails');
+Route::get('/company-details/bank', 'apiController@bankCompanies');
+Route::post('/company-details/bank', 'apiController@bankCompaniesAdd');
+Route::delete('/company-details/bank/{id}', 'apiController@bankCompaniesDelete');
 
 // Customers API
 Route::get('/customers', 'apiController@getCustomers');

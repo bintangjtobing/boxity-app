@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div>
-                    <span>{{moment().format('LLLL')}}</span>
+                    <span>{{moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}}</span>
                     <h2><b>Hi {{user.name}}, </b>Welcome Back &#129303;</h2>
                 </div>
             </div>

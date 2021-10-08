@@ -64,6 +64,7 @@ use App\Notifications\updateProfileFromAdminNotifier;
 use App\Permission;
 use App\suppliers;
 use App\bank;
+use App\BankCompany;
 use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -1100,7 +1101,7 @@ class apiController extends Controller
     // BANK LISTS
     public function getBankList()
     {
-        return bank::orderBy('name', 'ASC')->get();
+        return bank::orderBy('id', 'ASC')->get();
     }
 
     // POP UP
@@ -1204,11 +1205,11 @@ class apiController extends Controller
     // Company API
     public function getCompanyDetails()
     {
-        return response()->json(company_details::get());
+        return response()->json(company_details::where('id', 1)->first());
     }
     public function saveCompanyDetails(Request $request)
     {
-        $comp = new company_details();
+        $comp = company_details::find(1);
         $comp->icon = $request->icon;
         $comp->logo = $request->logo;
         $comp->logoblack = $request->logoblack;
@@ -1227,13 +1228,31 @@ class apiController extends Controller
         $comp->save();
         return response()->json($comp, 201);
     }
-    public function saveMetaCompanyDetails($id, Request $request)
+    public function saveMetaCompanyDetails(Request $request)
     {
-        $comp = company_details::find($id);
-        // $comp->meta_description = $request->meta_description;
-        // $comp->meta_keywords = $request->meta_keywords;
-        // $comp->save();
+        $comp = company_details::find(1);
+        $comp->meta_description = $request->meta_description;
+        $comp->meta_keywords = $request->meta_keywords;
+        $comp->save();
         return response()->json($comp, 201);
+    }
+    public function bankCompanies()
+    {
+        return response()->json(BankCompany::where('company_id', 1)->with('company', 'bank')->get());
+    }
+    public function bankCompaniesAdd(Request $request)
+    {
+        $bank = new bankCompany();
+        $bank->company_id = 1;
+        $bank->bank_id = $request->bank_id;
+        $bank->account_no = $request->account_no;
+        $bank->account_name = $request->account_name;
+        $bank->save();
+        return response()->json($bank);
+    }
+    public function bankCompaniesDelete($id)
+    {
+        return response()->json(BankCompany::find($id)->delete());
     }
     public function userGetWithOutLoggedIn()
     {

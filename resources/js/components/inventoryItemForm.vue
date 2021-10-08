@@ -331,7 +331,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" v-if="this.imgs > 1">
+                            <div class="row" v-if="this.imgs.length">
                                 <div class="col-lg-12 text-center mb-3" v-if="addItemBtn">
                                     <a v-on:click="itemImageAdds"><span class="itemImageAdd"><i
                                                 class="fad fa-plus fa-2x"></i></span></a>

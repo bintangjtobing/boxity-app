@@ -12,9 +12,9 @@ export default {
     created() {
         const title = getTitle(this)
         if (title) {
-            axios.get('/api/company-details').then((resp) => {
+            axios.get('/api/company-details/1').then((resp) => {
                 // console.log(resp.data[0]);
-                document.title = `${title} - ` + resp.data[0].company_id;
+                document.title = `${title} - ` + resp.data.company_id;
             });
         }
     },
