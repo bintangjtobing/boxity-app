@@ -109,7 +109,7 @@
                                                                         placeholder="Ex: Kg for weight, Pcs for things or else">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Item Group:</span>
                                                                     <select v-model="inventorydata.item_group"
@@ -120,6 +120,20 @@
                                                                             :key="inventoryOpt.id"
                                                                             :value="inventoryOpt.id">
                                                                             {{inventoryOpt.name}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <span>Stock Group:</span>
+                                                                    <select v-model="inventorydata.stock_group"
+                                                                        class="form-control form-control-default">
+                                                                        <option value="" disabled>Select stock item
+                                                                        </option>
+                                                                        <option v-for="inventoryGroup in inventoryGroup"
+                                                                            :key="inventoryGroup.id"
+                                                                            :value="inventoryGroup.id">
+                                                                            {{inventoryGroup.name}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -400,6 +414,7 @@
                 addItemImages: false,
                 inventorydata: {},
                 inventoryOpt: {},
+                inventoryGroup: {},
                 range: {},
 
                 // datatable
@@ -486,6 +501,8 @@
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
                 this.inventoryOpt = resp.data;
+                const respGroup = await axios.get('/api/stock-group');
+                this.inventoryGroup = respGroup.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

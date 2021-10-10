@@ -24,7 +24,9 @@ class inventoryItem extends Model
         'price',
         'customerId',
         'userid',
-        'warehouseid'
+        'warehouseid',
+        'stock_group',
+        'descriptions'
     ];
     public function itemGroup()
     {
