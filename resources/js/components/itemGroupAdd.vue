@@ -109,12 +109,12 @@
                 this.$isLoading(true);
                 await axios.post('/api/item-group', this.itemgroup).then(response => {
                     document.getElementById('ding').play();
-
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
                         text: 'Success New Item Group',
                     });
+                    this.$router.push('/item-group');
                     this.itemgroup = {
                         warehouse_code: '',
                         warehouse_name: '',

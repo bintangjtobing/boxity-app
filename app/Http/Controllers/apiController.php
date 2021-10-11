@@ -70,6 +70,7 @@ use App\subscription;
 use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use App\imagesItemGroup;
+use App\imagesStockGroup;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Mail;
 use PDF;
@@ -1682,11 +1683,40 @@ class apiController extends Controller
     {
         return response()->json(stockGroup::find($id)->delete());
     }
-
+    public function imagesInStockGroupStore(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/stock-group'
+        ])->getSecurePath();
+        $images = imagesStockGroup::create([
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function imagesInStockGroupStoreDelete($id)
+    {
+        return response()->json(imagesStockGroup::find($id)->delete());
+    }
+    public function imagesInStockGroupStoreWithId(Request $request, $id)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/stock-group'
+        ])->getSecurePath();
+        $images = imagesStockGroup::create([
+            'file' => $uploadFile,
+            'stockGroupId' => $id,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function getImageInStockGroup($id)
+    {
+        $getImg = imagesStockGroup::where('stockGroupId', $id)->get();
+        return response()->json($getImg);
+    }
     // ItemGroup
     public function getItemGroup()
     {
-        if (Auth::user()->role == 'customer') {
+        if (Auth::user()->role != 'customer') {
             return response()->json(itemGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());

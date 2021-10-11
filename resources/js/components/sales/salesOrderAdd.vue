@@ -372,7 +372,7 @@
             selectSearch: SelectSearch,
         },
         title() {
-            return `New Purchase Order`;
+            return `New Sales Order`;
         },
         data() {
             return {

@@ -439,7 +439,7 @@ class salesController extends Controller
         }
 
         $tax = 10;
-        $taxVat = $total * $tax/100;
+        $taxVat = $total * $tax / 100;
 
         $tax = 10;
         $taxVat = $total * $tax / 100;

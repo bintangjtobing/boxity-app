@@ -188,6 +188,11 @@ Route::delete('/warehouse-customer/{id}', 'apiController@deleteWarehouseCustomer
 Route::patch('/warehouse-customer/{id}', 'apiController@postWarehouseCustomerById');
 
 // Stock Group
+// Upload image
+Route::post('/stock-group/images', 'apiController@imagesInStockGroupStore')->name('dropzoneImages');
+Route::delete('/stock-group/images/{id}', 'apiController@imagesInStockGroupStoreDelete');
+Route::post('/stock-group/images/{id}', 'apiController@imagesInStockGroupStoreWithId')->name('dropzoneImages');
+Route::get('/stock-group/album/{id}', 'apiController@getImageInStockGroup');
 Route::get('/stock-group', 'apiController@getStockGroup');
 Route::post('/stock-group', 'apiController@postStockGroup');
 Route::get('/stock-group/{id}', 'apiController@getStockGroupById');

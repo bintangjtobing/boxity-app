@@ -159,10 +159,10 @@
         },
         data() {
             return {
+                itemgroup: {},
                 addItemBtn: true,
                 noImageHere: true,
                 addItemImages: false,
-                itemgroup: {},
                 imgs: {},
                 // TODO: callback to save the ids of the uploaded file
                 dropzoneOptions: {
