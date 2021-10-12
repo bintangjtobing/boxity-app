@@ -33,8 +33,13 @@
                             <li class="nav-support">
                                 <div class="dropdown-custom">
                                     <a href="https://help.boxity.id" target="_blank" class="nav-item-toggle">
-                                        <span style="font-size: 1.35rem;"><i class="fal fa-question-circle"></i></span>
+                                        <span style="font-size: 1.10rem;" class="mx-2"><i
+                                                class="fal fa-question-circle"></i></span>
                                     </a>
+                                    <router-link to="/inbox" class="nav-item-toggle">
+                                        <span style="font-size: 1.10rem;" class="mx-2"><i
+                                                class="fal fa-inbox-in"></i></span>
+                                    </router-link>
                                 </div>
                             </li>
                             <li class="nav-author">
@@ -83,7 +88,7 @@
             </nav>
             <div class="more" v-show="(isMore && isMobile)">
                 <ul class="nav-right">
-                    <li>
+                    <!-- <li>
                         <button class="btn" onclick="turnOnDarkMode()"><span>
                                 <div id="sunmoon" class="fas fa-moon"></div>
                             </span></button>
@@ -93,7 +98,7 @@
                             <a href="/direct-message" class="nav-item-toggle">
                                 <i data-feather="send"></i></a>
                         </div>
-                    </li>
+                    </li> -->
                     <li class="nav-author">
                         <div class="dropdown-custom">
                             <a href="javascript:;" class="nav-item-toggle"><img
@@ -377,6 +382,22 @@
                                             data-bs-placement="right" title="Goods receipt">
                                             <router-link style="margin:0; width:100%" to="/document/delivery">
                                                 <span>Documents Delivery</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </li>
+                        </div>
+                        <div v-if="permission.includes('ViewSalesOrder')">
+                            <li>
+                                <menuCollapse v-bind=" { isSidebar: sidebar, title: 'E-Commerce' , icon: 'storefront' ,
+                            listId:'menuCollapse14' }">
+                                    <ul id="menuCollapse14" style="padding: 0;">
+                                        <li v-if="permission.includes('ViewSalesOrder')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Sales Order">
+                                            <router-link style="margin:0; width:100%" to="/e-commerce/sales/order">
+                                                <span>Sales Order</span>
+
                                             </router-link>
                                         </li>
                                     </ul>

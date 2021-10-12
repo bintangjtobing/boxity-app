@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BankCompany;
 use App\itemsSales;
 use App\salesDeliveryReceipt;
 use App\salesInvoice;
@@ -33,7 +34,7 @@ class salesController extends Controller
     // Sales Order
     public function getSalesOrder()
     {
-        return response()->json(salesOrder::with('customers')->with('createdby')->orderBy('created_at', 'DESC')->get());
+        return response()->json(salesOrder::with('customers')->where('type', '!=', 1)->with('createdby')->orderBy('created_at', 'DESC')->get());
     }
 
     public function getSalesOrderById($id)
@@ -54,6 +55,7 @@ class salesController extends Controller
         $salesOrd->order_date = $request->order_date;
         $salesOrd->remarks = $request->remarks;
         $salesOrd->status = 0;
+        $salesOrd->type = 0;
         $salesOrd->created_by = Auth::id();
         $salesOrd->updated_by = Auth::id();
 
@@ -80,6 +82,7 @@ class salesController extends Controller
         $salesOrd->customer = $request->customer;
         $salesOrd->order_date = $request->order_date;
         $salesOrd->remarks = $request->remarks;
+        $salesOrd->type = 0;
         $salesOrd->updated_by = Auth::id();
 
         // Save to logs
@@ -566,5 +569,101 @@ class salesController extends Controller
             $temp = $this->penyebut($nilai / 1000000000000) . " Trilyun" . $this->penyebut(fmod($nilai, 1000000000000));
         }
         return $temp;
+    }
+
+    // ecommerce sales order
+    public function getESalesOrder()
+    {
+        return response()->json(salesOrder::where('type', 1)->with('bank')->orderBy('created_at', 'DESC')->get());
+    }
+    public function getESalesOrderById($id)
+    {
+        try {
+            $salesOrder = salesOrder::where('id', $id)->first();
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+        return response()->json($salesOrder);
+    }
+    public function postESalesOrderById($id, Request $request)
+    {
+        $salesOrd = salesOrder::find($id);
+        $salesOrd->so_number = $mix;
+        $salesOrd->ecom_order_note = $req->ordernote;
+        $salesOrd->ecom_label_recipient = $req->label;
+        $salesOrd->ecom_recipient_name = $req->nama_penerima;
+        $salesOrd->ecom_contact_num = $req->nohp;
+        $salesOrd->ecom_city = $req->city;
+        $salesOrd->ecom_zipcode = $req->zipcode;
+        $salesOrd->ecom_address = $req->address;
+        $salesOrd->ecom_courier = $req->pengiriman;
+        $salesOrd->ecom_bank_id = $req->pembayaran;
+        $salesOrd->status = 0;
+        $salesOrd->updated_by = 0;
+
+        $salesOrd->save();
+        return response()->json($salesOrd, 200);
+    }
+    public function deleteESalesOrderById($id)
+    {
+        return response()->json(salesOrder::find($id)->delete());
+    }
+    public function reportESalesOrder($so_number)
+    {
+        $company = company_details::first();
+        $salesOrder = salesOrder::where('so_number', $so_number)->with('bank')->first();
+        $itemSales = itemsSales::where('salesingId', $salesOrder->so_number)->with('item')->get();
+        $bankAccount = BankCompany::where('bank_id', $salesOrder->ecom_bank_id)->with('bank')->first();
+
+        $item = [];
+        $total = 0;
+        foreach ($itemSales as $x) {
+            $total = $total + $x->price * $x->qtyOrdered;
+            $data = [
+                "name" => $x->item->item_name,
+                "price" => $x->price,
+                "qty" => $x->qtyOrdered,
+                "remark" => $x->remarks,
+                "unit" => $x->unit,
+                "priceAmount" => $x->price * $x->qtyOrdered
+            ];
+            array_push($item, $data);
+        }
+
+        $tax = 10;
+        $taxVat = $total * $tax / 100;
+
+        $tax = 10;
+        $taxVat = $total * $tax / 100;
+
+        $data = [
+            "title" => "SALES ORDER",
+            "companyName" => $company->company_name,
+            "companyAddress" => $company->address,
+            "companyPhone" => $company->phone,
+            "companyEmail" => $company->email,
+            "soNumber" => $salesOrder->so_number,
+            "orderDate" => $this->format_date($salesOrder->order_date),
+            "createdAt" => $this->format_date($salesOrder->created_at),
+            "remark" => $salesOrder->remarks,
+            "customerName" => $salesOrder->ecom_recipient_name,
+            "customerAddress" => $salesOrder->cecom_address,
+            "customerEmail" => $salesOrder->ecom_contact_num,
+            "bankPaymentName" => $bankAccount->bank->name,
+            "bankPaymentAccountName" => $bankAccount->account_name,
+            "bankPaymentNo" => $bankAccount->account_no,
+            "items" => $item,
+            "tax" => $tax,
+            "total" => $total,
+            'taxVat' => $taxVat,
+            'grandTotal' => $total + $taxVat,
+            'counted' => $this->penyebut($total + $taxVat) . " Rupiah",
+            "qrcode" => base64_encode(QrCode::format('svg')->size(100)->generate(url('/api/report/e/sales-order/' . $so_number))),
+            "image" => $company->logoblack,
+        ];
+
+        $pdf = PDF::loadView('vendor.invoices.templates.e-sales-order', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+        // return $data;
     }
 }

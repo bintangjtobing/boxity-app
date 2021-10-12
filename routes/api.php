@@ -438,3 +438,9 @@ Route::get('/subscriptions', 'apiController@getSubscriptions');
 
 // Inbox
 Route::get('/inbox', 'apiController@getInbox');
+
+// ecommerce sales order
+Route::get('/e/sales/order', 'salesController@getESalesOrder');
+Route::get('/e/sales/order/{id}', 'salesController@getESalesOrderById');
+Route::patch('/e/sales/order/{id}', 'salesController@postESalesOrderById');
+Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');

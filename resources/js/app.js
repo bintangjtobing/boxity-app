@@ -98,6 +98,7 @@ import inventoryItemAdd from './components/inventoryItemAdd.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
 import subscrips from './components/subscriptions.vue';
+import inbox from './components/inbox.vue';
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -127,6 +128,11 @@ import SalesReturn from './components/sales/salesReturn.vue';
 import SalesReturnForm from './components/sales/salesReturnForm.vue';
 import SalesReturnAdd from './components/sales/salesReturnAdd.vue';
 
+// E-commerce
+import ESalesOrder from './components/ecommerce/salesOrder.vue';
+import ESalesOrderForm from './components/ecommerce/salesOrderForm.vue';
+
+
 // Receiving Confirmation
 import receivingConfirmation from './components/receivingConfirmation/receivingConfirmation.vue';
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
@@ -151,6 +157,10 @@ const routes = [{
         name: 'user',
         path: '/users-management/add',
         component: UserAdd
+    }, {
+        name: 'inbox',
+        path: '/inbox',
+        component: inbox
     },
     {
         name: 'contact lists',
@@ -485,6 +495,14 @@ const routes = [{
         name: 'subscriptions',
         path: '/subscriptions',
         component: subscrips
+    }, {
+        name: 'ecommerce-sales-order',
+        path: '/e-commerce/sales/order',
+        component: ESalesOrder
+    }, {
+        name: 'ecommerce-sales-order',
+        path: '/e-commerce/sales/order/detail/:so_id',
+        component: ESalesOrderForm
     }
 ]
 Vue.filter('toDecimal', num => {

@@ -59,6 +59,7 @@ Route::get('/report/test', 'purchasingController@reportTest');
 // SALES REPORT
 Route::get('/report/sales/invoices/{si_number}', 'salesController@reportSI');
 Route::get('/report/sales/order/{so_number}', 'salesController@reportSalesOrder');
+Route::get('/report/e/sales/order/{so_number}', 'salesController@reportESalesOrder');
 Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr');
 
 // Reporting PDF

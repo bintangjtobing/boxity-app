@@ -1828,15 +1828,15 @@ class apiController extends Controller
     public function getInventoryByWarehouse($id, $customerid)
     {
 
-        if (Auth::user()->role != 'admin') {
-            $getDataItem = DB::table('inventory_items')
-                ->join('warehouse_lists', 'inventory_items.warehouseid', '=', 'warehouse_lists.id')
-                ->where('inventory_items.warehouseid', $id)
-                ->where('inventory_items.customerId', $customerid)
-                ->select('inventory_items.*', 'warehouse_lists.warehouse_name', 'warehouse_lists.warehouse_code')
-                ->get();
-            return $getDataItem;
-        }
+        // if (Auth::user()->role != 'admin') {
+        $getDataItem = DB::table('inventory_items')
+            ->join('warehouse_lists', 'inventory_items.warehouseid', '=', 'warehouse_lists.id')
+            ->where('inventory_items.warehouseid', $id)
+            ->where('inventory_items.customerId', $customerid)
+            ->select('inventory_items.*', 'warehouse_lists.warehouse_name', 'warehouse_lists.warehouse_code')
+            ->get();
+        return $getDataItem;
+        // }
     }
     public function postInventoryItem(Request $request)
     {
