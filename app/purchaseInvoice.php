@@ -9,7 +9,7 @@ class purchaseInvoice extends Model
     protected $table = 'purchase_invoices';
     protected $fillable = [
         'pi_number', 'supplier', 'invoice_date', 'reference_no', 'status', 'created_by',
-        'updated_by', 'remarks', 'vehicle_no', 'drivers', 'deliver_to'
+        'updated_by', 'remarks', 'vehicle_no', 'drivers', 'deliver_to', 'customerId'
     ];
     public function warehouse()
     {
@@ -30,5 +30,9 @@ class purchaseInvoice extends Model
     public function item()
     {
         return $this->belongsTo(itemsPurchase::class, 'pi_number', 'purchasingId');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(customers::class, 'customerId');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\companiesPic;
 use App\company_details;
 use App\inventoryItem;
 use App\itemHistory;
@@ -41,10 +42,11 @@ class purchasingController extends Controller
     // PURCHASE ORDER
     public function getPurchaseOrder()
     {
-        if (Auth::user()->role == 'customer') {
-            return purchaseOrder::where('created_by', Auth::id())->with('suppliers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        if (Auth::user()->role == 'admin') {
+            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         } else {
-            return purchaseOrder::with('suppliers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
+            return purchaseOrder::where('created_by', Auth::id())->where('customerId', $getUserIdOnCustomer->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         }
     }
     public function postPurchaseOrder(Request $request)
@@ -180,10 +182,11 @@ class purchasingController extends Controller
     // PURCHASE INVOICE
     public function getPurchaseInvoice()
     {
-        if (Auth::user()->role == 'customer') {
-            return purchaseInvoice::where('created_by', Auth::id())->with('suppliers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
-        } else {
-            return purchaseInvoice::with('suppliers')->with('warehouse')->with('createdby')->orderBy('created_at', 'DESC')->get();
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        if (Auth::user()->role == 'admin') {
+            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+        } else if ($getUserIdOnCustomer) {
+            return purchaseInvoice::where('created_by', Auth::id())->where('customerId', $getUserIdOnCustomer->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         }
     }
     public function postPurchaseInvoice(Request $request)

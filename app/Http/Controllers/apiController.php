@@ -1271,7 +1271,9 @@ class apiController extends Controller
     public function getCustomers()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
-        if ($getUserIdOnCustomer) {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(customers::orderBy('created_at', 'DESC')->get());
+        } else if ($getUserIdOnCustomer) {
             $customer = DB::table('companies')
                 ->join('companies_pic', 'companies.id', '=', 'companies_pic.company_id')
                 ->join('users', 'companies_pic.user_id', '=', 'users.id')
@@ -1280,8 +1282,6 @@ class apiController extends Controller
                 ->select('companies.*')
                 ->get();
             return $customer;
-        } else {
-            return response()->json(customers::orderBy('created_at', 'DESC')->get());
         }
         // return $getUserIdOnCustomer;
     }
@@ -1476,7 +1476,9 @@ class apiController extends Controller
     public function getWarehouse()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if ($getUserIdOnCustomer && Auth::user()->role != 'admin') {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
+        } else if ($getUserIdOnCustomer) {
             $warehouse = DB::table('warehouse_lists')
                 ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
                 ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
@@ -1484,8 +1486,6 @@ class apiController extends Controller
                 ->orderBy('warehouse_lists.warehouse_name', 'ASC')
                 ->get();
             return $warehouse;
-        } else {
-            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
         }
         // return $getUserIdOnCustomer;
     }
