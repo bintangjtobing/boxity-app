@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BankCompany;
+use App\companiesPic;
 use App\itemsSales;
 use App\salesDeliveryReceipt;
 use App\salesInvoice;
@@ -110,6 +111,7 @@ class salesController extends Controller
     public function getSalesInvoice(Request $request)
     {
         $query = [];
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
         if ($request->feature === 'deliveryReceipt') {
             $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
         } else {

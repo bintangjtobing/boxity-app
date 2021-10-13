@@ -16,6 +16,8 @@ Route::get('/test-pdf', function () {
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
 });
+Route::get('/customer-connected','apiController@checkCustomerConnected');
+
 
 // Users API
 Route::get('/users', 'apiController@getUsers');

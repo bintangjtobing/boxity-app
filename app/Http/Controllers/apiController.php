@@ -90,6 +90,10 @@ class apiController extends Controller
 
         return $user;
     }
+    public function checkCustomerConnected()
+    {
+        return companiesPic::where('user_id', Auth::id())->first();
+    }
     public function customerRelateWarehouse()
     {
         return companiesPic::where('user_id', Auth::id())->get();
