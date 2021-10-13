@@ -242,6 +242,9 @@
                     text: 'User Name',
                     value: 'user_detail.name'
                 }, {
+                    text: 'Email',
+                    value: 'user_detail.email'
+                }, {
                     text: 'Data Added',
                     value: 'created_at'
                 }, {
