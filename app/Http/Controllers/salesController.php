@@ -111,13 +111,16 @@ class salesController extends Controller
     public function getSalesInvoice(Request $request)
     {
         $query = [];
-        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if ($request->feature === 'deliveryReceipt') {
-            $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->where('customer', $getUserIdOnCustomer->company_id)->orderBy('created_at', 'DESC')->get();
-        } else {
-            $query = salesInvoice::with('customers')->with('createdby')->orderBy('created_at', 'DESC')->get();
+            $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
+        } else if (Auth::user()->role != 'admin') {
+            foreach ($getUserIdOnCustomer as  $x) {
+                $query = salesInvoice::with('customers')->with('createdby')->where('customer', $x->company_id)->orderBy('created_at', 'DESC')->get();
+            }
         }
         return response()->json($query);
+        // return $getUserIdOnCustomer;
     }
     public function postSalesInvoice(Request $request)
     {
