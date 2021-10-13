@@ -113,7 +113,7 @@ class salesController extends Controller
         $query = [];
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
         if ($request->feature === 'deliveryReceipt') {
-            $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
+            $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->where('customer', $getUserIdOnCustomer->company_id)->orderBy('created_at', 'DESC')->get();
         } else {
             $query = salesInvoice::with('customers')->with('createdby')->orderBy('created_at', 'DESC')->get();
         }
