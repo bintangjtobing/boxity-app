@@ -151,7 +151,7 @@
                                                         update penerimaan barang melalui tools yang telah disediakan ya.
                                                         <br>
                                                         Atau kamu bisa langsung direct ke link tersebut. <a
-                                                            href="https://btsa.co.id/goods-receipt">https://btsa.co.id/goods-receipt</a>
+                                                            href="https://tools.btsa.co.id/goods-receipt">https://tools.btsa.co.id/goods-receipt</a>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">

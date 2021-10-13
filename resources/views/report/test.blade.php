@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4">
-                <img src="https://btsa.co.id/webpage/images/logo.png">
+                <img src="https://tools.btsa.co.id/webpage/images/logo.png">
             </div>
             <div class="col-lg-4">
                 <h1>PT BERLIAN TRANSTAR ABADI</h1>

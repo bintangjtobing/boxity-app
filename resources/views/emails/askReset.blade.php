@@ -146,7 +146,7 @@
                                                         $unique = substr(base64_encode(md5( mt_rand() )), 0, 15);
                                                         ?>
                                                         <span>Berikut link untuk reset password kamu: <br>
-                                                            <a href="https://btsa.co.id/reset-password/{{$user->id}}">Click
+                                                            <a href="https://tools.btsa.co.id/reset-password/{{$user->id}}">Click
                                                                 This Link</a>
                                                         </span>
                                                     </p>

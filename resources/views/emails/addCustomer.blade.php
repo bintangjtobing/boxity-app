@@ -145,7 +145,7 @@
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         You have been added to our system, <br>you can now use the
                                                         customer system by running it on your browser <a
-                                                            href="https://btsa.co.id/">btsa.co.id/</a>
+                                                            href="https://tools.btsa.co.id/">btsa.co.id/</a>
                                                         <br><br>
                                                         by using this credential: <br>
                                                         email: {{$customer->email}} <br>

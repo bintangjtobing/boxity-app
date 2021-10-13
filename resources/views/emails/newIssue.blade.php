@@ -168,8 +168,8 @@
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         Klik link untuk Lihat issue tersebut di link yang sudah
                                                         tersedia: <br>
-                                                        <span><a href="https://btsa.co.id/issues/{{$issues->id}} "
-                                                                target="_blank">https://btsa.co.id/issues/{{$issues->id}}</a></span>
+                                                        <span><a href="https://tools.btsa.co.id/issues/{{$issues->id}} "
+                                                                target="_blank">https://tools.btsa.co.id/issues/{{$issues->id}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
