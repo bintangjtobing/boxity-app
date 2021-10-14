@@ -42,11 +42,14 @@ class purchasingController extends Controller
     // PURCHASE ORDER
     public function getPurchaseOrder()
     {
-        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (Auth::user()->role == 'admin') {
             return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         } else {
-            return purchaseOrder::where('created_by', Auth::id())->where('customerId', $getUserIdOnCustomer->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            foreach ($getUserIdOnCustomer as $key) {
+                $po = purchaseOrder::where('created_by', Auth::id())->where('customerId', $key->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            }
+            return $po;
         }
     }
     public function postPurchaseOrder(Request $request)
@@ -182,11 +185,14 @@ class purchasingController extends Controller
     // PURCHASE INVOICE
     public function getPurchaseInvoice()
     {
-        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (Auth::user()->role == 'admin') {
             return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         } else if ($getUserIdOnCustomer) {
-            return purchaseInvoice::where('created_by', Auth::id())->where('customerId', $getUserIdOnCustomer->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            foreach ($getUserIdOnCustomer as $key) {
+                $pi = purchaseInvoice::where('created_by', Auth::id())->where('customerId', $key->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            }
+            return $pi;
         }
     }
     public function postPurchaseInvoice(Request $request)
