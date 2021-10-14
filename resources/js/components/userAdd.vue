@@ -214,7 +214,7 @@
                         Swal.fire({
                             icon: "success",
                             title: "Congratulations",
-                            text: "Success delete permission",
+                            text: "Success add new user.",
                         });
                         this.$router.push('/users-management');
                         this.$Progress.finish();
