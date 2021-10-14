@@ -14,7 +14,7 @@ class AddDescriptionsOnInventoryItem extends Migration
     public function up()
     {
         Schema::table('inventory_items', function (Blueprint $table) {
-            $table->string('descriptions')->nullable()->after('price');
+            $table->longText('descriptions')->nullable()->after('price');
         });
     }
 
