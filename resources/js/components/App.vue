@@ -501,7 +501,7 @@
                                 <ul>
                                     <li>
                                         <a href="https://help.boxity.id/platform/releases#v109" target="_blank">
-                                            Web App | Beta
+                                            Web Platform | Beta
                                             version 1.0.9</a>
                                     </li>
                                 </ul>
