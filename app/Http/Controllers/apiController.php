@@ -1823,8 +1823,8 @@ class apiController extends Controller
             //     ];
             //     array_push($item, $data);
             // }
-            foreach ($getUserIdOnCustomer->company_id as $compid) {
-                $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->where('customerid', $compid)->orderBy('created_at', 'DESC')->get();
+            foreach ($getUserIdOnCustomer as $compid) {
+                $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->where('customerid', $compid->company_id)->orderBy('created_at', 'DESC')->get();
             }
             return response()->json($res);
         } else {
