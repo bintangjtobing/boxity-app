@@ -500,9 +500,9 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <a href="https://help.boxity.id/platform/releases#v108" target="_blank">
-                                            App
-                                            version 1.0.8</a>
+                                        <a href="https://help.boxity.id/platform/releases#v109" target="_blank">
+                                            Web App | Beta
+                                            version 1.0.9</a>
                                     </li>
                                 </ul>
                             </div>
