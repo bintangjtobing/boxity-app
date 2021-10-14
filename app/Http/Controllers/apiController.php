@@ -92,7 +92,7 @@ class apiController extends Controller
     }
     public function checkCustomerConnected()
     {
-        return companiesPic::where('user_id', Auth::id())->first();
+        return companiesPic::where('user_id', Auth::id())->get();
     }
     public function customerRelateWarehouse()
     {
@@ -1816,14 +1816,16 @@ class apiController extends Controller
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (Auth::user()->role != 'admin') {
-            $item = [];
-            for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
-                $data = [
-                    'companyId' => $getUserIdOnCustomer[$i]->company_id
-                ];
-                array_push($item, $data);
+            // $item = [];
+            // for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
+            //     $data = [
+            //         'companyId' => $getUserIdOnCustomer[$i]->company_id
+            //     ];
+            //     array_push($item, $data);
+            // }
+            foreach ($getUserIdOnCustomer->company_id as $compid) {
+                $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->where('customerid', $compid)->orderBy('created_at', 'DESC')->get();
             }
-            $res = inventoryItem::whereIn('customerid', $item)->with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get();
             return response()->json($res);
         } else {
             return response()->json(inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get());
