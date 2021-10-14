@@ -276,6 +276,9 @@
                                     </ul>
                                 </menuCollapse>
                             </li>
+                        </div>
+                        <div v-if="permission.includes('ViewInventoryItem') || permission.includes('ViewStockGroup') ||
+                            permission.includes('ViewItemGroup')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Inventory Control', icon: 'inventory_2', listId:'menuCollapse5' }">
