@@ -1815,7 +1815,7 @@ class apiController extends Controller
     public function getInventoryItem()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role != 'admin') {
+        if (Auth::user()->role == 'admin') {
             // $item = [];
             // for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
             //     $data = [
@@ -1823,12 +1823,15 @@ class apiController extends Controller
             //     ];
             //     array_push($item, $data);
             // }
-            foreach ($getUserIdOnCustomer as $compid) {
-                $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->where('customerid', $compid->company_id)->orderBy('created_at', 'DESC')->get();
-            }
-            return response()->json($res);
-        } else {
+
             return response()->json(inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get());
+        } else {
+            $ids = [];
+            foreach ($getUserIdOnCustomer as $compid) {
+                $ids[] = $compid->company_id;
+            }
+            $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->whereIn('customerId', $ids)->orderBy('created_at', 'DESC')->get();
+            return response()->json($res);
         }
     }
     public function getInventoryByWarehouse($id, $customerid)

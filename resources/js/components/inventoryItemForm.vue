@@ -313,10 +313,10 @@
                                                                                 </div>
                                                                             </template>
                                                                             <template v-slot:[`item.qtyIn`]="{item}">
-                                                                                {{item.qtyIn}}
+                                                                                {{item.qtyIn|toDecimal}}
                                                                             </template>
                                                                             <template v-slot:[`item.qtyOut`]="{item}">
-                                                                                {{item.qtyOut}}
+                                                                                {{item.qtyOut|toDecimal}}
                                                                             </template>
                                                                         </v-data-table>
                                                                     </div>

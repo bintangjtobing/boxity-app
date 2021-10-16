@@ -314,7 +314,7 @@
             async handleSubmit() {
                 // this.$Progress.start();
                 this.$isLoading(true);
-                await axios.patch('/api/user/' + this.$route.params.id, this.warehouse);
+                await axios.patch('/api/customers/' + this.$route.params.id, this.warehouse);
                 document.getElementById('ding').play();
 
                 Swal.fire({

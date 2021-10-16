@@ -115,9 +115,11 @@ class salesController extends Controller
         if ($request->feature === 'deliveryReceipt') {
             $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
         } else if (Auth::user()->role != 'admin') {
+            $ids = [];
             foreach ($getUserIdOnCustomer as  $x) {
-                $query = salesInvoice::with('customers')->with('createdby')->where('customer', $x->company_id)->orderBy('created_at', 'DESC')->get();
+                $ids[] = $x->company_id;
             }
+            $query = salesInvoice::with('customers')->with('createdby')->where('customer', $ids)->orderBy('created_at', 'DESC')->get();
         }
         return response()->json($query);
         // return $getUserIdOnCustomer;

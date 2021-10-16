@@ -113,7 +113,10 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/inventory-item');
+                // for (let i = 0; i < resp.data.length; i++) {
                 this.inventoryItem = resp.data;
+                // console.log(resp.data[i])
+                // }
 
                 const count = await axios.get('/api/count-item-group');
                 this.countItems = count.data;

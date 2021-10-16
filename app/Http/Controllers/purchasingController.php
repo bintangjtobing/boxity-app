@@ -46,9 +46,11 @@ class purchasingController extends Controller
         if (Auth::user()->role == 'admin') {
             return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         } else {
+            $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
-                $po = purchaseOrder::where('created_by', Auth::id())->where('customerId', $key->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+                $ids[] = $key->company_id;
             }
+            $po = purchaseOrder::where('created_by', Auth::id())->where('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $po;
         }
     }
@@ -189,9 +191,11 @@ class purchasingController extends Controller
         if (Auth::user()->role == 'admin') {
             return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         } else if ($getUserIdOnCustomer) {
+            $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
-                $pi = purchaseInvoice::where('created_by', Auth::id())->where('customerId', $key->company_id)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+                $ids[] = $key->company_id;
             }
+            $pi = purchaseInvoice::where('created_by', Auth::id())->where('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $pi;
         }
     }
