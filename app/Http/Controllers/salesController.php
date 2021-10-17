@@ -119,7 +119,7 @@ class salesController extends Controller
             foreach ($getUserIdOnCustomer as  $x) {
                 $ids[] = $x->company_id;
             }
-            $query = salesInvoice::with('customers')->with('createdby')->where('customer', $ids)->orderBy('created_at', 'DESC')->get();
+            $query = salesInvoice::with('customers')->with('createdby')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
         }
         return response()->json($query);
         // return $getUserIdOnCustomer;

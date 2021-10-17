@@ -50,7 +50,7 @@ class purchasingController extends Controller
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $po = purchaseOrder::where('created_by', Auth::id())->where('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $po;
         }
     }
@@ -195,7 +195,7 @@ class purchasingController extends Controller
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $pi = purchaseInvoice::where('created_by', Auth::id())->where('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $pi = purchaseInvoice::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $pi;
         }
     }
