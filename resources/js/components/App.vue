@@ -492,10 +492,7 @@
                         <div class="col-md-8">
                             <div class="footer-copyright">
                                 <p>&copy; Copyright -<a href="/"
-                                        target="_blank"><abbr>{{company.company_name}}</abbr></a> |
-                                    Partner with <abbr title="PT BENUA SOLUSI TEKNOLOGI"><a
-                                            href="https://infinitysolutions.co.id" target="_blank">Infinity
-                                            Solutions</a></abbr>
+                                        target="_blank"><abbr>{{company.company_name}}</abbr></a>
                                 </p>
                             </div>
                         </div>

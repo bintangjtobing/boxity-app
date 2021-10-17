@@ -643,3 +643,18 @@ body.swal2-shown>[aria-hidden="true"] {
     padding: 20px 10px 10px 10px;
     color: #fff
 }
+
+.feature-cards4 img {
+    width: 100%;
+    height: 130px;
+}
+
+.feature-cards4 a {
+    text-decoration: underline;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.feature-cards4 figcaption p {
+    font-size: 13px;
+}
