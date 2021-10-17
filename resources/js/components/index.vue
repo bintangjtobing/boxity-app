@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewIssue')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewIssue')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634485447/assets/undraw/issue_e1ffd3.svg">
@@ -37,7 +37,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewCandidate')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewCandidate')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634485449/assets/undraw/candidate_fdmy2m.svg">
@@ -48,7 +48,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewInventoryItem')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewInventoryItem')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634485447/assets/undraw/inventory_byzxea.svg">
@@ -59,7 +59,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewPurchaseInvoice')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewPurchaseInvoice')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634485447/assets/undraw/purchasing_x9hmey.svg">
@@ -71,7 +71,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewSalesInvoice')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewSalesInvoice')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634485447/assets/undraw/salesing_qrkopp.svg">
@@ -82,7 +82,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permission.includes('ViewDocumentsReceipt')">
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-25" v-if="permissionss.includes('ViewDocumentsReceipt')">
                 <figure class="feature-cards4">
                     <img class="svg"
                         src="https://res.cloudinary.com/boxity-id/image/upload/v1634490234/assets/undraw/goods_receipt_wvutv2.svg">
@@ -149,7 +149,7 @@
                 user: {},
                 moment: moment,
                 currentTime: null,
-                permission: []
+                permissionss: []
             }
         },
         mounted() {
@@ -166,9 +166,10 @@
                 // Get user logged in
                 const userLogged = await axios.get('/getUserLoggedIn');
                 this.user = userLogged.data;
-                this.permission = JSON.parse(localStorage.getItem('permissions'));
-                console.log(this.permission);
-                // // this.$Progress.finish();
+                this.permissionss = JSON.parse(localStorage.getItem('permissions'));
+                if (this.permissions.length) {
+                    console.log(this.permission);
+                } // // this.$Progress.finish();
                 this.$isLoading(false);
             },
             updateCurrentTime() {
