@@ -542,8 +542,6 @@
                 user: {},
                 version: {},
                 company: {},
-                countIssues: '0',
-                countGoods: '0',
                 sidebar: true,
                 isMore: false,
                 isMobile: false,
@@ -552,7 +550,6 @@
         },
         mounted() {
             feather.replace();
-            this.versionGet();
             this.companyGet();
             this.$Progress.finish();
         },
@@ -587,14 +584,6 @@
                 this.user = resp.data;
                 localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
                 this.permission = JSON.parse(localStorage.getItem('permissions'));
-            },
-            async versionGet() {
-                const resp = await axios.get('/api/version-control');
-                this.version = resp.data[0];
-                const count = await axios.get('/api/count-goods');
-                this.countGoods = count.data;
-                const issues = await axios.get('/api/count-issue');
-                this.countIssues = issues.data;
             },
             signOutConfirm() {
                 Swal.fire({

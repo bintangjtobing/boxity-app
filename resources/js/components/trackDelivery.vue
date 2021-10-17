@@ -15,8 +15,8 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="tracks"
-                            :items-per-page="10" class="elevation-1">
+                        <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
+                            :items="tracks" :items-per-page="10" class="elevation-1">
                             <template v-slot:item.order_id="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <router-link :to="`/track-delivery/${item.id}`" class="text-dark fw-500">
@@ -82,6 +82,7 @@
                 tracks: [],
                 search: '',
                 key: 1,
+                loading: true,
                 headers: [{
                     text: 'Track ID',
                     value: 'order_id'
@@ -110,6 +111,9 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/track-delivery/get');
                 this.tracks = resp.data;
+                if (resp.data.length) {
+                    this.loading = false
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
@@ -187,7 +191,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.patch('/api/track-deliverys/' + id);
                     // console.log('200')
                     this.loadDataTrack();
@@ -198,7 +202,7 @@
                         text: 'Success terminated current track'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

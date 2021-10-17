@@ -26,8 +26,9 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
                                         hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
-                                    :items="goodsData" :search="search" :items-per-page="10" class="elevation-1">
+                                <v-data-table :loading="loading" loading-text="Loading... Please wait"
+                                    :headers="headers" :items="goodsData" :search="search" :items-per-page="10"
+                                    class="elevation-1">
                                     <template v-slot:[`item.typeOfGoods`]="{ item }">
                                         <div class="userDatatable-inline-title my-3">
                                             <a href="#" class="text-dark fw-500">
@@ -196,6 +197,7 @@
                 },
                 // datatable
                 search: '',
+                loading: true,
                 goodsData: [],
                 headers: [{
                     text: 'Type',
@@ -237,6 +239,9 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/goods-receipt');
                 this.goodsData = resp.data;
+                if (resp.data.length) {
+                    this.loading = false
+                }
                 const respMember = await axios.get('/getUserLoggedIn');
                 this.member = respMember.data;
                 const respUser = await axios.get('/api/contact-list');
@@ -257,7 +262,7 @@
                         text: 'Success New good receipt',
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                     this.goods = {
                         courier: '',
                         typeOfGoods: '',

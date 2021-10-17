@@ -132,7 +132,7 @@
                                                                                 hide-details>
                                                                             </v-text-field>
                                                                         </v-card-title>
-                                                                        <v-data-table loading
+                                                                        <v-data-table :loading="loading"
                                                                             loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
                                                                             multi-sort :sort-by.sync="
@@ -169,6 +169,7 @@
                 bank: {},
                 user: {},
                 errors: {},
+                loading: true,
                 warehouseRelated: {},
             }
         },

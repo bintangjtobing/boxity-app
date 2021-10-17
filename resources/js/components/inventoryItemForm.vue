@@ -279,7 +279,7 @@
                                                                                 hide-details>
                                                                             </v-text-field>
                                                                         </v-card-title>
-                                                                        <v-data-table loading
+                                                                        <v-data-table :loading="loading"
                                                                             loading-text="Data not found..."
                                                                             :search="search" :headers="headers"
                                                                             multi-sort :sort-by.sync="
@@ -419,6 +419,7 @@
 
                 // datatable
                 search: '',
+                loading: true,
                 sortBy: ['invoiceDate', 'created_at'],
                 sortDesc: ['false', 'true'],
                 key: 1,
@@ -515,6 +516,9 @@
                 console.log(this.imgs);
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
                 this.historyItem = historyList.data;
+                if (historyList.data.length) {
+                    this.loading = false
+                }
                 const qtyInSum = await axios.get('/api/sum/in/item-history/' + this.$route.params.id);
                 this.sumQtyIn = qtyInSum.data;
                 this.inventorydata.qty = qtyInSum.data;

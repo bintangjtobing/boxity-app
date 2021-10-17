@@ -7,8 +7,8 @@
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="subsData"
-                            :items-per-page="10" class="elevation-1">
+                        <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
+                            :items="subsData" :items-per-page="10" class="elevation-1">
                             <template v-slot:[`item.status`]="{ item }">
                                 <div v-if="item.status==1">
                                     <span class="rounded-pill userDatatable-content-status color-success
@@ -40,6 +40,7 @@
                 // datatable
                 subsData: [],
                 key: 1,
+                loading: true,
                 headers: [{
                     text: 'Email',
                     value: 'email'
@@ -59,6 +60,9 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/subscriptions');
                 this.subsData = resp.data;
+                if (resp.data.length) {
+                    this.loading = false
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

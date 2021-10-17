@@ -22,9 +22,9 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table loading loading-text="Loading... Please wait..." :headers="headers"
-                                    multi-sort :items="itemGroupData" :items-per-page="10" class="elevation-1"
-                                    :search="search">
+                                <v-data-table :loading="loading" loading-text="Loading... Please wait..."
+                                    :headers="headers" multi-sort :items="itemGroupData" :items-per-page="10"
+                                    class="elevation-1" :search="search">
                                     <template v-slot:item.remarks="{ item }">
                                         <span v-html="item.remarks" class="d-inline-block text-truncate"
                                             style="max-width: 230px;"></span>
@@ -113,6 +113,7 @@
                 // datatable
                 search: '',
                 key: 1,
+                loading: true,
                 itemGroupData: [],
                 headers: [{
                         text: 'Item Group Code',
@@ -145,6 +146,9 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/item-group');
                 this.itemGroupData = resp.data;
+                if (resp.data.length) {
+                    this.loading = false
+                }
                 const count = await axios.get('/api/count-item-group');
                 this.countStocks = count.data;
                 // this.$Progress.finish();

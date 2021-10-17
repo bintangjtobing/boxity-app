@@ -26,7 +26,7 @@
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
                                 </v-card-title>
-                                <v-data-table loading loading-text="Loading... Please wait..." :search="search"
+                                <v-data-table :loading="loading" loading-text="Loading... Please wait..." :search="search"
                                     :headers="headers" multi-sort :items="inventoryItem" :items-per-page="10"
                                     class="elevation-1" group-by="warehouse.warehouse_name">
                                     <template v-slot:item.qty="{ item }">
@@ -70,6 +70,7 @@
                 // datatable
                 search: '',
                 key: 1,
+                loading: true,
                 inventoryItem: [],
                 headers: [{
                     text: 'Customer',
@@ -115,6 +116,9 @@
                 const resp = await axios.get('/api/inventory-item');
                 // for (let i = 0; i < resp.data.length; i++) {
                 this.inventoryItem = resp.data;
+                if(resp.data.length){
+                    this.loading = false
+                }
                 // console.log(resp.data[i])
                 // }
 

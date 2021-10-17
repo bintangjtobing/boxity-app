@@ -22,8 +22,9 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table loading loading-text="Loading... Please wait" :headers="headers"
-                                    :items="candidates" :items-per-page="10" class="elevation-1" :search="search">
+                                <v-data-table :loading="loading" loading-text="Loading... Please wait"
+                                    :headers="headers" :items="candidates" :items-per-page="10" class="elevation-1"
+                                    :search="search">
                                     <template v-slot:item.details="{ item }">
                                         <div>
                                             <router-link :to="`/candidate/detail/`+item.id" class="rounded-pill userDatatable-content-status color-primary
@@ -59,6 +60,7 @@
             return {
                 search: '',
                 key: 1,
+                loading: true,
                 headers: [{
                     text: 'Name',
                     value: 'nama_lengkap'
@@ -94,6 +96,9 @@
                 this.$isLoading(true);
                 const res = await axios.get('/api/candidates');
                 this.candidates = res.data;
+                if (res.data.length) {
+                    this.loading = false;
+                }
                 axios.get("/api/users")
                     .then(resp => {
                         this.members = resp.data;
@@ -111,7 +116,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/candidates/' + id);
                     this.loadCandidates();
                     document.getElementById('ding').play();
@@ -121,7 +126,7 @@
                         text: 'Success deleted current candidates'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

@@ -140,10 +140,10 @@
                                                             label="Search here..." single-line hide-details>
                                                         </v-text-field>
                                                     </v-card-title>
-                                                    <v-data-table loading loading-text="Loading... Please wait..."
-                                                        :search="search" :headers="headers" multi-sort
-                                                        :items="warehouseCustomerList" :items-per-page="10"
-                                                        class="elevation-1">
+                                                    <v-data-table :loading="loading"
+                                                        loading-text="Loading... Please wait..." :search="search"
+                                                        :headers="headers" multi-sort :items="warehouseCustomerList"
+                                                        :items-per-page="10" class="elevation-1">
                                                         <template v-slot:item.actions="{item}">
                                                             <router-link :to="`/detail/warehouse-customer/${item.id}`"
                                                                 class="edit">
@@ -181,6 +181,7 @@
                 // datatable
                 search: '',
                 key: 1,
+                loading: true,
                 warehouseCustomerList: [],
                 headers: [{
                     text: 'Customer Name',
@@ -242,6 +243,9 @@
                 // Load customer warehouse
                 const custList = await axios.get('/api/customer-warehouse/' + this.$route.params.id);
                 this.warehouseCustomerList = custList.data;
+                if (custList.data.length) {
+                    this.loading = false
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

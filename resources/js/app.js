@@ -53,7 +53,6 @@ import Quote from './components/quote.vue';
 import Gallery from './components/gallery.vue';
 import Blog from './components/blog.vue';
 import TrackDev from './components/trackDelivery.vue';
-import VersionControl from './components/version-control.vue';
 import userForm from './components/userForm.vue';
 import ContactLists from './components/contactList.vue';
 import IssueForm from './components/issueForm.vue';
@@ -76,7 +75,6 @@ import goodsReceipt from './components/goodsReceipt.vue';
 import documentsDelivery from './components/documentsDelivery.vue';
 import documentsDeliveryForm from './components/documentsDeliveryForm.vue';
 import documentsDeliveryAdd from './components/documentsDeliveryAdd.vue';
-import versionView from './components/versionView.vue';
 import userGuide from './components/userGuide.vue';
 import notFoundPage from './components/notFoundPage.vue';
 import directMessage from './components/dm.vue';
@@ -202,11 +200,7 @@ const routes = [{
         name: 'track-delivery',
         path: '/track-delivery',
         component: TrackDev
-    }, {
-        name: 'version-control',
-        path: '/version-control',
-        component: VersionControl
-    }, {
+    },  {
         name: 'update-user',
         path: '/detail/user/:id',
         component: userForm,
@@ -290,10 +284,6 @@ const routes = [{
         name: 'detailDocumentsDelivery',
         path: '/detail/document/delivery/:ddr_number',
         component: documentsDeliveryForm,
-    }, {
-        name: 'versionView',
-        path: '/v/:version',
-        component: versionView
     }, {
         name: 'user-guide',
         path: '/user-guide',

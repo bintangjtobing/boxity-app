@@ -77,8 +77,8 @@
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
                                 hide-details></v-text-field>
                         </v-card-title>
-                        <v-data-table loading loading-text="Loading... Please wait" :headers="headers" :items="blogs"
-                            :items-per-page="10" class="elevation-1">
+                        <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
+                            :items="blogs" :items-per-page="10" class="elevation-1">
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <a href="#" class="text-dark fw-500">
@@ -126,6 +126,7 @@
                 blogs: [],
                 search: '',
                 key: 1,
+                loading: true,
                 headers: [{
                     text: 'Title',
                     value: 'title'
@@ -153,6 +154,9 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/blogs');
                 this.blogs = resp.data;
+                if (resp.data.length) {
+                    this.loading = false;
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
@@ -166,7 +170,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('api/blogs/' + id);
                     this.loadBlogs();
                     document.getElementById('ding').play();
@@ -176,7 +180,7 @@
                         text: 'Success deleted blog'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
             async handleSubmit() {
@@ -196,7 +200,7 @@
                         category: '',
                     }
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
                     document.getElementById('failding').play();

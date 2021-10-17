@@ -168,9 +168,10 @@
                                                             label="Search here..." single-line hide-details>
                                                         </v-text-field>
                                                     </v-card-title>
-                                                    <v-data-table loading loading-text="Loading... Please wait..."
-                                                        :search="searchPIC" :headers="headers" multi-sort
-                                                        :items="userRelated" :items-per-page="10" class="elevation-1">
+                                                    <v-data-table :loading="loading"
+                                                        loading-text="Loading... Please wait..." :search="searchPIC"
+                                                        :headers="headers" multi-sort :items="userRelated"
+                                                        :items-per-page="10" class="elevation-1">
                                                         <template v-slot:item.actions="{item}">
                                                             <a v-on:click="deleteUserCompany(item.id)" class="remove">
                                                                 <i class="fad fa-trash"></i></a>
@@ -197,7 +198,8 @@
                                                             label="Search here..." single-line hide-details>
                                                         </v-text-field>
                                                     </v-card-title>
-                                                    <v-data-table loading loading-text="Loading... Please wait..."
+                                                    <v-data-table :loading="loadings"
+                                                        loading-text="Loading... Please wait..."
                                                         :search="searchWarehouse" :headers="headersWarehouse" multi-sort
                                                         :items="warehouseRelated" :items-per-page="10"
                                                         class="elevation-1">
@@ -237,6 +239,8 @@
                 // datatable
                 search: '',
                 key: 1,
+                loading: true,
+                loadings: true,
                 userRelated: [],
                 headers: [{
                     text: 'User Name',
@@ -305,9 +309,15 @@
                 // Load customer warehouse
                 const custList = await axios.get('/api/user-customer/' + this.$route.params.id);
                 this.userRelated = custList.data;
+                if (custList.data.length) {
+                    this.loading = false
+                }
 
                 const warehouseList = await axios.get('/api/warehouse-customer/' + this.$route.params.id);
                 this.warehouseRelated = warehouseList.data;
+                if (warehouseList.data.length) {
+                    this.loadings = false
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
