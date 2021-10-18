@@ -52,7 +52,7 @@
                                 hide-details>
                             </v-text-field>
                         </v-card-title>
-                        <v-data-table :expanded.sync="expanded" show-expand :search="search" loading
+                        <v-data-table :expanded.sync="expanded" show-expand :search="search" :loading="loading"
                             loading-text="Loading... Please wait..." :headers="headers" multi-sort :items="issues"
                             :items-per-page="10" class="elevation-1">
                             <template v-slot:expanded-item="{ headers, item }">
@@ -124,9 +124,9 @@
                                 single-line hide-details>
                             </v-text-field>
                         </v-card-title>
-                        <v-data-table :expanded.sync="expandedFromCreated" show-expand :search="searchFromYou" loading
-                            loading-text="Loading... Please wait..." :headers="headers" multi-sort :items="fromYou"
-                            :items-per-page="10" class="elevation-1">
+                        <v-data-table :expanded.sync="expandedFromCreated" show-expand :search="searchFromYou"
+                            :loading="loadings" loading-text="Loading... Please wait..." :headers="headers" multi-sort
+                            :items="fromYou" :items-per-page="10" class="elevation-1">
                             <template v-slot:expanded-item="{ headers, item }">
                                 <td :colspan="headers.length">
                                     More info: <span v-html="item.issue"></span>
@@ -197,6 +197,8 @@
                 expanded: [],
                 expandedFromCreated: [],
                 search: '',
+                loading: true,
+                loadings: true,
                 searchFromYou: '',
                 key: 1,
                 issues: [],
@@ -242,10 +244,16 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/issue');
                 this.issues = resp.data;
+                if (resp.data.length) {
+                    this.loading = false
+                }
 
                 // Get issue from user logged in
                 const respy = await axios.get('/api/issue/created');
                 this.fromYou = respy.data;
+                if (respy.data.length) {
+                    this.loading = false
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

@@ -195,7 +195,7 @@ class purchasingController extends Controller
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $pi = purchaseInvoice::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $pi = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $pi;
         }
     }
