@@ -139,13 +139,13 @@
                                                 style="font-family:Helvetica, sans-serif;padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px;">
                                                 <div style="   font-family: Helvetica, sans-serif; ">
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        <span style="">Hallo HRD/GA BTSA LOGISTICS,</span></p>
+                                                        <span style="">Hallo HRD/GA {{$company->company_name}},</span></p>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         {{$candidate->nama_lengkap}}, sudah melamar posisi yang tersedia
-                                                        di lowongan pekerjaan BTSA LOGISTICS. <br> Kamu bisa lihat
+                                                        di lowongan pekerjaan {{$company->company_name}}. <br> Kamu bisa lihat
                                                         profile {{$candidate->nama_lengkap}} di <a
-                                                            href="https://tools.btsa.co.id/candidate/detail/{{$candidate->id}}">sistem
-                                                            BTSA Logistics</a>
+                                                            href="https://{{$company->site}}/tools/candidate/detail/{{$candidate->id}}">sistem
+                                                            {{$company->company_name}}</a>
                                                         <br><br>
                                                         Silahkan seleksi dan kabari kandidat untuk mengetahui status
                                                         lamaran mereka ya. Kabar kamu bisa sangat berarti dan sangat
@@ -158,11 +158,13 @@
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
                                                             Best regards, <br>
-                                                            Support System BTSA LOGISTICS
+                                                            Support System {{$company->company_name}}
                                                             <br><br>
                                                             E-mail: <a
-                                                                href="mailto:support@btsa.co.id">support@btsa.co.id</a><br>
-                                                            Tel: 061 8003 2999 (ext.103)
+                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
+                                                            @if ($company->phone)
+                                                            Tel: {{$company->phone}}
+                                                            @endif
                                                         </span></p>
                                                 </div>
                                             </div>

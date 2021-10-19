@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4">
-                <img src="https://tools.btsa.co.id/webpage/images/logo.png">
+                <img src="https://{{$company->site}}/tools/webpage/images/logo.png">
             </div>
             <div class="col-lg-4">
                 <h1>PT BERLIAN TRANSTAR ABADI</h1>
@@ -20,7 +20,7 @@
                     Medan Estate, Kec. Percut Sei Tuan, Kabupaten Deli
                     Serdang, Sumatera Utara 20371
                     06180032999</span>
-                <a href="#">support@btsa.co.id</a>
+                <a href="#">support@ {{$company->site}}</a>
             </div>
             <div class="col-lg-4">
                 <img

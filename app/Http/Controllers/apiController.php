@@ -36,6 +36,7 @@ use App\Mail\confirmUpdateIssue;
 use App\Mail\confirmUpdateProfile;
 use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
+use App\Mail\rejectCandidate;
 use App\messages;
 use App\notepad;
 use App\quotes;
@@ -148,6 +149,7 @@ class apiController extends Controller
     }
     public function addUser(Request $request)
     {
+        $company = company_details::where('id', 1)->first();
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -157,7 +159,7 @@ class apiController extends Controller
         $user->status = '1';
         $user->divisi = $request->divisi;
         $user->gender = $request->gender;
-        $user->organisation = 'BTSA LOGISTICS';
+        $user->organisation = $company->company_name;
         $user->phone = '000';
         if ($user->gender == 'M') {
             $arr = array(1, 3, 5);
@@ -194,8 +196,7 @@ class apiController extends Controller
             ];
             DB::table('users_permissions')->insert($usersPermissionsQuery);
         }
-
-        Mail::to($user->email)->send(new addUser($user));
+        Mail::to($user->email)->send(new addUser($user, $company));
 
         return response()->json($user, 201);
     }
@@ -244,7 +245,9 @@ class apiController extends Controller
         }
 
         $user->save();
-        Mail::to($user->email)->send(new confirmUpdateIssue($user));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($user->email)->send(new confirmUpdateIssue($user, $company));
 
         // sendToTelegram
         if ($user->telegram_id) {
@@ -281,7 +284,9 @@ class apiController extends Controller
         $issue->save();
         if ($issue->status = '1') {
             $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
-            Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
+            $company = company_details::where('id', 1)->first();
+
+            Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
             // sendToTelegram
             if ($issues->assigne->telegram_id) {
@@ -338,7 +343,7 @@ class apiController extends Controller
     }
     public function getIssuesClosed()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             $issueGet = issue::with('user')
                 ->withCount('comments')
                 ->where('status', '=', '2')
@@ -407,10 +412,14 @@ class apiController extends Controller
 
         // if user signed not same as created by issue
         if (Auth::id() != $issueGet[0]->created_by) {
-            Mail::to($issuefind[0]->user->email)->send(new AddComment($userfind[0], $issuefind[0]));
+            $company = company_details::where('id', 1)->first();
+
+            Mail::to($issuefind[0]->user->email)->send(new AddComment($userfind[0], $issuefind[0], $company));
             return response()->json(200);
         } else {
-            Mail::to($userfind[0]->user->email)->send(new addCommentToCreator($userfind[0], $issuefind[0]));
+            $company = company_details::where('id', 1)->first();
+
+            Mail::to($userfind[0]->user->email)->send(new addCommentToCreator($userfind[0], $issuefind[0], $company));
             return response()->json(200);
         }
         return response()->json(201);
@@ -438,7 +447,9 @@ class apiController extends Controller
 
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
-        Mail::to($issues->assigne->email)->send(new makeNewIssue($issues));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
         // sendToTelegram
         if ($issues->assigne->telegram_id) {
@@ -464,7 +475,9 @@ class apiController extends Controller
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         $sendTo = $issues->user->email;
-        Mail::to($sendTo)->send(new closedIssue($issues));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($sendTo)->send(new closedIssue($issues, $company));
 
         // sendToTelegram
         if ($issues->user->telegram_id) {
@@ -673,7 +686,9 @@ class apiController extends Controller
         $saveLogs->save();
 
         $profile->save();
-        Mail::to($profile->email)->send(new confirmUpdateProfile($profile));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($profile->email)->send(new confirmUpdateProfile($profile, $company));
 
         // sendToTelegram
         if ($profile->telegram_id) {
@@ -1007,7 +1022,7 @@ class apiController extends Controller
     // Goods Receipt
     public function getGoods()
     {
-        if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
+        if (Auth::user()->role == 'hrdga' || Auth::user()->divisi == 'developer') {
             return response()->json(goodsReceip::with('receiver')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->orderBy('created_at', 'DESC')->get());
@@ -1042,7 +1057,9 @@ class apiController extends Controller
         $newGoods->save();
         $goods = User::find($newGoods->receiverid);
         // return $goods->email;
-        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
         return response()->json($goods);
         // return response()->json($newGoods, 200);
     }
@@ -1152,7 +1169,20 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        return response()->json(candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
+        return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id));
+
+        // return response()->json(candidates::with('posisi')->find($id));
+    }
+    public function patchCandidateById($id)
+    {
+        $candidate = candidates::with('posisi')->find($id);
+        $candidate->status = false;
+        $candidate->updated_by = Auth::user()->name;
+        $candidate->save();
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($candidate->email)->send(new rejectCandidate($candidate, $company));
+        return response()->json(200);
     }
 
     // Chat API
@@ -1275,7 +1305,7 @@ class apiController extends Controller
     public function getCustomers()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(customers::orderBy('created_at', 'DESC')->get());
         } else if ($getUserIdOnCustomer) {
             $customer = DB::table('companies')
@@ -1480,7 +1510,7 @@ class apiController extends Controller
     public function getWarehouse()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
         } else if ($getUserIdOnCustomer) {
             $warehouse = DB::table('warehouse_lists')
@@ -1815,7 +1845,7 @@ class apiController extends Controller
     public function getInventoryItem()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             // $item = [];
             // for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
             //     $data = [
@@ -2075,7 +2105,7 @@ class apiController extends Controller
     // USER ACTIVITY LOGS
     public function getActivityLogs()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(userLogs::with('user')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(userLogs::with('user')->where('userId', Auth::id())->orderBy('created_at', 'DESC')->get());
@@ -2115,7 +2145,9 @@ class apiController extends Controller
             // PO Status 2, means having a Document Delivery ID
             ->update(array('ddrId' => $deliveryDocOrd->ddr_number, 'status' => '2'));
         $ddrGet = documentsDelivery::where('ddr_number', $deliveryDocOrd->ddr_number)->with('sender', 'createdBy', 'updatedBy')->first();
-        Mail::to('ga2@btsa.co.id')->send(new newDocumentDelivery($ddrGet));
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to('ga2@btsa.co.id')->send(new newDocumentDelivery($ddrGet, $company));
 
         return response()->json($deliveryDocOrd, 200);
     }

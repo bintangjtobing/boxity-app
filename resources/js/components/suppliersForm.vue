@@ -176,6 +176,11 @@
         created() {
             this.loadDataUser();
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateUsers')){
+                this.$router.push('/') 
+            }
+        },
         methods: {
             async loadDataUser() {
                 // this.$Progress.start();

@@ -278,7 +278,8 @@
             <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm" class="btn btn-secondary-boxity float-left btn-default btn-squared">
+                        <button @click="activeAddForm" v-if="permissions.includes('EditSalesOrder')"
+                        class="btn btn-secondary-boxity float-left btn-default btn-squared" >
                             <span><i class="fal fa-plus-circle"></i></span>&nbsp; Add item
                         </button>
                         <div class="
@@ -499,8 +500,12 @@
                     input: true,
                 },
                 isEdit: false,
+                permissions: []
             };
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         async created() {
             await this.loadData();
             await this.generateSONumber();

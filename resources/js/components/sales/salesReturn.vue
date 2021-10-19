@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Sales Return<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateSalesReturn')">
                         <div class="action-btn">
                             <router-link to="/sales/return/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Sales Return</router-link>
@@ -33,7 +33,7 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/sales/return/${item.id}`" class="edit">
                                             <i class="fad fa-edit"></i></router-link>
-                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
+                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove" v-if="permissions.includes('DeleteSalesReturn')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -91,8 +91,12 @@
                 // end datatable
                 inventoryOpt: {},
                 countItems: '0',
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         created() {
             this.loadItem();
         },

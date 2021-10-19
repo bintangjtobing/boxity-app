@@ -391,6 +391,11 @@
                 countItems: '0',
             }
         },
+        beforeMount(){
+          if(!this.$store.getters.getPermissions.includes('CreatePurchaseOrder')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadData();
             this.generatePONumber();
