@@ -153,12 +153,12 @@
                                                     <hr>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         Don't reply to this email directly or <a
-                                                            href="https://tools.btsa.co.id/issues/{{$userfind->issueId}}">reply
+                                                            href="https://{{$company->site}}/tools/issues/{{$userfind->issueId}}">reply
                                                             it on Issue Center</a>.
                                                         You're receiving this email because of your account on
                                                         our system.<br>
-                                                        <span><a href="https://tools.btsa.co.id/issues/{{$userfind->issueId}} "
-                                                                target="_blank">https://tools.btsa.co.id/issues/{{$userfind->issueId}}</a></span>
+                                                        <span><a href="https://{{$company->site}}/tools/issues/{{$userfind->issueId}} "
+                                                                target="_blank">https://{{$company->site}}/tools/issues/{{$userfind->issueId}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
@@ -166,11 +166,13 @@
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
                                                             Best regards, <br>
-                                                            Support System BTSA LOGISTICS
+                                                            Support System {{$company->company_name}}
                                                             <br><br>
                                                             E-mail: <a
-                                                                href="mailto:support@btsa.co.id">support@btsa.co.id</a><br>
-                                                            Tel: 061 8003 2999 (ext.103)
+                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
+                                                            @if ($company->phone)
+                                                            Tel: {{$company->phone}}
+                                                            @endif
                                                         </span></p>
                                                 </div>
                                             </div>

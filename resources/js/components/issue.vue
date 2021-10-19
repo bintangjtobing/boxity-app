@@ -252,7 +252,7 @@
                 const respy = await axios.get('/api/issue/created');
                 this.fromYou = respy.data;
                 if (respy.data.length) {
-                    this.loading = false
+                    this.loadings = false
                 }
                 // this.$Progress.finish();
                 this.$isLoading(false);

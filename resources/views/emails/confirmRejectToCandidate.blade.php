@@ -142,11 +142,17 @@
                                                         <span style="">Hallo
                                                             {{$candidate->nama_lengkap}},</span></p>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        Terima kasih karena sudah tertarik bergabung bersama kami. <br>
-                                                        Dan lamaran kamu berhasil kami terima di sistem. Kami akan
-                                                        menyeleksi lamaran ini dan menghubungi anda lewat email atau
-                                                        telepon untuk mengundang anda menghadiri tahap interview.
+                                                        Thanks for your interest in the
+                                                        {{$candidate->posisi()->first()->title}}
+                                                        position at
+                                                        {{$company->company_name}} in {{$candidate->posisi()->first()->location}}.
+                                                        Unfortunately, we will not be moving forward with
+                                                        your application but we appreciate your time and interest in
+                                                        {{$company->company_name}}.
                                                         <br><br>
+                                                        Thank you ^_^ <br>
+                                                        Best Regards, <br>
+                                                        {{$company->company_name}}
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">

@@ -18,6 +18,9 @@
                 <div class="card mb-3">
                     <div class="card-header px-30 pt-30 pb-10 border-bottom-0">
                         <div class="row justify-content-md-center">
+                            <div class="col-lg-9 text-center bg-danger" v-if="candidates.status==false">
+                                <h6>Already rejected on {{candidates.updated_at}} by {{candidates.updated_by}}</h6>
+                            </div>
                             <div class="col-lg-9 text-center">
                                 <h6>Application Information</h6>
                                 <h2 style="font-size: 28px; font-weight: 700;">{{candidates.nama_lengkap}} -
@@ -27,7 +30,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-md-center">
-                            <div class="col-lg-7 text-left">
+                            <div class="col-lg-6 text-left">
                                 <p>
                                     Nama Lengkap <br>
                                     <b>{{candidates.nama_lengkap}}</b> <br><br>
@@ -69,23 +72,28 @@
                                 </p>
                                 <h3>Tentang saya</h3> <br><span v-html="candidates.about"></span>
                             </div>
-                            <div class="col-lg-3 text-left">
-                                <a href="" target="_blank"><img class="pasfoto" :src="candidates.picture"
-                                        style="width: 113.3px; height: 151.1px; object-fit:cover;"></a>
+                            <div class="col-lg-4 text-left">
+                                <img class="pasfoto" :src="candidates.picture"
+                                    style="width: 113.3px; height: 151.1px; object-fit:cover;">
                                 <br><br>
                                 <p>
                                     Email <br>
                                     <b>{{candidates.email}}</b><br><br>
                                     Nomor HP <br>
                                     <b>{{candidates.nohp}}</b><br><br>
-                                    <a :href="candidates.supported_file" download class="rounded-pill userDatatable-content-status color-primary
-                                                bg-opacity-primary active" target="_blank">
-                                        <i class="fal fa-paperclip"></i> &nbsp;Supported Document
-                                    </a>
-                                    <a :href="`/generate/pdf/`+candidates.id" target="_blank" class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active mt-1">
-                                        <i class="fad fa-print"></i> &nbsp;Print/Export to PDF
-                                    </a>
+                                    <div class="atbd-button-list d-flex flex-wrap align-items-end">
+                                        <a @click="rejectCandidate"
+                                            class="btn btn-primary-boxity btn-default btn-rounded mr-1"
+                                            :class="{disabled: isDisabled}">Reject
+                                        </a>
+                                        <a :href="candidates.supported_file" download target="_blank"
+                                            class="btn btn-default btn-rounded btn-outline-primary-boxity mr-1">Download
+                                        </a>
+                                        <a :href="`/generate/pdf/`+candidates.id" target="_blank"
+                                            class="btn btn-default btn-rounded btn-outline-primary-boxity">Export
+                                        </a>
+                                    </div>
+                                    <!-- ends: .atbd-button-list" -->
                                 </p>
                             </div>
                         </div>
@@ -96,6 +104,8 @@
     </div>
 </template>
 <script>
+    import Swal from 'sweetalert2';
+
     export default {
         title() {
             return `Detail candidate`;
@@ -103,6 +113,7 @@
         data() {
             return {
                 candidates: {},
+                isDisabled: true,
             }
         },
         created() {
@@ -119,9 +130,37 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/candidates/' + this.$route.params.id);
-                this.candidates = resp.data[0];
+                this.candidates = resp.data;
+                if (this.candidates.status != false) {
+                    this.isDisabled = false;
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
+            },
+            rejectCandidate() {
+                // alert(this.candidates.id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: 'rgba(243, 118, 73)',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, reject it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$isLoading(true);
+                        axios.patch('/api/candidates/' + this.$route.params.id);
+                        this.$isLoading(false);
+                        Swal.fire(
+                            'Rejected!',
+                            'Your candidate has been rejected.',
+                            'success'
+                        )
+                        this.loadCandidate();
+                        this.isDisabled = true;
+                    }
+                })
             }
         },
     }

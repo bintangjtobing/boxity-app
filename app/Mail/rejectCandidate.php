@@ -8,9 +8,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\company_details;
 
-class doneReset extends Mailable
+class rejectCandidate extends Mailable
 {
-    public $user;
+    public $candidate;
+    public $company;
     use Queueable, SerializesModels;
 
     /**
@@ -18,9 +19,10 @@ class doneReset extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($candidate, $company)
     {
-        $this->user = $user;
+        $this->candidate = $candidate;
+        $this->company = $company;
     }
 
     /**
@@ -33,8 +35,8 @@ class doneReset extends Mailable
         $company = company_details::where('id', 1)->first();
 
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@' . $company->site, $company->company_name . 'Support System')
-            ->subject('You have been successfully reset your password!')
-            ->markdown('emails.doneReset');
+        return $this->from('hrd' . $string . '@' . $company->site, $company->company_name . 'Human Resources System')
+            ->subject('Thank you for the interest to work with us!')
+            ->markdown('emails.confirmRejectToCandidate');
     }
 }
