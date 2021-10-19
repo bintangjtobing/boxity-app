@@ -151,6 +151,11 @@
                 inventoryOpt: {},
             }
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateSalesReturn')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadDataInventoryItem();
         },

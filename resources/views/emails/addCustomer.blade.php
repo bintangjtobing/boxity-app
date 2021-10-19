@@ -145,7 +145,7 @@
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         You have been added to our system, <br>you can now use the
                                                         customer system by running it on your browser <a
-                                                            href="https://tools.btsa.co.id/">btsa.co.id/</a>
+                                                            href="https://{{$company->site}}/tools/">btsa.co.id/</a>
                                                         <br><br>
                                                         by using this credential: <br>
                                                         email: {{$customer->email}} <br>
@@ -163,11 +163,13 @@
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
                                                             Best regards, <br>
-                                                            Support System BTSA LOGISTICS
+                                                            Support System {{$company->company_name}}
                                                             <br><br>
                                                             E-mail: <a
-                                                                href="mailto:support@btsa.co.id">support@btsa.co.id</a><br>
-                                                            Tel: 061 8003 2999 (ext.103)
+                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
+                                                            @if ($company->phone)
+                                                            Tel: {{$company->phone}}
+                                                            @endif
                                                         </span></p>
                                                 </div>
                                             </div>

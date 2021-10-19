@@ -49,38 +49,39 @@
                                                             <div class="form-group mb-10">
                                                                 <span>Warehouse code:</span>
                                                                 <input type="text" v-model="warehouse.warehouse_code"
-                                                                    class="form-control">
+                                                                    class="form-control"
+                                                                    :disabled="!permissions.includes('EditWarehouse')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <div class="form-group mb-10">
                                                                 <span>Warehouse name:</span>
                                                                 <input type="text" v-model="warehouse.warehouse_name"
-                                                                    class="form-control">
+                                                                    class="form-control" :disabled="!permissions.includes('EditWarehouse')">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group mt-1">
                                                         <span>Full address:</span>
                                                         <textarea class="form-control" v-model="warehouse.address"
-                                                            cols="30" rows="5"></textarea>
+                                                            cols="30" rows="5" :disabled="!permissions.includes('EditWarehouse')"></textarea>
                                                     </div>
                                                     <div class="form-group my-2">
                                                         <span>Remarks</span>
                                                         <textarea class="form-control" v-model="warehouse.remarks"
-                                                            cols="30" rows="5"></textarea>
+                                                            cols="30" rows="5" :disabled="!permissions.includes('EditWarehouse')"></textarea>
                                                     </div>
                                                     <div class="form-group my-2">
                                                         <span>Person in charge:</span>
                                                         <select v-model="warehouse.pic" id=""
-                                                            class="form-control form-control-default">
+                                                            class="form-control form-control-default" :disabled="!permissions.includes('EditWarehouse')">
                                                             <option value="" disabled>Select supervisor:</option>
                                                             <option v-for="users in user" :key="users.id"
                                                                 v-bind:value="users.id">
                                                                 {{users.name}}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="button-group d-flex pt-25">
+                                                    <div class="button-group d-flex pt-25" v-if="permissions.includes('EditWarehouse')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -95,7 +96,7 @@
                         <div class="tab-pane fade show" id="v-pills-customerListed" role="tabpanel"
                             aria-labelledby="v-pills-customerListed-tab">
                             <div class="row mx-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" v-if="permissions.includes('AddPICCustomersOnWarehouse')">
                                     <div class="card my-3">
                                         <div class="card-body pb-md-30">
                                             <div class="vertical-form">
@@ -106,7 +107,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group mb-10">
                                                             <select v-model="warehouseCust.customerId" id=""
-                                                                class="form-control form-control-default">
+                                                                class="form-control form-control-default" :disabled="!permissions.includes('AddPICCustomersOnWarehouse')">
                                                                 <option value="" disabled>Select customer:
                                                                 </option>
                                                                 <option v-for="customerList in customerList"
@@ -117,7 +118,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group my-2">
+                                                <div class="form-group my-2" v-if="permissions.includes('AddPICCustomersOnWarehouse')">
                                                     <div class="justify-content-end">
                                                         <button v-on:click="addCustomerToWarehouse"
                                                             v-on:keyup.enter="addCustomerToWarehouse"
@@ -130,7 +131,7 @@
                                     </div>
                                 </div>
                                 <!-- Table Customer Listed -->
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 mt-3">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -143,15 +144,12 @@
                                                     <v-data-table :loading="loading"
                                                         loading-text="Loading... Please wait..." :search="search"
                                                         :headers="headers" multi-sort :items="warehouseCustomerList"
-                                                        :items-per-page="10" class="elevation-1">
-                                                        <template v-slot:item.actions="{item}">
-                                                            <router-link :to="`/detail/warehouse-customer/${item.id}`"
-                                                                class="edit">
-                                                                <i class="fad fa-eye"></i></router-link>
+                                                        :items-per-page="10" class="elevation-1">                                                        
+                                                        <template v-slot:item.actions="{item}">                                                            
                                                             <a v-on:click="deleteWarehouseCustomerList(item.id)"
-                                                                class="remove">
+                                                                class="remove" v-if="permissions.includes('DeletePICCustomersOnWarehouse')">
                                                                 <i class="fad fa-trash"></i></a>
-                                                        </template>
+                                                        </template>                                                        
                                                     </v-data-table>
                                                 </div>
                                             </div>
@@ -205,11 +203,15 @@
                     customerId: '',
                 },
                 customerList: {},
+                permissions: []
             }
         },
         created() {
             this.loadDataWarehouse();
             this.loadCustomerWarehouse();
+        },
+        beforeMount(){                                    
+            this.permissions = this.$store.getters.getPermissions;
         },
         methods: {
             routerBack() {

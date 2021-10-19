@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Suppliers
                     </h2>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newSupplier">
+                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newSupplier" v-if="permissions.includes('CreateUsers')">
                             <i class="las la-plus fs-16"></i>New supplier</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newSupplier"
@@ -110,9 +110,9 @@
                             :items="members" :items-per-page="10" class="elevation-1" :search="search"
                             :expanded.sync="expanded" show-expand>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/supplier/${item.id}`" class="edit">
+                                <router-link :to="`/detail/supplier/${item.id}`" class="edit" v-if="permissions.includes('EditUsers')">
                                     <i class="fad fa-eye"></i></router-link>
-                                <a v-on:click="deleteData(item.id)" class="remove">
+                                <a v-on:click="deleteData(item.id)" class="remove" v-if="permissions.includes('TerminateUsers')">
                                     <i class="fad fa-trash"></i></a>
                             </template>
                             <template v-slot:item.email="{item}">
@@ -169,7 +169,11 @@
                 user: {
                     bank_code: '',
                 },
+                permissions: []
             };
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         mounted() {
             this.loadSuppliers();

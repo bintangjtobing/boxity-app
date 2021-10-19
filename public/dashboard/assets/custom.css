@@ -469,6 +469,17 @@ a {
     border-color: rgba(240, 101, 50);
 }
 
+.btn-outline-primary-boxity {
+    color: rgba(243, 118, 73);
+    border-color: rgba(243, 118, 73);
+}
+
+.btn-outline-primary-boxity:hover {
+    color: #fff;
+    border-color: rgba(243, 118, 73);
+    background-color: rgba(243, 118, 73);
+}
+
 .btn-secondary-boxity:hover {
     color: #fff !important;
     background-color: rgba(32, 50, 71);

@@ -5,8 +5,8 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Customers
                     </h2>
-                    <div class="action-btn" v-if="this.users.role=='admin'">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer">
+                    <div class="action-btn">
+                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer" v-if="permissions.includes('CreateUsers')">
                             <i class="las la-plus fs-16"></i>New customer</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newCustomer"
@@ -109,9 +109,9 @@
                             :items="members" :items-per-page="10" class="elevation-1" :search="search"
                             :expanded.sync="expanded" show-expand>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/customer/${item.id}`" class="edit">
+                                <router-link :to="`/detail/customer/${item.id}`" class="edit" v-if="permissions.includes('EditUsers')">
                                     <i class="fad fa-eye"></i></router-link>
-                                <a v-on:click="deleteData(item.id)" class="remove">
+                                <a v-on:click="deleteData(item.id)" class="remove" v-if="permissions.includes('TerminateUsers')">
                                     <i class="fad fa-trash"></i></a>
                             </template>
                             <template v-slot:item.email="{item}">
@@ -169,7 +169,11 @@
                     bank_code: '',
                 },
                 users: {},
+                permissions: []
             };
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         mounted() {
             this.loadCustomers();

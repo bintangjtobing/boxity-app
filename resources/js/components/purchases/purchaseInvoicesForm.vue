@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}" v-if="permissions.includes('EditPurchaseInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -217,7 +217,7 @@
             <div class=" col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm"
+                        <button @click="activeAddForm" v-if="permissions.includes('CreatePurchaseInvoice')"
                             class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -273,6 +273,7 @@
                                         placeholder="Brand">
                                 </div>
                             </div>
+                            <!-- 
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Deliver to:</span>
@@ -301,7 +302,8 @@
                                         placeholder="ex: BK 0000 ABC">
                                 </div>
                             </div>
-                        </div>
+                            -->
+                        </div>                        
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -310,8 +312,8 @@
                                         v-model="purchaseInvoiceData.remarks" cols="30" rows="4"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group my-2">
+                        </div>                        
+                        <div class="form-group my-2" v-if="permissions.includes('EditPurchaseInvoice')">
                             <div class="row">
                                 <div class="col-5 text-left">
                                     <div class="checkbox-theme-default custom-checkbox ">
@@ -425,7 +427,11 @@
                     // }
                 ],
                 countItems: '0',
+                permissions: []
             }
+        },
+        beforeMount(){
+          this.permissions = this.$store.getters.getPermissions;  
         },
         created() {
             this.loadData();

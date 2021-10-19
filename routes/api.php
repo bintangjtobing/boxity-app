@@ -131,6 +131,7 @@ Route::post('/popup-management', 'apiController@postPopup');
 // Candidate API
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
+Route::patch('/candidates/{id}', 'apiController@patchCandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
 
 // CHAT API

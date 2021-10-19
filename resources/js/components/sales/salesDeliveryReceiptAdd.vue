@@ -420,6 +420,11 @@
                 countItems: '0',
             }
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateDeliveryReceipt')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadData();
             this.generatePONumber();

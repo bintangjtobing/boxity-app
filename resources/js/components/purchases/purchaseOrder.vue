@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Order<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreatePurchaseOrder')">
                         <div class="action-btn">
                             <router-link to="/purchase/order/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Order</router-link>
@@ -59,7 +59,7 @@
                                             <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/order/${item.po_number}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove">
+                                        <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove" v-if="permissions.includes('DeletePurchaseOrder')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -116,8 +116,12 @@
                 // end datatable
                 countItems: '0',
                 user: {},
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },        
         created() {
             this.loadItem();
             this.getUser();

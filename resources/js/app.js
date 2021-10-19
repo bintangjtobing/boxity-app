@@ -15,6 +15,7 @@ import 'feather-icons';
 import moment from 'moment';
 import VueProgressBar from 'vue-progressbar';
 import loading from 'vuejs-loading-screen'
+import store from './store'
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -513,6 +514,7 @@ const router = new VueRouter({
 new Vue(Vue.util.extend({
     router,
     vuetify,
+    store,
     render: function (h) {
         return h(App)
     }
