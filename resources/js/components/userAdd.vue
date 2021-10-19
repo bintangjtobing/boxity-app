@@ -146,6 +146,11 @@
                 isAutoGenerate: false,
             };
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateUsers')){
+                this.$router.push('/') 
+            }
+        },
         created() {
             this.getRolePermission();
         },

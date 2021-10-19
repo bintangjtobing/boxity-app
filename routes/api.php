@@ -16,7 +16,7 @@ Route::get('/test-pdf', function () {
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
 });
-Route::get('/customer-connected','apiController@checkCustomerConnected');
+Route::get('/customer-connected', 'apiController@checkCustomerConnected');
 
 
 // Users API
@@ -131,7 +131,15 @@ Route::post('/popup-management', 'apiController@postPopup');
 // Candidate API
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
+Route::patch('/candidates/{id}', 'apiController@patchCandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
+
+// Employee API
+Route::get('/employee', 'apiController@getEmployee');
+Route::post('/employee', 'apiController@newEmployee');
+Route::get('/employee/{id}', 'apiController@getEmployeeById');
+Route::patch('/employee/{id}', 'apiController@patchEmployeeById');
+Route::delete('/employee/{id}', 'apiController@deleteEmployee');
 
 // CHAT API
 Route::get('/chat/{id}', 'apiController@getChatFor');
@@ -217,6 +225,7 @@ Route::get('/count-item-group', 'apiController@countItemGroup');
 Route::delete('/item-group/{id}', 'apiController@deleteItemGroupById');
 
 // Inventory Item
+Route::get('/item', 'apiController@listItem');
 // Upload image
 Route::post('/inventory-item/images', 'apiController@imagesInventoryItemStore')->name('dropzoneImages');
 Route::delete('/inventory-item/images/{id}', 'apiController@imagesInventoryItemStoreDelete');
@@ -239,11 +248,13 @@ Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
 Route::get('/count-inventory-item', 'apiController@countInventoryItem');
 Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
 Route::get('/inventory-item/w/{id}/{customerid}', 'apiController@getInventoryByWarehouse');
+Route::get('/inventory-item/warehouse/{warehouseId}', 'apiController@getInventoryByWarehouseV2');
 
 // History Ittem
 Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
 Route::get('/sum/in/item-history/{id}', 'apiController@sumQtyInHistoryItem');
 Route::get('/sum/out/item-history/{id}', 'apiController@sumQtyOutHistoryItem');
+Route::get('/beginning/item-history/{id}', 'apiController@beginningHistoryItem');
 Route::get('/report/item-history/{id}', 'apiController@reportItemHistory');
 
 // Goods Item Transfer -> list item in one row goods transfer
@@ -285,10 +296,12 @@ Route::patch('/purchase/order/{po_number}', 'purchasingController@postPurchaseOr
 Route::delete('/purchases-order/{id}', 'purchasingController@deletePurchaseOrderById');
 Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
 Route::get('/approve/purchase/order/{po_number}', 'purchasingController@approvePurchaseOrderByPoNumber');
+Route::get('/po/{id}', 'purchasingController@getPoWithCustomerId');
 
 
 // Item on Purchases Order
-Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasePO');
+Route::get('/po-item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
+Route::get('/pos/item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
 Route::post('/po/item-purchase', 'itemOnPurchasingController@postItemPurchasePO');
 Route::post('/po/item-purchase/{po_number}', 'itemOnPurchasingController@postItemPurchaseByPoNumber');
 Route::get('/po/item-purchase/{po_number}', 'itemOnPurchasingController@getItemPurchaseByPoNumber');
@@ -359,6 +372,7 @@ Route::get('/pre/count-item-purchase', 'itemOnPurchasingController@countItemPurc
 
 // Sales Order
 Route::get('/sales/order', 'salesController@getSalesOrder');
+Route::get('/sales/order/customer/{customerId}', 'salesController@getSalesOrderByCustomer');
 Route::post('/sales/order', 'salesController@postSalesOrder');
 Route::get('/sales/order/{id}', 'salesController@getSalesOrderById');
 Route::patch('/sales/order/{id}', 'salesController@postSalesOrderById');
@@ -379,7 +393,7 @@ Route::post('/si/item-sales', 'itemOnSalesController@postItemSalesSI');
 Route::post('/si/item-sales/{si_number}', 'itemOnSalesController@postItemSalesBySiNumber');
 Route::get('/si/item-sales/{si_number}', 'itemOnSalesController@getItemSalesBySiNumber');
 Route::get('/si/item-saless/{id}', 'itemOnSalesController@getItemSalesSIById');
-Route::patch('/si/item-sales/{id}', 'itemOnSalesController@postItemSalesSIById');
+Route::put('/si/item-sales/{id}', 'itemOnSalesController@postItemSalesSIById');
 Route::delete('/si/item-sales/{id}', 'itemOnSalesController@deleteItemSalesSIById');
 Route::get('/si/count-item-sales', 'itemOnSalesController@countItemSalesSI');
 ///////////////// SALES INVOICE END ///////////////////////////////////
@@ -446,3 +460,7 @@ Route::get('/e/sales/order', 'salesController@getESalesOrder');
 Route::get('/e/sales/order/{id}', 'salesController@getESalesOrderById');
 Route::patch('/e/sales/order/{id}', 'salesController@postESalesOrderById');
 Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');
+
+
+Route::get('/report-card', 'apiController@getReportCard');
+

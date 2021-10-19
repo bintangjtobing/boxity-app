@@ -30,7 +30,8 @@ class itemsSales extends Model
         'updated_by',
         'customerId',
         'driver_name',
-        'driver_nopol'
+        'driver_nopol',
+        'weightIn', 'weightOut'
 
     ];
     public function warehouse()

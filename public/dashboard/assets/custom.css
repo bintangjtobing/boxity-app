@@ -469,6 +469,17 @@ a {
     border-color: rgba(240, 101, 50);
 }
 
+.btn-outline-primary-boxity {
+    color: rgba(243, 118, 73);
+    border-color: rgba(243, 118, 73);
+}
+
+.btn-outline-primary-boxity:hover {
+    color: #fff;
+    border-color: rgba(243, 118, 73);
+    background-color: rgba(243, 118, 73);
+}
+
 .btn-secondary-boxity:hover {
     color: #fff !important;
     background-color: rgba(32, 50, 71);
@@ -657,4 +668,13 @@ body.swal2-shown>[aria-hidden="true"] {
 
 .feature-cards4 figcaption p {
     font-size: 13px;
+}
+
+.transparency-primary-boxity {
+    background: rgba(125, 198, 125, .5);
+    padding: 6px;
+    border-radius: 4px;
+    color: rgb(25, 108, 25);
+    font-weight: bold;
+    font-size: 11.5px;
 }

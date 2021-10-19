@@ -36,6 +36,8 @@ Route::get('/sign-out', function (Request $request) {
     return redirect('/');
 });
 
+Route::get('/print/report-warehouse', 'apiController@printReportWarehouse');
+
 // Auth url
 Route::get('/login', function () {
     session()->regenerate();
@@ -66,6 +68,7 @@ Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr'
 Route::get('/generate/pdf/{id}', function ($id) {
     $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
     return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
+    // return $candidate;
 });
 // Dashboard data url
 // Route::get('/tool', function () {
@@ -74,3 +77,8 @@ Route::get('/generate/pdf/{id}', function ($id) {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/{any}', 'spaController@index')->where('any', '.*');
 });
+
+
+Route::post('companydetails/create-step-one', 'authController@CompanyDetailsStepOne')->name('companydetails.create.step.one.post');
+Route::post('companydetails/create-step-two', 'authController@CompanyDetailsStepTwo')->name('companydetails.create.step.two.post');
+Route::post('companydetails/create-step-three', 'authController@CompanyDetailsStepThree')->name('companydetails.create.step.three.post');

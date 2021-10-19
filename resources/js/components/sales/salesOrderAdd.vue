@@ -3,19 +3,8 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main user-member justify-content-sm-between">
-                    <div class="
-              d-flex
-              flex-wrap
-              justify-content-center
-              breadcrumb-main__wrapper
-            ">
-                        <div class="
-                d-flex
-                align-items-center
-                user-member__title
-                justify-content-center
-                mr-sm-25
-              ">
+                    <div class="d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                        <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
                             <h4 class="text-capitalize fw-500 breadcrumb-title">
                                 New Sales Order <span>#{{ salesOrderData.so_number }}</span>
                             </h4>
@@ -91,23 +80,23 @@
                                         <div class="form-group col-lg-6">
                                             <span>From warehouse:</span>
                                             <selectSearch v-model="selected.warehouse" v-bind="{
-                          datas: warehouse,
-                          width: '100%',
-                          name: 'warehouse_name',
-                          isDisable: isDisable.warehouseSelected,
-                          placeholder: 'Select Warehouse',
-                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                                datas: warehouse,
+                                                width: '100%',
+                                                name: 'warehouse_name',
+                                                isDisable: isDisable.warehouseSelected,
+                                                placeholder: 'Select Warehouse',
+                                            }" @dataSelected="onWarehouseSelected"></selectSearch>
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <span>Item name:</span>
                                             <selectSearch v-model="selected.item" v-bind="{
-                          datas: items,
-                          width: '100%',
-                          name: 'item_name',
-                          group: 'item_code',
-                          isDisable: isDisable.select,
-                          placeholder: 'Select Item',
-                        }" @dataSelected="onItemSelected"></selectSearch>
+                                                datas: items,
+                                                width: '100%',
+                                                name: 'item_name',
+                                                group: 'warehouse_code',
+                                                isDisable: isDisable.select,
+                                                placeholder: 'Select Item',
+                                            }" @dataSelected="onItemSelected"></selectSearch>
 
                                             <span class="float-left"><abbr title="Add new item">Don't see the item
                                                     you're looking for?</abbr>
@@ -119,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
                                         <span v-show="isShow.qtyItem"
@@ -128,6 +117,22 @@
                                             placeholder="" id="" min="0" max="10000" step="1" class="form-control"
                                             required :disabled="isDisable.input" />
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div>
+                                 -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Ordered/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.qtyOrdered"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -165,12 +170,12 @@
                                     <div class="form-group">
                                         <span>Used by:</span>
                                         <selectSearch v-model="selected.usedBy" v-bind="{
-                        datas: users,
-                        width: '100%',
-                        name: 'name',
-                        isDisable: isDisable.input,
-                        placeholder: 'Select Item',
-                      }" @dataSelected="onItemSelectedUsed"></selectSearch>
+                                            datas: users,
+                                            width: '100%',
+                                            name: 'name',
+                                            isDisable: isDisable.input,
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelectedUsed"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -185,11 +190,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button v-on:click="addToList" v-on:keyup.enter="addToList" class="
-                        btn btn-success
-                        float-right
-                        btn-default btn-squared
-                        px-30
-                      " :disabled="btndisable">
+                                            btn btn-success
+                                            float-right
+                                            btn-default btn-squared
+                                            px-30
+                                        " :disabled="btndisable">
                                             Add to lists
                                         </button>
                                     </div>
@@ -238,15 +243,65 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateModifNettWeight"
+                                        @input="calculateModifNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
-                                        <span v-show="isShow.qtyItem" id="qtyItem">{{
-                      "(Quantity Item = " + qtyItem + ")"
-                    }}</span>
-                                        <input type="number" v-model="itemModify.qtyOrdered" @input="onModifyQtyInc"
-                                            placeholder="0" id="" min="0" max="10000" step="1" class="form-control" />
-                                        <span v-show="isShow.qty" id="qty">Tidak boleh lebih dari quantity item</span>
+                                        <span v-show="isShow.qtyItem"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <input type="number" v-model="itemAdd.qtyOrdered" @input="onQtyInc"
+                                            placeholder="" id="" min="0" max="10000" step="1" class="form-control"
+                                            required :disabled="isDisable.input" />
+                                        <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div>
+                                 -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Ordered/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.qtyOrdered"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -283,11 +338,11 @@
                                     <div class="form-group">
                                         <span>Used by:</span>
                                         <selectSearch v-model="selected.usedBy" v-bind="{
-                        datas: users,
-                        width: '100%',
-                        name: 'name',
-                        placeholder: 'Select Item',
-                      }" @dataSelected="onItemSelectedUsed"></selectSearch>
+                                            datas: users,
+                                            width: '100%',
+                                            name: 'name',
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelectedUsed"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -321,12 +376,12 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="
-                userDatatable
-                projectDatatable
-                project-table
-                bg-white
-                border-0
-              ">
+                            userDatatable
+                            projectDatatable
+                            project-table
+                            bg-white
+                            border-0
+                        ">
                             <div class="table-responsive">
                                 <v-card-title>
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
@@ -477,6 +532,11 @@
                 },
             };
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateSalesOrder')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadData();
             this.generateSONumber();
@@ -509,6 +569,12 @@
             },
         },
         methods: {
+             calculateModifNettWeight() {
+                this.itemModify.qtyOrdered = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
+                },
+            calculateNettWeight() {
+                this.itemAdd.qtyOrdered = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+            },
             classRotate: function (param) {
                 return param ? "rotate" : "";
             },
@@ -520,7 +586,7 @@
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
                 this.isDisable.select = false;
-                const itemData = await axios.get('/api/inventory-item/w/' + param.id);
+                const itemData = await axios.get('/api/inventory-item/w/' + param.id + "/" + this.itemAdd.customerid);
                 this.items = itemData.data;
             },
             async onCustomerSelected(param) {
@@ -561,15 +627,7 @@
                 this.isShow.qty = false;
                 const getId = value.id;
                 console.log(value)
-                // this.$Progress.start();
-                this.$isLoading(true);
-                const {
-                    data: itemData
-                } = await axios.get(
-                    "/api/inventory-item/" + getId
-                );
-                // this.$Progress.finish();
-                this.$isLoading(false);
+                const { data: itemData } = await axios.get( "/api/inventory-item/" + getId );
                 this.itemAdd.unit = itemData.unit;
                 this.itemAdd.currentPrice = itemData.price;
                 this.itemAdd.itemid = itemData.id;
@@ -637,10 +695,10 @@
                 // Load data relation
                 const resp = await axios.get("/api/customers");
                 this.customer = resp.data;
-                const itemSalesData = await axios.get("/api/item-sales");
-                this.itemSalesData = itemSalesData.data;
                 const contactUsers = await axios.get("/api/contact-list");
                 this.users = contactUsers.data;
+                const itemSalesData = await axios.get(`/api/item-sales`);
+                this.itemSalesData = itemSalesData.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
@@ -658,8 +716,6 @@
                 this.itemModify.item_name = `${resp.data.item.item_code} - ${resp.data.item.item_name}`;
                 this.itemModify.warehouseid = resp.data.warehouse.id;
                 this.itemModify.warehouse_name = resp.data.warehouse.warehouse_name;
-                this.selected.usedBy = `${resp.data.used.name}`;
-                this.itemModify.used_by = resp.data.used.id;
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = "Modify Sales Order Items";
                 this.isVisibleAddForm = true;

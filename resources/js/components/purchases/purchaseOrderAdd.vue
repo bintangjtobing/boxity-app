@@ -31,15 +31,41 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Customer:</span>
+                                        <selectSearch v-model="selected.customer" v-bind="{
+                          datas: customersGet,
+                          width: '100%',
+                          name: 'company_name',
+                          placeholder: 'Select Customer',
+                          isDisable: isDisable.customerSelected,
+                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>To warehouse:</span>
+                                        <selectSearch v-model="selected.warehouse" v-bind="{
+                          datas: warehouse,
+                          width: '100%',
+                          name: 'warehouse_name',
+                          isDisable: isDisable.warehouseSelected,
+                          placeholder: 'Select Warehouse',
+                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                            class="form-control form-control-default">
-                                            <option value="" disabled>Select item:</option>
-                                            <option v-for="items in items" :key="items.id" :value="items.id">
-                                                {{items.item_name}}</option>
-                                        </select>
+                                        <selectSearch v-model="selected.item" v-bind="{
+                          datas: items,
+                          width: '100%',
+                          name: 'item_name',
+                          group: 'warehouse_code',
+                          isDisable: isDisable.select,
+                          placeholder: 'Select Item',
+                        }" @dataSelected="onItemSelected"></selectSearch>
                                         <span class="float-right"><abbr title="Add new item">Don't see the item you're
                                                 looking for?</abbr>
                                             <router-link :to="'/inventory-item'">
@@ -232,6 +258,9 @@
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
+                                    <template v-slot:item.qtyOrdered="{ item }">
+                                        {{ item.qtyOrdered | toDecimal }} / {{ item.unit }}
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>
@@ -256,7 +285,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select supplier:</option>
                                         <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
-                                            {{supplier.customerName}}</option>
+                                            {{supplier.supplier_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -306,9 +335,13 @@
 <script>
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
+    import SelectSearch from "../item/selectSearch.vue";
+    import VueNumeric from 'vue-numeric';
     export default {
         components: {
-            'editor': Editor
+            'editor': Editor,
+            selectSearch: SelectSearch,
+            VueNumeric
         },
         title() {
             return `New Purchase Order`;
@@ -351,6 +384,7 @@
 
                 // data relation
                 supplier: {},
+                customersGet: {},
                 warehouse: {},
                 items: {},
                 users: {},
@@ -389,6 +423,28 @@
                     }
                 ],
                 countItems: '0',
+                selected: {
+                    warehouse: '',
+                    item: "",
+                    usedBy: "",
+                    customer: "",
+                },
+                isDisable: {
+                    select: true,
+                    input: true,
+                    warehouseSelected: true,
+                    customerSelected: false,
+                },
+            }
+        },
+        beforeMount() {
+            if (!this.$store.getters.getPermissions.includes('CreatePurchaseOrder')) {
+                this.$router.push('/')
+            }
+        },
+        beforeMount() {
+            if (!this.$store.getters.getPermissions.includes('CreatePurchaseOrder')) {
+                this.$router.push('/')
             }
         },
         created() {
@@ -439,6 +495,46 @@
                     itemid: getItemDataSelected.data.id,
                 }
             },
+            async onItemSelected(value) {
+                console.log('item id selected: ', value.id);
+                const getId = value.id;
+                const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
+                this.itemAdd = {
+                    unit: getItemDataSelected.data.unit,
+                    currentPrice: getItemDataSelected.data.price,
+                    itemid: getItemDataSelected.data.id,
+                    ...this.itemAdd
+                }
+                this.selected.item = `[${value.warehouse_code}][${value.item_code}] - ${value.item_name}`;
+            },
+            async onWarehouseSelected(param) {
+                const idWarehouseGet = param.id;
+                const getWarehouseDataSelected = await axios.get('/api/warehouse/' + idWarehouseGet);
+                this.itemAdd.warehouseid = getWarehouseDataSelected.data.id;
+                console.log('warehouse id selected: ', this.itemAdd.warehouseid);
+                this.itemModify.warehouseid = param.id;
+                this.selected.warehouse = param.warehouse_name;
+                this.purchaseOrderData.deliver_to = param.id;
+                this.isDisable.select = false;
+                const itemDataGet = await axios.get('/api/inventory-item/w/' + param.id + '/' + this.itemAdd
+                    .customerid);
+                this.items = itemDataGet.data;
+            },
+            async onCustomerSelected(param) {
+                const idCustGet = param.id;
+                const getCustDataSelected = await axios.get('/api/customers/' + idCustGet);
+                this.itemAdd = {
+                    customerid: getCustDataSelected.data.id,
+                }
+                // console.log('customer id selected: ', this.itemAdd.customerid);
+                // console.log(this.itemAdd.customerid);
+                this.selected.customer = param.company_name;
+                this.purchaseOrderData.customer = param.id;
+                this.isDisable.warehouseSelected = false;
+                const warehouseData = await axios.get('/api/warehouse-customers/' + idCustGet);
+                this.warehouse = warehouseData.data;
+                // console.log(param);
+            },
             onQtyInc() {
                 this.itemAdd.price = parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
             },
@@ -479,7 +575,7 @@
                 this.isVisibleAddForm = false,
                     this.isVisibleModifyForm = true,
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
             },
             async loadData() {
                 // this.$Progress.start();
@@ -487,9 +583,11 @@
                 // Load data relation
                 const resp = await axios.get('/api/suppliers');
                 this.supplier = resp.data;
+                const respCust = await axios.get("/api/customers");
+                this.customersGet = respCust.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/po/item-purchase');
+                const itemPurchasingData = await axios.get('/api/pos/item-purchase');
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
@@ -517,12 +615,12 @@
             },
             async addToList() {
                 // this.$Progress.start();
-                this.$isLoading(true);
                 // console.log(this.itemAdd)
+                this.$isLoading(true);
                 await axios.post('/api/po/item-purchase', this.itemAdd).then(response => {
                     // console.log(response)
                     document.getElementById('ding').play();
-
+                    this.purchaseOrderData.customerid = response.data.customerId;
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
@@ -541,8 +639,8 @@
                     }
                 });
                 this.loadData();
-                // this.$Progress.finish();
                 this.$isLoading(false);
+                // this.$Progress.finish();
             },
             async modifyItemPurchase() {
                 // this.$Progress.start();
@@ -595,10 +693,10 @@
                     this.purchaseOrderData.po_number = genPONumber;
                     this.$router.push('/purchase/order');
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
-                   document.getElementById('failding').play();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'warning',
                         title: 'Something wrong.',
@@ -624,7 +722,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/po/item-purchase/' + id);
                     this.loadData();
                     document.getElementById('ding').play();
@@ -635,7 +733,7 @@
                         text: 'Success deleted current item.'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

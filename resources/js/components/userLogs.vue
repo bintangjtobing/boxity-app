@@ -66,6 +66,7 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resMember = await axios.get('/api/user-logs');
+                this.$isLoading(false);
                 this.members = resMember.data;
             },
         },

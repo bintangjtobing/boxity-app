@@ -195,7 +195,7 @@
             <div class=" col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm"
+                        <button @click="activeAddForm" v-if="permissions.includes('EditPurchaseReturn')"
                             class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -239,7 +239,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select supplier:</option>
                                         <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
-                                            {{supplier.customerName}}</option>
+                                            {{supplier.supplier_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -368,7 +368,11 @@
                     }
                 ],
                 countItems: '0',
+                permissions: []
             }
+        },
+        beforeMount(){
+          this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadData();

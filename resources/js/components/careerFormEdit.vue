@@ -15,13 +15,14 @@
         </div>
         <form @submit.prevent="handleSubmit">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
+                                            <span>Job title:</span>
                                             <input type="text"
                                                 class="form-control ih-medium ip-gray radius-xs b-light px-15"
                                                 v-model="job.title" id="formGroupExampleInput"
@@ -32,58 +33,34 @@
                                 <div class="form-row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.location"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Job location</option>
-                                                <option v-bind:value="`Medan`">Medan</option>
-                                                <option v-bind:value="`Jakarta`">Jakarta</option>
-                                                <option v-bind:value="`Palembang`">Palembang
-                                                </option>
-                                                <option v-bind:value="`Surabaya`">Surabaya
-                                                </option>
-                                                <option v-bind:value="`Makassar`">Makassar
-                                                </option>
-                                                <option v-bind:value="`Bali`">Bali
-                                                </option>
-                                            </select>
+                                            <span>Job location:</span>
+                                            <input type="text" v-model="job.location" placeholder="Job Location"
+                                                required class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
+                                            <small>Such as: Country and location</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.divisi"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Department</option>
-                                                <option v-bind:value="`Antar-Pulau`">Antar-Pulau</option>
-                                                <option v-bind:value="`Ekspor`">Ekspor</option>
-                                                <option v-bind:value="`Impor`">Impor</option>
-                                                <option v-bind:value="`Trucking`">Trucking
-                                                </option>
-                                            </select>
+                                            <span>Department:</span>
+                                            <input type="text" v-model="job.divisi" placeholder="Department of" required
+                                                class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.part"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Part of</option>
-                                                <option v-bind:value="`Personalia Umum`">Personalia Umum
-                                                </option>
-                                                <option v-bind:value="`Finance`">Finance
-                                                </option>
-                                                <option v-bind:value="`Document`">Document
-                                                </option>
-                                                <option v-bind:value="`Operational`">Operational
-                                                </option>
-                                            </select>
+                                            <span>Part of:</span>
+                                            <input type="text" v-model="job.part" placeholder="Part of" required
+                                                class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <span>Job description:</span>
                                     <editor
                                         placeholder="Requirements / Decriptions / Qualification / Job descriptions. Press `CTRL + ENTER` to send the comment."
                                         v-model="job.description" @keydown.enter="handleSubmit"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 300,
+                                                                height: 600,
                                                                 menubar: false,
                                                                 branding: false,
                                                                 toolbar:

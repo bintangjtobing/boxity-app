@@ -43,22 +43,42 @@ class purchasingController extends Controller
     public function getPurchaseOrder()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
-            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-        } else {
+        $data = [];
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-            return $po;
+            $data = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'item', 'createdBy')->orderBy('created_at', 'DESC')->get();
+        } else {
+            $data = purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'item')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $temp = null;
+            if ($elm['item']['qtyShipped'] > 0) {
+                if (empty($elm['item']['qtyOrdered']) || $elm['item']['qtyOrdered'] == $elm['item']['qtyShipped']) {
+                    $temp = true;
+                } else {
+                    $temp = false;
+                }
+            }
+            unset($elm['item']);
+            $elm['paidOff'] = $temp;
+        }
+
+        return response()->json($data, 200);
+    }
+    public function getPoWithCustomerId($id)
+    {
+        return purchaseOrder::where('customerId', $id)->where('status', 1)->get();
     }
     public function postPurchaseOrder(Request $request)
     {
         $purchasingOrd = new purchaseOrder();
         $purchasingOrd->po_number = $request->po_number;
+        $purchasingOrd->status = '0';
         $purchasingOrd->supplier = $request->supplier;
+        $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->order_date = $request->order_date;
         $purchasingOrd->deliver_to = $request->deliver_to;
         $purchasingOrd->remarks = $request->remarks;
@@ -113,7 +133,7 @@ class purchasingController extends Controller
                 'status' => 1,
                 'approvedBy' => Auth::id(),
             ));
-        return response()->json($detailsToPO);
+        return response()->json($statusPRE);
     }
     public function deletePurchaseOrderById($id, Request $request)
     {
@@ -187,22 +207,29 @@ class purchasingController extends Controller
     // PURCHASE INVOICE
     public function getPurchaseInvoice()
     {
+        $data = [];
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
-            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-        } else if ($getUserIdOnCustomer) {
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $pi = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-            return $pi;
+            $data = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
+        } else {
+            $data = purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $elm['hasPo'] = !empty($elm['item']['purchasingId']) ? true : false;
+            unset($elm['item']);
+        }
+        return response()->json($data, 200);
+        // return $getUserIdOnCustomer;
     }
     public function postPurchaseInvoice(Request $request)
     {
         $purchasingOrd = new purchaseInvoice();
         $purchasingOrd->pi_number = $request->pi_number;
+        $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->invoice_date = $request->order_date;
         $purchasingOrd->drivers = $request->drivers;
@@ -223,38 +250,43 @@ class purchasingController extends Controller
 
         $itemGet = DB::table('items_purchases')
             ->where('pi_status', '=', '1')
+            ->where('created_by', '=', Auth::id())
             // PO Status 2, means having a purchasing ID
             ->update(array('purchasingId' => $purchasingOrd->pi_number, 'pi_status' => '2'));
 
         $getItemOnPI = itemsPurchase::where('purchasingId', $purchasingOrd->pi_number)->get();
-        // Jika item yang ada di PI lebih dari 1
+        // Jika item yang ada di PI lebih dari 0
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {
-                $inputToHistory = new itemHistory();
-                $inputToHistory->itemId = $getItemOnPi->item_code;
-                $inputToHistory->itemInId = $purchasingOrd->pi_number;
-                $inputToHistory->type = 1;
-                $inputToHistory->date = $purchasingOrd->created_at;
-                $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
-                $inputToHistory->remarks = $getItemOnPi->remarks;
-                $inputToHistory->save();
+                if ($getItemOnPi->qtyShipped) {
+                    $inputToHistory = new itemHistory();
+                    $inputToHistory->itemId = $getItemOnPi->item_code;
+                    $inputToHistory->itemInId = $purchasingOrd->pi_number;
+                    $inputToHistory->type = 1;
+                    $inputToHistory->date = $purchasingOrd->created_at;
+                    $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
+                    $inputToHistory->remarks = $getItemOnPi->remarks;
+                    $inputToHistory->save();
 
-                // Get inventory item related
-                $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
-                $getQtyItem = $itemRelated->qty;
-                $getInputQtyValue = $getItemOnPi->qtyShipped;
-                // Sum the value between get Qty Item and Get Value Inputted
-                $sumQty = $getQtyItem + $getInputQtyValue;
+                    // Get inventory item related
+                    $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
+                    $getQtyItem = $itemRelated->qty;
+                    $getInputQtyValue = $getItemOnPi->qtyShipped;
+                    // Sum the value between get Qty Item and Get Value Inputted
+                    $sumQty = $getQtyItem + $getInputQtyValue;
 
-                // Update to inventory item
-                $getInventory = DB::table('inventory_items')
-                    ->where('id', $getItemOnPi->item_code)
-                    ->update(array(
-                        'qty' => $sumQty,
-                    ));
+                    // Update to inventory item
+                    $getInventory = DB::table('inventory_items')
+                        ->where('id', $getItemOnPi->item_code)
+                        ->update(array(
+                            'qty' => $sumQty,
+                        ));
+                } else {
+                }
+                // dd($getItemOnPI);
             }
         }
-        return 200;
+        return response($getItemOnPI);
     }
     public function getPurchaseInvoiceByPiNumber($pi_number)
     {

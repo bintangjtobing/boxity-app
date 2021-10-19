@@ -4,10 +4,11 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Invoice<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="permissions.includes('CreatePurchaseInvoice')">
                         <div class="action-btn">
                             <router-link to="/purchase/invoices/add" class="btn btn-sm btn-primary-boxity btn-add">
-                                <i class="las la-plus fs-16"></i>New Purchase Invoice</router-link>
+                                <em class="las la-plus fs-16"></em>New Purchase Invoice</router-link>
                         </div>
                     </div>
                 </div>
@@ -25,14 +26,26 @@
                                 <v-data-table :search="search" loading loading-text="Loading... Please wait..."
                                     :headers="headers" multi-sort :items="purchaseInvoiceItem" :items-per-page="10"
                                     class="elevation-1" group-by="warehouse.warehouse_name" group-expanded>
+                                    <template v-slot:item.status="{item}">
+                                        <span class="transparency-primary-boxity" v-if="!item.hasPo">
+                                            <em class="fad fa-check"></em> Passed without purchase order
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==0">
+                                            Phase 1 passed
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==1">
+                                            Phase 2 passed
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==2">
+                                            <em class="fad fa-check"></em> All passed
+                                        </span>
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/purchase/invoices/${item.pi_number}`" target="_blank"
                                             class="view">
-                                            <i class="fad fa-print"></i></a>
+                                            <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/purchase/invoices/${item.pi_number}`" class="edit">
-                                            <i class="fad fa-eye"></i></router-link>
-                                        <!-- <a v-on:click="deletePurchaseInvoiceItem(item.id)" class="remove">
-                                            <i class="fad fa-trash"></i></a> -->
+                                            <em class="fad fa-eye"></em></router-link>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -70,6 +83,10 @@
                     text: 'Delivery Date',
                     value: 'invoice_date'
                 }, {
+                    text: 'Status',
+                    value: 'status',
+                    align: 'center'
+                }, {
                     text: 'Actions',
                     value: 'actions',
                     align: 'right',
@@ -78,7 +95,11 @@
                 }],
                 // end datatable
                 countItems: '0',
+                permissions: []
             }
+        },
+        beforeMount(){
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadItem();

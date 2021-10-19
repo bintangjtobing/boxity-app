@@ -8,8 +8,8 @@
                     <a @click="sidebarToggle" class="sidebar-toggle">
                         <img class="svg" src="dashboard/img/svg/bars.svg" alt="img"></a>
                     <a class="navbar-brand" href="/">
-                        <img class="svg dark" :src="company.logoblack" alt="company-logo">
-                        <img class="light" :src="company.logo" alt="company-logo">
+                        <img class="svg dark" :src="company.logo" alt="company-logo">
+                        <img class="light" :src="company.logoblack" alt="company-logo">
                     </a>
                     <div>
                         <span>{{user.customerCity}}</span>
@@ -226,10 +226,9 @@
                                     <ul id="menuCollapse3" style="padding: 0;">
                                         <li v-if="permission.includes('ViewEmployee')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Employee">
-                                            <a href="#" style="margin:0; width:100%">
+                                            <router-link to="/employee" style="margin:0; width:100%">
                                                 <span>Employee</span>
-                                                <span class="badge badge-primary menuItem">Soon</span>
-                                            </a>
+                                            </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewJobVacancy')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Job Vacancy">
@@ -390,6 +389,25 @@
                                     </ul>
                                 </menuCollapse>
                             </li>
+                        </div>
+                        <div>
+                            <label>
+                                <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Report Card' , icon: 'receipt_long' ,
+                            listId:'menuCollapse15' }">
+                                    <ul id="menuCollapse15" style="padding: 0;">
+                                        <!-- <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Report">
+                                            <router-link style="margin:0; width:100%" :to="'/report/stock'">
+                                                <span>Stock Report</span>
+                                            </router-link>
+                                        </li> -->
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse Report">
+                                            <router-link style="margin:0; width:100%" :to="'/report/warehouse'">
+                                                <span>Warehouse Report</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </label>
                         </div>
                         <div v-if="permission.includes('ViewSalesOrder')">
                             <li>
@@ -576,11 +594,10 @@
                 this.company = resp.data;
             },
             async userGet() {
-                localStorage.removeItem("permissions")
                 const resp = await axios.get('/getUserLoggedIn');
                 this.user = resp.data;
-                localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
-                this.permission = JSON.parse(localStorage.getItem('permissions'));
+                this.permission = resp.data.permission;
+                this.$store.dispatch("SET_PERMISSIONS", resp.data.permission)
             },
             signOutConfirm() {
                 Swal.fire({

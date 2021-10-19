@@ -8,6 +8,7 @@ use App\purchaseRequest;
 use App\purchaseReturn;
 use App\itemsPurchase;
 use App\itemHistory;
+use App\inventoryItem;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,20 +37,20 @@ class itemOnPurchasingController extends Controller
     }
 
     // ITEM ON PURCHASE ORDER
-    public function getItemPurchasePO()
+    public function getItemPurchasesPO()
     {
-        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
+        return response()->json(itemsPurchase::with('item', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
     }
     public function postItemPurchasePO(Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
-            ->where('id', '=', $request->itemid)
-            ->update([
-                'inventory_items.price' => $request->currentPrice,
-            ]);
+        if (empty($request->itemid)) {
+            DB::table('inventory_items')
+                ->where('id', '=', $request->itemid)
+                ->update(['inventory_items.price' => $request->currentPrice]);
+        }
 
         $ItemPurchasing = new itemsPurchase();
-        $ItemPurchasing->item_code = $request->itemid;
+        $ItemPurchasing->item_code = $request->itemid ?? null;
         $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
         $ItemPurchasing->qtyShipped = '0';
         $ItemPurchasing->unit = $request->unit;
@@ -57,6 +58,8 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->purpose = $request->purpose;
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->remarks = $request->remarks;
 
         // po status 1 means stored at database but not with the purchase order id;
@@ -141,11 +144,9 @@ class itemOnPurchasingController extends Controller
     }
     public function postItemPurchasePI(Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
+        DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
-            ->update([
-                'inventory_items.price' => $request->currentPrice,
-            ]);
+            ->update(['inventory_items.price' => $request->currentPrice]);
 
         $ItemPurchasing = new itemsPurchase();
         $ItemPurchasing->item_code = $request->itemid;
@@ -157,10 +158,13 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
-        $ItemPurchasing->warehouseid = $request->warehouseid;
-        $ItemPurchasing->customerid = $request->customerid;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
+        $ItemPurchasing->purchase_related = $request->poRelated;
 
 
         // po status 1 means stored at database but not with the purchase order id;
@@ -172,7 +176,7 @@ class itemOnPurchasingController extends Controller
     }
     public function postItemPurchaseByPiNumber($pi_number, Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
+        DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
             ->update([
                 'inventory_items.price' => $request->currentPrice,
@@ -188,8 +192,13 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
+        $ItemPurchasing->purchase_related = $request->poRelated;
 
 
         $ItemPurchasing->pi_status = '2';
@@ -225,8 +234,10 @@ class itemOnPurchasingController extends Controller
             ]);
 
         $ItemPurchasing = itemsPurchase::find($id);
+        $ItemPurchasing->item_code = $request->itemid;
         $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
         $ItemPurchasing->qtyShipped = $request->qtyShipped;
+        $ItemPurchasing->unit = $request->unit;
         $ItemPurchasing->price = $request->price;
         $ItemPurchasing->purpose = $request->purpose;
         $ItemPurchasing->requested_by = Auth::id();
@@ -234,9 +245,58 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->remarks = $request->remarks;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
         $ItemPurchasing->updated_by = Auth::id();
+
         $ItemPurchasing->save();
-        return response()->json($itemPurchase, 200);
+
+
+        $itemPo = itemsPurchase::where('purchasingId', $ItemPurchasing->purchase_related)->first();
+        if ($request->qtyShipped == $itemPo->qtyOrdered) {
+            itemsPurchase::where('id', $ItemPurchasing->id)->update(['status' => '2']);
+            itemsPurchase::where('purchasingId', $ItemPurchasing->purchase_related)->update(['status' => '2']);
+            purchaseOrder::where('po_number', $ItemPurchasing->purchase_related)->update(['status' => '2']);
+            purchaseInvoice::where('pi_number', $ItemPurchasing->purchasingId)->update(['status' => '2']);
+        }
+
+        $getItemOnPI = itemsPurchase::where('purchasingId', $ItemPurchasing->purchasingId)->get();
+        if (count($getItemOnPI) > 0) {
+            foreach ($getItemOnPI as $getItemOnPi) {
+                if ($getItemOnPi->qtyShipped) {
+                    $inputToHistory = new itemHistory();
+                    $inputToHistory->itemId = $getItemOnPi->item_code;
+                    $inputToHistory->itemInId = $getItemOnPi->purchasingId;
+                    $inputToHistory->type = 1;
+                    $inputToHistory->date = $getItemOnPi->created_at;
+                    $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
+                    $inputToHistory->remarks = $getItemOnPi->remarks;
+                    $inputToHistory->save();
+
+                    // Get inventory item related
+                    $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
+                    $getQtyItem = $itemRelated->qty;
+                    $getInputQtyValue = $getItemOnPi->qtyShipped;
+                    // Sum the value between get Qty Item and Get Value Inputted
+                    $sumQty = $getQtyItem + $getInputQtyValue;
+
+                    // Update to inventory item
+                    $getInventory = DB::table('inventory_items')
+                        ->where('id', $getItemOnPi->item_code)
+                        ->update(array(
+                            'qty' => $sumQty,
+                        ));
+                }
+                // dd($getItemOnPI);
+                }
+            }
+            // if jumlah qtyShipped = jumlah order qtyOrdered di PO {
+            //     $ItemPurchasingGet->status = 2;
+            //     }else{
+            // $ItemPurchasingGet->status = 1;
+            //     }
+            return response()->json($itemPurchase, 200);
+
         // return $request->itemid;
     }
     public function deleteItemPurchasePIById($id)
