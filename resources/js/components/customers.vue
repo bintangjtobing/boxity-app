@@ -5,7 +5,7 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Customers
                     </h2>
-                    <div class="action-btn" v-if="this.users.role=='admin'">
+                    <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer">
                             <i class="las la-plus fs-16"></i>New customer</a>
                         <!-- Modal -->

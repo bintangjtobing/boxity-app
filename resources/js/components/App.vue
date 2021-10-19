@@ -8,8 +8,8 @@
                     <a @click="sidebarToggle" class="sidebar-toggle">
                         <img class="svg" src="dashboard/img/svg/bars.svg" alt="img"></a>
                     <a class="navbar-brand" href="/">
-                        <img class="svg dark" :src="company.logoblack" alt="company-logo">
-                        <img class="light" :src="company.logo" alt="company-logo">
+                        <img class="svg dark" :src="company.logo" alt="company-logo">
+                        <img class="light" :src="company.logoblack" alt="company-logo">
                     </a>
                     <div>
                         <span>{{user.customerCity}}</span>
@@ -226,10 +226,9 @@
                                     <ul id="menuCollapse3" style="padding: 0;">
                                         <li v-if="permission.includes('ViewEmployee')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Employee">
-                                            <a href="#" style="margin:0; width:100%">
+                                            <router-link to="/employee" style="margin:0; width:100%">
                                                 <span>Employee</span>
-                                                <span class="badge badge-primary menuItem">Soon</span>
-                                            </a>
+                                            </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewJobVacancy')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Job Vacancy">

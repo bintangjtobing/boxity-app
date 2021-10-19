@@ -6,11 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\company_details;
 
 class GoodsReceive extends Mailable
 {
     public $goods;
     public $newGoods;
+    public $company;
     use Queueable, SerializesModels;
 
     /**
@@ -18,10 +20,11 @@ class GoodsReceive extends Mailable
      *
      * @return void
      */
-    public function __construct($goods, $newGoods)
+    public function __construct($goods, $newGoods, $company)
     {
         $this->goods = $goods;
         $this->newGoods = $newGoods;
+        $this->company = $company;
     }
 
     /**
@@ -31,8 +34,10 @@ class GoodsReceive extends Mailable
      */
     public function build()
     {
+        $company = company_details::where('id', 1)->first();
+
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@btsa.co.id', 'Support System BTSA')
+        return $this->from($string . '@' . $company->site, 'Support System ' . $company->company_name)
             ->subject('Ada paket/dokumen datang untukmu, ' . $this->goods->name . '!')
             ->markdown('emails.goodsReceive');
     }

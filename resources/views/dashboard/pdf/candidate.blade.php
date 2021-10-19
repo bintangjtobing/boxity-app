@@ -73,8 +73,9 @@
                             </p>
                         </div>
                         <div class="col-lg-3 text-left">
-                            <a target="_blank"><img style="width: 113.3px; height: 151.1px; object-fit:cover;"
-                                    class="pasfoto" alt="Pas foto 3x4" src="{{$candidate->pictures}}"></a>
+                            <a target="_blank"><img src="{{$candidate->picture}}"
+                                    style="width: 113.3px; height: 151.1px; object-fit:cover;" class="pasfoto"
+                                    alt="Pas foto 3x4"></a>
                             <br><br>
                             <p>
                                 Email <br>
@@ -91,7 +92,7 @@
     <div class="footer">
         <div class="row">
             <div class="col-lg-12 text-center mb-3">
-                <i>Asset original document refer to BTSA LOGISTICS</i>
+                <i>Asset original document refer to {{$company->company_name}}</i>
             </div>
         </div>
     </div>

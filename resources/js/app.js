@@ -96,6 +96,8 @@ import inventoryItemAdd from './components/inventoryItemAdd.vue';
 import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
 import subscrips from './components/subscriptions.vue';
+import employee from './components/employee/employee.vue';
+import employeeDetail from './components/employee/employeeDetail.vue';
 import inbox from './components/inbox.vue';
 
 // Purchase Modules
@@ -177,6 +179,14 @@ const routes = [{
         path: '/candidate/detail/:id',
         component: candidateDetail
     }, {
+        name: 'employee',
+        path: '/employee',
+        component: employee
+    }, {
+        name: 'employee-detal',
+        path: '/employee/detail/:id',
+        component: employeeDetail
+    }, {
         name: 'issues',
         path: '/issues',
         component: Issue
@@ -200,7 +210,7 @@ const routes = [{
         name: 'track-delivery',
         path: '/track-delivery',
         component: TrackDev
-    },  {
+    }, {
         name: 'update-user',
         path: '/detail/user/:id',
         component: userForm,
