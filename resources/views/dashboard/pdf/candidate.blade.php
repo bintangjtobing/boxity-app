@@ -73,8 +73,9 @@
                             </p>
                         </div>
                         <div class="col-lg-3 text-left">
-                            <a target="_blank"><img style="width: 113.3px; height: 151.1px; object-fit:cover;"
-                                    class="pasfoto" alt="Pas foto 3x4" src="{{$candidate->pictures}}"></a>
+                            <a target="_blank"><img src="{{$candidate->picture}}"
+                                    style="width: 113.3px; height: 151.1px; object-fit:cover;" class="pasfoto"
+                                    alt="Pas foto 3x4"></a>
                             <br><br>
                             <p>
                                 Email <br>

@@ -36,6 +36,7 @@ use App\Mail\confirmUpdateIssue;
 use App\Mail\confirmUpdateProfile;
 use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
+use App\Mail\rejectCandidate;
 use App\messages;
 use App\notepad;
 use App\quotes;
@@ -1152,7 +1153,19 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        return response()->json(candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->get());
+        return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id));
+
+        // return response()->json(candidates::with('posisi')->find($id));
+    }
+    public function patchCandidateById($id)
+    {
+        $candidate = candidates::with('posisi')->find($id);
+        $candidate->status = false;
+        $candidate->updated_by = Auth::user()->name;
+        $candidate->save();
+
+        Mail::to($candidate->email)->send(new rejectCandidate($candidate));
+        return response()->json(200);
     }
 
     // Chat API

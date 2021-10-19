@@ -25,17 +25,12 @@
                                 <v-data-table :loading="loading" loading-text="Loading... Please wait"
                                     :headers="headers" :items="candidates" :items-per-page="10" class="elevation-1"
                                     :search="search">
-                                    <template v-slot:item.details="{ item }">
-                                        <div>
-                                            <router-link :to="`/candidate/detail/`+item.id" class="rounded-pill userDatatable-content-status color-primary
-                                                bg-opacity-primary active">
-                                                <i class="fal fa-exclamation-circle"></i> &nbsp;Data lengkap
-                                            </router-link>
-                                        </div>
-                                    </template>
                                     <template v-slot:item.actions="{item}">
+                                        <router-link :to="`/candidate/detail/`+item.id" class="view">
+                                            <i class="fad fa-eye"></i></router-link>
                                         <a v-on:click="deleteData(item.id)" class="remove">
-                                            <i class="fad fa-trash"></i></a>
+                                            <i class="fad fa-trash"></i>
+                                        </a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -73,10 +68,6 @@
                 }, {
                     text: 'Pendidikan',
                     value: 'pendidikan_akhir'
-                }, {
-                    text: 'Details',
-                    filterable: false,
-                    value: 'details'
                 }, {
                     text: 'Actions',
                     value: 'actions',
