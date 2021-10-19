@@ -322,6 +322,12 @@
                     }
                 ],
                 countItems: '0',
+                
+            }
+        },
+        beforeMount(){
+          if(!this.$store.getters.getPermissions.includes('CreatePurchaseRequest')){
+                this.$router.push('/') 
             }
         },
         created() {

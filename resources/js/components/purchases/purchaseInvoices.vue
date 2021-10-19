@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Invoice<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreatePurchaseInvoice')">
                         <div class="action-btn">
                             <router-link to="/purchase/invoices/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Invoice</router-link>
@@ -78,8 +78,12 @@
                 }],
                 // end datatable
                 countItems: '0',
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },    
         created() {
             this.loadItem();
         },

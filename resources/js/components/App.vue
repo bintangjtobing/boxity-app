@@ -8,8 +8,8 @@
                     <a @click="sidebarToggle" class="sidebar-toggle">
                         <img class="svg" src="dashboard/img/svg/bars.svg" alt="img"></a>
                     <a class="navbar-brand" href="/">
-                        <img class="svg dark" :src="company.logoblack" alt="company-logo">
-                        <img class="light" :src="company.logo" alt="company-logo">
+                        <img class="svg dark" :src="company.logo" alt="company-logo">
+                        <img class="light" :src="company.logoblack" alt="company-logo">
                     </a>
                     <div>
                         <span>{{user.customerCity}}</span>
@@ -226,10 +226,9 @@
                                     <ul id="menuCollapse3" style="padding: 0;">
                                         <li v-if="permission.includes('ViewEmployee')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Employee">
-                                            <a href="#" style="margin:0; width:100%">
+                                            <router-link to="/employee" style="margin:0; width:100%">
                                                 <span>Employee</span>
-                                                <span class="badge badge-primary menuItem">Soon</span>
-                                            </a>
+                                            </router-link>
                                         </li>
                                         <li v-if="permission.includes('ViewJobVacancy')" data-bs-toggle="tooltip"
                                             data-bs-placement="right" title="Job Vacancy">
@@ -548,10 +547,10 @@
         mounted() {
             feather.replace();
             this.companyGet();
-            this.$Progress.finish();
+            this.$Progress.finish();          
         },
         beforeMount() {
-            this.userGet();
+              this.userGet();
         },
         created() {
             window.addEventListener('resize', this.handleResize);
@@ -575,12 +574,11 @@
                 const resp = await axios.get('/api/company-details/1');
                 this.company = resp.data;
             },
-            async userGet() {
-                localStorage.removeItem("permissions")
+            async userGet() {                
                 const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;
-                localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
-                this.permission = JSON.parse(localStorage.getItem('permissions'));
+                this.user = resp.data;                
+                this.permission = resp.data.permission;
+                this.$store.dispatch("SET_PERMISSIONS", resp.data.permission)
             },
             signOutConfirm() {
                 Swal.fire({
@@ -592,7 +590,7 @@
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        window.location.href = '/sign-out';
+                        window.location.href = '/sign-out';                            
                     }
                 })
             }

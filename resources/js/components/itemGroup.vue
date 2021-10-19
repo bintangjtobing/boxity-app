@@ -5,7 +5,7 @@
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Item Group <span>- {{countStocks}} Items</span>
                     </h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateItemGroup')">
                         <div class="action-btn">
                             <router-link to="/item-group/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Item Group</router-link>
@@ -32,7 +32,7 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/item-group/${item.id}`" class="edit">
                                             <i class="fad fa-edit"></i></router-link>
-                                        <a v-on:click="deleteItemGroup(item.id)" class="remove">
+                                        <a v-on:click="deleteItemGroup(item.id)" class="remove" v-if="permissions.includes('DeleteItemGroup')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -135,7 +135,11 @@
                 ],
                 // end datatable
                 countStocks: '0',
+                permissions: []
             }
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadItemGroup();

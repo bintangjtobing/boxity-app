@@ -9,7 +9,7 @@
                             <span class="sub-title ml-sm-25 pl-sm-25">{{count}} Users</span>
                         </div>
                     </div>
-                    <div class="action-btn">
+                    <div class="action-btn" v-if="permissions.includes('CreateUsers')">
                         <router-link to="/users-management/add" class="btn btn-sm btn-primary-boxity btn-add">
                             <em class="las la-plus fs-16"></em>New user</router-link>
                     </div>
@@ -49,9 +49,9 @@
                                     &nbsp;{{item.role}}</span>
                             </template>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/user/${item.id}`" class="edit">
+                                <router-link :to="`/detail/user/${item.id}`" class="edit" v-if="permissions.includes('EditUsers')">
                                     <i class="fad fa-edit"></i></router-link>
-                                <a v-on:click="deleteData(item.id)" class="remove">
+                                <a v-on:click="deleteData(item.id)" class="remove" v-if="permissions.includes('TerminateUsers')">
                                     <i class="fad fa-trash"></i></a>
                             </template>
                         </v-data-table>
@@ -113,7 +113,11 @@
                     password: '',
                     confirmPassword: '',
                 },
+                permissions: []
             };
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         mounted() {
             this.loadUsers();

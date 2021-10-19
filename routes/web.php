@@ -66,6 +66,7 @@ Route::get('/report/delivery-receipt/{sdr_number}', 'salesController@reportSSdr'
 Route::get('/generate/pdf/{id}', function ($id) {
     $candidate = candidates::where('id', $id)->with('posisi')->with('provinsi')->with('domisili')->with('kecamatan')->with('kelurahan')->with('agama')->with('suku')->orderBy('created_at', 'DESC')->first();
     return view('dashboard.pdf.candidate', ['candidate' => $candidate]);
+    // return $candidate;
 });
 // Dashboard data url
 // Route::get('/tool', function () {

@@ -477,6 +477,11 @@
                 },
             };
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateSalesOrder')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadData();
             this.generateSONumber();

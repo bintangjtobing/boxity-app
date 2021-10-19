@@ -41,19 +41,22 @@
                                                         <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <input type="text" v-model="inventorydata.item_code"
-                                                                    placeholder="Item Code" class="form-control">
+                                                                    placeholder="Item Code" class="form-control"
+                                                                    :disabled="!permissions.includes('EditSalesReturn')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-7">
                                                             <div class="form-group">
                                                                 <input type="text" v-model="inventorydata.item_name"
-                                                                    placeholder="Item Name" class="form-control">
+                                                                    placeholder="Item Name" class="form-control"
+                                                                    :disabled="!permissions.includes('EditSalesReturn')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <select v-model="inventorydata.type" id=""
-                                                                    class="form-control form-control-default">
+                                                                    class="form-control form-control-default" 
+                                                                    :disabled="!permissions.includes('EditSalesReturn')">
                                                                     <option value="" disabled>Type item</option>
                                                                     <option value="1">Stock</option>
                                                                     <option value="2">Non Stock</option>
@@ -69,7 +72,8 @@
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <input type="text" v-model="inventorydata.brand"
-                                                                        class="form-control" placeholder="Brand">
+                                                                        class="form-control" placeholder="Brand"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -97,47 +101,53 @@
                                                                 <div class="form-group">
                                                                     <span>Width</span>
                                                                     <input type="text" v-model="inventorydata.width"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Length</span>
                                                                     <input type="text" v-model="inventorydata.length"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Thickness</span>
                                                                     <input type="text" v-model="inventorydata.thickness"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Nett Weight</span>
                                                                     <input type="text" v-model="inventorydata.nt_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Gross Weight</span>
                                                                     <input type="text" v-model="inventorydata.gr_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Volume</span>
                                                                     <input type="text" v-model="inventorydata.volume"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditSalesReturn')">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="button-group d-flex pt-25">
+                                                    <div class="button-group d-flex pt-25" v-if="permissions.includes('EditSalesReturn')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -193,8 +203,12 @@
             return {
                 inventorydata: {},
                 inventoryOpt: {},
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         created() {
             this.loadDataInventoryItem();
         },

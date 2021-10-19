@@ -125,8 +125,12 @@
             return {
                 user: {},
                 errors: {},
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },        
         created() {
             this.loadDataUser();
         },
