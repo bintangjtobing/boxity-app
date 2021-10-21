@@ -23,10 +23,10 @@ class AddCustomerIdOnItemsPurchases extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::table('items_purchases', function (Blueprint $table) {
-            $table->dropColumn('customerId');
-        });
-    }
+    // public function down()
+    // {
+    //     Schema::table('items_purchases', function (Blueprint $table) {
+    //         $table->dropColumn('customerId');
+    //     });
+    // }
 }
