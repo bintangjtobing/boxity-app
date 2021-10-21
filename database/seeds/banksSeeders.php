@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\bank;
+use Illuminate\Support\Facades\DB;
 
 class banksSeeders extends Seeder
 {
