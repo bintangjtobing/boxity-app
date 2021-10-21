@@ -10,6 +10,7 @@ use Database\Seeders\AgamaSeeder;
 use Database\Seeders\SukuSeeder;
 use Database\Seeders\roleSeed;
 use Database\Seeders\banksSeeders;
+use Database\Seeders\userPermissionAdmin;
 
 
 class DatabaseSeeder extends Seeder
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AgamaSeeder::class);
         $this->call(roleSeed::class);
         $this->call(banksSeeders::class);
+        $this->call(userPermissionAdmin::class);
     }
 }
