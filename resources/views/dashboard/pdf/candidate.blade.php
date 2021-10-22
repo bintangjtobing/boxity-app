@@ -92,7 +92,7 @@
     <div class="footer">
         <div class="row">
             <div class="col-lg-12 text-center mb-3">
-                <i>Asset original document refer to BTSA LOGISTICS</i>
+                <i>Asset original document refer to {{$company->company_name}}</i>
             </div>
         </div>
     </div>

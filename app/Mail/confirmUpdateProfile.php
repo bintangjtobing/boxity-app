@@ -6,10 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\company_details;
 
 class confirmUpdateProfile extends Mailable
 {
     public $profile;
+    public $company;
     use Queueable, SerializesModels;
 
     /**
@@ -17,9 +19,10 @@ class confirmUpdateProfile extends Mailable
      *
      * @return void
      */
-    public function __construct($profile)
+    public function __construct($profile, $company)
     {
         $this->profile = $profile;
+        $this->company = $company;
     }
 
     /**
@@ -29,8 +32,10 @@ class confirmUpdateProfile extends Mailable
      */
     public function build()
     {
+        $company = company_details::where('id', 1)->first();
+
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@btsa.co.id', 'BTSA Support System')
+        return $this->from($string . '@' . $company->site, $company->company_name . ' Support System')
             ->subject('Developer/Admin change some of your information!')
             ->markdown('emails.confirmUpdateProfile');
     }

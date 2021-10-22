@@ -18,3 +18,7 @@ public/storage
 .vscode/settings.json
 public/imagePublic/
 composer.lock
+.htaccess
+.user.ini
+.error_log
+php.ini

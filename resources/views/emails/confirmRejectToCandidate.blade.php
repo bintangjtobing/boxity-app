@@ -145,14 +145,14 @@
                                                         Thanks for your interest in the
                                                         {{$candidate->posisi()->first()->title}}
                                                         position at
-                                                        BTSA LOGISTICS in {{$candidate->posisi()->first()->location}}.
+                                                        {{$company->company_name}} in {{$candidate->posisi()->first()->location}}.
                                                         Unfortunately, we will not be moving forward with
                                                         your application but we appreciate your time and interest in
-                                                        BTSA LOGISTICS.
+                                                        {{$company->company_name}}.
                                                         <br><br>
                                                         Thank you ^_^ <br>
                                                         Best Regards, <br>
-                                                        BTSA LOGISTICS
+                                                        {{$company->company_name}}
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
@@ -160,11 +160,13 @@
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
                                                             Best regards, <br>
-                                                            Support System BTSA LOGISTICS
+                                                            Support System {{$company->company_name}}
                                                             <br><br>
                                                             E-mail: <a
-                                                                href="mailto:support@btsa.co.id">support@btsa.co.id</a><br>
-                                                            Tel: 061 8003 2999 (ext.103)
+                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
+                                                            @if ($company->phone)
+                                                            Tel: {{$company->phone}}
+                                                            @endif
                                                         </span></p>
                                                 </div>
                                             </div>
