@@ -1,0 +1,9 @@
+windows:
+  - name: boxity-app conf
+    root: ~/Volumes/StorageY/GitHub/boxity-app/
+    layout: tiled
+    panes:
+      - cd ../../Volumes/StorageY/GitHub/boxity-app
+      - cd ../../Volumes/StorageY/GitHub/boxity-app
+      - ssh k1305893@207.180.206.103
+      - cd ../../Volumes/StorageY/GitHub/boxity-app

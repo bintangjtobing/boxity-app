@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+
+@font-face {
+    font-family: 'Lato', sans-serif;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    color: #f35e00;
+    text-decoration: none;
+}
+
+body {
+    position: relative;
+    height: 21cm;
+    margin: 0 auto;
+    color: #777;
+    background: #FFFFFF;
+    font-family: 'Lato', sans-serif;
+}
+
+header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+#logo {
+    float: left;
+    margin-top: 8px;
+}
+
+#logo img {
+    height: 100px;
+}
+
+#company {
+    width: 45%;
+    float: right;
+    font-size: .85rem;
+    text-align: right;
+}
+
+#details {
+    margin-bottom: 50px;
+}
+
+#client {
+    width: 40%;
+    padding-left: 6px;
+    border-left: 6px solid #f35e00;
+    float: left;
+}
+
+#client .to {
+    font-size: .85rem;
+    color: #777777;
+}
+
+#client .address,
+#client .email {
+    font-size: .85rem;
+}
+
+#company h2,
+#client h2 {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    margin: 0;
+}
+
+#invoice {
+    width: 100%;
+    float: right;
+    text-align: right;
+}
+
+#invoice h1 {
+    color: #f35e00;
+    font-size: 1.2rem;
+    line-height: 1em;
+    font-weight: normal;
+    margin: 0 0 2px 0;
+}
+
+#invoice .date {
+    font-size: 1rem;
+    color: #777777;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+table th {
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+table td {
+    text-align: right;
+}
+
+table .desc {
+    text-align: left;
+}
+
+table .qty {
+    text-align: center;
+}
+
+thead tr {
+    background: #f35e00;
+    color: #fff;
+}
+
+tbody {
+    background: rgb(246, 246, 246);
+}
+
+thead tr th {
+    font-weight: 700;
+    font-size: .90rem;
+}
+
+thead tr .price,
+thead tr .total {
+    text-align: right;
+}
+
+tbody tr .desc {
+    color: #777;
+}
+
+tbody tr {
+    color: #777;
+}
+
+table tfoot td {
+    padding: 10px 20px;
+    background: #FFFFFF;
+    border-bottom: none;
+    font-size: .90rem;
+    white-space: nowrap;
+    border-top: 1px solid #AAAAAA;
+}
+
+table tfoot tr:first-child td {
+    border-top: none;
+}
+
+table tfoot tr:last-child td {
+    color: #fff;
+    font-size: .90rem;
+    font-weight: 700;
+    border-top: 1px solid #fff;
+    background: #f35e00;
+}
+
+table tfoot tr td:first-child {
+    border: none;
+}
+
+#notices {
+    padding-left: 6px;
+    border-left: 6px solid #f35e00;
+}
+
+#notices .notice {
+    font-size: .90rem;
+}
+
+footer {
+    color: #777777;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #AAAAAA;
+    padding: 8px 0;
+    text-align: center;
+}

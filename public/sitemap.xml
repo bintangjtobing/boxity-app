@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+<url>
+  <loc>https://btsa.co.id/</loc>
+  <lastmod>2019-11-30T05:15:53+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/galeri</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/tentang-kamii</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/blog</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/karir</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/facebook</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://btsa.co.id/instagram</loc>
+  <lastmod>2019-11-20T06:40:37+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+</urlset>
