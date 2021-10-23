@@ -743,7 +743,7 @@
             async submitHandle() {
                 // this.$Progress.start();
                 this.$isLoading(true);
-                await axios.post('/api/purchase/invoices', ...this.purchaseInvoiceData).then(response => {
+                await axios.post('/api/purchase/invoices', this.purchaseInvoiceData).then(response => {
                     this.loadData();
                     document.getElementById('ding').play();
 
