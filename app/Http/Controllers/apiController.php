@@ -343,7 +343,7 @@ class apiController extends Controller
     }
     public function getIssuesClosed()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             $issueGet = issue::with('user')
                 ->withCount('comments')
                 ->where('status', '=', '2')
@@ -1022,7 +1022,7 @@ class apiController extends Controller
     // Goods Receipt
     public function getGoods()
     {
-        if (Auth::user()->role == 'hrdga' || Auth::user()->role == 'admin') {
+        if (Auth::user()->role == 'hrdga' || Auth::user()->divisi == 'developer') {
             return response()->json(goodsReceip::with('receiver')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(goodsReceip::with('receiver')->where('receiverid', Auth::id())->orderBy('created_at', 'DESC')->get());
@@ -1305,7 +1305,7 @@ class apiController extends Controller
     public function getCustomers()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(customers::orderBy('created_at', 'DESC')->get());
         } else if ($getUserIdOnCustomer) {
             $customer = DB::table('companies')
@@ -1510,7 +1510,7 @@ class apiController extends Controller
     public function getWarehouse()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
         } else if ($getUserIdOnCustomer) {
             $warehouse = DB::table('warehouse_lists')
@@ -1845,7 +1845,7 @@ class apiController extends Controller
     public function getInventoryItem()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             // $item = [];
             // for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
             //     $data = [
@@ -2105,7 +2105,7 @@ class apiController extends Controller
     // USER ACTIVITY LOGS
     public function getActivityLogs()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->divisi == 'developer') {
             return response()->json(userLogs::with('user')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(userLogs::with('user')->where('userId', Auth::id())->orderBy('created_at', 'DESC')->get());
