@@ -361,9 +361,9 @@
                                     <select v-model="purchaseInvoiceData.deliver_to"
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select warehouse:</option>
-                                        <option v-for="warehouse in warehouse" :key="warehouse.id"
-                                            :value="warehouse.id">
-                                            {{warehouse.warehouse_name}}</option>
+                                        <option v-for="warehouses in warehouses" :key="warehouses.id"
+                                            :value="warehouses.id">
+                                            {{warehouses.warehouse_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -463,6 +463,7 @@
                 supplier: {},
                 customer: {},
                 warehouse: {},
+                warehouses: {},
                 items: {},
                 users: {},
                 logged: {},
@@ -581,7 +582,7 @@
                 this.itemAdd = {
                     customerid: getCustDataSelected.data.id,
                 }
-                console.log('customer id selected: ', this.itemAdd.customerid);
+                // console.log('customer id selected: ', this.itemAdd.customerid);
                 // console.log(this.itemAdd.customerid);
                 this.selected.customer = param.company_name;
                 this.purchaseInvoiceData.customer = param.id;
@@ -607,9 +608,9 @@
                         warehouse: '',
                         item: '',
                     }
-                    this.isDisable = {
-                        customerSelected: true,
-                    }
+                    // this.isDisable = {
+                    //     customerSelected: true,
+                    // }
                     this.itemAdd = {
                         itemid: '',
                         qtyOrdered: '0',
@@ -683,6 +684,8 @@
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
+                const warehouseDatas = await axios.get('/api/warehouse');
+                this.warehouses = warehouseDatas.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
@@ -740,7 +743,7 @@
             async submitHandle() {
                 // this.$Progress.start();
                 this.$isLoading(true);
-                await axios.post('/api/purchase/invoices', this.purchaseInvoiceData).then(response => {
+                await axios.post('/api/purchase/invoices', ...this.purchaseInvoiceData).then(response => {
                     this.loadData();
                     document.getElementById('ding').play();
 

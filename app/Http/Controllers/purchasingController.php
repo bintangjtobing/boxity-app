@@ -203,6 +203,7 @@ class purchasingController extends Controller
     {
         $purchasingOrd = new purchaseInvoice();
         $purchasingOrd->pi_number = $request->pi_number;
+        $purchasingOrd->customerId = $request->pi_number;
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->invoice_date = $request->order_date;
         $purchasingOrd->drivers = $request->drivers;
