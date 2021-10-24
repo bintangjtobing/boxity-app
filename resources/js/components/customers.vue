@@ -6,11 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Customers
                     </h2>
                     <div class="action-btn">
-<<<<<<< HEAD
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer">
-=======
                         <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer" v-if="permissions.includes('CreateUsers')">
->>>>>>> 27bd54103f579d9866bee938a7645336c5c28f94
                             <i class="las la-plus fs-16"></i>New customer</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newCustomer"
