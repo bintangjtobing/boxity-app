@@ -284,7 +284,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group my-2">
+                        <div class="form-group my-2" v-if="permissions.includes('EditSalesInvoice')">
                             <div class="row">
                                 <div class="col-5 text-left">
                                     <div class="checkbox-theme-default custom-checkbox ">

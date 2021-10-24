@@ -9,7 +9,7 @@
                             adalah {{countItems}}, <abbr title="Inventory Item">Inventory Item</abbr> akan berfungsi
                             jika
                             anda memiliki item group minimal sebanyak 1. </span></h2>
-                        <div v-if="permissions.includes('CreateInventoryItem')" class="breadcrumb-action justify-content-center flex-wrap">                    
+                        <div v-if="permissions.includes('CreateInventoryItem')" class="breadcrumb-action justify-content-center flex-wrap">
                         <div class="action-btn">
                             <router-link to="/inventory-item/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Inventory Item</router-link>
@@ -21,7 +21,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
-                            <div class="table-responsive">                                
+                            <div class="table-responsive">
                                 <v-card-title>
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
@@ -64,7 +64,7 @@
         },
         title() {
             return 'Inventory Item';
-        },        
+        },
         data() {
             return {
                 // datatable
@@ -107,11 +107,11 @@
             }
         },
         created() {
-            this.loadItem();              
+            this.loadItem();
         },
-        beforeMount(){                        
+        beforeMount(){
             this.permissions = this.$store.getters.getPermissions;
-        },        
+        },
         methods: {
             async loadItem() {
                 // this.$Progress.start();
@@ -149,8 +149,8 @@
                         text: 'Success deleted current item.'
                     });
                 }
-            },            
-            
+            },
+
         },
     }
 
