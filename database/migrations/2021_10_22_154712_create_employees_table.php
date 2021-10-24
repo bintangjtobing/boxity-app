@@ -15,6 +15,40 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('employee_code');
+            $table->string('employee_name');
+            $table->string('employee_nickname');
+            $table->boolean('employee_sex');
+            $table->integer('employee_age')->nullable();
+            $table->string('employee_pic')->nullable();
+            $table->string('employee_working_duration')->nullable();
+
+            // Details
+            $table->string('birth_place')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->date('date_join')->nullable();
+            $table->string('nationality')->nullable();
+            $table->integer('identity_no')->nullable();
+            $table->string('religion')->nullable();
+            $table->string('event')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('height')->nullable();
+            $table->string('blood_type')->nullable();
+
+            // Miscellaneous
+            $table->integer('tax_id')->nullable();
+            $table->integer('bpjstk')->nullable();
+            $table->integer('bpjskes')->nullable();
+
+            // contact us
+            $table->string('email')->nullable();
+            $table->integer('phone')->nullable();
+
+            // job
+            $table->string('job_title')->nullable();
+            $table->integer('departments')->nullable()->index('departments');
+            $table->integer('sub_departments')->nullable()->index('sub_departments');
+
             $table->timestamps();
         });
     }

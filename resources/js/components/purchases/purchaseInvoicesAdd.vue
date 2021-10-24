@@ -330,7 +330,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>PI number:</span>
                                     <input type="text" v-model="purchaseInvoiceData.pi_number" readonly
@@ -355,6 +355,7 @@
                                         placeholder="Brand">
                                 </div>
                             </div>
+                            <!-- 
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Deliver to:</span>
@@ -366,8 +367,8 @@
                                             {{warehouses.warehouse_name}}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-lg-3">
+                            </div>                            
+                            <div class="col-lg-3"> 
                                 <div class="form-group">
                                     <span>Driver Name:</span>
                                     <input type="text" v-model="purchaseInvoiceData.drivers" class="form-control">
@@ -380,7 +381,9 @@
                                         placeholder="ex: BK 0000 ABC">
                                 </div>
                             </div>
+                            -->
                         </div>
+                        <!-- 
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -390,6 +393,7 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                         <div class="form-group my-2">
                             <div class="row">
                                 <div class="col-12">

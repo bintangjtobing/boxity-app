@@ -15,6 +15,9 @@ class CreateEmployeeBanksTable extends Migration
     {
         Schema::create('employee_banks', function (Blueprint $table) {
             $table->id();
+            $table->integer('employee_id')->index('employee_id');
+            $table->integer('bank_id')->index('bank_id');
+            $table->bigInteger('account_no');
             $table->timestamps();
         });
     }

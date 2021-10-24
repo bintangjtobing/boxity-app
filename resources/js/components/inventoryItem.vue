@@ -9,7 +9,7 @@
                             adalah {{countItems}}, <abbr title="Inventory Item">Inventory Item</abbr> akan berfungsi
                             jika
                             anda memiliki item group minimal sebanyak 1. </span></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                        <div v-if="permissions.includes('CreateInventoryItem')" class="breadcrumb-action justify-content-center flex-wrap">                    
                         <div class="action-btn">
                             <router-link to="/inventory-item/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Inventory Item</router-link>
@@ -21,7 +21,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
-                            <div class="table-responsive">
+                            <div class="table-responsive">                                
                                 <v-card-title>
                                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
                                         single-line hide-details></v-text-field>
@@ -42,7 +42,7 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
+                                        <a v-on:click="deleteInventoryItem(item.id)" v-if="permissions.includes('DeleteInventoryItem')" class="remove">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -64,7 +64,7 @@
         },
         title() {
             return 'Inventory Item';
-        },
+        },        
         data() {
             return {
                 // datatable
@@ -103,12 +103,15 @@
                     sortable: false
                 }],
                 countItems: '0',
-                // end datatable
+                permissions: [],
             }
         },
         created() {
-            this.loadItem();
+            this.loadItem();              
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },        
         methods: {
             async loadItem() {
                 // this.$Progress.start();
@@ -146,7 +149,8 @@
                         text: 'Success deleted current item.'
                     });
                 }
-            },
+            },            
+            
         },
     }
 

@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Warehouse List</h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateWarehouse')">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addWarehouse"
                                 class="btn btn-sm btn-primary-boxity btn-add">
@@ -32,9 +32,9 @@
                                         </td>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/warehouse/${item.id}`" class="edit">
+                                        <router-link :to="`/detail/warehouse/${item.id}`" class="edit" v-if="permissions.includes('EditWarehouse')">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deleteWarehouse(item.id)" class="remove">
+                                        <a v-on:click="deleteWarehouse(item.id)" class="remove" v-if="permissions.includes('DeleteWarehouse')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -134,7 +134,11 @@
                 }],
                 // end datatable
                 user: {},
+                permissions: []
             }
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             // this.$Progress.start();

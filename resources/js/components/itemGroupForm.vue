@@ -47,18 +47,21 @@
                                                         <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <input type="text" v-model="itemgroup.itemgroup_id"
-                                                                    placeholder="Item Group Code" class="form-control">
+                                                                    placeholder="Item Group Code" class="form-control"
+                                                                    :disabled="!permissions.includes('EditItemGroup')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <div class="form-group">
                                                                 <input type="text" v-model="itemgroup.name"
-                                                                    placeholder="Item Group Name" class="form-control">
+                                                                    placeholder="Item Group Name" class="form-control"
+                                                                    :disabled="!permissions.includes('EditItemGroup')">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group my-2">
                                                         <editor placeholder="Remarks..." v-model="itemgroup.remarks"
+                                                            :disabled="!permissions.includes('EditItemGroup')" 
                                                             api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
                                                             :init="{
                                                                 height: 150,
@@ -70,7 +73,7 @@
                                                                     bullist numlist outdent indent | removeformat'
                                                         }" />
                                                     </div>
-                                                    <div class="button-group d-flex pt-25">
+                                                    <div class="button-group d-flex pt-25" v-if="permissions.includes('EditItemGroup')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -87,7 +90,7 @@
                             <div class="row mx-4">
                                 <div class="col-lg-4 text-center itemImage" v-for="image in imgs" :key="image.id">
                                     <a :href="image.file" target="_blank"><img :src="image.file"></a>
-                                    <div class="row justify-content-center">
+                                    <div class="row justify-content-center" v-if="permissions.includes('EditItemGroup')">
                                         <div class="col-lg-12 text-center">
                                             <a v-on:click="deleteThisImage(image.id)"
                                                 class="btn btn-danger-boxity btn-block"><i
@@ -110,7 +113,7 @@
                                             <img src="https://res.cloudinary.com/boxity-id/image/upload/v1633661884/404_qggjfd.svg"
                                                 alt="404" class="svg">
                                             <h5 class="fw-500">Sorry! This item has no images here...</h5>
-                                            <div class="content-center mt-30">
+                                            <div class="content-center mt-30" v-if="permissions.includes('EditItemGroup')">
                                                 <a @click="itemImageAdds" href="#"
                                                     class="btn btn-primary-boxity btn-default btn-squared px-30">+ Add
                                                     Image</a>
@@ -173,7 +176,11 @@
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'
                 },
+                permissions: []
             }
+        },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadDataItemGroup();

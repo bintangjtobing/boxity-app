@@ -68,6 +68,7 @@ use App\bank;
 use App\BankCompany;
 use App\inboxMessage;
 use App\subscription;
+use App\employee;
 use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use App\imagesItemGroup;
@@ -1182,6 +1183,86 @@ class apiController extends Controller
         $company = company_details::where('id', 1)->first();
 
         Mail::to($candidate->email)->send(new rejectCandidate($candidate, $company));
+        return response()->json(200);
+    }
+
+    // Employee API
+    public function getEmployee()
+    {
+        return response()->json(employee::with('department', 'subdepartment')->orderBy('created_at', 'DESC')->get());
+    }
+    public function newEmployee(Request $request)
+    {
+        $employee = new employee();
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        $employee->employee_sex = $request->employee_sex;
+        $employee->employee_age = $request->employee_age;
+        if ($request->employee_pic) {
+            $uploadFile = Cloudinary::upload($request->file('employee_pic')->getRealPath(), [
+                'folder' => 'asset/employee'
+            ])->getSecurePath();
+            $employee->employee_pic = $uploadFile;
+        }
+        $employee->employee_working_duration = $request->employee_working_duration;
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->event = $request->event;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->departments = $request->departments;
+        $employee->sub_departments = $request->sub_departments;
+        $employee->save();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Create New employee.';
+        $saveLogs->save();
+
+        return response()->json(200, $employee);
+    }
+    public function deleteEmployee($id, Request $request)
+    {
+        $getUser = employee::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete employee.';
+        $saveLogs->save();
+
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function getEmployeeById($id)
+    {
+        return response()->json(employee::with('department', 'subdepartment')->find($id));
+
+        // return response()->json(candidates::with('posisi')->find($id));
+    }
+    public function patchEmployeeById($id)
+    {
+        $candidate = employee::with('posisi')->find($id);
+        $candidate->status = false;
+        $candidate->updated_by = Auth::user()->name;
+        $candidate->save();
+        $company = company_details::where('id', 1)->first();
+
         return response()->json(200);
     }
 

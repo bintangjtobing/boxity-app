@@ -28,7 +28,7 @@
                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
                                     role="tab" aria-controls="v-pills-home" aria-selected="true">details</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" v-if="permissions.includes('ViewActivitiesInventoryItem')">
                                 <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history"
                                     role="tab" aria-controls="v-pills-history" aria-selected="true">Activites &
                                     History</a>
@@ -53,21 +53,24 @@
                                                             <div class="form-group">
                                                                 <span>Item Code:</span>
                                                                 <input type="text" v-model="inventorydata.item_code"
-                                                                    placeholder="Item Code" class="form-control">
+                                                                    placeholder="Item Code" class="form-control" 
+                                                                    :disabled="!permissions.includes('EditInventoryItem') ">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-7">
                                                             <div class="form-group">
                                                                 <span>Item Name:</span>
                                                                 <input type="text" v-model="inventorydata.item_name"
-                                                                    placeholder="Item Name" class="form-control">
+                                                                    placeholder="Item Name" class="form-control"
+                                                                    :disabled="!permissions.includes('EditInventoryItem')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <span>Type:</span>
                                                                 <select v-model="inventorydata.type" id=""
-                                                                    class="form-control form-control-default">
+                                                                    class="form-control form-control-default"
+                                                                    :disabled="!permissions.includes('EditInventoryItem')">
                                                                     <option value="" disabled>Type item</option>
                                                                     <option value="1">Stock</option>
                                                                     <option value="2">Non Stock</option>
@@ -84,7 +87,8 @@
                                                                 <div class="form-group">
                                                                     <span>Brand:</span>
                                                                     <input type="text" v-model="inventorydata.brand"
-                                                                        class="form-control" placeholder="Brand">
+                                                                        class="form-control" placeholder="Brand"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
@@ -106,14 +110,16 @@
                                                                     <span>Unit:</span>
                                                                     <input type="text" v-model="inventorydata.unit"
                                                                         class="form-control"
-                                                                        placeholder="Ex: Kg for weight, Pcs for things or else">
+                                                                        placeholder="Ex: Kg for weight, Pcs for things or else"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Item Group:</span>
                                                                     <select v-model="inventorydata.item_group"
-                                                                        class="form-control form-control-default">
+                                                                        class="form-control form-control-default"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                         <option value="" disabled>Select category item
                                                                         </option>
                                                                         <option v-for="inventoryOpt in inventoryOpt"
@@ -127,7 +133,8 @@
                                                                 <div class="form-group">
                                                                     <span>Stock Group:</span>
                                                                     <select v-model="inventorydata.stock_group"
-                                                                        class="form-control form-control-default">
+                                                                        class="form-control form-control-default"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                         <option value="" disabled>Select stock item
                                                                         </option>
                                                                         <option v-for="inventoryGroup in inventoryGroup"
@@ -149,47 +156,53 @@
                                                                 <div class="form-group">
                                                                     <span>Width</span>
                                                                     <input type="text" v-model="inventorydata.width"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Length</span>
                                                                     <input type="text" v-model="inventorydata.length"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Thickness</span>
                                                                     <input type="text" v-model="inventorydata.thickness"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Nett Weight</span>
                                                                     <input type="text" v-model="inventorydata.nt_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Gross Weight</span>
                                                                     <input type="text" v-model="inventorydata.gr_weight"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Volume</span>
                                                                     <input type="text" v-model="inventorydata.volume"
-                                                                        class="form-control" placeholder="0.00 mm">
+                                                                        class="form-control" placeholder="0.00 mm"
+                                                                        :disabled="!permissions.includes('EditInventoryItem')">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="button-group d-flex pt-25">
+                                                    <div class="button-group d-flex pt-25" v-if="permissions.includes('EditInventoryItem')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -336,7 +349,7 @@
                             <div class="row mx-4">
                                 <div class="col-lg-4 text-center itemImage" v-for="image in imgs" :key="image.id">
                                     <a :href="image.file" target="_blank"><img :src="image.file"></a>
-                                    <div class="row justify-content-center">
+                                    <div class="row justify-content-center" v-if="permissions.includes('EditInventoryItem')">
                                         <div class="col-lg-12 text-center">
                                             <a v-on:click="deleteThisImage(image.id)"
                                                 class="btn btn-danger-boxity btn-block"><i
@@ -359,7 +372,7 @@
                                             <img src="https://res.cloudinary.com/boxity-id/image/upload/v1633661884/404_qggjfd.svg"
                                                 alt="404" class="svg">
                                             <h5 class="fw-500">Sorry! This item has no images here...</h5>
-                                            <div class="content-center mt-30">
+                                            <div class="content-center mt-30" v-if="permissions.includes('EditInventoryItem')">
                                                 <a @click="itemImageAdds" href="#"
                                                     class="btn btn-primary-boxity btn-default btn-squared px-30">+ Add
                                                     Image</a>
@@ -465,12 +478,16 @@
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'
                 },
+                permissions: []
             }
         },
         created() {
             this.loadDataInventoryItem();
             this.loadHistoryItem();
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },        
         computed: {
             notSuitable() {
                 return (this.range.fromDate > this.range.toDate) || false

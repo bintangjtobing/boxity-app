@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}" v-if="permissions.includes('EditSalesInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -201,7 +201,7 @@
             <div class=" col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm"
+                        <button @click="activeAddForm" v-if="permissions.includes('EditSalesInvoice')"
                             class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -397,8 +397,12 @@
                     // }
                 ],
                 countItems: '0',
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         created() {
             this.loadData();
             this.loadLoggedUser();
