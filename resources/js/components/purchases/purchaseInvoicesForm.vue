@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}">
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}" v-if="permissions.includes('EditPurchaseInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -273,6 +273,7 @@
                                         placeholder="Brand">
                                 </div>
                             </div>
+                            <!-- 
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Deliver to:</span>
@@ -301,7 +302,8 @@
                                         placeholder="ex: BK 0000 ABC">
                                 </div>
                             </div>
-                        </div>
+                            -->
+                        </div>                        
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -310,8 +312,8 @@
                                         v-model="purchaseInvoiceData.remarks" cols="30" rows="4"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group my-2">
+                        </div>                        
+                        <div class="form-group my-2" v-if="permissions.includes('EditPurchaseInvoice')">
                             <div class="row">
                                 <div class="col-5 text-left">
                                     <div class="checkbox-theme-default custom-checkbox ">

@@ -96,7 +96,7 @@
                         <div class="tab-pane fade show" id="v-pills-customerListed" role="tabpanel"
                             aria-labelledby="v-pills-customerListed-tab">
                             <div class="row mx-4">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" v-if="permissions.includes('AddPICCustomersOnWarehouse')">
                                     <div class="card my-3">
                                         <div class="card-body pb-md-30">
                                             <div class="vertical-form">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                                 <!-- Table Customer Listed -->
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 mt-3">
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -144,15 +144,12 @@
                                                     <v-data-table :loading="loading"
                                                         loading-text="Loading... Please wait..." :search="search"
                                                         :headers="headers" multi-sort :items="warehouseCustomerList"
-                                                        :items-per-page="10" class="elevation-1">
-                                                        <template v-slot:item.actions="{item}">
-                                                            <router-link :to="`/detail/warehouse-customer/${item.id}`"
-                                                                class="edit">
-                                                                <i class="fad fa-eye"></i></router-link>
+                                                        :items-per-page="10" class="elevation-1">                                                        
+                                                        <template v-slot:item.actions="{item}">                                                            
                                                             <a v-on:click="deleteWarehouseCustomerList(item.id)"
                                                                 class="remove" v-if="permissions.includes('DeletePICCustomersOnWarehouse')">
                                                                 <i class="fad fa-trash"></i></a>
-                                                        </template>
+                                                        </template>                                                        
                                                     </v-data-table>
                                                 </div>
                                             </div>
