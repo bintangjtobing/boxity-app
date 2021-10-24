@@ -148,7 +148,7 @@
             <div class=" col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <button @click="activeAddForm"
+                        <button @click="activeAddForm" v-if="permissions.includes('EditDeliveryReceipt')"
                             class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
                                     class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
@@ -172,9 +172,9 @@
                                         </section>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
+                                        <a v-on:click="modifyItemPurchasing(item.id)" class="edit" v-if="permissions.includes('EditDeliveryReceipt')">
                                             <i class="fad fa-edit"></i></a>
-                                        <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
+                                        <a v-on:click="deleteItemPurchasing(item.id)" class="remove" v-if="permissions.includes('EditDeliveryReceipt')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -364,8 +364,12 @@
                     }
                 ],
                 countItems: '0',
+                permissions: []
             }
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         created() {
             this.loadData();
             this.loadLoggedUser();

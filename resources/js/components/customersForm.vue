@@ -280,6 +280,11 @@
             this.loadDataUser();
             this.loadUserCompany();
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateUsers')){
+                this.$router.push('/') 
+            }
+        },
         methods: {
             routerBack() {
                 this.$router.go(-1);

@@ -547,10 +547,10 @@
         mounted() {
             feather.replace();
             this.companyGet();
-            this.$Progress.finish();
+            this.$Progress.finish();          
         },
         beforeMount() {
-            this.userGet();
+              this.userGet();
         },
         created() {
             window.addEventListener('resize', this.handleResize);
@@ -574,12 +574,11 @@
                 const resp = await axios.get('/api/company-details/1');
                 this.company = resp.data;
             },
-            async userGet() {
-                localStorage.removeItem("permissions")
+            async userGet() {                
                 const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;
-                localStorage.setItem("permissions", JSON.stringify(resp.data.permission));
-                this.permission = JSON.parse(localStorage.getItem('permissions'));
+                this.user = resp.data;                
+                this.permission = resp.data.permission;
+                this.$store.dispatch("SET_PERMISSIONS", resp.data.permission)
             },
             signOutConfirm() {
                 Swal.fire({
@@ -591,7 +590,7 @@
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        window.location.href = '/sign-out';
+                        window.location.href = '/sign-out';                            
                     }
                 })
             }

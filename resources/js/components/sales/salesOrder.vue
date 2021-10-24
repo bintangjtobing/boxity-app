@@ -6,7 +6,7 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">
                         Sales Order<br />
                     </h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateSalesOrder')">
                         <div class="action-btn">
                             <router-link to="/sales/order/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Sales Order</router-link>
@@ -61,7 +61,7 @@
                                             <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove">
+                                        <a v-on:click="deleteInventoryItem(item.id)" class="remove" v-if="permissions.includes('DeleteSalesOrder')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -114,8 +114,12 @@
                         sortable: false,
                     },
                 ],
+                permissions: []
             };
         },
+        beforeMount(){                        
+            this.permissions = this.$store.getters.getPermissions;
+        },   
         created() {
             this.loadItem();
         },

@@ -450,6 +450,11 @@
                 },
             }
         },
+        beforeMount(){                                    
+            if(!this.$store.getters.getPermissions.includes('CreateSalesInvoice')){
+                this.$router.push('/') 
+            }            
+        },
         created() {
             this.loadData();
             this.generatePONumber();

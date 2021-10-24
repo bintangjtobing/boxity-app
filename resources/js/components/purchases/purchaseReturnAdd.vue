@@ -347,8 +347,13 @@
                         sortable: false
                     }
                 ],
-                countItems: '0',
+                countItems: '0',                
             }
+        },
+        beforeMount(){
+          if(!this.$store.getters.getPermissions.includes('CreatePurchaseReturn')){
+                this.$router.push('/') 
+            }            
         },
         created() {
             this.loadData();
