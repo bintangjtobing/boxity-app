@@ -114,14 +114,14 @@ class salesController extends Controller
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if ($request->feature === 'deliveryReceipt') {
             $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
-        } else if (Auth::user()->role != 'admin') {
+        } else if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as  $x) {
                 $ids[] = $x->company_id;
             }
             $query = salesInvoice::with('customers')->with('createdby')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
+            return response()->json($query);
         }
-        return response()->json($query);
         // return $getUserIdOnCustomer;
     }
     public function postSalesInvoice(Request $request)

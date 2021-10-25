@@ -43,15 +43,15 @@ class purchasingController extends Controller
     public function getPurchaseOrder()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
-            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-        } else {
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
             $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $po;
+        } else {
+            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         }
     }
     public function postPurchaseOrder(Request $request)
@@ -188,15 +188,15 @@ class purchasingController extends Controller
     public function getPurchaseInvoice()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->role == 'admin') {
-            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-        } else if ($getUserIdOnCustomer) {
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
             $pi = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
             return $pi;
+        } else {
+            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
         }
     }
     public function postPurchaseInvoice(Request $request)

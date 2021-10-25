@@ -1385,10 +1385,8 @@ class apiController extends Controller
     // CUSTOMERS API CONTROLLER
     public function getCustomers()
     {
-        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->first();
-        if (Auth::user()->divisi == 'developer') {
-            return response()->json(customers::orderBy('created_at', 'DESC')->get());
-        } else if ($getUserIdOnCustomer) {
+        $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
+        if (count($getUserIdOnCustomer) > 0) {
             $customer = DB::table('companies')
                 ->join('companies_pic', 'companies.id', '=', 'companies_pic.company_id')
                 ->join('users', 'companies_pic.user_id', '=', 'users.id')
@@ -1397,6 +1395,8 @@ class apiController extends Controller
                 ->select('companies.*')
                 ->get();
             return $customer;
+        } else {
+            return response()->json(customers::orderBy('created_at', 'DESC')->get());
         }
         // return $getUserIdOnCustomer;
     }
@@ -1591,9 +1591,7 @@ class apiController extends Controller
     public function getWarehouse()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->divisi == 'developer') {
-            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
-        } else if ($getUserIdOnCustomer) {
+        if (count($getUserIdOnCustomer) > 0) {
             $warehouse = DB::table('warehouse_lists')
                 ->join('warehouse_customers', 'warehouse_lists.id', '=', 'warehouse_customers.warehouse_id')
                 ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
@@ -1601,6 +1599,8 @@ class apiController extends Controller
                 ->orderBy('warehouse_lists.warehouse_name', 'ASC')
                 ->get();
             return $warehouse;
+        } else {
+            return response()->json(warehouseList::with('user')->with('createdBy')->orderBy('created_at', 'DESC')->get());
         }
         // return $getUserIdOnCustomer;
     }
@@ -1926,23 +1926,15 @@ class apiController extends Controller
     public function getInventoryItem()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if (Auth::user()->divisi == 'developer') {
-            // $item = [];
-            // for ($i = 0; $i < count($getUserIdOnCustomer); $i++) {
-            //     $data = [
-            //         'companyId' => $getUserIdOnCustomer[$i]->company_id
-            //     ];
-            //     array_push($item, $data);
-            // }
-
-            return response()->json(inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get());
-        } else {
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $compid) {
                 $ids[] = $compid->company_id;
             }
             $res = inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->whereIn('customerId', $ids)->orderBy('created_at', 'DESC')->get();
             return response()->json($res);
+        } else {
+            return response()->json(inventoryItem::with('itemGroup', 'customer', 'users', 'warehouse')->orderBy('created_at', 'DESC')->get());
         }
     }
     public function getInventoryByWarehouse($id, $customerid)
@@ -2186,7 +2178,7 @@ class apiController extends Controller
     // USER ACTIVITY LOGS
     public function getActivityLogs()
     {
-        if (Auth::user()->divisi == 'developer') {
+        if (Auth::user()->role == 'admin') {
             return response()->json(userLogs::with('user')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(userLogs::with('user')->where('userId', Auth::id())->orderBy('created_at', 'DESC')->get());
