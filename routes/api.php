@@ -293,6 +293,7 @@ Route::patch('/purchase/order/{po_number}', 'purchasingController@postPurchaseOr
 Route::delete('/purchases-order/{id}', 'purchasingController@deletePurchaseOrderById');
 Route::get('/count-purchase-order', 'purchasingController@countPurchaseOrder');
 Route::get('/approve/purchase/order/{po_number}', 'purchasingController@approvePurchaseOrderByPoNumber');
+Route::get('/po/{id}', 'purchasingController@getPoWithCustomerId');
 
 
 // Item on Purchases Order

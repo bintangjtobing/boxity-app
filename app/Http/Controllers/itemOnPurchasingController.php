@@ -57,6 +57,8 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->purpose = $request->purpose;
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->remarks = $request->remarks;
 
         // po status 1 means stored at database but not with the purchase order id;
@@ -157,8 +159,8 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
-        $ItemPurchasing->warehouseid = $request->warehouseid;
-        $ItemPurchasing->customerid = $request->customerid;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
 

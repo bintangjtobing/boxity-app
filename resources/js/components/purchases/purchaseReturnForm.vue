@@ -239,7 +239,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select supplier:</option>
                                         <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
-                                            {{supplier.customerName}}</option>
+                                            {{supplier.supplier_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -372,7 +372,7 @@
             }
         },
         beforeMount(){
-          this.permissions = this.$store.getters.getPermissions;  
+          this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadData();

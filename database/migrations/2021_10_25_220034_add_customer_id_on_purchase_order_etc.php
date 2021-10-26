@@ -4,18 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeDetailsTable extends Migration
+class AddCustomerIdOnPurchaseOrderEtc extends Migration
 {
-    /**
+    /**w
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('employee_details', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('purchase_orders', function (Blueprint $table) {
+            $table->integer('customerId')->index('customerId')->nullable()->after('supplier');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateEmployeeDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_details');
+        Schema::table('purchase_orders', function (Blueprint $table) {
+            $table->dropColumn('customerId');
+        });
     }
 }

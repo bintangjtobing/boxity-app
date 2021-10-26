@@ -236,7 +236,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select supplier:</option>
                                         <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
-                                            {{supplier.customerName}}</option>
+                                            {{supplier.supplier_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -347,13 +347,13 @@
                         sortable: false
                     }
                 ],
-                countItems: '0',                
+                countItems: '0',
             }
         },
         beforeMount(){
           if(!this.$store.getters.getPermissions.includes('CreatePurchaseReturn')){
-                this.$router.push('/') 
-            }            
+                this.$router.push('/')
+            }
         },
         created() {
             this.loadData();

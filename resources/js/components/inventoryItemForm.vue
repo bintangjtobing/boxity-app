@@ -53,7 +53,7 @@
                                                             <div class="form-group">
                                                                 <span>Item Code:</span>
                                                                 <input type="text" v-model="inventorydata.item_code"
-                                                                    placeholder="Item Code" class="form-control" 
+                                                                    placeholder="Item Code" class="form-control"
                                                                     :disabled="!permissions.includes('EditInventoryItem') ">
                                                             </div>
                                                         </div>
@@ -485,9 +485,9 @@
             this.loadDataInventoryItem();
             this.loadHistoryItem();
         },
-        beforeMount(){                        
+        beforeMount(){
             this.permissions = this.$store.getters.getPermissions;
-        },        
+        },
         computed: {
             notSuitable() {
                 return (this.range.fromDate > this.range.toDate) || false

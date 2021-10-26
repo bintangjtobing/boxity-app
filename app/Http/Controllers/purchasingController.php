@@ -48,17 +48,22 @@ class purchasingController extends Controller
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
             return $po;
         } else {
-            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
         }
+    }
+    public function getPoWithCustomerId($id)
+    {
+        return purchaseOrder::where('customerId', $id)->where('status', 1)->get();
     }
     public function postPurchaseOrder(Request $request)
     {
         $purchasingOrd = new purchaseOrder();
         $purchasingOrd->po_number = $request->po_number;
         $purchasingOrd->supplier = $request->supplier;
+        $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->order_date = $request->order_date;
         $purchasingOrd->deliver_to = $request->deliver_to;
         $purchasingOrd->remarks = $request->remarks;
@@ -203,7 +208,7 @@ class purchasingController extends Controller
     {
         $purchasingOrd = new purchaseInvoice();
         $purchasingOrd->pi_number = $request->pi_number;
-        // $purchasingOrd->customerId = $request->pi_number;
+        $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->invoice_date = $request->order_date;
         $purchasingOrd->drivers = $request->drivers;

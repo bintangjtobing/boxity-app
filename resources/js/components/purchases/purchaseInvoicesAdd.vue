@@ -31,7 +31,7 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Customer:</span>
                                         <selectSearch v-model="selected.customer" v-bind="{
@@ -41,6 +41,18 @@
                           placeholder: 'Select Customer',
                           isDisable: isDisable.customerSelected,
                         }" @dataSelected="onCustomerSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Select PO:</span>
+                                        <selectSearch v-model="selected.PO" v-bind="{
+                          datas: purchaseOrderGet,
+                          width: '100%',
+                          name: 'po_number',
+                          placeholder: 'Select Purchase Order',
+                          isDisable: isDisable.POSelected,
+                        }" @dataSelected="onPOSelected"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -466,8 +478,9 @@
                 // data relation
                 supplier: {},
                 customer: {},
-                warehouse: {},
                 warehouses: {},
+                customersGet: {},
+                warehouse: {},
                 items: {},
                 users: {},
                 logged: {},
@@ -509,13 +522,15 @@
                     item: "",
                     usedBy: "",
                     customer: "",
+                    PO: "",
                 },
-                customersGet: {},
+                purchaseOrderGet: {},
                 isDisable: {
                     select: true,
                     input: true,
                     warehouseSelected: true,
                     customerSelected: false,
+                    POSelected: true,
                 },
             }
         },
@@ -567,11 +582,25 @@
                 }
                 this.selected.item = `[${value.warehouse_code}][${value.item_code}] - ${value.item_name}`;
             },
+            async onPOSelected(param) {
+                this.isDisable.warehouseSelected = false;
+                this.isDisable.select = false;
+                this.selected.PO = param.po_number;
+                const getWarehouse = await axios.get('/api/purchase/order/' + param.po_number);
+                const getItem = await axios.get('/api/po/item-purchase/' + param.po_number);
+                this.selected.warehouse = getWarehouse.data.warehouse.warehouse_name;
+                this.itemAdd = {
+                    unit: getItem.data.item.unit,
+                    currentPrice: getItem.data.item.price,
+                    itemid: getItem.data.item.id,
+                    ...this.itemAdd
+                }
+                this.selected.item = getItem.data.item.item_name;
+            },
             async onWarehouseSelected(param) {
                 const idWarehouseGet = param.id;
                 const getWarehouseDataSelected = await axios.get('/api/warehouse/' + idWarehouseGet);
                 this.itemAdd.warehouseid = getWarehouseDataSelected.data.id;
-                console.log('warehouse id selected: ', this.itemAdd.warehouseid);
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
                 this.purchaseInvoiceData.deliver_to = param.id;
@@ -583,54 +612,57 @@
             async onCustomerSelected(param) {
                 const idCustGet = param.id;
                 const getCustDataSelected = await axios.get('/api/customers/' + idCustGet);
+                const getPoCustomerSelected = await axios.get('/api/po/' + idCustGet);
                 this.itemAdd = {
                     customerid: getCustDataSelected.data.id,
+                    poRelated: getPoCustomerSelected.data.po_number,
                 }
                 // console.log('customer id selected: ', this.itemAdd.customerid);
                 // console.log(this.itemAdd.customerid);
+                this.purchaseOrderGet = getPoCustomerSelected.data;
                 this.selected.customer = param.company_name;
                 this.purchaseInvoiceData.customer = param.id;
-                this.isDisable.warehouseSelected = false;
                 const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
                 this.warehouse = warehouseData.data;
+                this.isDisable.POSelected = false;
                 // console.log(param);
             },
             async addToList() {
-                // console.log(this.itemAdd);
-                this.isWriteForm = true;
-                this.$Progress.start();
-                this.$isLoading(true);
-                await axios.post('/api/pi/item-purchase', this.itemAdd).then(response => {
-                    document.getElementById('ding').play();
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Congratulations',
-                        text: 'Success add item on Purchase Invoice table',
-                    });
-                    this.selected = {
-                        warehouse: '',
-                        item: '',
-                    }
-                    // this.isDisable = {
-                    //     customerSelected: true,
-                    // }
-                    this.itemAdd = {
-                        itemid: '',
-                        qtyOrdered: '0',
-                        unit: '',
-                        currentPrice: '0',
-                        price: '0',
-                        purpose: '',
-                        requested_by: '',
-                        used_by: '',
-                        remarks: '',
-                    }
-                });
-                this.loadData();
-                this.isWriteForm = false;
-                // this.$Progress.finish();
-                this.$isLoading(false);
+                console.log(this.itemAdd);
+                // this.isWriteForm = true;
+                // this.$Progress.start();
+                // this.$isLoading(true);
+                // await axios.post('/api/pi/item-purchase', this.itemAdd).then(response => {
+                //     document.getElementById('ding').play();
+                //     this.purchaseInvoiceData.customerid = response.data.customerId;
+                //     Swal.fire({
+                //         icon: 'success',
+                //         title: 'Congratulations',
+                //         text: 'Success add item on Purchase Invoice table',
+                //     });
+                //     this.selected = {
+                //         warehouse: '',
+                //         item: '',
+                //     }
+                //     // this.isDisable = {
+                //     //     customerSelected: true,
+                //     // }
+                //     this.itemAdd = {
+                //         itemid: '',
+                //         qtyOrdered: '0',
+                //         unit: '',
+                //         currentPrice: '0',
+                //         price: '0',
+                //         purpose: '',
+                //         requested_by: '',
+                //         used_by: '',
+                //         remarks: '',
+                //     }
+                // });
+                // this.loadData();
+                // this.isWriteForm = false;
+                // // this.$Progress.finish();
+                // this.$isLoading(false);
             },
             onQtyInc() {
                 this.itemAdd.price = parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);

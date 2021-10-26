@@ -261,7 +261,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select supplier:</option>
                                         <option v-for="supplier in supplier" :key="supplier.id" :value="supplier.id">
-                                            {{supplier.customerName}}</option>
+                                            {{supplier.supplier_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -273,7 +273,7 @@
                                         placeholder="Brand">
                                 </div>
                             </div>
-                            <!-- 
+                            <!--
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Deliver to:</span>
@@ -303,7 +303,7 @@
                                 </div>
                             </div>
                             -->
-                        </div>                        
+                        </div>
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -312,7 +312,7 @@
                                         v-model="purchaseInvoiceData.remarks" cols="30" rows="4"></textarea>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="form-group my-2" v-if="permissions.includes('EditPurchaseInvoice')">
                             <div class="row">
                                 <div class="col-5 text-left">
@@ -431,7 +431,7 @@
             }
         },
         beforeMount(){
-          this.permissions = this.$store.getters.getPermissions;  
+          this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadData();
