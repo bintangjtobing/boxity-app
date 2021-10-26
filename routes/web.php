@@ -74,3 +74,8 @@ Route::get('/generate/pdf/{id}', function ($id) {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/{any}', 'spaController@index')->where('any', '.*');
 });
+
+
+Route::post('companydetails/create-step-one', 'authController@CompanyDetailsStepOne')->name('companydetails.create.step.one.post');
+Route::post('companydetails/create-step-two', 'authController@CompanyDetailsStepTwo')->name('companydetails.create.step.two.post');
+Route::post('companydetails/create-step-three', 'authController@CompanyDetailsStepThree')->name('companydetails.create.step.three.post');
