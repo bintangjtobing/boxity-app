@@ -64,7 +64,8 @@
                                                         <div class="col-lg-6">
                                                             <span>Address:</span>
                                                             <textarea class="form-control" v-model="user.address" id=""
-                                                                rows="2":disabled="!permissions.includes('EditUsers')"></textarea>
+                                                                rows="2"
+                                                                :disabled="!permissions.includes('EditUsers')"></textarea>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>NPWP:</span>
@@ -81,7 +82,7 @@
                                                         <div class="col-lg-3">
                                                             <span>Phone number:</span>
                                                             <input type="tel" v-model="user.phone" class="form-control"
-                                                            :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="!permissions.includes('EditUsers')">
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>Email:</span>
@@ -92,7 +93,7 @@
                                                         <div class="col-lg-5">
                                                             <span>Site:</span>
                                                             <input type="url" v-model="user.site" class="form-control"
-                                                            :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="!permissions.includes('EditUsers')">
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>Bank:</span>
@@ -120,7 +121,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="button-group d-flex pt-25" v-if="permissions.includes('EditUsers')">
+                                                <div class="button-group d-flex pt-25"
+                                                    v-if="permissions.includes('EditUsers')">
                                                     <button v-on:click="handleSubmit"
                                                         class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                     </button>
@@ -134,7 +136,7 @@
                         <div class="tab-pane fade show" id="v-pills-pic" role="tabpanel"
                             aria-labelledby="v-pills-pic-tab">
                             <div class="row mx-4">
-                                <div class="col-lg-12" v-if="permissions.includes('EditUsers')">
+                                <div class="col-lg-12">
                                     <div class="card my-3">
                                         <div class="card-body pb-md-30">
                                             <div class="vertical-form">
@@ -183,7 +185,8 @@
                                                         :headers="headers" multi-sort :items="userRelated"
                                                         :items-per-page="10" class="elevation-1">
                                                         <template v-slot:item.actions="{item}">
-                                                            <a v-on:click="deleteUserCompany(item.id)" class="remove" v-if="permissions.includes('EditUsers')">
+                                                            <a v-on:click="deleteUserCompany(item.id)" class="remove"
+                                                                v-if="permissions.includes('EditUsers')">
                                                                 <i class="fad fa-trash"></i></a>
                                                         </template>
                                                     </v-data-table>
@@ -291,8 +294,8 @@
             this.loadDataUser();
             this.loadUserCompany();
         },
-        beforeMount(){
-            if(!this.$store.getters.getPermissions.includes('CreateUsers')){
+        beforeMount() {
+            if (!this.$store.getters.getPermissions.includes('CreateUsers')) {
                 this.$router.push('/')
             }
         },

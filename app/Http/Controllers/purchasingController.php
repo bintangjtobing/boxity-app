@@ -236,28 +236,30 @@ class purchasingController extends Controller
         // Jika item yang ada di PI lebih dari 1
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {
-                $inputToHistory = new itemHistory();
-                $inputToHistory->itemId = $getItemOnPi->item_code;
-                $inputToHistory->itemInId = $purchasingOrd->pi_number;
-                $inputToHistory->type = 1;
-                $inputToHistory->date = $purchasingOrd->created_at;
-                $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
-                $inputToHistory->remarks = $getItemOnPi->remarks;
-                $inputToHistory->save();
+                if ($getItemOnPI->qtyShipped) {
+                    $inputToHistory = new itemHistory();
+                    $inputToHistory->itemId = $getItemOnPi->item_code;
+                    $inputToHistory->itemInId = $purchasingOrd->pi_number;
+                    $inputToHistory->type = 1;
+                    $inputToHistory->date = $purchasingOrd->created_at;
+                    $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
+                    $inputToHistory->remarks = $getItemOnPi->remarks;
+                    $inputToHistory->save();
 
-                // Get inventory item related
-                $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
-                $getQtyItem = $itemRelated->qty;
-                $getInputQtyValue = $getItemOnPi->qtyShipped;
-                // Sum the value between get Qty Item and Get Value Inputted
-                $sumQty = $getQtyItem + $getInputQtyValue;
+                    // Get inventory item related
+                    $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
+                    $getQtyItem = $itemRelated->qty;
+                    $getInputQtyValue = $getItemOnPi->qtyShipped;
+                    // Sum the value between get Qty Item and Get Value Inputted
+                    $sumQty = $getQtyItem + $getInputQtyValue;
 
-                // Update to inventory item
-                $getInventory = DB::table('inventory_items')
-                    ->where('id', $getItemOnPi->item_code)
-                    ->update(array(
-                        'qty' => $sumQty,
-                    ));
+                    // Update to inventory item
+                    $getInventory = DB::table('inventory_items')
+                        ->where('id', $getItemOnPi->item_code)
+                        ->update(array(
+                            'qty' => $sumQty,
+                        ));
+                }
             }
         }
         return 200;

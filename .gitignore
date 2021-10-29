@@ -22,3 +22,8 @@ composer.lock
 .user.ini
 .error_log
 php.ini
+public/mix-manifest.json
+public/css/app.css
+public/css/asset.css
+public/js/app.js
+public/js/resources_js_components_item_menuCollapse_vue.js

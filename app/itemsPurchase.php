@@ -30,7 +30,8 @@ class itemsPurchase extends Model
         'warehouseId',
         'customerId',
         'driver_name',
-        'driver_nopol'
+        'driver_nopol',
+        'weightIn', 'weightOut'
     ];
     public function item()
     {

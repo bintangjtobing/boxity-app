@@ -16,7 +16,7 @@ Route::get('/test-pdf', function () {
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
 });
-Route::get('/customer-connected','apiController@checkCustomerConnected');
+Route::get('/customer-connected', 'apiController@checkCustomerConnected');
 
 
 // Users API
@@ -297,7 +297,7 @@ Route::get('/po/{id}', 'purchasingController@getPoWithCustomerId');
 
 
 // Item on Purchases Order
-Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasePO');
+Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
 Route::post('/po/item-purchase', 'itemOnPurchasingController@postItemPurchasePO');
 Route::post('/po/item-purchase/{po_number}', 'itemOnPurchasingController@postItemPurchaseByPoNumber');
 Route::get('/po/item-purchase/{po_number}', 'itemOnPurchasingController@getItemPurchaseByPoNumber');

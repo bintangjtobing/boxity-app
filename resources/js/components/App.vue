@@ -390,6 +390,25 @@
                                 </menuCollapse>
                             </li>
                         </div>
+                        <div>
+                            <label>
+                                <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Report Card' , icon: 'receipt_long' ,
+                            listId:'menuCollapse15' }">
+                                    <ul id="menuCollapse15" style="padding: 0;">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Report">
+                                            <router-link style="margin:0; width:100%" :to="'/report/stock'">
+                                                <span>Stock Report</span>
+                                            </router-link>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse Report">
+                                            <router-link style="margin:0; width:100%" :to="'/report/warehouse'">
+                                                <span>Warehouse Report</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </label>
+                        </div>
                         <div v-if="permission.includes('ViewSalesOrder')">
                             <li>
                                 <menuCollapse v-bind=" { isSidebar: sidebar, title: 'E-Commerce' , icon: 'storefront' ,
@@ -547,10 +566,10 @@
         mounted() {
             feather.replace();
             this.companyGet();
-            this.$Progress.finish();          
+            this.$Progress.finish();
         },
         beforeMount() {
-              this.userGet();
+            this.userGet();
         },
         created() {
             window.addEventListener('resize', this.handleResize);
@@ -574,9 +593,9 @@
                 const resp = await axios.get('/api/company-details/1');
                 this.company = resp.data;
             },
-            async userGet() {                
+            async userGet() {
                 const resp = await axios.get('/getUserLoggedIn');
-                this.user = resp.data;                
+                this.user = resp.data;
                 this.permission = resp.data.permission;
                 this.$store.dispatch("SET_PERMISSIONS", resp.data.permission)
             },
@@ -590,7 +609,7 @@
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        window.location.href = '/sign-out';                            
+                        window.location.href = '/sign-out';
                     }
                 })
             }

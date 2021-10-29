@@ -28,7 +28,8 @@
                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
                                     role="tab" aria-controls="v-pills-home" aria-selected="true">details</a>
                             </li>
-                            <li class="nav-item" v-if="permissions.includes('ViewActivitiesInventoryItem')">
+                            <!-- <li class="nav-item" v-if="permissions.includes('ViewActivitiesInventoryItem')"> -->
+                            <li class="nav-item">
                                 <a class="nav-link" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history"
                                     role="tab" aria-controls="v-pills-history" aria-selected="true">Activites &
                                     History</a>
@@ -202,7 +203,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="button-group d-flex pt-25" v-if="permissions.includes('EditInventoryItem')">
+                                                    <div class="button-group d-flex pt-25"
+                                                        v-if="permissions.includes('EditInventoryItem')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -349,7 +351,8 @@
                             <div class="row mx-4">
                                 <div class="col-lg-4 text-center itemImage" v-for="image in imgs" :key="image.id">
                                     <a :href="image.file" target="_blank"><img :src="image.file"></a>
-                                    <div class="row justify-content-center" v-if="permissions.includes('EditInventoryItem')">
+                                    <div class="row justify-content-center"
+                                        v-if="permissions.includes('EditInventoryItem')">
                                         <div class="col-lg-12 text-center">
                                             <a v-on:click="deleteThisImage(image.id)"
                                                 class="btn btn-danger-boxity btn-block"><i
@@ -372,7 +375,8 @@
                                             <img src="https://res.cloudinary.com/boxity-id/image/upload/v1633661884/404_qggjfd.svg"
                                                 alt="404" class="svg">
                                             <h5 class="fw-500">Sorry! This item has no images here...</h5>
-                                            <div class="content-center mt-30" v-if="permissions.includes('EditInventoryItem')">
+                                            <div class="content-center mt-30"
+                                                v-if="permissions.includes('EditInventoryItem')">
                                                 <a @click="itemImageAdds" href="#"
                                                     class="btn btn-primary-boxity btn-default btn-squared px-30">+ Add
                                                     Image</a>
@@ -485,7 +489,7 @@
             this.loadDataInventoryItem();
             this.loadHistoryItem();
         },
-        beforeMount(){
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         computed: {

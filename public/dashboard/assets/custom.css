@@ -669,3 +669,12 @@ body.swal2-shown>[aria-hidden="true"] {
 .feature-cards4 figcaption p {
     font-size: 13px;
 }
+
+.transparency-primary-boxity {
+    background: rgba(125, 198, 125, .5);
+    padding: 6px;
+    border-radius: 4px;
+    color: rgb(25, 108, 25);
+    font-weight: bold;
+    font-size: 11.5px;
+}

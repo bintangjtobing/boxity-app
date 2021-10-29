@@ -36,10 +36,12 @@ class itemOnPurchasingController extends Controller
     }
 
     // ITEM ON PURCHASE ORDER
-    public function getItemPurchasePO()
-    {
-        return response()->json(itemsPurchase::with('item', 'usedBy', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
-    }
+    // public function getItemPurchasesPO()
+    // {
+    //     // return response()->json(itemsPurchase::with('item', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
+    //     // return response()->json(itemsPurchase::get());
+    //     // return 0;
+    // }
     public function postItemPurchasePO(Request $request)
     {
         $itemPurchase = DB::table('inventory_items')
@@ -163,6 +165,9 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
+        $ItemPurchasing->purchase_related = $request->poRelated;
 
 
         // po status 1 means stored at database but not with the purchase order id;
@@ -190,8 +195,13 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
+        $ItemPurchasing->purchase_related = $request->poRelated;
 
 
         $ItemPurchasing->pi_status = '2';
@@ -227,15 +237,22 @@ class itemOnPurchasingController extends Controller
             ]);
 
         $ItemPurchasing = itemsPurchase::find($id);
+        $ItemPurchasing->item_code = $request->itemid;
         $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
         $ItemPurchasing->qtyShipped = $request->qtyShipped;
+        $ItemPurchasing->unit = $request->unit;
         $ItemPurchasing->price = $request->price;
         $ItemPurchasing->purpose = $request->purpose;
         $ItemPurchasing->requested_by = Auth::id();
         $ItemPurchasing->used_by = $request->used_by;
         $ItemPurchasing->remarks = $request->remarks;
+        $ItemPurchasing->warehouseId = $request->warehouseid;
+        $ItemPurchasing->customerId = $request->customerid;
         $ItemPurchasing->driver_name = $request->driver_name;
         $ItemPurchasing->driver_nopol = $request->driver_nopol;
+        $ItemPurchasing->weightIn = $request->weightIn;
+        $ItemPurchasing->weightOut = $request->weightOut;
+        $ItemPurchasing->purchase_related = $request->poRelated;
         $ItemPurchasing->updated_by = Auth::id();
         $ItemPurchasing->save();
         return response()->json($itemPurchase, 200);

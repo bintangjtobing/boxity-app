@@ -1671,22 +1671,13 @@ class apiController extends Controller
     }
     public function getWarehouseCustomers($id)
     {
-        if (Auth::user()->role != 'admin') {
-            $getCustWarehouse = DB::table('warehouse_customers')
-                ->join('warehouse_lists', 'warehouse_customers.warehouse_id', '=', 'warehouse_lists.id')
-                ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
-                ->where('warehouse_customers.customer_id', $id)
-                ->select('warehouse_customers.warehouse_id as id', 'warehouse_lists.warehouse_name', 'companies.company_name', 'warehouse_customers.customer_id')
-                ->get();
-            return $getCustWarehouse;
-        } else {
-            $getCustWarehouse = DB::table('warehouse_customers')
-                ->join('warehouse_lists', 'warehouse_customers.warehouse_id', '=', 'warehouse_lists.id')
-                ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
-                ->select('warehouse_customers.warehouse_id as id', 'warehouse_lists.warehouse_name', 'companies.company_name', 'warehouse_customers.customer_id')
-                ->get();
-            return $getCustWarehouse;
-        }
+        $getCustWarehouse = DB::table('warehouse_customers')
+            ->join('warehouse_lists', 'warehouse_customers.warehouse_id', '=', 'warehouse_lists.id')
+            ->join('companies', 'warehouse_customers.customer_id', '=', 'companies.id')
+            ->where('warehouse_customers.customer_id', $id)
+            ->select('warehouse_customers.warehouse_id as id', 'warehouse_lists.warehouse_name', 'companies.company_name', 'warehouse_customers.customer_id')
+            ->get();
+        return $getCustWarehouse;
         // return response($id);
     }
     public function getCustomerWarehouse($id)

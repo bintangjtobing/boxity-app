@@ -33,6 +33,6 @@ class CreateItemHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_histories');
+        Schema::dropIfExists('inventory_item_histories');
     }
 }

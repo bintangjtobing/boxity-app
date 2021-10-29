@@ -521,7 +521,7 @@
                 this.selected.customer = param.company_name;
                 this.purchaseOrderData.customer = param.id;
                 this.isDisable.warehouseSelected = false;
-                const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
+                const warehouseData = await axios.get('/api/warehouse-customers/' + idCustGet);
                 this.warehouse = warehouseData.data;
                 // console.log(param);
             },

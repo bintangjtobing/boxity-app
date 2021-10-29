@@ -87,6 +87,23 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input type="number" v-model="itemAdd.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input type="number" v-model="itemAdd.weightOut" placeholder="0" id="" min="0"
+                                            @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
+                                            step="1" class="form-control" :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <!-- <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Quantity Ordered:</span>
@@ -97,7 +114,7 @@
                                 </div> -->
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
+                                        <span>Quantity Shipped/Nett Weight:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
                                             max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
@@ -184,6 +201,15 @@
                             </div>
                         </div>
                         <div v-show="isShow.colapse">
+                            <div class="form-row" v-if="itemModify.purchase_related">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <span>PO Number:</span>
+                                        <input type="text" v-model="itemModify.purchase_related" disabled id=""
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -204,6 +230,23 @@
                                         <span>Item name:</span>
                                         <input type="text" v-model="itemModify.item_name" id="" class="form-control"
                                             readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input type="number" v-model="itemModify.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id=""
+                                            min="0" @change="calculateModifNettWeight" @input="calculateModifNettWeight"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                             </div>
@@ -586,16 +629,28 @@
                 this.isDisable.warehouseSelected = false;
                 this.isDisable.select = false;
                 this.selected.PO = param.po_number;
+
+                // choose warehouse detected by PO selected
                 const getWarehouse = await axios.get('/api/purchase/order/' + param.po_number);
-                const getItem = await axios.get('/api/po/item-purchase/' + param.po_number);
                 this.selected.warehouse = getWarehouse.data.warehouse.warehouse_name;
+
+                const getItem = await axios.get('/api/inventory-item/w/' + getWarehouse.data.warehouse.id +
+                    '/' + param.customerId);
+                this.items = getItem.data;
+
+                const itemRelated = await axios.get('/api/po/item-purchase/' + param.po_number);
+                const getItemDataSelected = await axios.get('/api/inventory-item/' + itemRelated.data[0].item.id);
+                this.selected.item =
+                    `[${getItemDataSelected.data.item_code}] - ${getItemDataSelected.data.item_name}`;
                 this.itemAdd = {
-                    unit: getItem.data.item.unit,
-                    currentPrice: getItem.data.item.price,
-                    itemid: getItem.data.item.id,
+                    poRelated: param.po_number,
+                    warehouseid: getWarehouse.data.warehouse.id,
+                    unit: getItemDataSelected.data.unit,
+                    currentPrice: getItemDataSelected.data.price,
+                    itemid: getItemDataSelected.data.id,
                     ...this.itemAdd
                 }
-                this.selected.item = getItem.data.item.item_name;
+                console.log(getItemDataSelected.data);
             },
             async onWarehouseSelected(param) {
                 const idWarehouseGet = param.id;
@@ -615,7 +670,6 @@
                 const getPoCustomerSelected = await axios.get('/api/po/' + idCustGet);
                 this.itemAdd = {
                     customerid: getCustDataSelected.data.id,
-                    poRelated: getPoCustomerSelected.data.po_number,
                 }
                 // console.log('customer id selected: ', this.itemAdd.customerid);
                 // console.log(this.itemAdd.customerid);
@@ -631,41 +685,47 @@
                 console.log(this.itemAdd);
                 // this.isWriteForm = true;
                 // this.$Progress.start();
-                // this.$isLoading(true);
-                // await axios.post('/api/pi/item-purchase', this.itemAdd).then(response => {
-                //     document.getElementById('ding').play();
-                //     this.purchaseInvoiceData.customerid = response.data.customerId;
-                //     Swal.fire({
-                //         icon: 'success',
-                //         title: 'Congratulations',
-                //         text: 'Success add item on Purchase Invoice table',
-                //     });
-                //     this.selected = {
-                //         warehouse: '',
-                //         item: '',
-                //     }
-                //     // this.isDisable = {
-                //     //     customerSelected: true,
-                //     // }
-                //     this.itemAdd = {
-                //         itemid: '',
-                //         qtyOrdered: '0',
-                //         unit: '',
-                //         currentPrice: '0',
-                //         price: '0',
-                //         purpose: '',
-                //         requested_by: '',
-                //         used_by: '',
-                //         remarks: '',
-                //     }
-                // });
-                // this.loadData();
-                // this.isWriteForm = false;
-                // // this.$Progress.finish();
-                // this.$isLoading(false);
+                this.$isLoading(true);
+                await axios.post('/api/pi/item-purchase', this.itemAdd).then(response => {
+                    document.getElementById('ding').play();
+                    this.purchaseInvoiceData.customerid = response.data.customerId;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success add item on Purchase Invoice table',
+                    });
+                    this.selected = {
+                        warehouse: '',
+                        item: '',
+                    }
+                    // this.isDisable = {
+                    //     customerSelected: true,
+                    // }
+                    this.itemAdd = {
+                        itemid: '',
+                        qtyOrdered: '0',
+                        unit: '',
+                        currentPrice: '0',
+                        price: '0',
+                        purpose: '',
+                        requested_by: '',
+                        used_by: '',
+                        remarks: '',
+                    }
+                });
+                this.loadData();
+                this.isWriteForm = false;
+                this.$isLoading(false);
+                // this.$Progress.finish();
             },
             onQtyInc() {
                 this.itemAdd.price = parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
+            },
+            calculateNettWeight() {
+                this.itemAdd.qtyShipped = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+            },
+            calculateModifNettWeight() {
+                this.itemModify.qtyShipped = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
             },
             onPriceChange() {
                 this.itemAdd.price = parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
@@ -777,6 +837,7 @@
                 this.$isLoading(false);
             },
             async submitHandle() {
+                // console.log(this.purchaseInvoiceData);
                 // this.$Progress.start();
                 this.$isLoading(true);
                 await axios.post('/api/purchase/invoices', this.purchaseInvoiceData).then(response => {

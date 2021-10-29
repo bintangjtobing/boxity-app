@@ -20,7 +20,8 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}" v-if="permissions.includes('EditPurchaseInvoice')">
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}"
+                v-if="permissions.includes('EditPurchaseInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -230,12 +231,10 @@
                                 <v-data-table :search="search" :loading="itemPurchasingData.length"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemPurchasingData" :items-per-page="10" class="elevation-1">
-                                    <!-- <template v-slot:item.actions="{item}">
+                                    <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <i class="fad fa-edit"></i></a>
-                                        <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
-                                            <i class="fad fa-trash"></i></a>
-                                    </template> -->
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>
@@ -418,20 +417,20 @@
                         text: 'Unit',
                         value: 'unit'
                     },
-                    // {
-                    //     text: 'Actions',
-                    //     value: 'actions',
-                    //     align: 'right',
-                    //     filterable: false,
-                    //     sortable: false
-                    // }
+                    {
+                        text: 'Actions',
+                        value: 'actions',
+                        align: 'right',
+                        filterable: false,
+                        sortable: false
+                    }
                 ],
                 countItems: '0',
                 permissions: []
             }
         },
-        beforeMount(){
-          this.permissions = this.$store.getters.getPermissions;
+        beforeMount() {
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadData();

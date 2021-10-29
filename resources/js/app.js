@@ -100,6 +100,8 @@ import subscrips from './components/subscriptions.vue';
 import employee from './components/employee/employee.vue';
 import employeeDetail from './components/employee/employeeDetail.vue';
 import inbox from './components/inbox.vue';
+import stockCard from './components/stockCard.vue';
+import stockWarehouse from './components/stockWarehouse.vue';
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -504,6 +506,14 @@ const routes = [{
         name: 'ecommerce-sales-order',
         path: '/e-commerce/sales/order/detail/:so_id',
         component: ESalesOrderForm
+    }, {
+        name: 'stock-card',
+        path: '/report/stock',
+        component: stockCard
+    }, {
+        name: 'stock-warehouse',
+        path: '/report/warehouse',
+        component: stockWarehouse
     }
 ]
 Vue.filter('toDecimal', num => {
