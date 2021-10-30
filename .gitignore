@@ -13,9 +13,6 @@ public/.DS_Store
 .tmp/
 .DS_Store
 *.code-workspace
-
-/public
-
 public/dashboard/img/author/profile
 public/storage
 public/mix-manifest.json
