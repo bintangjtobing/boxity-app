@@ -52,7 +52,7 @@
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="approvePO(item.po_number)" class="create"
-                                            v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
+                                            v-if="item.status=='0'">
                                             <i class="far fa-thumbs-up"></i> Approve</a>
                                         <a :href="`/report/purchase/order/${item.po_number}`" target="_blank"
                                             v-if="item.status!=0" class="view">
@@ -119,9 +119,9 @@
                 permissions: []
             }
         },
-        beforeMount(){                        
+        beforeMount(){
             this.permissions = this.$store.getters.getPermissions;
-        },        
+        },
         created() {
             this.loadItem();
             this.getUser();

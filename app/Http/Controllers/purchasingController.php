@@ -262,7 +262,7 @@ class purchasingController extends Controller
                 }
             }
         }
-        return 200;
+        return response($getItemOnPI);
     }
     public function getPurchaseInvoiceByPiNumber($pi_number)
     {

@@ -29,7 +29,7 @@
                                 <input type="date" v-model="req.to" class="form-control" placeholder="dd / mm / yyyy">
                             </div>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-1 mx-2">
                             <div class="form-group">
                                 <a @click="searchData" class="btn btn-primary-boxity" style="margin-top:22px;"><i
                                         class="far fa-search"></i>
@@ -82,44 +82,96 @@
                 customers: {},
                 search: '',
                 key: 1,
-                reports: [],
+                reports: [{
+                    item_code: 'B001',
+                    item_name: 'Pollar',
+                    po_number: 'PO.20211010.817363',
+                    supplier: 'Bungasari',
+                    date_in: '10/10/2021',
+                    location: 'GDG 1 CARGILL',
+                    beginning_stock: '60.000 kg (800 bag)',
+                    qty_received: '',
+                    qty_received_cum: '60.000 kg (800 bag)',
+                    qty_delivery: '-',
+                    qty_delivery_cum: '-',
+                    qty_total: '',
+                }, {
+                    item_code: 'B001',
+                    item_name: 'Pollar',
+                    po_number: 'PO.20211013.624534',
+                    supplier: 'Bungasari',
+                    date_in: '13/10/2021',
+                    location: 'GDG 1 CARGILL',
+                    beginning_stock: '60.000 kg (800 bag)',
+                    qty_received: '30.000 kg (400 bag)',
+                    qty_received_cum: '90.000 kg (1.200 bag)',
+                    qty_delivery: '-',
+                    qty_delivery_cum: '-',
+                    qty_total: '',
+                }, {
+                    item_code: 'B011',
+                    item_name: 'Meat Bone Meal',
+                    po_number: 'PO.20211009.61451',
+                    supplier: 'Bungasari',
+                    date_in: '09/10/2021',
+                    location: 'GDG 1 CARGILL',
+                    beginning_stock: '30.000 kg (400 bag)',
+                    qty_received: '',
+                    qty_received_cum: '30.000 kg (400 bag)',
+                    qty_delivery: '-',
+                    qty_delivery_cum: '-',
+                    qty_total: '',
+                }, {
+                    item_code: 'B011',
+                    item_name: 'Meat Bone Meal',
+                    po_number: 'PO.20211010.123445',
+                    supplier: 'Bungasari',
+                    date_in: '10/10/2021',
+                    location: 'GDG 1 CARGILL',
+                    beginning_stock: '30.000 kg (400 bag)',
+                    qty_received: '30.000 kg (400 bag)',
+                    qty_received_cum: '60.000 kg (800 bag)',
+                    qty_delivery: '-',
+                    qty_delivery_cum: '-',
+                    qty_total: '',
+                }, ],
                 loading: true,
                 headers: [{
                     text: 'Item code',
-                    value: 'title'
+                    value: 'item_code'
                 }, {
                     text: 'Item name',
-                    value: 'category'
+                    value: 'item_name'
                 }, {
                     text: 'PO No.',
-                    value: 'views'
+                    value: 'po_number'
                 }, {
                     text: 'Supplier',
-                    value: 'views'
+                    value: 'supplier'
                 }, {
                     text: 'Date In',
-                    value: 'views'
+                    value: 'date_in'
                 }, {
                     text: 'Location',
-                    value: 'views'
+                    value: 'location'
                 }, {
                     text: 'Beginning Stock',
-                    value: 'views'
+                    value: 'beginning_stock'
                 }, {
                     text: 'Receive Qty',
-                    value: 'views'
+                    value: 'qty_received'
                 }, {
                     text: 'Receive Cum.',
-                    value: 'views'
+                    value: 'qty_received_cum'
                 }, {
                     text: 'Delivery Qty',
-                    value: 'views'
+                    value: 'qty_delivery'
                 }, {
                     text: 'Delivery Cum.',
-                    value: 'views'
+                    value: 'qty_delivery_cum'
                 }, {
                     text: 'Total Stock',
-                    value: 'views'
+                    value: 'qty_total'
                 }],
                 // end datatable
             }
