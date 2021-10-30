@@ -236,7 +236,7 @@ class purchasingController extends Controller
         // Jika item yang ada di PI lebih dari 1
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {
-                if ($getItemOnPI->qtyShipped) {
+                if (!empty($getItemOnPI->qtyShipped)) {
                     $inputToHistory = new itemHistory();
                     $inputToHistory->itemId = $getItemOnPi->item_code;
                     $inputToHistory->itemInId = $purchasingOrd->pi_number;
