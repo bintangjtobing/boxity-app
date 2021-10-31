@@ -27,7 +27,10 @@
                                     :headers="headers" multi-sort :items="purchaseInvoiceItem" :items-per-page="10"
                                     class="elevation-1" group-by="warehouse.warehouse_name" group-expanded>
                                     <template v-slot:item.status="{item}">
-                                        <span class="transparency-primary-boxity" v-if="item.status==0">
+                                        <span class="transparency-primary-boxity" v-if="!item.hasPo">
+                                            <em class="fad fa-check"></em> Passed without purchase order
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==0">
                                             Phase 1 passed
                                         </span>
                                         <span class="transparency-primary-boxity" v-else-if="item.status==1">
@@ -35,9 +38,6 @@
                                         </span>
                                         <span class="transparency-primary-boxity" v-else-if="item.status==2">
                                             <em class="fad fa-check"></em> All passed
-                                        </span>
-                                        <span class="transparency-primary-boxity" v-else-if="item.status">
-                                            <em class="fad fa-check"></em> Passed without purchase order
                                         </span>
                                     </template>
                                     <template v-slot:item.actions="{item}">

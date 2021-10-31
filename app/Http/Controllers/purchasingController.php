@@ -207,17 +207,23 @@ class purchasingController extends Controller
     // PURCHASE INVOICE
     public function getPurchaseInvoice()
     {
+        $data = [];
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $pi = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $data = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
             return $pi;
         } else {
-            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $data = purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $elm['hasPo'] = !empty($elm['item']['purchase_related']) ? true : false;
+            unset($elm['item']);
+        }
+        return response()->json($data, 200);
     }
     public function postPurchaseInvoice(Request $request)
     {
