@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        Understand\UnderstandLaravel5\UnderstandLaravel5ServiceProvider::class,
 
         /*
          * Package Service Providers...

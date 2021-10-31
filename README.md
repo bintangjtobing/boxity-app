@@ -1,9 +1,17 @@
+<p align="center">
+  <a href="https://boxity.id">
+    <img src="https://res.cloudinary.com/boxity-id/image/upload/v1634111737/powered_by_gdxnxg.png" width="318px" alt="Boxity logo" />
+  </a>
+</p>
+
 ### Installation
 1. Clone the repository first
    ```sh
    git clone https://github.com/The-Boring-Organizations/boxity-app
    ```
-2. Dont forget to ```npm run prod``` before running into hosted server
+2. Make sure the ```npm or yarn package``` was installed on your root server.
+3. Run the ```npm install``` to install the npm package of the project.
+3. Then you can run ```npm run production``` to ensure your project establishes.
 3. Copy env File to the directory
     ```
     cp .env.example .env
@@ -31,7 +39,7 @@
     ```
 5. Install composer by running
     ```sh
-    composer intall
+    composer install
     ```
 5. Run the app key, migrate the database and also optimize the artisan
     ```
@@ -46,17 +54,3 @@
     ```
     php artisan optimize:clear
     ```
-
-## Instructions how to run the code
-The first is the database, so I've included SQL files in this repo. You can download it and import it into your SQL software. You can use XAMPP, SQLite, or others.
-And the next is:
-- Open this workspace/repo on your Visual Studio Code or you can use notepad++ or others.
-- Input php artisan serve on your terminal for the backend.
-- And the last you can open another tab on your terminal (Command + T).
-- Input npm run watch for the frontend, i use vue.js.
-- You can see on your browser by localhost:8000. It should be worked because on .env file i set it up to localhost, 127.0.0.1 with port 3306.
-
-## How it works?
-- You can login it with email: admin@admin.com, password: admin.
-- And then you will see the dashboards, and then you can go to Your Sites.
-- As your assignment, i've been already completed that, with you can add your website, update it and delete on Account page.

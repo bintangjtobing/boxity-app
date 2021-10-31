@@ -2,11 +2,19 @@
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
-                <div class="breadcrumb-main user-member justify-content-sm-between ">
-                    <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                        <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Inventory item data - <abbr
-                                    :title="inventorydata.item_name">{{inventorydata.item_name}}</abbr></h4>
+                <div class="breadcrumb-main">
+                    <h4 class="text-capitalize fw-500 breadcrumb-title">Inventory item data - <abbr
+                            :title="inventorydata.item_name">{{inventorydata.item_name}}</abbr></h4>
+                    <div class="breadcrumb-action justify-content-end flex-wrap">
+                        <div class="action-btn">
+                            <a class="btn btn-sm btn-primary-boxity btn-add">
+                                Item ID : &nbsp;
+                                <b>{{inventorydata.id}}</b></a>
+                        </div>
+                        <div class="action-btn">
+                            <a class="btn btn-sm btn-primary-boxity btn-add">
+                                Warehouse name : &nbsp; <b>{{inventorydata.warehouse.warehouse_name}}</b>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -95,15 +103,21 @@
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Current Price:</span>
-                                                                    <input type="text" v-model="inventorydata.price"
-                                                                        class="form-control" readonly>
+                                                                    <!-- <input type="text" v-model="inventorydata.price"
+                                                                        class="form-control" readonly> -->
+                                                                    <vue-numeric class="form-control" readonly
+                                                                        v-bind:precision="0"
+                                                                        v-model="inventorydata.price"></vue-numeric>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Ending Balance:</span>
-                                                                    <input type="text" v-model="countQty"
-                                                                        class="form-control" readonly>
+                                                                    <vue-numeric class="form-control" readonly
+                                                                        v-bind:precision="0" v-model="countQty">
+                                                                    </vue-numeric>
+                                                                    <!-- <input type="text" v-model="countQty"
+                                                                        class="form-control" readonly> -->
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
@@ -253,29 +267,41 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Beginning:</span>
-                                                            <input type="text" v-model="beginningQty" id=""
-                                                                class="form-control" readonly>
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="beginningQty">
+                                                            </vue-numeric>
+                                                            <!-- <input type="text" v-model="beginningQty" id=""
+                                                                class="form-control" readonly> -->
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Quantity In:</span>
-                                                            <input type="text" v-model="sumQtyIn" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="sumQtyIn" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="sumQtyIn">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Quantity Out:</span>
-                                                            <input type="text" v-model="sumQtyOut" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="sumQtyOut" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="sumQtyOut">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Ending Balance:</span>
-                                                            <input type="text" v-model="countQty" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="countQty" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="countQty">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -416,10 +442,12 @@
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
     import vue2Dropzone from 'vue2-dropzone';
+    import VueNumeric from 'vue-numeric'
     export default {
         components: {
             'editor': Editor,
             vueDropzone: vue2Dropzone,
+            VueNumeric
         },
         title() {
             return `Inventory item data`;
@@ -472,7 +500,7 @@
                 sumQtyIn: 0,
                 sumQtyOut: 0,
                 countQty: '-',
-                beginningQty: '-',
+                beginningQty: 0,
                 // TODO: callback to save the ids of the uploaded file
                 dropzoneOptions: {
                     url: '/api/inventory-item/images/' + this.$route.params.id,
@@ -520,6 +548,9 @@
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
 
+                const beginning = await axios.get('/api/beginning/item-history/' + this.$route.params.id);
+                this.beginningQty = beginning.data;
+
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
                 this.inventoryOpt = resp.data;
@@ -534,7 +565,6 @@
                 // Load customer warehouse
                 const imgList = await axios.get('/api/inventory-item/album/' + this.$route.params.id);
                 this.imgs = imgList.data;
-                console.log(this.imgs);
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
                 this.historyItem = historyList.data;
                 if (historyList.data.length) {
@@ -546,9 +576,6 @@
                 const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
                 this.sumQtyOut = qtyOutSum.data;
                 this.countQty = this.sumQtyIn - this.sumQtyOut;
-                console.log('qtyIn', this.sumQtyIn);
-                console.log('qtyOut', this.sumQtyOut);
-                console.log('count', this.countQty);
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

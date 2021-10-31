@@ -395,11 +395,11 @@
                                 <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Report Card' , icon: 'receipt_long' ,
                             listId:'menuCollapse15' }">
                                     <ul id="menuCollapse15" style="padding: 0;">
-                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Report">
+                                        <!-- <li data-bs-toggle="tooltip" data-bs-placement="right" title="Stock Report">
                                             <router-link style="margin:0; width:100%" :to="'/report/stock'">
                                                 <span>Stock Report</span>
                                             </router-link>
-                                        </li>
+                                        </li> -->
                                         <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse Report">
                                             <router-link style="margin:0; width:100%" :to="'/report/warehouse'">
                                                 <span>Warehouse Report</span>

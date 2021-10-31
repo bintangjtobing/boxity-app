@@ -43,16 +43,30 @@ class purchasingController extends Controller
     public function getPurchaseOrder()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
+        $data = [];
         if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
-            return $po;
+            $data = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'item', 'createdBy')->orderBy('created_at', 'DESC')->get();
         } else {
-            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
+            $data = purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'item')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $temp = null;
+            if ($elm['item']['qtyShipped'] > 0) {
+                if (empty($elm['item']['qtyOrdered']) || $elm['item']['qtyOrdered'] == $elm['item']['qtyShipped']) {
+                    $temp = true;
+                } else {
+                    $temp = false;
+                }
+            }
+            unset($elm['item']);
+            $elm['paidOff'] = $temp;
+        }
+
+        return response()->json($data, 200);
     }
     public function getPoWithCustomerId($id)
     {
@@ -62,6 +76,7 @@ class purchasingController extends Controller
     {
         $purchasingOrd = new purchaseOrder();
         $purchasingOrd->po_number = $request->po_number;
+        $purchasingOrd->status = '0';
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->order_date = $request->order_date;
@@ -118,7 +133,7 @@ class purchasingController extends Controller
                 'status' => 1,
                 'approvedBy' => Auth::id(),
             ));
-        return response()->json($detailsToPO);
+        return response()->json($statusPRE);
     }
     public function deletePurchaseOrderById($id, Request $request)
     {
@@ -192,17 +207,23 @@ class purchasingController extends Controller
     // PURCHASE INVOICE
     public function getPurchaseInvoice()
     {
+        $data = [];
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $pi = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
-            return $pi;
+            $data = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         } else {
-            return purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'customer')->orderBy('created_at', 'DESC')->get();
+            $data = purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $elm['hasPo'] = !empty($elm['item']['purchasingId']) ? true : false;
+            unset($elm['item']);
+        }
+        return response()->json($data, 200);
+        // return $getUserIdOnCustomer;
     }
     public function postPurchaseInvoice(Request $request)
     {
@@ -229,14 +250,15 @@ class purchasingController extends Controller
 
         $itemGet = DB::table('items_purchases')
             ->where('pi_status', '=', '1')
+            ->where('created_by', '=', Auth::id())
             // PO Status 2, means having a purchasing ID
             ->update(array('purchasingId' => $purchasingOrd->pi_number, 'pi_status' => '2'));
 
         $getItemOnPI = itemsPurchase::where('purchasingId', $purchasingOrd->pi_number)->get();
-        // Jika item yang ada di PI lebih dari 1
+        // Jika item yang ada di PI lebih dari 0
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {
-                if (!empty($getItemOnPI->qtyShipped)) {
+                if ($getItemOnPi->qtyShipped) {
                     $inputToHistory = new itemHistory();
                     $inputToHistory->itemId = $getItemOnPi->item_code;
                     $inputToHistory->itemInId = $purchasingOrd->pi_number;
@@ -259,7 +281,9 @@ class purchasingController extends Controller
                         ->update(array(
                             'qty' => $sumQty,
                         ));
+                } else {
                 }
+                // dd($getItemOnPI);
             }
         }
         return response($getItemOnPI);

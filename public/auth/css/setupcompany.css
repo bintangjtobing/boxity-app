@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
 html,
 body {
     height: 100%;
+    font-family: 'Roboto', sans-serif;
 }
 
 body.my-login-page {
@@ -56,33 +60,6 @@ body.my-login-page {
     padding: 12px 10px;
 }
 
-.bg-orange {
-    background: #F95B12;
-}
-
-/* input.input-style:focus {
-    outline: none !important;
-    outline-width: 0 !important;
-} */
-
-input:focus,
-input.form-control:focus {
-    outline: none !important;
-    outline-width: 0 !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-}
-
-.bg-input-new {
-    background: #EDF2F5;
-}
-
-.text-grey {
-    color: #868282;
-}
-
-
 .my-login-page .footer {
     margin: 40px 0;
     color: #888;
@@ -113,5 +90,40 @@ input.form-control:focus {
 
     .my-login-page .card.fat .card-body {
         padding: 15px;
+    }
+}
+
+.wrap-icon {
+    background: #F95B12;
+    height: 60px;
+    width: 60px;
+    align-items: center
+}
+
+.text-orange {
+    color: #F95B12;
+}
+
+.text-grey {
+    color: #868282;
+}
+
+.text-title-form {
+    font-size: 16px;
+}
+
+.text-description {
+    font-size: 16px;
+}
+
+@media screen and (min-width: 320px) {
+    .text-title-form {
+        font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .text-title-form {
+        font-size: 16px;
     }
 }

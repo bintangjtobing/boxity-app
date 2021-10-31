@@ -35,7 +35,7 @@ class rejectCandidate extends Mailable
         $company = company_details::where('id', 1)->first();
 
         $string = base64_encode(random_bytes(10));
-        return $this->from('hrd' . $string . '@' . $company->site, $company->company_name . 'Human Resources System')
+        return $this->from('hrd' . $string . '@' . $company->site, $company->company_name . ' Human Resources System')
             ->subject('Thank you for the interest to work with us!')
             ->markdown('emails.confirmRejectToCandidate');
     }

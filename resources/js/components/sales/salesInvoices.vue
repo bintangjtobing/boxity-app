@@ -23,6 +23,17 @@
                                 </v-card-title>
                                 <v-data-table :headers="headers" multi-sort :items="salesInvoiceData"
                                     :items-per-page="10" class="elevation-1" group-by="customers.company_name">
+                                    <template v-slot:item.status="{item}">
+                                        <span class="transparency-primary-boxity" v-if="item.status==0">
+                                            Phase 1 passed
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==1">
+                                            Phase 2 passed
+                                        </span>
+                                        <span class="transparency-primary-boxity" v-else-if="item.status==2">
+                                            <em class="fad fa-check"></em> All passed
+                                        </span>
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a :href="`/report/sales/invoices/${item.si_number}`" target="_blank"
                                             class="view">
@@ -55,6 +66,7 @@
         data() {
             return {
                 // datatable
+                item: [],
                 search: '',
                 key: 1,
                 salesInvoiceData: [],
@@ -67,6 +79,9 @@
                 }, {
                     text: 'Customer',
                     value: 'customers.company_name'
+                }, {
+                    text: 'Status',
+                    value: 'status'
                 }, {
                     text: 'Actions',
                     value: 'actions',

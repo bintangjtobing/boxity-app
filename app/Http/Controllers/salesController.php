@@ -35,7 +35,7 @@ class salesController extends Controller
     // Sales Order
     public function getSalesOrder()
     {
-        return response()->json(salesOrder::with('customers')->where('type', '!=', 1)->with('createdby')->orderBy('created_at', 'DESC')->get());
+        return response()->json(salesOrder::with('customers', 'items')->where('type', '!=', 1)->with('createdby')->orderBy('created_at', 'DESC')->get());
     }
 
     public function getSalesOrderById($id)
@@ -110,20 +110,25 @@ class salesController extends Controller
     // Sales Invoices
     public function getSalesInvoice(Request $request)
     {
-        $query = [];
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
-        if ($request->feature === 'deliveryReceipt') {
-            $query = salesInvoice::with('customers')->with('createdby')->with('items.item')->whereNotIn('si_number', $request->si_number)->orderBy('created_at', 'DESC')->get();
-        } else if (count($getUserIdOnCustomer) > 0) {
+        $query = [];
+        if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as  $x) {
                 $ids[] = $x->company_id;
             }
-            $query = salesInvoice::with('customers')->with('createdby')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
-            return response()->json($query);
+            $query = salesInvoice::with('customers')->with('createdby', 'items')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
+        } else {
+            $query = salesInvoice::with('customers', 'createdby', 'items')->orderBy('created_at', 'DESC')->get();
         }
-        // return $getUserIdOnCustomer;
+        return response()->json($query, 200);
     }
+    
+    public function getSalesOrderByCustomer ($customerId) {
+        $data = salesOrder::where('customer', $customerId)->with('items')->get();
+        return response()->json($data);
+    }
+    
     public function postSalesInvoice(Request $request)
     {
         $salesInv = new salesInvoice();
@@ -451,9 +456,6 @@ class salesController extends Controller
         $tax = 10;
         $taxVat = $total * $tax / 100;
 
-        $tax = 10;
-        $taxVat = $total * $tax / 100;
-
         $data = [
             "title" => "SALES ORDER",
             "companyName" => $company->company_name,
@@ -636,9 +638,6 @@ class salesController extends Controller
             ];
             array_push($item, $data);
         }
-
-        $tax = 10;
-        $taxVat = $total * $tax / 100;
 
         $tax = 10;
         $taxVat = $total * $tax / 100;
