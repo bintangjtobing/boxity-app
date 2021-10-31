@@ -32,37 +32,32 @@
                                 <v-data-table :search="search" :headers="headers" multi-sort :items="inventoryItem"
                                     :items-per-page="10" class="elevation-1" group-by="customers.company_name">
                                     <template v-slot:[`item.status`]="{item}">
+                                        <div v-if="item.status===2">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><em
+                                                    class="fal fa-check-circle"></em>
+                                                &nbsp;Paid Off</span>
+                                        </div>
+                                        <div v-else-if="item.status===1">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-primary active text-capitalize"><em
+                                                    class="fal fa-times-circle"></em>
+                                                &nbsp;Not Yet Paid Off</span>
+                                        </div>
                                         <div v-if="item.status===0">
                                             <span class="rounded-pill userDatatable-content-status color-warning
-                                                bg-opacity-warning active text-capitalize"><i
-                                                    class="fal fa-exclamation-circle"></i>
+                                                bg-opacity-warning active text-capitalize"><em
+                                                    class="fal fa-exclamation-circle"></em>
                                                 &nbsp;Draft</span>
-                                        </div>
-                                        <div v-if="item.status===1">
-                                            <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i
-                                                    class="fal fa-check-circle"></i>
-                                                &nbsp;Approved</span>
-                                        </div>
-                                        <div v-if="item.status===2">
-                                            <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active text-capitalize"><i
-                                                    class="fal fa-times-circle"></i>
-                                                &nbsp;Canceled</span>
-                                        </div>
-                                        <div v-if="item.status===3">
-                                            <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i class="fal fa-link"></i>
-                                                &nbsp;PO Already Created</span>
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <a :href="`/report/sales/order/${item.so_number}`" target="_blank" class="view">
-                                            <i class="fad fa-print"></i></a>
+                                            <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
-                                            <i class="fad fa-eye"></i></router-link>
+                                            <em class="fad fa-eye"></em></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove" v-if="permissions.includes('DeleteSalesOrder')">
-                                            <i class="fad fa-trash"></i></a>
+                                            <em class="fad fa-trash"></em></a>
                                     </template>
                                 </v-data-table>
                             </div>

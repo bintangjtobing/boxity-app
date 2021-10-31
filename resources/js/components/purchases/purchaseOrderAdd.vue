@@ -258,6 +258,9 @@
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
+                                    <template v-slot:item.qtyOrdered="{ item }">
+                                        {{ item.qtyOrdered | toDecimal }} / {{ item.unit }}
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>
@@ -333,10 +336,12 @@
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
     import SelectSearch from "../item/selectSearch.vue";
+    import VueNumeric from 'vue-numeric';
     export default {
         components: {
             'editor': Editor,
             selectSearch: SelectSearch,
+            VueNumeric
         },
         title() {
             return `New Purchase Order`;
@@ -577,7 +582,7 @@
                 this.customersGet = respCust.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/po/item-purchase');
+                const itemPurchasingData = await axios.get('/api/pos/item-purchase');
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
@@ -611,7 +616,6 @@
                     // console.log(response)
                     document.getElementById('ding').play();
                     this.purchaseOrderData.customerid = response.data.customerId;
-                    console.log(this.purchaseOrderData.customerid);
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

@@ -16,13 +16,9 @@ public/.DS_Store
 public/dashboard/img/author/profile
 public/storage
 public/mix-manifest.json
-<<<<<<< HEAD
-# public/css/app.css
-=======
-/public/js
-/public/css
+public/js
+public/css
 public/css/app.css
->>>>>>> d0dfb2a550139fed7d6ad015f9caa2473f352be9
 public/css/asset.css
 public/js/app.js
 public/js/resources_js_components_item_menuCollapse_vue.js
@@ -31,5 +27,8 @@ public/imagePublic/
 composer.lock
 .htaccess
 .user.ini
-.error_log
+error_log
 php.ini
+package-lock.json
+public/.htaccess
+public/js/app.js.LICENSE.txt

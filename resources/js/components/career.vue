@@ -13,45 +13,32 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div v-if="!careers.length">
-                    <div class="card card-default card-md mb-4">
-                        <div class="card-body">
-                            <div class="atbd-empty text-center">
-                                <div class="atbd-empty__image">
-
-                                    <img src="/dashboard/img/folders/1.svg" alt="Admin Empty">
-
-                                </div>
-                                <div class="atbd-empty__text">
-
-                                    <p class="">No job vacancy available here</p>
-
-                                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="userDatatable projectDatatable project-table bg-white border-0">
+                            <div class="table-responsive">
+                                <v-card-title>
+                                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..."
+                                        single-line hide-details></v-text-field>
+                                </v-card-title>
+                                <v-data-table :loading="loading" loading-text="Loading... Please wait..."
+                                    :search="search" :headers="headers" multi-sort :items="careers" :items-per-page="10"
+                                    show-expand class="elevation-1">
+                                    <template v-slot:[`item.actions`]="{item}">
+                                        <router-link :to="`/career/${item.id}`" class="edit">
+                                            <i class="fad fa-eye"></i></router-link>
+                                        <a v-on:click="deleteCareer(item.id)" class="remove">
+                                            <i class="fad fa-trash"></i></a>
+                                    </template>
+                                    <template v-slot:expanded-item="{ headers,item }">
+                                        <td :colspan="headers.length">
+                                            <div v-html="item.description"></div>
+                                        </td>
+                                    </template>
+                                </v-data-table>
                             </div>
-
-
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-25" v-for="career in careers" :key="career.id">
-                <div class="feature-cards">
-                    <figure class="feather-cards__figure">
-                        <figcaption>
-                            <router-link :to="`/career/${career.id}`">
-                                <h4>{{career.title}}</h4>
-                            </router-link>
-                            <p v-if="career.description.length < 125" v-html="career.description"></p>
-                            <p v-if="career.description.length >= 125" v-html="career.description.substring(0,125)+`
-                                ...`">
-                            </p>
-                            <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                                <a @click="deleteCareer(career.id)" class="remove">
-                                    <i class="fal fa-times"></i>
-                                </a>
-                            </div>
-                        </figcaption>
-                    </figure>
                 </div>
             </div>
         </div>
@@ -69,7 +56,25 @@
         },
         data() {
             return {
-                careers: {},
+                search: '',
+                key: 1,
+                loading: true,
+                headers: [{
+                    text: 'Job Title',
+                    value: 'title'
+                }, {
+                    text: 'Location',
+                    value: 'location'
+                }, {
+                    text: 'Department',
+                    value: 'divisi'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
+                careers: [],
             }
         },
         mounted() {
@@ -98,7 +103,7 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('api/career/' + id);
                     this.loadCareers();
                     document.getElementById('ding').play();
@@ -108,7 +113,7 @@
                         text: 'Success deleted current job vacancy'
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }
             },
         },

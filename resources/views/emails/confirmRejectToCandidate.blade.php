@@ -145,7 +145,8 @@
                                                         Thanks for your interest in the
                                                         {{$candidate->posisi()->first()->title}}
                                                         position at
-                                                        {{$company->company_name}} in {{$candidate->posisi()->first()->location}}.
+                                                        {{$company->company_name}} in
+                                                        {{$candidate->posisi()->first()->location}}.
                                                         Unfortunately, we will not be moving forward with
                                                         your application but we appreciate your time and interest in
                                                         {{$company->company_name}}.
@@ -159,9 +160,7 @@
                                                         <span style="">Don't reply this email. <br>
                                                             If you have any questions or need help, please do not
                                                             hesitate to contact us. <br><br>
-                                                            Best regards, <br>
-                                                            Support System {{$company->company_name}}
-                                                            <br><br>
+
                                                             E-mail: <a
                                                                 href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
                                                             @if ($company->phone)

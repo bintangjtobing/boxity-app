@@ -23,4 +23,8 @@ class salesOrder extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function items()
+    {
+        return $this->hasMany(itemsSales::class, 'salesingId', 'so_number');
+    }
 }
