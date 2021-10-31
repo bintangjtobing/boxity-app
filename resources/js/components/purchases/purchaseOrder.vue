@@ -7,7 +7,7 @@
                     <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreatePurchaseOrder')">
                         <div class="action-btn">
                             <router-link to="/purchase/order/add" class="btn btn-sm btn-primary-boxity btn-add">
-                                <i class="las la-plus fs-16"></i>New Purchase Order</router-link>
+                                <em class="las la-plus fs-16"></em>New Purchase Order</router-link>
                         </div>
                     </div>
                 </div>
@@ -26,41 +26,46 @@
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
                                     class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:[`item.status`]="{item}">
-                                        <div v-if="item.status===0">
-                                            <span class="rounded-pill userDatatable-content-status color-warning
-                                                bg-opacity-warning active text-capitalize"><i
-                                                    class="fal fa-exclamation-circle"></i>
-                                                &nbsp;Draft</span>
-                                        </div>
-                                        <div v-if="item.status===1">
+                                        <div v-if="item.status===1 && item.paidOff">
                                             <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i
-                                                    class="fal fa-check-circle"></i>
+                                                bg-opacity-success active text-capitalize"><em class="fal fa-check-circle"></em>
+                                                &nbsp;Paid Off</span>
+                                        </div>
+                                        <div v-else-if="item.status===1 && !item.paidOff">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><em class="fal fa-times-circle"></em>
+                                                &nbsp;Not Yet Paid Off</span>
+                                        </div>
+                                        <div v-else-if="item.status===1">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><em
+                                                    class="fal fa-check-circle"></em>
                                                 &nbsp;Approved</span>
                                         </div>
-                                        <div v-if="item.status===2">
-                                            <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active text-capitalize"><i
-                                                    class="fal fa-times-circle"></i>
-                                                &nbsp;Canceled</span>
+                                        <div v-else-if="item.status===0">
+                                            <span class="rounded-pill userDatatable-content-status color-warning
+                                                bg-opacity-warning active text-capitalize"><em
+                                                    class="fal fa-exclamation-circle"></em>
+                                                &nbsp;Draft</span>
                                         </div>
-                                        <div v-if="item.status===3">
-                                            <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i class="fal fa-link"></i>
-                                                &nbsp;PO Already Created</span>
+                                        <div v-else-if="item.status===2">
+                                            <span class="rounded-pill userDatatable-content-status color-danger
+                                                bg-opacity-danger active text-capitalize"><em
+                                                    class="fal fa-times-circle"></em>
+                                                &nbsp;Canceled</span>
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="approvePO(item.po_number)" class="create"
                                             v-if="item.status=='0'">
-                                            <i class="far fa-thumbs-up"></i> Approve</a>
+                                            <em class="far fa-thumbs-up"></em> Approve</a>
                                         <a :href="`/report/purchase/order/${item.po_number}`" target="_blank"
                                             v-if="item.status!=0" class="view">
-                                            <i class="fad fa-print"></i></a>
+                                            <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/purchase/order/${item.po_number}`" class="edit">
-                                            <i class="fad fa-eye"></i></router-link>
+                                            <em class="fad fa-eye"></em></router-link>
                                         <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove" v-if="permissions.includes('DeletePurchaseOrder')">
-                                            <i class="fad fa-trash"></i></a>
+                                            <em class="fad fa-trash"></em></a>
                                     </template>
                                 </v-data-table>
                             </div>

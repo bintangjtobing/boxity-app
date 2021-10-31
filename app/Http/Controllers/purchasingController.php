@@ -43,16 +43,31 @@ class purchasingController extends Controller
     public function getPurchaseOrder()
     {
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
+        $data = [];
         if (count($getUserIdOnCustomer) > 0) {
             $ids = [];
             foreach ($getUserIdOnCustomer as $key) {
                 $ids[] = $key->company_id;
             }
-            $po = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
-            return $po;
+            $data = purchaseOrder::where('created_by', Auth::id())->whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'item', 'createdBy')->orderBy('created_at', 'DESC')->get();
         } else {
-            return purchaseOrder::with('suppliers', 'warehouse', 'createdBy')->orderBy('created_at', 'DESC')->get();
+            $data = purchaseOrder::with('suppliers', 'warehouse', 'createdBy', 'item')->orderBy('created_at', 'DESC')->get();
         }
+        foreach ($data as $elm) {
+            $temp = null;
+            if (empty($elm['item']['qtyShipped'])) {
+                if (empty($elm['item']['qtyReturns']) || $elm['item']['qtyReturns'] == $elm['item']['qtyShipped']) {
+                    $temp = true;
+                }
+                else {
+                    $temp = false;
+                }
+            }
+            unset($elm['item']);
+            $elm['paidOff'] = $temp;
+        }
+        
+        return response()->json($data, 200);
     }
     public function getPoWithCustomerId($id)
     {

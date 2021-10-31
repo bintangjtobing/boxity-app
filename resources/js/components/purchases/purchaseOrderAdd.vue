@@ -611,7 +611,6 @@
                     // console.log(response)
                     document.getElementById('ding').play();
                     this.purchaseOrderData.customerid = response.data.customerId;
-                    console.log(this.purchaseOrderData.customerid);
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

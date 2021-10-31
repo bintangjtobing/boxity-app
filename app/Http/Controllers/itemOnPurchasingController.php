@@ -44,14 +44,14 @@ class itemOnPurchasingController extends Controller
     // }
     public function postItemPurchasePO(Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
-            ->where('id', '=', $request->itemid)
-            ->update([
-                'inventory_items.price' => $request->currentPrice,
-            ]);
+        if (empty($request->itemid)) {
+            DB::table('inventory_items')
+                ->where('id', '=', $request->itemid)
+                ->update(['inventory_items.price' => $request->currentPrice]);
+        }
 
         $ItemPurchasing = new itemsPurchase();
-        $ItemPurchasing->item_code = $request->itemid;
+        $ItemPurchasing->item_code = $request->itemid ?? null;
         $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
         $ItemPurchasing->qtyShipped = '0';
         $ItemPurchasing->unit = $request->unit;
@@ -145,11 +145,9 @@ class itemOnPurchasingController extends Controller
     }
     public function postItemPurchasePI(Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
+        DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
-            ->update([
-                'inventory_items.price' => $request->currentPrice,
-            ]);
+            ->update(['inventory_items.price' => $request->currentPrice]);
 
         $ItemPurchasing = new itemsPurchase();
         $ItemPurchasing->item_code = $request->itemid;

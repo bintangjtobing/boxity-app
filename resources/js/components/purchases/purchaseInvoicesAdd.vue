@@ -29,62 +29,67 @@
                                 </span>
                             </div>
                         </div>
-                        <div v-show="isShow.colapse">
+                        <div v-show="isShow.colapse">                            
                             <div class="form-row">
-                                <div class="col-lg-2">
+                                <div class="col-lg">
                                     <div class="form-group">
                                         <span>Customer:</span>
                                         <selectSearch v-model="selected.customer" v-bind="{
-                          datas: customersGet,
-                          width: '100%',
-                          name: 'company_name',
-                          placeholder: 'Select Customer',
-                          isDisable: isDisable.customerSelected,
-                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                            datas: customersGet,
+                                            width: '100%',
+                                            name: 'company_name',
+                                            placeholder: 'Select Customer',
+                                            isDisable: isDisable.customerSelected,
+                                        }" @dataSelected="onCustomerSelected"/>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-2" v-show="isShow.formPO">
                                     <div class="form-group">
                                         <span>Select PO:</span>
                                         <selectSearch v-model="selected.PO" v-bind="{
-                          datas: purchaseOrderGet,
-                          width: '100%',
-                          name: 'po_number',
-                          placeholder: 'Select Purchase Order',
-                          isDisable: isDisable.POSelected,
-                        }" @dataSelected="onPOSelected"></selectSearch>
+                                            datas: purchaseOrderGet,
+                                            width: '100%',
+                                            name: 'po_number',
+                                            placeholder: 'Select Purchase Order',
+                                            isDisable: isDisable.POSelected,
+                                        }" @dataSelected="onPOSelected"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>To warehouse:</span>
                                         <selectSearch v-model="selected.warehouse" v-bind="{
-                          datas: warehouse,
-                          width: '100%',
-                          name: 'warehouse_name',
-                          isDisable: isDisable.warehouseSelected,
-                          placeholder: 'Select Warehouse',
-                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                            datas: warehouse,
+                                            width: '100%',
+                                            name: 'warehouse_name',
+                                            isDisable: isDisable.warehouseSelected,
+                                            placeholder: 'Select Warehouse',
+                                        }" @dataSelected="onWarehouseSelected"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <selectSearch v-model="selected.item" v-bind="{
-                          datas: items,
-                          width: '100%',
-                          name: 'item_name',
-                          group: 'warehouse_code',
-                          isDisable: isDisable.select,
-                          placeholder: 'Select Item',
-                        }" @dataSelected="onItemSelected"></selectSearch>
-                                        <span class="float-right"><abbr title="Add new item">Don't see the item you're
-                                                looking for?</abbr>
-                                            <router-link :to="'/inventory-item'">
-                                                Add new item here</router-link>
+                                            datas: items,
+                                            width: '100%',
+                                            name: 'item_name',
+                                            group: 'warehouse_code',
+                                            isDisable: isDisable.select,
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelected"/>
+                                        <span class="float-right">
+                                            <abbr title="Add new item">Don't see the item you'relooking for?</abbr>
+                                            <router-link :to="'/inventory-item'">Add new item here</router-link>
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="checkbox-theme-default custom-checkbox ">
+                                <input v-model="isShow.formPO" class="checkbox" type="checkbox" id="check-1">
+                                <label for="check-1">
+                                    <span class="checkbox-text">Need Purchase Order?</span>
+                                </label>
                             </div>
                             <div class="form-row">
                                 <div class="col-lg-2">
@@ -480,6 +485,7 @@
                 expanded: [],
                 isShow: {
                     colapse: true,
+                    formPO: true
                 },
                 isWriteForm: false,
                 isModifyForm: false,
@@ -671,6 +677,7 @@
                 this.itemAdd = {
                     customerid: getCustDataSelected.data.id,
                 }
+                    this.isDisable.warehouseSelected = false;
                 // console.log('customer id selected: ', this.itemAdd.customerid);
                 // console.log(this.itemAdd.customerid);
                 this.purchaseOrderGet = getPoCustomerSelected.data;
@@ -679,7 +686,12 @@
                 const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
                 this.warehouse = warehouseData.data;
                 this.isDisable.POSelected = false;
-                // console.log(param);
+                // if (this.isShow.formPO) {
+                    // this.isDisable.select = false;
+                    // const getWarehouse = await axios.get('/api/warehouse-customer/' + idCustGet);
+                    // const warehouseData = await axios.get('/api/inventory-item/w/' + getWarehouse.data.warehouse.id +
+                    // '/' + param.customerId);
+                // }
             },
             async addToList() {
                 console.log(this.itemAdd);
