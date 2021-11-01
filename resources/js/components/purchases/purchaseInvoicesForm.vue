@@ -13,14 +13,16 @@
             </div>
         </div>
         <div class="row">
-            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
-                    class="fad fa-arrow-left"></i></span>
-            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
-                    class="fad fa-sync"></i></span>
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center">
+                <em class="fad fa-arrow-left"></em>
+            </span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center">
+                <em class="fad fa-sync"></em>
+            </span>
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}"
+            <div class="col-lg-12" :class="{unvisible: false}"
                 v-if="permissions.includes('EditPurchaseInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -107,8 +109,7 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared
-                                                px-30">Add to lists</button>
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared px-30">Add to lists</button>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +118,7 @@
                 </div>
             </div>
             <!-- Form Modify -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleModifyForm}">
+            <div class="col-lg-12" :class="{unvisible: false}">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -219,8 +220,8 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <button @click="activeAddForm" v-if="permissions.includes('CreatePurchaseInvoice')"
-                            class="btn btn-secondary-boxity float-left btn-default btn-squared"><span><i
-                                    class="fal fa-plus-circle"></i></span>&nbsp; Add item</button>
+                            class="btn btn-secondary-boxity float-left btn-default btn-squared"><span>
+                                <em class="fal fa-plus-circle"></em></span>&nbsp; Add item</button>
                         <div class="userDatatable projectDatatable project-table bg-white border-0">
                             <div class="table-responsive">
                                 <v-card-title>
@@ -228,12 +229,12 @@
                                         single-line hide-details>
                                     </v-text-field>
                                 </v-card-title>
-                                <v-data-table :search="search" :loading="itemPurchasingData.length"
+                                <v-data-table :search="search" :loading="loading"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemPurchasingData" :items-per-page="10" class="elevation-1">
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
-                                            <i class="fad fa-edit"></i></a>
+                                            <em class="fad fa-edit"></em></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -324,7 +325,7 @@
                                 </div>
                                 <div class="col-7 text-right">
                                     <a :href="`/report/purchase/invoices/${purchaseInvoiceData.pi_number}`" class="btn btn-secondary float-right btn-warning btn-squared
-                                                px-30 mx-2"><i class="fad fa-print"></i>&nbsp;Print</a>
+                                                px-30 mx-2"><em class="fad fa-print"></em>&nbsp;Print</a>
                                     <button v-bind:disabled="checkedPI === false" v-on:click="submitHandle"
                                         v-on:keyup.enter="submitHandle" class="btn btn-primary-boxity float-right btn-default btn-squared
                                                 px-30">Update</button>
@@ -340,15 +341,18 @@
 <script>
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
+    import SelectSearch from "../item/selectSearch.vue";
     export default {
         components: {
-            'editor': Editor
+            'editor': Editor,
+            selectSearch: SelectSearch,
         },
         title() {
             return `Purchase Invoice`;
         },
         data() {
             return {
+                loading: true,
                 isWriteForm: false,
                 isShow: {
                     colapse: false,
@@ -425,6 +429,13 @@
                         sortable: false
                     }
                 ],
+                selected: {
+                    customer: '',
+                    warehouse: '',
+                    item: ''
+                },
+                customersGet: [],
+                itemsGet: [],
                 countItems: '0',
                 permissions: []
             }
@@ -500,13 +511,14 @@
                 this.warehouse = respWarehouse.data;
                 const itemPurchasingData = await axios.get('/api/pi/item-purchase/' + this.$route.params.pi_number);
                 this.itemPurchasingData = itemPurchasingData.data;
-                const purchasingOrderData = await axios.get('/api/purchase/invoices/' + this.$route.params
-                    .pi_number);
+                const purchasingOrderData = await axios.get('/api/purchase/invoices/' + this.$route.params.pi_number);
                 this.purchaseInvoiceData = purchasingOrderData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
+                const respCust = await axios.get("/api/customers");
+                this.customersGet = respCust.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
@@ -514,6 +526,7 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/pi/item-purchases/' + id);
+                this.$isLoading(false);
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
@@ -523,7 +536,6 @@
                 this.titleItemDescription = 'Modify Purchase Invoice Items';
                 window.scrollTo(0, 0);
                 // this.$Progress.finish();
-                this.$isLoading(false);
             },
             async modifyItemList() {
                 // this.$Progress.start();

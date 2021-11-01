@@ -215,7 +215,6 @@ class purchasingController extends Controller
                 $ids[] = $key->company_id;
             }
             $data = purchaseInvoice::whereIn('customerId', $ids)->with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
-            return $pi;
         } else {
             $data = purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         }
