@@ -36,12 +36,10 @@ class itemOnPurchasingController extends Controller
     }
 
     // ITEM ON PURCHASE ORDER
-    // public function getItemPurchasesPO()
-    // {
-    //     // return response()->json(itemsPurchase::with('item', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
-    //     // return response()->json(itemsPurchase::get());
-    //     // return 0;
-    // }
+    public function getItemPurchasesPO()
+    {
+        return response()->json(itemsPurchase::with('item', 'requestedBy')->orderBy('created_at', 'DESC')->where('po_status', 1)->where('created_by', Auth::id())->get());
+    }
     public function postItemPurchasePO(Request $request)
     {
         if (empty($request->itemid)) {
@@ -177,7 +175,7 @@ class itemOnPurchasingController extends Controller
     }
     public function postItemPurchaseByPiNumber($pi_number, Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
+        DB::table('inventory_items')
             ->where('id', '=', $request->itemid)
             ->update([
                 'inventory_items.price' => $request->currentPrice,

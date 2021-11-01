@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: false}"
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}"
                 v-if="permissions.includes('EditPurchaseInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -40,35 +40,73 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <span>Customer:</span>
+                                        <selectSearch v-model="selected.customer" v-bind="{
+                                            datas: customersGet,
+                                            width: '100%',
+                                            name: 'company_name',
+                                            placeholder: 'Select Customer',
+                                        }" @dataSelected="onCustomerSelected"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>To warehouse:</span>
+                                        <selectSearch v-model="selected.warehouse" v-bind="{
+                                            datas: warehouse,
+                                            width: '100%',
+                                            name: 'warehouse_name',
+                                            isDisable: isDisable.warehouseSelected,
+                                            placeholder: 'Select Warehouse',
+                                        }" @dataSelected="onWarehouseSelected"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <select :disabled="isWriteForm" v-model="itemAdd.itemid"
-                                            @change="onItemSelected($event)" class="form-control form-control-default">
-                                            <option value="" disabled>Select item:</option>
-                                            <option v-for="items in items" :key="items.id" :value="items.id">
-                                                {{items.item_name}}</option>
-                                        </select>
+                                        <selectSearch v-model="selected.item" v-bind="{
+                                            datas: items,
+                                            width: '100%',
+                                            name: 'item_name',
+                                            group: 'warehouse_code',
+                                            isDisable: isDisable.select,
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelected"/>
+                                        <span class="float-right">
+                                            <abbr title="Add new item">Don't see the item you'relooking for?</abbr>
+                                            <router-link :to="'/inventory-item'">Add new item here</router-link>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Ordered:</span>
-                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.qtyOrdered"
-                                            @change="onAddQtyInc" @input="onAddQtyInc" placeholder="0" id="" min="0"
-                                            max="10000" step="1" class="form-control">
+                                        <span>Weight In:</span>
+                                        <input type="number" v-model="itemAdd.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
-                                        <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
-                                            max="10000" step="1" :disabled="isWriteForm" class="form-control">
+                                        <span>Weight Out:</span>
+                                        <input type="number" v-model="itemAdd.weightOut" placeholder="0" id="" min="0"
+                                            @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
+                                            step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
                                         <input type="text" v-model="itemAdd.unit" id="" class="form-control" readonly>
@@ -77,9 +115,9 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Price:</span>
-                                        <input type="number" :disabled="isWriteForm" v-model="itemAdd.currentPrice"
-                                            @change="onAddPriceChange" @input="onAddPriceChange" class="form-control"
-                                            min="0" max="9999999" step="250" />
+                                        <input type="number" v-model="itemAdd.currentPrice" @change="onPriceChange"
+                                            @input="onPriceChange" class="form-control" min="0" max="9999999" step="250"
+                                            :disabled="isWriteForm" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -94,15 +132,30 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Purpose:</span>
-                                        <input type="text" :disabled="isWriteForm" v-model="itemAdd.purpose" id=""
+                                        <input type="text" v-model="itemAdd.purpose" id="" class="form-control"
+                                            :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Driver Name:</span>
+                                        <input type="text" v-model="itemAdd.driver_name" placeholder="Driver's name"
                                             class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Vehicle No:</span>
+                                        <input type="text" v-model="itemAdd.driver_nopol" class="form-control"
+                                            placeholder="ex: BK 0000 ABC">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <span>Remarks:</span>
-                                        <textarea v-model="itemAdd.remarks" :disabled="isWriteForm" class="form-control"
-                                            id="" cols="30" rows="2"></textarea>
+                                        <textarea v-model="itemAdd.remarks" class="form-control" id="" cols="30"
+                                            rows="2" :disabled="isWriteForm">
+                                            </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +171,7 @@
                 </div>
             </div>
             <!-- Form Modify -->
-            <div class="col-lg-12" :class="{unvisible: false}">
+            <div class="col-lg-12" :class="{unvisible: isVisibleModifyForm}">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -135,7 +188,21 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Customer:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.customer" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Warehouse:</span>
+                                        <input v-bind:disabled="checkedItem === false" type="text"
+                                            v-model="itemModify.warehouse" id="" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <input v-bind:disabled="checkedItem === false" type="text"
@@ -146,43 +213,47 @@
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Ordered:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="number"
-                                            v-model="itemModify.qtyOrdered" @change="onModifyQtyInc"
-                                            @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
-                                            class="form-control">
+                                        <span>Weight In:</span>
+                                        <input type="number" v-model="itemModify.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <span>Quantity Shipped:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="number"
-                                            v-model="itemModify.qtyShipped" placeholder="0" id="" min="0" max="10000"
-                                            step="1" class="form-control">
+                                        <span>Weight Out:</span>
+                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id="" min="0"
+                                            @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
+                                            step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                            </div>
+                            <div class="form-row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input type="number" v-model="itemModify.qtyShipped" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="text"
-                                            v-model="itemModify.unit" id="" class="form-control" readonly>
+                                        <input type="text" v-model="itemModify.unit" id="" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Price:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="number"
-                                            v-model="itemModify.currentPrice" @change="onModifyPriceChange"
-                                            @input="onModifyPriceChange" class="form-control" min="0" max="9999999"
-                                            step="250" />
+                                        <input type="number" v-model="itemModify.currentPrice" @change="onPriceChange"
+                                            @input="onPriceChange" class="form-control" min="0" max="9999999" step="250"
+                                            :disabled="isWriteForm" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Line total:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="number"
-                                            v-model="itemModify.price" class="form-control" min="0.00" max="10000.00"
-                                            step="0.01" readonly />
+                                        <input type="number" v-model="itemModify.price" class="form-control" min="0.00"
+                                            max="10000.00" step="0.01" readonly />
                                     </div>
                                 </div>
                             </div>
@@ -190,15 +261,30 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <span>Purpose:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="text"
-                                            v-model="itemModify.purpose" id="" class="form-control">
+                                        <input type="text" v-model="itemModify.purpose" id="" class="form-control"
+                                            :disabled="isWriteForm">
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Driver Name:</span>
+                                        <input type="text" v-model="itemModify.driver_name" placeholder="Driver's name"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Vehicle No:</span>
+                                        <input type="text" v-model="itemModify.driver_nopol" class="form-control"
+                                            placeholder="ex: BK 0000 ABC">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <span>Remarks:</span>
-                                        <textarea v-bind:disabled="checkedItem === false" v-model="itemModify.remarks"
-                                            class="form-control" id="" cols="30" rows="2"></textarea>
+                                        <textarea v-model="itemModify.remarks" class="form-control" id="" cols="30"
+                                            rows="2" :disabled="isWriteForm">
+                                            </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -378,6 +464,7 @@
                 },
                 itemAdd: {
                     itemid: '',
+                    qtyShipped : 0,
                     qtyOrdered: '0',
                     unit: '',
                     currentPrice: '0',
@@ -430,14 +517,19 @@
                     }
                 ],
                 selected: {
-                    customer: '',
-                    warehouse: '',
-                    item: ''
+                    item: "",
+                    usedBy: "",
+                    customer: "",
                 },
                 customersGet: [],
                 itemsGet: [],
                 countItems: '0',
-                permissions: []
+                permissions: [],
+                isDisable: {
+                    select: true,
+                    warehouseSelected: true,
+                    customerSelected: true
+                },
             }
         },
         beforeMount() {
@@ -448,6 +540,31 @@
             this.loadLoggedUser();
         },
         methods: {
+            onPriceChange() {
+                this.itemAdd.price = parseInt(this.itemAdd.qtyOrdered) * parseInt(this.itemAdd.currentPrice);
+                this.itemModify.price = parseInt(this.itemModify.qtyOrdered) * parseInt(this.itemModify.currentPrice);
+            },
+            calculateNettWeight() {
+                this.itemAdd.qtyShipped = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+                this.itemModify.qtyShipped = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
+            },
+            async onCustomerSelected(param) {
+                this.selected.customer = param.company_name;
+                this.itemAdd.customerid = param.id;
+                this.purchaseInvoiceData.customer = param.id;
+                const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
+                this.warehouse = warehouseData.data;
+                this.isDisable.warehouseSelected = false;
+            },
+            async onWarehouseSelected(param) {
+                this.itemAdd.warehouseid = param.id;
+                this.itemModify.warehouseid = param.id;
+                this.selected.warehouse = param.warehouse_name;
+                this.purchaseInvoiceData.deliver_to = param.id;
+                const itemDataGet = await axios.get('/api/inventory-item/w/' + param.id + '/' + this.itemAdd.customerid);
+                this.items = itemDataGet.data;
+                this.isDisable.select = false;
+            },
             routerBack() {
                 this.$router.go(-1)
             },
@@ -470,17 +587,15 @@
             },
             // on CHange Attribute
             async onItemSelected(event) {
-                const getId = event.target.value;
-                // this.$Progress.start();
-                this.$isLoading(true);
+                const getId = event.id;
+                this.selected.item = `[${event.warehouse_code}][${event.item_code}] - ${event.item_name}`;
                 const getItemDataSelected = await axios.get('/api/inventory-item/' + getId);
-                this.itemAdd.itemid = getItemDataSelected.data.id;
-                // this.$Progress.finish();
-                this.$isLoading(false);
                 this.itemAdd = {
+                    ...this.itemAdd,
+                    item_code: event.item_code,
                     unit: getItemDataSelected.data.unit,
                     currentPrice: getItemDataSelected.data.price,
-                    itemid: getItemDataSelected.data.id,
+                    itemid: getId
                 }
             },
             onModifyQtyInc() {
@@ -500,6 +615,7 @@
                 this.titleItemDescription = 'Add Purchase Invoice Items';
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
+                this.isShow.colapse = true;
             },
             async loadData() {
                 // this.$Progress.start();
@@ -523,19 +639,28 @@
                 this.$isLoading(false);
             },
             async modifyItemPurchasing(id) {
-                // this.$Progress.start();
-                this.$isLoading(true);
                 const resp = await axios.get('/api/pi/item-purchases/' + id);
-                this.$isLoading(false);
+                console.log(resp)
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
                 this.itemModify.item_name = resp.data.item.item_name;
-                this.itemModify.used_by = resp.data.used_by.id;
+                this.itemModify.customer = resp.data.customer.company_name;
+                this.itemModify.warehouse = resp.data.warehouse.warehouse_name;
                 this.itemModify.itemid = resp.data.item.id;
+                this.itemModify.weightIn = resp.data.weightIn;
+                this.itemModify.weightOut = resp.data.weightOut;
+                this.itemModify.qtyShipped = resp.data.qtyShipped;
+                this.itemModify.unit = resp.data.unit;
+                this.itemModify.purpose = resp.data.purpose;
+                this.itemModify.driver_name = resp.data.driver_name;
+                this.itemModify.driver_nopol = resp.data.driver_nopol;
+                this.itemModify.remarks = resp.data.remarks;
                 this.titleItemDescription = 'Modify Purchase Invoice Items';
+                this.isVisibleAddForm = true;
+                this.isVisibleModifyForm = false;
+                this.isShow.colapse = true;
                 window.scrollTo(0, 0);
-                // this.$Progress.finish();
             },
             async modifyItemList() {
                 // this.$Progress.start();
@@ -567,9 +692,7 @@
             },
             async addToList() {
                 this.isWriteForm = true;
-                // this.$Progress.start();
                 this.$isLoading(true);
-                // console.log(this.itemAdd);
                 await axios.post('/api/pi/item-purchase/' + this.$route.params.pi_number, this.itemAdd).then(
                     response => {
                         document.getElementById('ding').play();
@@ -596,6 +719,11 @@
                 this.isVisibleModifyForm = false;
                 this.loadData();
                 this.isWriteForm = false;
+                this.selected = {
+                    item: "",
+                    usedBy: "",
+                    customer: "",
+                }
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
