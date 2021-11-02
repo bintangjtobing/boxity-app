@@ -640,7 +640,6 @@
             },
             async modifyItemPurchasing(id) {
                 const resp = await axios.get('/api/pi/item-purchases/' + id);
-                console.log(resp)
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;

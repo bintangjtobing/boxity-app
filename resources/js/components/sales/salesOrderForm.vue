@@ -195,15 +195,65 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateModifNettWeight"
+                                        @input="calculateModifNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
-                                        <span v-show="isShow.qtyItem" id="qtyItem">{{
-                      "(Quantity Item = " + qtyItem + ")"
-                    }}</span>
-                                        <input type="number" v-model="itemModify.qtyOrdered" @input="onModifyQtyInc"
-                                            placeholder="0" id="" min="0" max="10000" step="1" class="form-control" />
-                                        <span v-show="isShow.qty" id="qty">Tidak boleh lebih dari quantity item</span>
+                                        <span v-show="isShow.qtyItem"
+                                            id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <input type="number" v-model="itemAdd.qtyOrdered" @input="onQtyInc"
+                                            placeholder="" id="" min="0" max="10000" step="1" class="form-control"
+                                            required :disabled="isDisable.input" />
+                                        <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div>
+                                 -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Ordered/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.qtyOrdered"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -240,11 +290,11 @@
                                     <div class="form-group">
                                         <span>Used by:</span>
                                         <selectSearch v-model="selected.usedBy" v-bind="{
-                        datas: users,
-                        width: '100%',
-                        name: 'name',
-                        placeholder: 'Select Item',
-                      }" @dataSelected="onItemSelectedUsed"></selectSearch>
+                                            datas: users,
+                                            width: '100%',
+                                            name: 'name',
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelectedUsed"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -541,6 +591,9 @@
             },
         },
         methods: {
+            calculateModifNettWeight() {
+                this.itemModify.qtyOrdered = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
+            },
             activeAddForm: function () {
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
@@ -686,8 +739,6 @@
                 this.itemModify.item_name = `${resp.data.item.item_code} - ${resp.data.item.item_name}`;
                 this.itemModify.warehouseid = resp.data.warehouse.id;
                 this.itemModify.warehouse_name = resp.data.warehouse.warehouse_name;
-                this.selected.usedBy = `${resp.data.used.name}`;
-                this.itemModify.used_by = resp.data.used.id;
                 this.itemModify.itemid = resp.data.item.id;
                 this.titleItemDescription = "Modify Sales Order Items";
                 this.isVisibleAddForm = true;

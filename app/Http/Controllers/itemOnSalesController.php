@@ -49,7 +49,11 @@ class itemOnSalesController extends Controller
         $itemsSales->purpose = $request->purpose;
         $itemsSales->requested_by = Auth::id();
         $itemsSales->used_by = $request->used_by;
+        $itemsSales->warehouseid = $request->warehouseid;
         $itemsSales->remarks = $request->remarks;
+        $itemsSales->weightIn = $request->weightIn;
+        $itemsSales->weightOut = $request->weightOut;
+        
 
         $itemsSales->salesingId = $request->so_number ?? '0';
         $itemsSales->so_status = $request->so_status ?? '1';
