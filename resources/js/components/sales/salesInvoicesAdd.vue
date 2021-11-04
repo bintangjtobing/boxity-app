@@ -35,24 +35,24 @@
                                     <div class="form-group">
                                         <span>Customer:</span>
                                         <selectSearch v-model="selected.customer" v-bind="{
-                          datas: customersGet,
-                          width: '100%',
-                          name: 'company_name',
-                          placeholder: 'Select Customer',
-                          isDisable: isDisable.customerSelected,
-                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                            datas: customersGet,
+                                            width: '100%',
+                                            name: 'company_name',
+                                            placeholder: 'Select Customer',
+                                            isDisable: isDisable.customerSelected,
+                                        }" @dataSelected="onCustomerSelected"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>From warehouse:</span>
                                         <selectSearch v-model="selected.warehouse" v-bind="{
-                          datas: warehouse,
-                          width: '100%',
-                          name: 'warehouse_name',
-                          isDisable: isDisable.warehouseSelected,
-                          placeholder: 'Select Warehouse',
-                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                            datas: warehouse,
+                                            width: '100%',
+                                            name: 'warehouse_name',
+                                            isDisable: isDisable.warehouseSelected,
+                                            placeholder: 'Select Warehouse',
+                                        }" @dataSelected="onWarehouseSelected"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -64,7 +64,7 @@
                                             name: 'item_name',
                                             group: 'warehouse_code',
                                             placeholder: 'Select Item',
-                          isDisable: isDisable.select,
+                                            isDisable: isDisable.select,
                                         }" @dataSelected="onItemSelected" />
                                         <span class="float-right"><abbr title="Add new item">Don't see the item you're
                                                 looking for?</abbr>
@@ -75,7 +75,41 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateNettWeight"
+                                        @input="calculateNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Out <i class="far fa-sign-out"></i>:</span>
                                         <span v-show="qtyItem != null"
@@ -84,6 +118,21 @@
                                             @change="onQtyInc" @input="onQtyInc" placeholder="0" id="" min="0"
                                             max="10000" step="1" class="form-control">
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.qtyShipped"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -186,6 +235,40 @@
                             <div class="form-row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateModifNettWeight"
+                                        @input="calculateModifNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-2">
+                                    <div class="form-group">
                                         <span>Qty Out <i class="far fa-sign-out"></i>:</span>
                                         <span v-show="qtyItem != null"
                                             id="qtyItem">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
@@ -193,6 +276,21 @@
                                             @input="onQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.qtyShipped"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -462,6 +560,12 @@
             this.loadCustomers();
         },
         methods: {
+            calculateNettWeight() {
+                this.itemAdd.qtyShipped = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+            },
+            calculateModifNettWeight() {
+                this.itemModify.qtyShipped = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
+            },
             classRotate: function (param) {
                 return param ? "rotate" : "";
             },
@@ -594,6 +698,7 @@
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/si/item-saless/' + id);
+                console.log(resp)
                 this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
@@ -615,6 +720,7 @@
                 this.isWriteForm = true;
                 // this.$Progress.start();
                 this.$isLoading(true);
+                console.log(this.itemAdd)
                 await axios.post('/api/si/item-sales', this.itemAdd).then(response => {
                     document.getElementById('ding').play();
 

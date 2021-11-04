@@ -4,18 +4,18 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main user-member justify-content-sm-between">
                     <div class="
-              d-flex
-              flex-wrap
-              justify-content-center
-              breadcrumb-main__wrapper
-            ">
+                        d-flex
+                        flex-wrap
+                        justify-content-center
+                        breadcrumb-main__wrapper
+                    ">
                         <div class="
-                d-flex
-                align-items-center
-                user-member__title
-                justify-content-center
-                mr-sm-25
-              ">
+                            d-flex
+                            align-items-center
+                            user-member__title
+                            justify-content-center
+                            mr-sm-25
+                        ">
                             <h4 class="text-capitalize fw-500 breadcrumb-title">
                                 Sales Order <span>#{{ salesOrderData.so_number }}</span>
                             </h4>
@@ -48,22 +48,22 @@
                                         <div class="form-group col-lg-5">
                                             <span>From warehouse:</span>
                                             <selectSearch v-model="selected.warehouse" v-bind="{
-                          datas: warehouse,
-                          width: '100%',
-                          name: 'warehouse_name',
-                          placeholder: 'Select Item',
-                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                                datas: warehouse,
+                                                width: '100%',
+                                                name: 'warehouse_name',
+                                                placeholder: 'Select Item',
+                                            }" @dataSelected="onWarehouseSelected"></selectSearch>
                                         </div>
                                         <div class="form-group col-lg-5">
                                             <span>Item name:</span>
                                             <selectSearch v-model="selected.item" v-bind="{
-                          datas: items,
-                          width: '100%',
-                          name: 'item_name',
-                          group: 'item_code',
-                          isDisable: isDisable.select,
-                          placeholder: 'Select Item',
-                        }" @dataSelected="onItemSelected"></selectSearch>
+                                                datas: items,
+                                                width: '100%',
+                                                name: 'item_name',
+                                                group: 'item_code',
+                                                isDisable: isDisable.select,
+                                                placeholder: 'Select Item',
+                                            }" @dataSelected="onItemSelected"></selectSearch>
 
                                             <span class="float-left"><abbr title="Add new item">Don't see the item
                                                     you're looking for?</abbr>
@@ -79,8 +79,8 @@
                                     <div class="form-group">
                                         <span>Quantity:</span>
                                         <span v-show="isShow.qtyItem" id="qtyItem">{{
-                      "(Quantity Item = " + qtyItem + ")"
-                    }}</span>
+                                            "(Quantity Item = " + qtyItem + ")"
+                                        }}</span>
                                         <input type="number" v-model="itemAdd.qtyOrdered" @input="onQtyInc"
                                             placeholder="" id="" min="0" max="10000" step="1" class="form-control"
                                             required :disabled="isDisable.input" />
@@ -122,12 +122,12 @@
                                     <div class="form-group">
                                         <span>Used by:</span>
                                         <selectSearch v-model="selected.usedBy" v-bind="{
-                        datas: users,
-                        width: '100%',
-                        name: 'name',
-                        isDisable: isDisable.input,
-                        placeholder: 'Select Item',
-                      }" @dataSelected="onItemSelectedUsed"></selectSearch>
+                                            datas: users,
+                                            width: '100%',
+                                            name: 'name',
+                                            isDisable: isDisable.input,
+                                            placeholder: 'Select Item',
+                                        }" @dataSelected="onItemSelectedUsed"></selectSearch>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -142,11 +142,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button v-on:click="addToList" v-on:keyup.enter="addToList" class="
-                        btn btn-success
-                        float-right
-                        btn-default btn-squared
-                        px-30
-                      " :disabled="btndisable">
+                                            btn btn-success
+                                            float-right
+                                            btn-default btn-squared
+                                            px-30
+                                        " :disabled="btndisable">
                                             Add to lists
                                         </button>
                                     </div>

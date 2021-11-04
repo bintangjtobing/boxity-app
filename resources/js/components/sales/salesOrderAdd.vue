@@ -729,8 +729,6 @@
                 // Load data relation
                 const resp = await axios.get("/api/customers");
                 this.customer = resp.data;
-                const itemSalesData = await axios.get("/api/item-sales");
-                this.itemSalesData = itemSalesData.data;
                 const contactUsers = await axios.get("/api/contact-list");
                 this.users = contactUsers.data;
                 // this.$Progress.finish();

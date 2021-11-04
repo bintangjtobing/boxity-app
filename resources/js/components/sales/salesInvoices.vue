@@ -55,6 +55,7 @@
         data() {
             return {
                 // datatable
+                item: [],
                 search: '',
                 key: 1,
                 salesInvoiceData: [],

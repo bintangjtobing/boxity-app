@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\documentsDelivery;
 use App\itemsSales;
+use App\itemHistory;
 use App\itemOndocumentsDelivery;
 
 use App\Http\Controllers\Controller;
@@ -202,6 +203,8 @@ class itemOnSalesController extends Controller
         $itemSalesing->warehouseId = $request->warehouseid;
         $itemSalesing->driver_name = $request->driver_name;
         $itemSalesing->driver_nopol = $request->driver_nopol;
+        $itemSalesing->weightIn = $request->weightIn;
+        $itemSalesing->weightOut = $request->weightOut;
 
         // po status 1 means stored at database but not with the purchase order id;
         $itemSalesing->si_status = '1';
@@ -220,7 +223,7 @@ class itemOnSalesController extends Controller
 
         $itemSalesing = new itemsSales();
         $itemSalesing->item_code = $request->itemid;
-        $itemSalesing->qtyShipped = $request->qtyShipped;
+        $itemSalesing->qtyShipped = $request->qtyShipped ?? 0;
         $itemSalesing->unit = $request->unit;
         $itemSalesing->price = $request->price;
         $itemSalesing->remarks = $request->remarks;
@@ -239,7 +242,7 @@ class itemOnSalesController extends Controller
         $inputToHistory->itemOutId = $si_number;
         $inputToHistory->type = 1;
         $inputToHistory->date = $itemSalesing->created_at;
-        $inputToHistory->qtyIn = $itemSalesing->qtyShipped;
+        $inputToHistory->qtyIn = $itemSalesing->qtyShipped ?? 0;
         $inputToHistory->remarks = $itemSalesing->remarks;
         $inputToHistory->save();
         return response()->json($itemSalesing, 200);

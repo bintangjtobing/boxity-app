@@ -64,7 +64,6 @@
                         width: '100%',
                         name: 'company_name',
                         placeholder: 'Select Customer',
-                        isDisable: isDisable.customerSelected,
                       }"
                       @dataSelected="onCustomerSelected"
                     />

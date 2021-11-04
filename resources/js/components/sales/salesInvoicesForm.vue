@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="row">
-            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
-                    class="fad fa-arrow-left"></i></span>
-            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
-                    class="fad fa-sync"></i></span>
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center">
+                <em class="fad fa-arrow-left"></em></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center">
+                <em class="fad fa-sync"></em></span>
         </div>
         <div class="row">
             <!-- Form Add -->
@@ -37,27 +37,84 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>Customer:</span>
+                                        <selectSearch v-model="selected.customer" v-bind="{
+                                            datas: customersGet,
+                                            width: '100%',
+                                            name: 'company_name',
+                                            placeholder: 'Select Customer'
+                                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <span>From warehouse:</span>
+                                        <selectSearch v-model="selected.warehouse" v-bind="{
+                                            datas: warehouse,
+                                            width: '100%',
+                                            name: 'warehouse_name',
+                                            isDisable: isDisable.warehouseSelected,
+                                            placeholder: 'Select Warehouse',
+                                        }" @dataSelected="onWarehouseSelected"></selectSearch>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <selectSearch v-model="selected.item" v-bind="{
                                             datas: items,
                                             width: '100%' ,
                                             name: 'item_name',
-                                            group: 'item_code',
+                                            group: 'warehouse_code',
                                             placeholder: 'Select Item',
+                                            isDisable: isDisable.select,
                                         }" @dataSelected="onItemSelected" />
-                                        <!-- <select v-model="itemAdd.itemid" @change="onItemSelected($event)"
-                                            class="form-control form-control-default">
-                                            <option value="" disabled>Select item:</option>
-                                            <option v-for="items in items" :key="items.id" :value="items.id">
-                                                {{items.item_name}}</option>
-                                        </select> -->
+                                        <span class="float-right"><abbr title="Add new item">Don't see the item you're
+                                                looking for?</abbr>
+                                            <router-link :to="'/inventory-item'">
+                                                Add new item here</router-link>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateNettWeight"
+                                        @input="calculateNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
                                         <span v-show="qtyItem != null"
@@ -67,7 +124,20 @@
                                             class="form-control">
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemAdd.qtyShipped"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
@@ -328,7 +398,8 @@
                     qty: false
                 },
                 selected: {
-                    item: ""
+                    item: "",
+                    customer: ""
                 },
                 updateOnly: true,
                 checkedSI: false,
@@ -364,6 +435,7 @@
                 items: {},
                 users: {},
                 logged: {},
+                customersGet: {},
 
                 // Datatable
                 itemSalesingData: [],
@@ -396,6 +468,11 @@
                     //     sortable: false
                     // }
                 ],
+                isDisable: {
+                    select: true,
+                    input: true,
+                    warehouseSelected: true,
+                },
                 countItems: '0',
                 permissions: []
             }
@@ -408,6 +485,25 @@
             this.loadLoggedUser();
         },
         methods: {
+            calculateNettWeight() {
+                this.itemAdd.qtyOrdered = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+            },
+            async onWarehouseSelected(param) {
+                this.itemAdd.warehouseid = param.id;
+                this.itemModify.warehouseid = param.id;
+                this.selected.warehouse = param.warehouse_name;
+                this.isDisable.select = false;
+                const itemData = await axios.get('/api/inventory-item/w/' + param.id + "/" + this.itemAdd.customerid);
+                this.items = itemData.data;
+            },
+            async onCustomerSelected(param) {
+                this.itemAdd.customerid = param.id;
+                this.selected.customer = param.company_name;
+                this.isDisable.warehouseSelected = false;
+                const warehouseData = await axios.get('/api/warehouse-customers/' + param.id);
+                this.warehouse = warehouseData.data;
+                // console.log(param);
+            },
             routerBack() {
                 this.$router.go(-1)
             },
@@ -471,10 +567,10 @@
                 const salesInvoiceData = await axios.get('/api/sales/invoices/' + this.$route.params
                     .si_number);
                 this.salesInvoiceData = salesInvoiceData.data;
-                const itemsData = await axios.get('/api/inventory-item');
-                this.items = itemsData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
+                const customerData = await axios.get("/api/customers");
+                this.customersGet = customerData.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
