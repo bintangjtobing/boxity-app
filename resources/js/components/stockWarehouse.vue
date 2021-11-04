@@ -7,13 +7,23 @@
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="form-row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <div class="form-group">
                                 <span>Select customer:</span>
                                 <select v-model="req.customerid" class="form-control">
                                     <option value="">Select customer</option>
                                     <option v-for="customers in customers" :key="customers.id" :value="customers.id">
                                         {{customers.company_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <span>Select Warehouse:</span>
+                                <select v-model="req.customerid" class="form-control">
+                                    <option value="">Select warehouse</option>
+                                    <option v-for="warehouse in warehouse" :key="warehouse.id" :value="warehouse.id">
+                                        {{warehouse.warehouse_name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -80,6 +90,7 @@
                 },
                 // datatable
                 customers: {},
+                warehouse: {},
                 search: '',
                 key: 1,
                 reports: [{
@@ -89,9 +100,9 @@
                     supplier: 'Bungasari',
                     date_in: '10/10/2021',
                     location: 'GDG 1 CARGILL',
-                    beginning_stock: '60.000 kg (800 bag)',
+                    beginning_stock: '60.000 kg',
                     qty_received: '',
-                    qty_received_cum: '60.000 kg (800 bag)',
+                    qty_received_cum: '60.000 kg',
                     qty_delivery: '-',
                     qty_delivery_cum: '-',
                     qty_total: '',
@@ -102,9 +113,9 @@
                     supplier: 'Bungasari',
                     date_in: '13/10/2021',
                     location: 'GDG 1 CARGILL',
-                    beginning_stock: '60.000 kg (800 bag)',
-                    qty_received: '30.000 kg (400 bag)',
-                    qty_received_cum: '90.000 kg (1.200 bag)',
+                    beginning_stock: '60.000 kg',
+                    qty_received: '30.000 kg',
+                    qty_received_cum: '90.000 kg',
                     qty_delivery: '-',
                     qty_delivery_cum: '-',
                     qty_total: '',
@@ -115,9 +126,9 @@
                     supplier: 'Bungasari',
                     date_in: '09/10/2021',
                     location: 'GDG 1 CARGILL',
-                    beginning_stock: '30.000 kg (400 bag)',
+                    beginning_stock: '30.000 kg',
                     qty_received: '',
-                    qty_received_cum: '30.000 kg (400 bag)',
+                    qty_received_cum: '30.000 kg',
                     qty_delivery: '-',
                     qty_delivery_cum: '-',
                     qty_total: '',
@@ -128,9 +139,9 @@
                     supplier: 'Bungasari',
                     date_in: '10/10/2021',
                     location: 'GDG 1 CARGILL',
-                    beginning_stock: '30.000 kg (400 bag)',
-                    qty_received: '30.000 kg (400 bag)',
-                    qty_received_cum: '60.000 kg (800 bag)',
+                    beginning_stock: '30.000 kg',
+                    qty_received: '30.000 kg',
+                    qty_received_cum: '60.000 kg',
                     qty_delivery: '-',
                     qty_delivery_cum: '-',
                     qty_total: '',
@@ -146,10 +157,10 @@
                     text: 'PO No.',
                     value: 'po_number'
                 }, {
-                    text: 'Supplier',
+                    text: 'First Supplier In',
                     value: 'supplier'
                 }, {
-                    text: 'Date In',
+                    text: 'First Date In',
                     value: 'date_in'
                 }, {
                     text: 'Location',
@@ -185,6 +196,8 @@
                 this.$isLoading(true);
                 const resp = await axios.get('/api/customers');
                 this.customers = resp.data;
+                const respWareh = await axios.get('/api/warehouse');
+                this.warehouse = respWareh.data;
                 if (resp.data.length) {
                     this.loading = false;
                 }
