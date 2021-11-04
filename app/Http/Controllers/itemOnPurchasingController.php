@@ -8,6 +8,7 @@ use App\purchaseRequest;
 use App\purchaseReturn;
 use App\itemsPurchase;
 use App\itemHistory;
+use App\inventoryItem;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -226,32 +227,73 @@ class itemOnPurchasingController extends Controller
     }
     public function postItemPurchasePIById($id, Request $request)
     {
-        $itemPurchase = DB::table('inventory_items')
-            ->where('id', '=', $request->itemid)
-            ->update([
-                'inventory_items.price' => $request->currentPrice,
-            ]);
+        try {
+            $itemPurchase = DB::table('inventory_items')
+                ->where('id', '=', $request->itemid)
+                ->update([
+                    'inventory_items.price' => $request->currentPrice,
+                ]);
 
-        $ItemPurchasing = itemsPurchase::find($id);
-        $ItemPurchasing->item_code = $request->itemid;
-        $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
-        $ItemPurchasing->qtyShipped = $request->qtyShipped;
-        $ItemPurchasing->unit = $request->unit;
-        $ItemPurchasing->price = $request->price;
-        $ItemPurchasing->purpose = $request->purpose;
-        $ItemPurchasing->requested_by = Auth::id();
-        $ItemPurchasing->used_by = $request->used_by;
-        $ItemPurchasing->remarks = $request->remarks;
-        $ItemPurchasing->warehouseId = $request->warehouseid;
-        $ItemPurchasing->customerId = $request->customerid;
-        $ItemPurchasing->driver_name = $request->driver_name;
-        $ItemPurchasing->driver_nopol = $request->driver_nopol;
-        $ItemPurchasing->weightIn = $request->weightIn;
-        $ItemPurchasing->weightOut = $request->weightOut;
-        $ItemPurchasing->purchase_related = $request->poRelated;
-        $ItemPurchasing->updated_by = Auth::id();
-        $ItemPurchasing->save();
-        return response()->json($itemPurchase, 200);
+            $ItemPurchasing = itemsPurchase::find($id);
+            $ItemPurchasing->item_code = $request->itemid;
+            $ItemPurchasing->qtyOrdered = $request->qtyOrdered;
+            $ItemPurchasing->qtyShipped = $request->qtyShipped;
+            $ItemPurchasing->unit = $request->unit;
+            $ItemPurchasing->price = $request->price;
+            $ItemPurchasing->purpose = $request->purpose;
+            $ItemPurchasing->requested_by = Auth::id();
+            $ItemPurchasing->used_by = $request->used_by;
+            $ItemPurchasing->remarks = $request->remarks;
+            $ItemPurchasing->warehouseId = $request->warehouseid;
+            $ItemPurchasing->customerId = $request->customerid;
+            $ItemPurchasing->driver_name = $request->driver_name;
+            $ItemPurchasing->driver_nopol = $request->driver_nopol;
+            $ItemPurchasing->weightIn = $request->weightIn;
+            $ItemPurchasing->weightOut = $request->weightOut;
+            $ItemPurchasing->purchase_related = $request->poRelated;
+            $ItemPurchasing->updated_by = Auth::id();
+            $ItemPurchasing->save();
+
+            $getItemOnPI = itemsPurchase::where('purchasingId', $ItemPurchasing->purchasingId)->get();
+            if (count($getItemOnPI) > 0) {
+                foreach ($getItemOnPI as $getItemOnPi) {
+                    if ($getItemOnPi->qtyShipped) {
+                        $inputToHistory = new itemHistory();
+                        $inputToHistory->itemId = $getItemOnPi->item_code;
+                        $inputToHistory->itemInId = $getItemOnPi->purchasingId;
+                        $inputToHistory->type = 1;
+                        $inputToHistory->date = $getItemOnPi->created_at;
+                        $inputToHistory->qtyIn = $getItemOnPi->qtyShipped;
+                        $inputToHistory->remarks = $getItemOnPi->remarks;
+                        $inputToHistory->save();
+
+                        // Get inventory item related
+                        $itemRelated = inventoryItem::where('id', $getItemOnPi->item_code)->first();
+                        $getQtyItem = $itemRelated->qty;
+                        $getInputQtyValue = $getItemOnPi->qtyShipped;
+                        // Sum the value between get Qty Item and Get Value Inputted
+                        $sumQty = $getQtyItem + $getInputQtyValue;
+
+                        // Update to inventory item
+                        $getInventory = DB::table('inventory_items')
+                            ->where('id', $getItemOnPi->item_code)
+                            ->update(array(
+                                'qty' => $sumQty,
+                            ));
+                    }
+                    // dd($getItemOnPI);
+                }
+            }
+            // if jumlah qtyShipped = jumlah order qtyOrdered di PO {
+            //     $ItemPurchasingGet->status = 2;
+            //     }else{
+            // $ItemPurchasingGet->status = 1;
+            //     }
+            return response()->json($itemPurchase, 200);
+        } catch (Exception $e) {
+            dd($e);
+        }
+
         // return $request->itemid;
     }
     public function deleteItemPurchasePIById($id)

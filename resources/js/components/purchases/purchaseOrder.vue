@@ -4,7 +4,8 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Order<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreatePurchaseOrder')">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="permissions.includes('CreatePurchaseOrder')">
                         <div class="action-btn">
                             <router-link to="/purchase/order/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <em class="las la-plus fs-16"></em>New Purchase Order</router-link>
@@ -26,14 +27,16 @@
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
                                     class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:[`item.status`]="{item}">
-                                        <div v-if="item.status===1 && item.paidOff">
+                                        <div v-if="item.status===1 && item.paidOff==true">
                                             <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><em class="fal fa-check-circle"></em>
+                                                bg-opacity-success active text-capitalize"><em
+                                                    class="fal fa-check-circle"></em>
                                                 &nbsp;Paid Off</span>
                                         </div>
-                                        <div v-else-if="item.status===1 && !item.paidOff">
+                                        <div v-else-if="item.paidOff==false">
                                             <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><em class="fal fa-times-circle"></em>
+                                                bg-opacity-success active text-capitalize"><em
+                                                    class="fal fa-times-circle"></em>
                                                 &nbsp;Not Yet Paid Off</span>
                                         </div>
                                         <div v-else-if="item.status===1">
@@ -64,7 +67,8 @@
                                             <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/purchase/order/${item.po_number}`" class="edit">
                                             <em class="fad fa-eye"></em></router-link>
-                                        <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove" v-if="permissions.includes('DeletePurchaseOrder')">
+                                        <a v-on:click="deletePurchaseOrderItem(item.id)" class="remove"
+                                            v-if="permissions.includes('DeletePurchaseOrder')">
                                             <em class="fad fa-trash"></em></a>
                                     </template>
                                 </v-data-table>
@@ -124,7 +128,7 @@
                 permissions: []
             }
         },
-        beforeMount(){
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         created() {

@@ -666,7 +666,7 @@
                 this.$isLoading(true);
                 await axios.patch('/api/pi/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
                     document.getElementById('ding').play();
-
+                    
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

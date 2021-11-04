@@ -41,8 +41,7 @@
                                         </span>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <a :href="`/report/purchase/invoices/${item.pi_number}`" 
-                                            target="_blank"
+                                        <a :href="`/report/purchase/invoices/${item.pi_number}`" target="_blank"
                                             class="view">
                                             <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/purchase/invoices/${item.pi_number}`" class="edit">

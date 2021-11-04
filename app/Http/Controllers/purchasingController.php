@@ -56,17 +56,16 @@ class purchasingController extends Controller
         foreach ($data as $elm) {
             $temp = null;
             if (empty($elm['item']['qtyShipped'])) {
-                if (empty($elm['item']['qtyReturns']) || $elm['item']['qtyReturns'] == $elm['item']['qtyShipped']) {
+                if (empty($elm['item']['qtyOrdered']) || $elm['item']['qtyOrdered'] == $elm['item']['qtyShipped']) {
                     $temp = true;
-                }
-                else {
+                } else {
                     $temp = false;
                 }
             }
             unset($elm['item']);
             $elm['paidOff'] = $temp;
         }
-        
+
         return response()->json($data, 200);
     }
     public function getPoWithCustomerId($id)
@@ -219,10 +218,11 @@ class purchasingController extends Controller
             $data = purchaseInvoice::with('suppliers', 'warehouse', 'createdBy', 'item', 'customer')->orderBy('created_at', 'DESC')->get();
         }
         foreach ($data as $elm) {
-            $elm['hasPo'] = !empty($elm['item']['purchase_related']) ? true : false;
+            $elm['hasPo'] = !empty($elm['item']['purchasingId']) ? true : false;
             unset($elm['item']);
         }
         return response()->json($data, 200);
+        // return $getUserIdOnCustomer;
     }
     public function postPurchaseInvoice(Request $request)
     {
@@ -253,10 +253,10 @@ class purchasingController extends Controller
             ->update(array('purchasingId' => $purchasingOrd->pi_number, 'pi_status' => '2'));
 
         $getItemOnPI = itemsPurchase::where('purchasingId', $purchasingOrd->pi_number)->get();
-        // Jika item yang ada di PI lebih dari 1
+        // Jika item yang ada di PI lebih dari 0
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {
-                if (!empty($getItemOnPI->qtyShipped)) {
+                if ($getItemOnPi->qtyShipped) {
                     $inputToHistory = new itemHistory();
                     $inputToHistory->itemId = $getItemOnPi->item_code;
                     $inputToHistory->itemInId = $purchasingOrd->pi_number;
@@ -279,7 +279,8 @@ class purchasingController extends Controller
                         ->update(array(
                             'qty' => $sumQty,
                         ));
-                }
+                }else{}
+                // dd($getItemOnPI);
             }
         }
         return response($getItemOnPI);
