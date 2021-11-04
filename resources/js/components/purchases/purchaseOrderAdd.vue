@@ -577,7 +577,7 @@
                 this.customersGet = respCust.data;
                 const respWarehouse = await axios.get('/api/warehouse');
                 this.warehouse = respWarehouse.data;
-                const itemPurchasingData = await axios.get('/api/po/item-purchase');
+                const itemPurchasingData = await axios.get('/api/pos/item-purchase');
                 this.itemPurchasingData = itemPurchasingData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;

@@ -298,7 +298,7 @@ Route::get('/po/{id}', 'purchasingController@getPoWithCustomerId');
 
 // Item on Purchases Order
 Route::get('/po-item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
-Route::get('/po/item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
+Route::get('/pos/item-purchase', 'itemOnPurchasingController@getItemPurchasesPO');
 Route::post('/po/item-purchase', 'itemOnPurchasingController@postItemPurchasePO');
 Route::post('/po/item-purchase/{po_number}', 'itemOnPurchasingController@postItemPurchaseByPoNumber');
 Route::get('/po/item-purchase/{po_number}', 'itemOnPurchasingController@getItemPurchaseByPoNumber');
