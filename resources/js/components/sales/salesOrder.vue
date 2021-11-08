@@ -32,28 +32,23 @@
                                 <v-data-table :search="search" :headers="headers" multi-sort :items="inventoryItem"
                                     :items-per-page="10" class="elevation-1" group-by="customers.company_name">
                                     <template v-slot:[`item.status`]="{item}">
+                                        <div v-if="item.status===2">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-success active text-capitalize"><em
+                                                    class="fal fa-check-circle"></em>
+                                                &nbsp;Paid Off</span>
+                                        </div>
+                                        <div v-else-if="item.status===1">
+                                            <span class="rounded-pill userDatatable-content-status color-success
+                                                bg-opacity-primary active text-capitalize"><em
+                                                    class="fal fa-times-circle"></em>
+                                                &nbsp;Not Yet Paid Off</span>
+                                        </div>
                                         <div v-if="item.status===0">
                                             <span class="rounded-pill userDatatable-content-status color-warning
-                                                bg-opacity-warning active text-capitalize"><i
-                                                    class="fal fa-exclamation-circle"></i>
+                                                bg-opacity-warning active text-capitalize"><em
+                                                    class="fal fa-exclamation-circle"></em>
                                                 &nbsp;Draft</span>
-                                        </div>
-                                        <div v-if="item.status===1">
-                                            <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i
-                                                    class="fal fa-check-circle"></i>
-                                                &nbsp;Approved</span>
-                                        </div>
-                                        <div v-if="item.status===2">
-                                            <span class="rounded-pill userDatatable-content-status color-danger
-                                                bg-opacity-danger active text-capitalize"><i
-                                                    class="fal fa-times-circle"></i>
-                                                &nbsp;Canceled</span>
-                                        </div>
-                                        <div v-if="item.status===3">
-                                            <span class="rounded-pill userDatatable-content-status color-success
-                                                bg-opacity-success active text-capitalize"><i class="fal fa-link"></i>
-                                                &nbsp;PO Already Created</span>
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{ item }">

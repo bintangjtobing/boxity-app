@@ -33,7 +33,7 @@
                                                     class="fal fa-check-circle"></em>
                                                 &nbsp;Paid Off</span>
                                         </div>
-                                        <div v-else-if="item.paidOff==false">
+                                        <div v-else-if="item.status===1 && item.paidOff==false">
                                             <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><em
                                                     class="fal fa-times-circle"></em>

@@ -247,6 +247,7 @@ Route::patch('/inventory-item/{id}', 'apiController@postInventoryItemById');
 Route::get('/count-inventory-item', 'apiController@countInventoryItem');
 Route::delete('/inventory-item/{id}', 'apiController@deleteInventoryItemById');
 Route::get('/inventory-item/w/{id}/{customerid}', 'apiController@getInventoryByWarehouse');
+Route::get('/inventory-item/warehouse/{warehouseId}', 'apiController@getInventoryByWarehouseV2');
 
 // History Ittem
 Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
@@ -369,6 +370,7 @@ Route::get('/pre/count-item-purchase', 'itemOnPurchasingController@countItemPurc
 
 // Sales Order
 Route::get('/sales/order', 'salesController@getSalesOrder');
+Route::get('/sales/order/customer/{customerId}', 'salesController@getSalesOrderByCustomer');
 Route::post('/sales/order', 'salesController@postSalesOrder');
 Route::get('/sales/order/{id}', 'salesController@getSalesOrderById');
 Route::patch('/sales/order/{id}', 'salesController@postSalesOrderById');
@@ -389,7 +391,7 @@ Route::post('/si/item-sales', 'itemOnSalesController@postItemSalesSI');
 Route::post('/si/item-sales/{si_number}', 'itemOnSalesController@postItemSalesBySiNumber');
 Route::get('/si/item-sales/{si_number}', 'itemOnSalesController@getItemSalesBySiNumber');
 Route::get('/si/item-saless/{id}', 'itemOnSalesController@getItemSalesSIById');
-Route::patch('/si/item-sales/{id}', 'itemOnSalesController@postItemSalesSIById');
+Route::put('/si/item-sales/{id}', 'itemOnSalesController@postItemSalesSIById');
 Route::delete('/si/item-sales/{id}', 'itemOnSalesController@deleteItemSalesSIById');
 Route::get('/si/count-item-sales', 'itemOnSalesController@countItemSalesSI');
 ///////////////// SALES INVOICE END ///////////////////////////////////
