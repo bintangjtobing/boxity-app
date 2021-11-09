@@ -35,7 +35,7 @@ class salesController extends Controller
     // Sales Order
     public function getSalesOrder()
     {
-        return response()->json(salesOrder::with('customers')->where('type', '!=', 1)->with('createdby')->orderBy('created_at', 'DESC')->get());
+        return response()->json(salesOrder::with('customers', 'items')->where('type', '!=', 1)->with('createdby')->orderBy('created_at', 'DESC')->get());
     }
 
     public function getSalesOrderById($id)
@@ -117,12 +117,18 @@ class salesController extends Controller
             foreach ($getUserIdOnCustomer as  $x) {
                 $ids[] = $x->company_id;
             }
-            $query = salesInvoice::with('customers')->with('createdby')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
+            $query = salesInvoice::with('customers')->with('createdby', 'items')->whereIn('customer', $ids)->orderBy('created_at', 'DESC')->get();
         } else {
             $query = salesInvoice::with('customers', 'createdby', 'items')->orderBy('created_at', 'DESC')->get();
         }
         return response()->json($query, 200);
     }
+    
+    public function getSalesOrderByCustomer ($customerId) {
+        $data = salesOrder::where('customer', $customerId)->with('items')->get();
+        return response()->json($data);
+    }
+    
     public function postSalesInvoice(Request $request)
     {
         $salesInv = new salesInvoice();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 use App\User;
 use App\customers;
@@ -1588,8 +1589,14 @@ class apiController extends Controller
     }
 
     // Warehouse
-    public function getWarehouse()
+    public function getWarehouse(Request $request)
     {
+        if(!empty($request->id)) {
+            $id= preg_split("/[,]/", $request->id);
+            $data = warehouseList::whereIn('id', $id)->with('createdBy')->get();
+            return response()->json($data);
+        }
+        
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (count($getUserIdOnCustomer) > 0) {
             $warehouse = DB::table('warehouse_lists')
@@ -1941,6 +1948,15 @@ class apiController extends Controller
         return $getDataItem;
         // }
     }
+    
+    public function getInventoryByWarehouseV2 ($warehouseId,Request $request) {
+        if(!empty($request->id)) {
+            $id= preg_split("/[,]/", $request->id);
+            $data = inventoryItem::whereIn('id', $id)->where('warehouseid', $warehouseId)->get();
+            return response()->json($data);
+        }
+    }
+    
     public function postInventoryItem(Request $request)
     {
         $inventory = new inventoryItem();

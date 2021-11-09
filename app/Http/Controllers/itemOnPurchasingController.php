@@ -63,7 +63,7 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->remarks = $request->remarks;
 
         // po status 1 means stored at database but not with the purchase order id;
-        $ItemPurchasing->po_status = '1';
+        $ItemPurchasing->po_status = '0';
         $ItemPurchasing->created_by = Auth::id();
         $ItemPurchasing->updated_by = Auth::id();
         $ItemPurchasing->save();

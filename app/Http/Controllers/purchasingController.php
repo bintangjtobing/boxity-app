@@ -55,7 +55,7 @@ class purchasingController extends Controller
         }
         foreach ($data as $elm) {
             $temp = null;
-            if (empty($elm['item']['qtyShipped'])) {
+            if ($elm['item']['qtyShipped'] > 0) {
                 if (empty($elm['item']['qtyOrdered']) || $elm['item']['qtyOrdered'] == $elm['item']['qtyShipped']) {
                     $temp = true;
                 } else {

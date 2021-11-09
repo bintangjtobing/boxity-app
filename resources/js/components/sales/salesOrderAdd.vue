@@ -108,40 +108,6 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <span>Weight In:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemAdd.weightIn"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <span>Weight Out:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemAdd.weightOut"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        @change="calculateNettWeight"
-                                        @input="calculateNettWeight"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity:</span>
@@ -731,6 +697,8 @@
                 this.customer = resp.data;
                 const contactUsers = await axios.get("/api/contact-list");
                 this.users = contactUsers.data;
+                const itemSalesData = await axios.get(`/api/item-sales`);
+                this.itemSalesData = itemSalesData.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

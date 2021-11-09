@@ -37,18 +37,21 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
-                                        <span>Customer:</span>
-                                        <selectSearch v-model="selected.customer" v-bind="{
-                                            datas: customersGet,
-                                            width: '100%',
-                                            name: 'company_name',
-                                            placeholder: 'Select Customer'
-                                        }" @dataSelected="onCustomerSelected"></selectSearch>
+                                        <span>Customer selected:</span>
+                                        <input type="text" v-model="selected.customer" id="" class="form-control"
+                                            readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Sales Order:</span>
+                                        <input type="text" v-model="selected.sales_related" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>From warehouse:</span>
                                         <selectSearch v-model="selected.warehouse" v-bind="{
@@ -60,7 +63,7 @@
                                         }" @dataSelected="onWarehouseSelected"></selectSearch>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Item name:</span>
                                         <selectSearch v-model="selected.item" v-bind="{
@@ -199,16 +202,71 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Customer selected:</span>
+                                        <input type="text" v-model="itemModify.customer" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Sales Order:</span>
+                                        <input type="text" v-model="itemModify.sales_related" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>From Warehouse:</span>
+                                        <input type="text" v-model="itemModify.warehouse" id="" class="form-control"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Item name:</span>
-                                        <input v-bind:disabled="checkedItem === false" type="text"
-                                            v-model="itemModify.item_name" id="" class="form-control" readonly>
+                                        <input type="text" v-model="itemModify.item_name" id="" class="form-control"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight In:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightIn"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <span>Weight Out:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.weightOut"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        @change="calculateModifNettWeight"
+                                        @input="calculateModifNettWeight"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Qty Delivery Out:</span>
                                         <span v-show="qtyItem != null"
@@ -218,6 +276,21 @@
                                             @input="onModifyQtyInc" placeholder="0" id="" min="0" max="10000" step="1"
                                             class="form-control">
                                         <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <span>Quantity Shipped/Nett Weight:</span>
+                                        <input
+                                        type="number"
+                                        v-model="itemModify.qtyShipped"
+                                        placeholder="0"
+                                        id=""
+                                        min="0"
+                                        max="10000"
+                                        step="1"
+                                        class="form-control"
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -284,12 +357,12 @@
                                 <v-data-table :search="search" loading-text="Loading... Please wait..."
                                     :headers="headers" :items="itemSalesingData" :items-per-page="10"
                                     class="elevation-1">
-                                    <!-- <template v-slot:item.actions="{item}">
+                                    <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemSalesing(item.id)" class="edit">
-                                            <i class="fad fa-edit"></i></a>
+                                            <em class="fad fa-edit"></em></a>
                                         <a v-on:click="deleteItemSalesing(item.id)" class="remove">
-                                            <i class="fad fa-trash"></i></a>
-                                    </template> -->
+                                            <em class="fad fa-trash"></em></a>
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>
@@ -315,7 +388,7 @@
                                         class="form-control form-control-default">
                                         <option value="" disabled>Select customer:</option>
                                         <option v-for="customer in customer" :key="customer.id" :value="customer.id">
-                                            {{customer.customerName}}</option>
+                                            {{customer.company_name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -406,7 +479,7 @@
                 checkedItem: false,
                 // Page Info
                 titleItemDescription: 'Items on this Sales Invoice',
-                isVisibleAddForm: false,
+                isVisibleAddForm: true,
                 isVisibleModifyForm: true,
 
                 itemModify: {
@@ -460,21 +533,22 @@
                         text: 'Unit',
                         value: 'unit'
                     },
-                    // {
-                    //     text: 'Actions',
-                    //     value: 'actions',
-                    //     align: 'right',
-                    //     filterable: false,
-                    //     sortable: false
-                    // }
+                    {
+                        text: 'Actions',
+                        value: 'actions',
+                        align: 'right',
+                        filterable: false,
+                        sortable: false
+                    }
                 ],
                 isDisable: {
                     select: true,
                     input: true,
-                    warehouseSelected: true,
+                    warehouseSelected: false,
                 },
                 countItems: '0',
-                permissions: []
+                permissions: [],
+                itemCode: []
             }
         },
         beforeMount(){                        
@@ -485,8 +559,11 @@
             this.loadLoggedUser();
         },
         methods: {
+            calculateModifNettWeight() {
+                this.itemModify.qtyShipped = parseInt(this.itemModify.weightIn) - parseInt(this.itemModify.weightOut);
+            },
             calculateNettWeight() {
-                this.itemAdd.qtyOrdered = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
+                this.itemAdd.qtyShipped = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
             },
             async onWarehouseSelected(param) {
                 this.itemAdd.warehouseid = param.id;
@@ -553,6 +630,7 @@
                 this.titleItemDescription = 'Add Sales Invoice Items';
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
+                this.isShow.colapse=true;
             },
             async loadData() {
                 // this.$Progress.start();
@@ -560,38 +638,55 @@
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
-                const respWarehouse = await axios.get('/api/warehouse');
-                this.warehouse = respWarehouse.data;
+                
                 const itemSalesingData = await axios.get('/api/si/item-sales/' + this.$route.params.si_number);
                 this.itemSalesingData = itemSalesingData.data;
-                const salesInvoiceData = await axios.get('/api/sales/invoices/' + this.$route.params
-                    .si_number);
+                this.selected.sales_related = itemSalesingData.data[0].sales_related
+                this.selected.customer = itemSalesingData.data[0].customer.company_name
+                this.salesInvoiceData.customer = itemSalesingData.data[0].customer.id
+
+                const {data} = await axios.get('/api/sales/order/customer/' + itemSalesingData.data[0].customerId);
+                const warehouseId = [];
+                data[0].items.forEach(elm => {
+                  if(elm.qtyOrdered > elm.qtyShipped && ((this.itemCode.includes(elm.item_code) === false) || (warehouseId.includes(elm.warehouseId) === false)) ) {
+                    this.itemCode.push(elm.item_code)
+                    warehouseId.push(elm.warehouseId)
+                  }
+                })
+                
+                const getWharehouse = await axios.get(`/api/warehouse?id=${warehouseId}`);
+                this.warehouse = getWharehouse.data;
+                
+                const salesInvoiceData = await axios.get('/api/sales/invoices/' + this.$route.params.si_number);
                 this.salesInvoiceData = salesInvoiceData.data;
                 const contactUsers = await axios.get('/api/contact-list');
                 this.users = contactUsers.data;
-                const customerData = await axios.get("/api/customers");
-                this.customersGet = customerData.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
             async modifyItemSalesing(id) {
                 // this.$Progress.start();
-                this.$isLoading(true);
                 const resp = await axios.get('/api/si/item-saless/' + id);
-                this.checkedItem = true;
                 this.itemModify = resp.data;
                 this.itemModify.currentPrice = resp.data.item.price;
-                this.itemModify.item_name = resp.data.item.item_name;
+                this.itemModify.item_name = `[${resp.data.item.item_code}] - ${resp.data.item.item_name}`;
+                this.itemModify.warehouse = resp.data.warehouse.warehouse_name;
+                this.itemModify.customer = resp.data.customer.company_name;
+                this.itemModify.sales_related = resp.data.sales_related;
+                this.checkedItem = true;
+                this.itemModify = resp.data;
                 this.itemModify.itemid = resp.data.item.id;
+                this.isVisibleAddForm = true;
+                this.isVisibleModifyForm = false;
+                this.isShow.colapse = true;
                 this.titleItemDescription = 'Modify Sales Invoice Items';
                 window.scrollTo(0, 0);
                 // this.$Progress.finish();
-                this.$isLoading(false);
             },
             async modifyItemList() {
-                // this.$Progress.start();
+                console.log(this.itemModify)
                 this.$isLoading(true);
-                await axios.patch('/api/si/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
+                await axios.put('/api/si/item-sales/' + this.itemModify.id, this.itemModify).then(response => {
                     document.getElementById('ding').play();
 
                     Swal.fire({
