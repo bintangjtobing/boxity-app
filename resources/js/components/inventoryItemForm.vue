@@ -95,15 +95,21 @@
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Current Price:</span>
-                                                                    <input type="text" v-model="inventorydata.price"
-                                                                        class="form-control" readonly>
+                                                                    <!-- <input type="text" v-model="inventorydata.price"
+                                                                        class="form-control" readonly> -->
+                                                                    <vue-numeric class="form-control" readonly
+                                                                        v-bind:precision="0"
+                                                                        v-model="inventorydata.price"></vue-numeric>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group">
                                                                     <span>Ending Balance:</span>
-                                                                    <input type="text" v-model="countQty"
-                                                                        class="form-control" readonly>
+                                                                    <vue-numeric class="form-control" readonly
+                                                                        v-bind:precision="0" v-model="countQty">
+                                                                    </vue-numeric>
+                                                                    <!-- <input type="text" v-model="countQty"
+                                                                        class="form-control" readonly> -->
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
@@ -253,29 +259,41 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Beginning:</span>
-                                                            <input type="text" v-model="beginningQty" id=""
-                                                                class="form-control" readonly>
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="beginningQty">
+                                                            </vue-numeric>
+                                                            <!-- <input type="text" v-model="beginningQty" id=""
+                                                                class="form-control" readonly> -->
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Quantity In:</span>
-                                                            <input type="text" v-model="sumQtyIn" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="sumQtyIn" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="sumQtyIn">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Quantity Out:</span>
-                                                            <input type="text" v-model="sumQtyOut" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="sumQtyOut" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="sumQtyOut">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <span>Ending Balance:</span>
-                                                            <input type="text" v-model="countQty" id=""
-                                                                class="form-control" readonly>
+                                                            <!-- <input type="text" v-model="countQty" id=""
+                                                                class="form-control" readonly> -->
+                                                            <vue-numeric class="form-control" readonly
+                                                                v-bind:precision="0" v-model="countQty">
+                                                            </vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -416,10 +434,12 @@
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
     import vue2Dropzone from 'vue2-dropzone';
+    import VueNumeric from 'vue-numeric'
     export default {
         components: {
             'editor': Editor,
             vueDropzone: vue2Dropzone,
+            VueNumeric
         },
         title() {
             return `Inventory item data`;

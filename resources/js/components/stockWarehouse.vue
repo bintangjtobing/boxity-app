@@ -65,6 +65,10 @@
                         </v-card-title>
                         <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
                             :items="reports" :items-per-page="10" class="elevation-1">
+                            <template v-slot:item.actions="{item}">
+                                <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
+                                    <i class="fad fa-eye"></i></router-link>
+                            </template>
                         </v-data-table>
                     </div>
                 </div>
@@ -96,10 +100,10 @@
                 reports: [{
                     item_code: 'B001',
                     item_name: 'Pollar',
-                    po_number: 'PO.20211010.817363',
-                    supplier: 'Bungasari',
-                    date_in: '10/10/2021',
-                    location: 'GDG 1 CARGILL',
+                    // po_number: 'PO.20211010.817363',
+                    // supplier: 'Bungasari',
+                    // date_in: '10/10/2021',
+                    // location: 'GDG 1 CARGILL',
                     beginning_stock: '60.000 kg',
                     qty_received: '',
                     qty_received_cum: '60.000 kg',
@@ -109,10 +113,10 @@
                 }, {
                     item_code: 'B001',
                     item_name: 'Pollar',
-                    po_number: 'PO.20211013.624534',
-                    supplier: 'Bungasari',
-                    date_in: '13/10/2021',
-                    location: 'GDG 1 CARGILL',
+                    // po_number: 'PO.20211013.624534',
+                    // supplier: 'Bungasari',
+                    // date_in: '13/10/2021',
+                    // location: 'GDG 1 CARGILL',
                     beginning_stock: '60.000 kg',
                     qty_received: '30.000 kg',
                     qty_received_cum: '90.000 kg',
@@ -122,10 +126,10 @@
                 }, {
                     item_code: 'B011',
                     item_name: 'Meat Bone Meal',
-                    po_number: 'PO.20211009.61451',
-                    supplier: 'Bungasari',
-                    date_in: '09/10/2021',
-                    location: 'GDG 1 CARGILL',
+                    // po_number: 'PO.20211009.61451',
+                    // supplier: 'Bungasari',
+                    // date_in: '09/10/2021',
+                    // location: 'GDG 1 CARGILL',
                     beginning_stock: '30.000 kg',
                     qty_received: '',
                     qty_received_cum: '30.000 kg',
@@ -135,10 +139,10 @@
                 }, {
                     item_code: 'B011',
                     item_name: 'Meat Bone Meal',
-                    po_number: 'PO.20211010.123445',
-                    supplier: 'Bungasari',
-                    date_in: '10/10/2021',
-                    location: 'GDG 1 CARGILL',
+                    // po_number: 'PO.20211010.123445',
+                    // supplier: 'Bungasari',
+                    // date_in: '10/10/2021',
+                    // location: 'GDG 1 CARGILL',
                     beginning_stock: '30.000 kg',
                     qty_received: '30.000 kg',
                     qty_received_cum: '60.000 kg',
@@ -148,42 +152,48 @@
                 }, ],
                 loading: true,
                 headers: [{
-                    text: 'Item code',
-                    value: 'item_code'
-                }, {
-                    text: 'Item name',
-                    value: 'item_name'
-                }, {
-                    text: 'PO No.',
-                    value: 'po_number'
-                }, {
-                    text: 'First Supplier In',
-                    value: 'supplier'
-                }, {
-                    text: 'First Date In',
-                    value: 'date_in'
-                }, {
-                    text: 'Location',
-                    value: 'location'
-                }, {
-                    text: 'Beginning Stock',
-                    value: 'beginning_stock'
-                }, {
-                    text: 'Receive Qty',
-                    value: 'qty_received'
-                }, {
-                    text: 'Receive Cum.',
-                    value: 'qty_received_cum'
-                }, {
-                    text: 'Delivery Qty',
-                    value: 'qty_delivery'
-                }, {
-                    text: 'Delivery Cum.',
-                    value: 'qty_delivery_cum'
-                }, {
-                    text: 'Total Stock',
-                    value: 'qty_total'
-                }],
+                        text: 'Item code',
+                        value: 'item_code'
+                    }, {
+                        text: 'Item name',
+                        value: 'item_name'
+                    },
+                    // {
+                    //     text: 'PO No.',
+                    //     value: 'po_number'
+                    // }, {
+                    //     text: 'First Supplier In',
+                    //     value: 'supplier'
+                    // }, {
+                    //     text: 'First Date In',
+                    //     value: 'date_in'
+                    // }, {
+                    //     text: 'Location',
+                    //     value: 'location'
+                    // },
+                    {
+                        text: 'Beginning Stock',
+                        value: 'beginning_stock'
+                    }, {
+                        text: 'Receive Qty',
+                        value: 'qty_received'
+                    }, {
+                        text: 'Receive Cum.',
+                        value: 'qty_received_cum'
+                    }, {
+                        text: 'Delivery Qty',
+                        value: 'qty_delivery'
+                    }, {
+                        text: 'Delivery Cum.',
+                        value: 'qty_delivery_cum'
+                    }, {
+                        text: 'Total Stock',
+                        value: 'qty_total'
+                    }, {
+                        text: 'Actions',
+                        value: 'actions'
+                    }
+                ],
                 // end datatable
             }
         },
