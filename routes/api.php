@@ -458,3 +458,6 @@ Route::get('/e/sales/order', 'salesController@getESalesOrder');
 Route::get('/e/sales/order/{id}', 'salesController@getESalesOrderById');
 Route::patch('/e/sales/order/{id}', 'salesController@postESalesOrderById');
 Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');
+
+
+Route::get('/report-card', 'apiController@getReportCard');
