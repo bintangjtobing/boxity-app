@@ -2312,13 +2312,52 @@ class apiController extends Controller
             'endDate' => ['date', 'after_or_equal:startDate', 'nullable'],
             'type' => ['in:warehouse,stock', 'required']
         ]);
-        $payload->startDate = date( 'Y-m-d H:i:s', strtotime( $payload->startDate));
-        $payload->endDate = date( 'Y-m-d H:i:s', strtotime( $payload->endDate) + 86399);
+        $payload->startDate = !empty($payload->startDate) ? 
+            date( 'Y-m-d H:i:s', strtotime( $payload->startDate)) : null;
+        $payload->endDate = !empty($payload->endDate) ? 
+            date( 'Y-m-d H:i:s', strtotime( $payload->endDate) + 86399) : null;
         
-        // $itemIds = itemsSales::where('customerId', $payload->customerId)->groupBy(['warehouseId', 'item_code'])->get()->groupBy('warehouseId')->toArray();
-        // dd($itemIds);
+        $warehouseItem = itemsSales::where('customerId', $payload->customerId)->groupBy(['warehouseId', 'item_code'])->get()->groupBy('warehouseId')->toArray();
         
-        $data = [];
+        $warehouseItemIds = array_map(function ($elm) {
+            return array_map(function ($subElm) {
+                return $subElm['item_code'];
+            }, $elm);
+        }, $warehouseItem);
+        
+        $result = []; $data = [];
+        if ($payload->type === 'stock') {
+            foreach ($warehouseItemIds as $value) {
+                $history = itemHistory::whereIn('itemId', $value)
+                ->when($payload, function ($query) use ($payload) {
+                    if (!empty($payload->startDate) && !empty($payload->endDate)) {
+                        return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
+                    }
+                    else if (!empty($payload->startDate)) {
+                        return $query->where('created_at', '>=',$payload->startDate); 
+                    }
+                })
+                ->with('item.warehouse','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
+                
+                $data = array_map(function ($elm) {
+                    $sumIn = array_reduce($elm, function($temp, $item) {
+                        return $temp += $item['qtyIn'];
+                    });
+                    $sumOut = array_reduce($elm, function($temp, $item) {
+                        return $temp += $item['qtyOut'];
+                    });
+                    $firstData = $elm[0];
+                    return [
+                        'data' => $firstData,
+                        'qtyInFirst' => $firstData['qtyIn']??0,
+                        'qtyIn' => $sumIn,
+                        'qtyOut' => $sumOut,
+                        'qtyTotal' => $sumIn - $sumOut
+                    ];
+                }, $history);
+                array_push($result, $data);
+            }
+        }
         if ($payload->type === 'warehouse') {
             $itemIds = itemsSales::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId)->groupBy('item_code')->pluck('item_code')->toArray();
             
@@ -2342,7 +2381,7 @@ class apiController extends Controller
                     return $temp += $item['qtyOut'];
                 });
                 $firstData = $elm[0];
-                return (object) [
+                return [
                     'data' => $firstData,
                     'qtyInFirst' => $firstData['qtyIn']??0,
                     'qtyIn' => $sumIn,
@@ -2352,6 +2391,7 @@ class apiController extends Controller
             }, $history);
         }
         
-        dd($data);
+        $result = !empty($result) ? $result : $data;
+        return response()->json($result);
     }
 }
