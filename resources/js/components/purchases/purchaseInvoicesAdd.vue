@@ -48,23 +48,23 @@
                                     <div class="form-group">
                                         <span>Customer:</span>
                                         <selectSearch v-model="selected.customer" v-bind="{
-                        datas: customersGet,
-                        width: '100%',
-                        name: 'company_name',
-                        placeholder: 'Select Customer',
-                      }" @dataSelected="onCustomerSelected" />
+                                            datas: customersGet,
+                                            width: '100%',
+                                            name: 'company_name',
+                                            placeholder: 'Select Customer',
+                                        }" @dataSelected="onCustomerSelected" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2" v-show="isShow.formPO">
                                     <div class="form-group">
                                         <span>Select PO:</span>
                                         <selectSearch v-model="selected.PO" v-bind="{
-                        datas: purchaseOrderGet,
-                        width: '100%',
-                        name: 'po_number',
-                        placeholder: 'Select Purchase Order',
-                        isDisable: isDisable.POSelected,
-                      }" @dataSelected="onPOSelected" />
+                                            datas: purchaseOrderGet,
+                                            width: '100%',
+                                            name: 'po_number',
+                                            placeholder: 'Select Purchase Order',
+                                            isDisable: isDisable.POSelected,
+                                        }" @dataSelected="onPOSelected" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

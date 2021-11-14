@@ -76,6 +76,7 @@ class purchasingController extends Controller
     {
         $purchasingOrd = new purchaseOrder();
         $purchasingOrd->po_number = $request->po_number;
+        $purchasingOrd->status = '1';
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->order_date = $request->order_date;
@@ -132,7 +133,7 @@ class purchasingController extends Controller
                 'status' => 1,
                 'approvedBy' => Auth::id(),
             ));
-        return response()->json($detailsToPO);
+        return response()->json($statusPRE);
     }
     public function deletePurchaseOrderById($id, Request $request)
     {

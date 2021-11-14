@@ -27,7 +27,7 @@
                                     :headers="headers" multi-sort :items="purchaseOrderItem" :items-per-page="10"
                                     class="elevation-1" group-by="suppliers.customerName" group-expanded>
                                     <template v-slot:[`item.status`]="{item}">
-                                        <div v-if="item.status===1 && item.paidOff==true">
+                                        <div v-if="item.status===2">
                                             <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><em
                                                     class="fal fa-check-circle"></em>
@@ -51,7 +51,7 @@
                                                     class="fal fa-exclamation-circle"></em>
                                                 &nbsp;Draft</span>
                                         </div>
-                                        <div v-else-if="item.status===2">
+                                        <div v-else-if="item.status===3">
                                             <span class="rounded-pill userDatatable-content-status color-danger
                                                 bg-opacity-danger active text-capitalize"><em
                                                     class="fal fa-times-circle"></em>
