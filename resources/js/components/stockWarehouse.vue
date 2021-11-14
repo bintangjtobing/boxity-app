@@ -20,7 +20,7 @@
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <span>Select Warehouse:</span>
-                                <select v-model="req.customerid" class="form-control">
+                                <select v-model="req.warehouseid" class="form-control">
                                     <option value="">Select warehouse</option>
                                     <option v-for="warehouse in warehouse" :key="warehouse.id" :value="warehouse.id">
                                         {{warehouse.warehouse_name}}</option>
@@ -97,67 +97,69 @@
                 warehouse: {},
                 search: '',
                 key: 1,
-                reports: [{
-                    item_code: 'B001',
-                    item_name: 'Pollar',
-                    // po_number: 'PO.20211010.817363',
-                    // supplier: 'Bungasari',
-                    // date_in: '10/10/2021',
-                    // location: 'GDG 1 CARGILL',
-                    beginning_stock: '60.000 kg',
-                    qty_received: '',
-                    qty_received_cum: '60.000 kg',
-                    qty_delivery: '-',
-                    qty_delivery_cum: '-',
-                    qty_total: '',
-                }, {
-                    item_code: 'B001',
-                    item_name: 'Pollar',
-                    // po_number: 'PO.20211013.624534',
-                    // supplier: 'Bungasari',
-                    // date_in: '13/10/2021',
-                    // location: 'GDG 1 CARGILL',
-                    beginning_stock: '60.000 kg',
-                    qty_received: '30.000 kg',
-                    qty_received_cum: '90.000 kg',
-                    qty_delivery: '-',
-                    qty_delivery_cum: '-',
-                    qty_total: '',
-                }, {
-                    item_code: 'B011',
-                    item_name: 'Meat Bone Meal',
-                    // po_number: 'PO.20211009.61451',
-                    // supplier: 'Bungasari',
-                    // date_in: '09/10/2021',
-                    // location: 'GDG 1 CARGILL',
-                    beginning_stock: '30.000 kg',
-                    qty_received: '',
-                    qty_received_cum: '30.000 kg',
-                    qty_delivery: '-',
-                    qty_delivery_cum: '-',
-                    qty_total: '',
-                }, {
-                    item_code: 'B011',
-                    item_name: 'Meat Bone Meal',
-                    // po_number: 'PO.20211010.123445',
-                    // supplier: 'Bungasari',
-                    // date_in: '10/10/2021',
-                    // location: 'GDG 1 CARGILL',
-                    beginning_stock: '30.000 kg',
-                    qty_received: '30.000 kg',
-                    qty_received_cum: '60.000 kg',
-                    qty_delivery: '-',
-                    qty_delivery_cum: '-',
-                    qty_total: '',
-                }, ],
+                // reports: [{
+                //     item_code: 'B001',
+                //     item_name: 'Pollar',
+                //     // po_number: 'PO.20211010.817363',
+                //     // supplier: 'Bungasari',
+                //     // date_in: '10/10/2021',
+                //     // location: 'GDG 1 CARGILL',
+                //     beginning_stock: '60.000 kg',
+                //     qty_received: '',
+                //     qty_received_cum: '60.000 kg',
+                //     qty_delivery: '-',
+                //     qty_delivery_cum: '-',
+                //     qty_total: '',
+                // }, {
+                //     item_code: 'B001',
+                //     item_name: 'Pollar',
+                //     // po_number: 'PO.20211013.624534',
+                //     // supplier: 'Bungasari',
+                //     // date_in: '13/10/2021',
+                //     // location: 'GDG 1 CARGILL',
+                //     beginning_stock: '60.000 kg',
+                //     qty_received: '30.000 kg',
+                //     qty_received_cum: '90.000 kg',
+                //     qty_delivery: '-',
+                //     qty_delivery_cum: '-',
+                //     qty_total: '',
+                // }, {
+                //     item_code: 'B011',
+                //     item_name: 'Meat Bone Meal',
+                //     // po_number: 'PO.20211009.61451',
+                //     // supplier: 'Bungasari',
+                //     // date_in: '09/10/2021',
+                //     // location: 'GDG 1 CARGILL',
+                //     beginning_stock: '30.000 kg',
+                //     qty_received: '',
+                //     qty_received_cum: '30.000 kg',
+                //     qty_delivery: '-',
+                //     qty_delivery_cum: '-',
+                //     qty_total: '',
+                // }, {
+                //     item_code: 'B011',
+                //     item_name: 'Meat Bone Meal',
+                //     // po_number: 'PO.20211010.123445',
+                //     // supplier: 'Bungasari',
+                //     // date_in: '10/10/2021',
+                //     // location: 'GDG 1 CARGILL',
+                //     beginning_stock: '30.000 kg',
+                //     qty_received: '30.000 kg',
+                //     qty_received_cum: '60.000 kg',
+                //     qty_delivery: '-',
+                //     qty_delivery_cum: '-',
+                //     qty_total: '',
+                // }, ],
                 loading: true,
-                headers: [{
-                        text: 'Item code',
-                        value: 'item_code'
-                    }, {
-                        text: 'Item name',
-                        value: 'item_name'
-                    },
+                reports: [],
+                headers: [
+                    // {
+                    //     text: 'Item code',
+                    //     value: 'item_code'
+                    // }, {
+                    //     text: 'Item name',
+                    //     value: 'item_name'
+                    // },
                     // {
                     //     text: 'PO No.',
                     //     value: 'po_number'
@@ -173,22 +175,26 @@
                     // },
                     {
                         text: 'Beginning Stock',
-                        value: 'beginning_stock'
-                    }, {
-                        text: 'Receive Qty',
-                        value: 'qty_received'
-                    }, {
+                        value: 'qtyInFirst'
+                    },
+                    // {
+                    //     text: 'Receive Qty',
+                    //     value: 'qty_received'
+                    // },
+                    {
                         text: 'Receive Cum.',
-                        value: 'qty_received_cum'
-                    }, {
-                        text: 'Delivery Qty',
-                        value: 'qty_delivery'
-                    }, {
+                        value: 'qtyIn'
+                    },
+                    // {
+                    //     text: 'Delivery Qty',
+                    //     value: 'qty_delivery'
+                    // },
+                    {
                         text: 'Delivery Cum.',
-                        value: 'qty_delivery_cum'
+                        value: 'qtyOut'
                     }, {
                         text: 'Total Stock',
-                        value: 'qty_total'
+                        value: 'qtyTotal'
                     }, {
                         text: 'Actions',
                         value: 'actions'
@@ -219,6 +225,17 @@
             },
             async searchData() {
                 console.log(this.req);
+                const resp = await axios.post('/api/report-card', null, {
+                    params: {
+                        customerId: this.req.customerid,
+                        warehouseId: this.req.warehouseid,
+                        startDate: this.req.from,
+                        endDate: this.req.to,
+                        type: 'warehouse'
+                    }
+                });
+                this.reports = resp.data;
+                console.log(resp.data);
             }
         },
     }

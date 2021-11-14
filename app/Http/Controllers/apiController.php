@@ -1596,7 +1596,7 @@ class apiController extends Controller
             $data = warehouseList::whereIn('id', $id)->with('createdBy')->get();
             return response()->json($data);
         }
-        
+
         $getUserIdOnCustomer = companiesPic::where('user_id', Auth::id())->get();
         if (count($getUserIdOnCustomer) > 0) {
             $warehouse = DB::table('warehouse_lists')
@@ -1948,7 +1948,7 @@ class apiController extends Controller
         return $getDataItem;
         // }
     }
-    
+
     public function getInventoryByWarehouseV2 ($warehouseId,Request $request) {
         if(!empty($request->id)) {
             $id= preg_split("/[,]/", $request->id);
@@ -1956,7 +1956,7 @@ class apiController extends Controller
             return response()->json($data);
         }
     }
-    
+
     public function postInventoryItem(Request $request)
     {
         $inventory = new inventoryItem();
@@ -2302,7 +2302,7 @@ class apiController extends Controller
     {
         return response()->json(inboxMessage::orderBy('created_at', 'DESC')->get());
     }
-    
+
     public function getReportCard(Request $request)
     {
         $payload = (object) $request->validate([
@@ -2312,19 +2312,19 @@ class apiController extends Controller
             'endDate' => ['date', 'after_or_equal:startDate', 'nullable'],
             'type' => ['in:warehouse,stock', 'required']
         ]);
-        $payload->startDate = !empty($payload->startDate) ? 
+        $payload->startDate = !empty($payload->startDate) ?
             date( 'Y-m-d H:i:s', strtotime( $payload->startDate)) : null;
-        $payload->endDate = !empty($payload->endDate) ? 
+        $payload->endDate = !empty($payload->endDate) ?
             date( 'Y-m-d H:i:s', strtotime( $payload->endDate) + 86399) : null;
-        
+
         $warehouseItem = itemsSales::where('customerId', $payload->customerId)->groupBy(['warehouseId', 'item_code'])->get()->groupBy('warehouseId')->toArray();
-        
-        $warehouseItemIds = array_map(function ($elm) {
+
+        $warehouseItemIds = array_map(function ($elm) { 
             return array_map(function ($subElm) {
                 return $subElm['item_code'];
             }, $elm);
         }, $warehouseItem);
-        
+
         $result = []; $data = [];
         if ($payload->type === 'stock') {
             foreach ($warehouseItemIds as $value) {
@@ -2334,11 +2334,11 @@ class apiController extends Controller
                         return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
                     }
                     else if (!empty($payload->startDate)) {
-                        return $query->where('created_at', '>=',$payload->startDate); 
+                        return $query->where('created_at', '>=',$payload->startDate);
                     }
                 })
                 ->with('item.warehouse','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
-                
+
                 $data = array_map(function ($elm) {
                     $sumIn = array_reduce($elm, function($temp, $item) {
                         return $temp += $item['qtyIn'];
@@ -2360,19 +2360,19 @@ class apiController extends Controller
         }
         if ($payload->type === 'warehouse') {
             $itemIds = itemsSales::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId)->groupBy('item_code')->pluck('item_code')->toArray();
-            
+
             $history = itemHistory::whereIn('itemId', $itemIds)
                 ->when($payload, function ($query) use ($payload) {
                     if (!empty($payload->startDate) && !empty($payload->endDate)) {
                         return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
                     }
                     else if (!empty($payload->startDate)) {
-                        return $query->where('created_at', '>=',$payload->startDate); 
+                        return $query->where('created_at', '>=',$payload->startDate);
                     }
                 })
                 ->with('item','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
-    
-            
+
+
             $data = array_map(function ($elm) {
                 $sumIn = array_reduce($elm, function($temp, $item) {
                     return $temp += $item['qtyIn'];
@@ -2390,7 +2390,7 @@ class apiController extends Controller
                 ];
             }, $history);
         }
-        
+
         $result = !empty($result) ? $result : $data;
         return response()->json($result);
     }
