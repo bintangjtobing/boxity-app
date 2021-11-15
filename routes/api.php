@@ -460,4 +460,4 @@ Route::patch('/e/sales/order/{id}', 'salesController@postESalesOrderById');
 Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');
 
 
-Route::post('/report-card', 'apiController@getReportCard');
+Route::get('/report-card', 'apiController@getReportCard');

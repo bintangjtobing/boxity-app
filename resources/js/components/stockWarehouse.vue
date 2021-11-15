@@ -65,10 +65,10 @@
                         </v-card-title>
                         <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
                             :items="reports" :items-per-page="10" class="elevation-1">
-                            <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
-                                    <i class="fad fa-eye"></i></router-link>
-                            </template>
+                            <!-- <template v-slot:item.actions="reports"> -->
+                                <!-- <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
+                                    <i class="fad fa-eye"></i></router-link> -->
+                            <!-- </template> -->
                         </v-data-table>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
     </div>
 </template>
 <script>
-    import Swal from 'sweetalert2';
+    // import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
 
     export default {
@@ -153,42 +153,42 @@
                 loading: true,
                 reports: [],
                 headers: [
-                    // {
-                    //     text: 'Item code',
-                    //     value: 'item_code'
-                    // }, {
-                    //     text: 'Item name',
-                    //     value: 'item_name'
-                    // },
-                    // {
-                    //     text: 'PO No.',
-                    //     value: 'po_number'
-                    // }, {
-                    //     text: 'First Supplier In',
-                    //     value: 'supplier'
-                    // }, {
-                    //     text: 'First Date In',
-                    //     value: 'date_in'
-                    // }, {
-                    //     text: 'Location',
-                    //     value: 'location'
-                    // },
+                    {
+                        text: 'Item code',
+                        value: 'item_code'
+                    }, {
+                        text: 'Item name',
+                        value: 'item_name'
+                    },
+                    {
+                        text: 'PO No.',
+                        value: 'po_number'
+                    }, {
+                        text: 'First Supplier In',
+                        value: 'supplier'
+                    }, {
+                        text: 'First Date In',
+                        value: 'date_in'
+                    }, {
+                        text: 'Location',
+                        value: 'location'
+                    },
                     {
                         text: 'Beginning Stock',
                         value: 'qtyInFirst'
                     },
-                    // {
-                    //     text: 'Receive Qty',
-                    //     value: 'qty_received'
-                    // },
+                    {
+                        text: 'Receive Qty',
+                        value: 'qty_received'
+                    },
                     {
                         text: 'Receive Cum.',
                         value: 'qtyIn'
                     },
-                    // {
-                    //     text: 'Delivery Qty',
-                    //     value: 'qty_delivery'
-                    // },
+                    {
+                        text: 'Delivery Qty',
+                        value: 'qty_delivery'
+                    },
                     {
                         text: 'Delivery Cum.',
                         value: 'qtyOut'
@@ -225,7 +225,7 @@
             },
             async searchData() {
                 console.log(this.req);
-                const resp = await axios.post('/api/report-card', null, {
+                const resp = await axios.get('/api/report-card', {
                     params: {
                         customerId: this.req.customerid,
                         warehouseId: this.req.warehouseid,
@@ -235,7 +235,6 @@
                     }
                 });
                 this.reports = resp.data;
-                console.log(resp.data);
             }
         },
     }

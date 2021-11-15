@@ -2358,11 +2358,11 @@ class apiController extends Controller
                 array_push($result, $data);
             }
         }
-        if ($payload->type === 'warehouse') {
+        else if ($payload->type === 'warehouse') {
             $itemIds = itemsSales::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId)->groupBy('item_code')->pluck('item_code')->toArray();
-
+            
             $history = itemHistory::whereIn('itemId', $itemIds)
-                ->when($payload, function ($query) use ($payload) {
+            ->when($payload, function ($query) use ($payload) {
                     if (!empty($payload->startDate) && !empty($payload->endDate)) {
                         return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
                     }
@@ -2371,9 +2371,8 @@ class apiController extends Controller
                     }
                 })
                 ->with('item','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
-
-
-            $data = array_map(function ($elm) {
+                
+            foreach ($history as $elm) {
                 $sumIn = array_reduce($elm, function($temp, $item) {
                     return $temp += $item['qtyIn'];
                 });
@@ -2381,14 +2380,15 @@ class apiController extends Controller
                     return $temp += $item['qtyOut'];
                 });
                 $firstData = $elm[0];
-                return [
+                
+                array_push($data, [
                     'data' => $firstData,
                     'qtyInFirst' => $firstData['qtyIn']??0,
                     'qtyIn' => $sumIn,
                     'qtyOut' => $sumOut,
                     'qtyTotal' => $sumIn - $sumOut
-                ];
-            }, $history);
+                ]);
+            }
         }
 
         $result = !empty($result) ? $result : $data;
