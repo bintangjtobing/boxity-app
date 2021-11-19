@@ -554,7 +554,6 @@
                 // Load customer warehouse
                 const imgList = await axios.get('/api/inventory-item/album/' + this.$route.params.id);
                 this.imgs = imgList.data;
-                console.log(this.imgs);
                 const historyList = await axios.get('/api/item-history/' + this.$route.params.id);
                 this.historyItem = historyList.data;
                 if (historyList.data.length) {

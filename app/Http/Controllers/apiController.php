@@ -1591,8 +1591,8 @@ class apiController extends Controller
     // Warehouse
     public function getWarehouse(Request $request)
     {
-        if(!empty($request->id)) {
-            $id= preg_split("/[,]/", $request->id);
+        if (!empty($request->id)) {
+            $id = preg_split("/[,]/", $request->id);
             $data = warehouseList::whereIn('id', $id)->with('createdBy')->get();
             return response()->json($data);
         }
@@ -1949,9 +1949,10 @@ class apiController extends Controller
         // }
     }
 
-    public function getInventoryByWarehouseV2 ($warehouseId,Request $request) {
-        if(!empty($request->id)) {
-            $id= preg_split("/[,]/", $request->id);
+    public function getInventoryByWarehouseV2($warehouseId, Request $request)
+    {
+        if (!empty($request->id)) {
+            $id = preg_split("/[,]/", $request->id);
             $data = inventoryItem::whereIn('id', $id)->where('warehouseid', $warehouseId)->get();
             return response()->json($data);
         }
@@ -2313,43 +2314,43 @@ class apiController extends Controller
             'type' => ['in:warehouse,stock', 'required']
         ]);
         $payload->startDate = !empty($payload->startDate) ?
-            date( 'Y-m-d H:i:s', strtotime( $payload->startDate)) : null;
+            date('Y-m-d H:i:s', strtotime($payload->startDate)) : null;
         $payload->endDate = !empty($payload->endDate) ?
-            date( 'Y-m-d H:i:s', strtotime( $payload->endDate) + 86399) : null;
+            date('Y-m-d H:i:s', strtotime($payload->endDate) + 86399) : null;
 
         $warehouseItem = itemsSales::where('customerId', $payload->customerId)->groupBy(['warehouseId', 'item_code'])->get()->groupBy('warehouseId')->toArray();
 
-        $warehouseItemIds = array_map(function ($elm) { 
+        $warehouseItemIds = array_map(function ($elm) {
             return array_map(function ($subElm) {
                 return $subElm['item_code'];
             }, $elm);
         }, $warehouseItem);
 
-        $result = []; $data = [];
+        $result = [];
+        $data = [];
         if ($payload->type === 'stock') {
             foreach ($warehouseItemIds as $value) {
                 $history = itemHistory::whereIn('itemId', $value)
-                ->when($payload, function ($query) use ($payload) {
-                    if (!empty($payload->startDate) && !empty($payload->endDate)) {
-                        return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
-                    }
-                    else if (!empty($payload->startDate)) {
-                        return $query->where('created_at', '>=',$payload->startDate);
-                    }
-                })
-                ->with('item.warehouse','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
+                    ->when($payload, function ($query) use ($payload) {
+                        if (!empty($payload->startDate) && !empty($payload->endDate)) {
+                            return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
+                        } else if (!empty($payload->startDate)) {
+                            return $query->where('created_at', '>=', $payload->startDate);
+                        }
+                    })
+                    ->with('item.warehouse', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
 
                 $data = array_map(function ($elm) {
-                    $sumIn = array_reduce($elm, function($temp, $item) {
+                    $sumIn = array_reduce($elm, function ($temp, $item) {
                         return $temp += $item['qtyIn'];
                     });
-                    $sumOut = array_reduce($elm, function($temp, $item) {
+                    $sumOut = array_reduce($elm, function ($temp, $item) {
                         return $temp += $item['qtyOut'];
                     });
                     $firstData = $elm[0];
                     return [
                         'data' => $firstData,
-                        'qtyInFirst' => $firstData['qtyIn']??0,
+                        'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                         'qtyIn' => $sumIn,
                         'qtyOut' => $sumOut,
                         'qtyTotal' => $sumIn - $sumOut
@@ -2357,33 +2358,33 @@ class apiController extends Controller
                 }, $history);
                 array_push($result, $data);
             }
-        }
-        else if ($payload->type === 'warehouse') {
+        } else if ($payload->type === 'warehouse') {
             $itemIds = itemsSales::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId)->groupBy('item_code')->pluck('item_code')->toArray();
-            
+
             $history = itemHistory::whereIn('itemId', $itemIds)
-            ->when($payload, function ($query) use ($payload) {
+                ->when($payload, function ($query) use ($payload) {
                     if (!empty($payload->startDate) && !empty($payload->endDate)) {
                         return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
-                    }
-                    else if (!empty($payload->startDate)) {
-                        return $query->where('created_at', '>=',$payload->startDate);
+                    } else if (!empty($payload->startDate)) {
+                        return $query->where('created_at', '>=', $payload->startDate);
                     }
                 })
-                ->with('item','detailItemIn','detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
-                
+                ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
+
             foreach ($history as $elm) {
-                $sumIn = array_reduce($elm, function($temp, $item) {
+                $sumIn = array_reduce($elm, function ($temp, $item) {
                     return $temp += $item['qtyIn'];
                 });
-                $sumOut = array_reduce($elm, function($temp, $item) {
+                $sumOut = array_reduce($elm, function ($temp, $item) {
                     return $temp += $item['qtyOut'];
                 });
                 $firstData = $elm[0];
-                
+
                 array_push($data, [
                     'data' => $firstData,
-                    'qtyInFirst' => $firstData['qtyIn']??0,
+                    'itemInIds' => substr($firstData['itemInId'], 3, -1),
+                    'unit' => $firstData['item']['unit'] ?? 'unit',
+                    'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,
                     'qtyOut' => $sumOut,
                     'qtyTotal' => $sumIn - $sumOut
