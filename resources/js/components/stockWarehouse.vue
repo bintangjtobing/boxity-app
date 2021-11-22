@@ -166,20 +166,20 @@
                 reports: [],
                 headers: [{
                         text: 'Item code',
-                        value: 'data.item.item_code'
+                        value: 'data.item_code'
                     }, {
                         text: 'Item name',
-                        value: 'data.item.item_name'
+                        value: 'data.item_name'
                     },
                     {
                         text: 'PO No.',
                         value: 'itemInIds'
                     }, {
                         text: 'First Supplier In',
-                        value: 'supplier'
+                        value: 'date_item_out'
                     }, {
                         text: 'First Date In',
-                        value: 'data.detail_item_in.invoice_date'
+                        value: 'date_item_in'
                     },
                     {
                         text: 'Beginning Stock',
