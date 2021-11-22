@@ -48,7 +48,7 @@
                                             width: '100%',
                                             name: 'company_name',
                                             placeholder: 'Select Customer',
-                                        }" @dataSelected="onCustomerSelected"/>
+                                        }" @dataSelected="onCustomerSelected" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -60,7 +60,7 @@
                                             name: 'warehouse_name',
                                             isDisable: isDisable.warehouseSelected,
                                             placeholder: 'Select Warehouse',
-                                        }" @dataSelected="onWarehouseSelected"/>
+                                        }" @dataSelected="onWarehouseSelected" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -73,7 +73,7 @@
                                             group: 'warehouse_code',
                                             isDisable: isDisable.select,
                                             placeholder: 'Select Item',
-                                        }" @dataSelected="onItemSelected"/>
+                                        }" @dataSelected="onItemSelected" />
                                         <span class="float-right">
                                             <abbr title="Add new item">Don't see the item you'relooking for?</abbr>
                                             <router-link :to="'/inventory-item'">Add new item here</router-link>
@@ -162,7 +162,9 @@
                             <div class="form-group my-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button v-on:click="addToList" v-on:keyup.enter="addToList" class="btn btn-secondary-boxity float-right btn-default btn-squared px-30">Add to lists</button>
+                                        <button v-on:click="addToList" v-on:keyup.enter="addToList"
+                                            class="btn btn-secondary-boxity float-right btn-default btn-squared px-30">Add
+                                            to lists</button>
                                     </div>
                                 </div>
                             </div>
@@ -221,9 +223,9 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight Out:</span>
-                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id="" min="0"
-                                            @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
-                                            step="1" class="form-control" :disabled="isWriteForm">
+                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id=""
+                                            min="0" @change="calculateNettWeight" @input="calculateNettWeight"
+                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
                                     </div>
                                 </div>
                             </div>
@@ -231,14 +233,16 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity Shipped/Nett Weight:</span>
-                                        <input type="number" v-model="itemModify.qtyShipped" placeholder="0" id="" min="0"
-                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                        <vue-numeric class="form-control" readonly v-bind:precision="0"
+                                            v-model="itemModify.qtyShipped">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
-                                        <input type="text" v-model="itemModify.unit" id="" class="form-control" readonly>
+                                        <input type="text" v-model="itemModify.unit" id="" class="form-control"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -318,6 +322,9 @@
                                 <v-data-table :search="search" :loading="loading"
                                     loading-text="Loading... Please wait..." :headers="headers"
                                     :items="itemPurchasingData" :items-per-page="10" class="elevation-1">
+                                    <template v-slot:item.qtyShipped="{item}">
+                                        {{item.qtyShipped | toDecimal}}
+                                    </template>
                                     <template v-slot:item.actions="{item}">
                                         <a v-on:click="modifyItemPurchasing(item.id)" class="edit">
                                             <em class="fad fa-edit"></em></a>
@@ -428,10 +435,12 @@
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
     import SelectSearch from "../item/selectSearch.vue";
+    import VueNumeric from 'vue-numeric'
     export default {
         components: {
             'editor': Editor,
             selectSearch: SelectSearch,
+            VueNumeric
         },
         title() {
             return `Purchase Invoice`;
@@ -464,7 +473,7 @@
                 },
                 itemAdd: {
                     itemid: '',
-                    qtyShipped : 0,
+                    qtyShipped: 0,
                     qtyOrdered: '0',
                     unit: '',
                     currentPrice: '0',
@@ -561,7 +570,8 @@
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
                 this.purchaseInvoiceData.deliver_to = param.id;
-                const itemDataGet = await axios.get('/api/inventory-item/w/' + param.id + '/' + this.itemAdd.customerid);
+                const itemDataGet = await axios.get('/api/inventory-item/w/' + param.id + '/' + this.itemAdd
+                    .customerid);
                 this.items = itemDataGet.data;
                 this.isDisable.select = false;
             },
@@ -627,7 +637,8 @@
                 this.warehouse = respWarehouse.data;
                 const itemPurchasingData = await axios.get('/api/pi/item-purchase/' + this.$route.params.pi_number);
                 this.itemPurchasingData = itemPurchasingData.data;
-                const purchasingOrderData = await axios.get('/api/purchase/invoices/' + this.$route.params.pi_number);
+                const purchasingOrderData = await axios.get('/api/purchase/invoices/' + this.$route.params
+                    .pi_number);
                 this.purchaseInvoiceData = purchasingOrderData.data;
                 const itemsData = await axios.get('/api/inventory-item');
                 this.items = itemsData.data;
@@ -667,7 +678,7 @@
                 this.$isLoading(true);
                 await axios.patch('/api/pi/item-purchase/' + this.itemModify.id, this.itemModify).then(response => {
                     document.getElementById('ding').play();
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',

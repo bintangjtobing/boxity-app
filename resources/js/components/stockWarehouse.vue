@@ -65,10 +65,22 @@
                         </v-card-title>
                         <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
                             :items="reports" :items-per-page="10" class="elevation-1">
-                            <!-- <template v-slot:item.actions="reports"> -->
-                                <!-- <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
-                                    <i class="fad fa-eye"></i></router-link> -->
-                            <!-- </template> -->
+                            <template v-slot:item.qtyInFirst="{ item }">
+                                {{item.qtyInFirst|toDecimal}} {{item.unit}}
+                            </template>
+                            <template v-slot:item.qtyIn="{ item }">
+                                {{item.qtyIn|toDecimal}} {{item.unit}}
+                            </template>
+                            <template v-slot:item.qtyOut="{ item }">
+                                {{item.qtyOut|toDecimal}} {{item.unit}}
+                            </template>
+                            <template v-slot:item.qtyTotal="{ item }">
+                                {{item.qtyTotal|toDecimal}} {{item.unit}}
+                            </template>
+                            <!-- <template v-slot:item.actions="reports">
+                                <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
+                                    <i class="fad fa-eye"></i></router-link>
+                            </template> -->
                         </v-data-table>
                     </div>
                 </div>
@@ -152,30 +164,27 @@
                 // }, ],
                 loading: true,
                 reports: [],
-                headers: [
-                    {
+                headers: [{
                         text: 'Item code',
-                        value: 'item_code'
+                        value: 'data.item.item_code'
                     }, {
                         text: 'Item name',
-                        value: 'item_name'
+                        value: 'data.item.item_name'
                     },
                     {
                         text: 'PO No.',
-                        value: 'po_number'
+                        value: 'itemInIds'
                     }, {
                         text: 'First Supplier In',
                         value: 'supplier'
                     }, {
                         text: 'First Date In',
-                        value: 'date_in'
-                    }, {
-                        text: 'Location',
-                        value: 'location'
+                        value: 'data.detail_item_in.invoice_date'
                     },
                     {
                         text: 'Beginning Stock',
-                        value: 'qtyInFirst'
+                        value: 'qtyInFirst',
+                        align: 'right',
                     },
                     {
                         text: 'Receive Qty',
@@ -183,7 +192,8 @@
                     },
                     {
                         text: 'Receive Cum.',
-                        value: 'qtyIn'
+                        value: 'qtyIn',
+                        align: 'right',
                     },
                     {
                         text: 'Delivery Qty',
@@ -191,10 +201,12 @@
                     },
                     {
                         text: 'Delivery Cum.',
-                        value: 'qtyOut'
+                        value: 'qtyOut',
+                        align: 'right',
                     }, {
                         text: 'Total Stock',
-                        value: 'qtyTotal'
+                        value: 'qtyTotal',
+                        align: 'right'
                     }, {
                         text: 'Actions',
                         value: 'actions'
