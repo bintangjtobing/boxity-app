@@ -2101,6 +2101,13 @@ class apiController extends Controller
             return response()->json(itemsSales::where('item_code', $id)->where('si_status', 2)->sum('qtyShipped'));
         }
     }
+    
+    public function beginningHistoryItem($id)
+    {
+        $getHistory = itemHistory::where('itemId', $id)->orderBy('id', 'asc')->select('qtyIn')->first();
+        $result = $getHistory['qtyIn'] ?? 0;
+        return response()->json($result);
+    }
 
     public function reportItemHistory($id, request $req)
     {

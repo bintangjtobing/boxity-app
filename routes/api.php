@@ -253,6 +253,7 @@ Route::get('/inventory-item/warehouse/{warehouseId}', 'apiController@getInventor
 Route::get('/item-history/{id}', 'apiController@getHistoryItemById');
 Route::get('/sum/in/item-history/{id}', 'apiController@sumQtyInHistoryItem');
 Route::get('/sum/out/item-history/{id}', 'apiController@sumQtyOutHistoryItem');
+Route::get('/beginning/item-history/{id}', 'apiController@beginningHistoryItem');
 Route::get('/report/item-history/{id}', 'apiController@reportItemHistory');
 
 // Goods Item Transfer -> list item in one row goods transfer

@@ -492,7 +492,7 @@
                 sumQtyIn: 0,
                 sumQtyOut: 0,
                 countQty: '-',
-                beginningQty: '-',
+                beginningQty: 0,
                 // TODO: callback to save the ids of the uploaded file
                 dropzoneOptions: {
                     url: '/api/inventory-item/images/' + this.$route.params.id,
@@ -539,6 +539,9 @@
                 this.$isLoading(true);
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
+                
+                const beginning = await axios.get('/api/beginning/item-history/' + this.$route.params.id);
+                this.beginningQty = beginning.data;
 
                 // Load data relation
                 const resp = await axios.get('/api/item-group');
@@ -566,9 +569,6 @@
                 const qtyOutSum = await axios.get('/api/sum/out/item-history/' + this.$route.params.id);
                 this.sumQtyOut = qtyOutSum.data;
                 this.countQty = this.sumQtyIn - this.sumQtyOut;
-                console.log('qtyIn', this.sumQtyIn);
-                console.log('qtyOut', this.sumQtyOut);
-                console.log('count', this.countQty);
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
