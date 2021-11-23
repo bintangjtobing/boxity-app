@@ -2324,15 +2324,16 @@ class apiController extends Controller
         $payload->endDate = !empty($payload->endDate) ?
             date( 'Y-m-d H:i:s', strtotime( $payload->endDate) + 86399) : null;
 
-        // $warehouseItem = itemsSales::where('customerId', $payload->customerId)->groupBy(['warehouseId', 'item_code'])->get()->groupBy('warehouseId')->toArray();
-        // $warehouseItemIds = array_map(function ($elm) { 
-        //     return array_map(function ($subElm) {
-        //         return $subElm['item_code'];
-        //     }, $elm);
-        // }, $warehouseItem);
-
+        $inventoryItem = inventoryItem::where('customerId', $payload->customerId);
+        
         $result = []; $data = [];
         if ($payload->type === 'stock') {
+            $warehouseItem = $inventoryItem->get()->groupBy('warehouseid')->toArray();
+            $warehouseItemIds = array_map(function ($elm) { 
+                return array_map(function ($subElm) {
+                    return $subElm['id'];
+                }, $elm);
+            }, $warehouseItem);
             foreach ($warehouseItemIds as $value) {
                 $history = itemHistory::whereIn('itemId', $value)
                 ->when($payload, function ($query) use ($payload) {
@@ -2365,11 +2366,8 @@ class apiController extends Controller
             }
         }
         else if ($payload->type === 'warehouse') {
-            // $itemIds = itemsSales::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId)->groupBy('item_code')->pluck('item_code')->toArray();
-            $inventoryItem = inventoryItem::where('customerId', $payload->customerId)->where('warehouseId', $payload->warehouseId);
-            
-            $item = $inventoryItem->get()->toArray();
-            $itemIds = $inventoryItem->select('id')->pluck('id')->toArray();
+            $item = $inventoryItem->where('warehouseId', $payload->warehouseId)->get()->toArray();
+            $itemIds = $inventoryItem->where('warehouseId', $payload->warehouseId)->select('id')->pluck('id')->toArray();
             
             $history = itemHistory::whereIn('itemId', $itemIds)
             ->when($payload, function ($query) use ($payload) {
