@@ -258,6 +258,9 @@
                                         <a v-on:click="deleteItemPurchasing(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
+                                    <template v-slot:item.qtyOrdered="{ item }">
+                                        {{ item.qtyOrdered | toDecimal }} / {{ item.unit }}
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>

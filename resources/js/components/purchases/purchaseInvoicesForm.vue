@@ -216,16 +216,18 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight In:</span>
-                                        <input type="number" v-model="itemModify.weightIn" placeholder="0" id="" min="0"
-                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                        <vue-numeric class="form-control" readonly v-bind:precision="0"
+                                            v-model="itemModify.weightIn">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight Out:</span>
-                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id=""
-                                            min="0" @change="calculateNettWeight" @input="calculateNettWeight"
-                                            max="10000" step="1" class="form-control" :disabled="isWriteForm">
+                                        <vue-numeric class="form-control" @change="calculateNettWeight"
+                                            @input="calculateNettWeight" readonly v-bind:precision="0"
+                                            v-model="itemModify.weightOut">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                             </div>

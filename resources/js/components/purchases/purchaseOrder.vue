@@ -45,7 +45,7 @@
                                                     class="fal fa-check-circle"></em>
                                                 &nbsp;Approved</span>
                                         </div>
-                                        <div v-else-if="item.status===0">
+                                        <div v-else-if="item.status==1 && item.paidOff==true">
                                             <span class="rounded-pill userDatatable-content-status color-warning
                                                 bg-opacity-warning active text-capitalize"><em
                                                     class="fal fa-exclamation-circle"></em>
@@ -59,8 +59,7 @@
                                         </div>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <a v-on:click="approvePO(item.po_number)" class="create"
-                                            v-if="item.status=='0'">
+                                        <a v-on:click="approvePO(item.po_number)" class="create" v-if="item.status===0">
                                             <em class="far fa-thumbs-up"></em> Approve</a>
                                         <a :href="`/report/purchase/order/${item.po_number}`" target="_blank"
                                             v-if="item.status!=0" class="view">
