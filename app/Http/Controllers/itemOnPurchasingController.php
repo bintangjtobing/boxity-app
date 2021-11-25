@@ -248,10 +248,10 @@ class itemOnPurchasingController extends Controller
         $ItemPurchasing->weightIn = $request->weightIn;
         $ItemPurchasing->weightOut = $request->weightOut;
         $ItemPurchasing->updated_by = Auth::id();
-        
+
         $ItemPurchasing->save();
-        
-        
+
+
         $itemPo = itemsPurchase::where('purchasingId', $ItemPurchasing->purchase_related)->first();
         if ($request->qtyShipped == $itemPo->qtyOrdered) {
             itemsPurchase::where('id', $ItemPurchasing->id)->update(['status' => '2']);
@@ -259,7 +259,7 @@ class itemOnPurchasingController extends Controller
             purchaseOrder::where('po_number', $ItemPurchasing->purchase_related)->update(['status' => '2']);
             purchaseInvoice::where('pi_number', $ItemPurchasing->purchasingId)->update(['status' => '2']);
         }
-        
+
         $getItemOnPI = itemsPurchase::where('purchasingId', $ItemPurchasing->purchasingId)->get();
         if (count($getItemOnPI) > 0) {
             foreach ($getItemOnPI as $getItemOnPi) {

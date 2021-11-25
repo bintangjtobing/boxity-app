@@ -76,7 +76,7 @@ class purchasingController extends Controller
     {
         $purchasingOrd = new purchaseOrder();
         $purchasingOrd->po_number = $request->po_number;
-        $purchasingOrd->status = '1';
+        $purchasingOrd->status = '0';
         $purchasingOrd->supplier = $request->supplier;
         $purchasingOrd->customerId = $request->customerid;
         $purchasingOrd->order_date = $request->order_date;
@@ -250,6 +250,7 @@ class purchasingController extends Controller
 
         $itemGet = DB::table('items_purchases')
             ->where('pi_status', '=', '1')
+            ->where('created_by', '=', Auth::id())
             // PO Status 2, means having a purchasing ID
             ->update(array('purchasingId' => $purchasingOrd->pi_number, 'pi_status' => '2'));
 
@@ -280,7 +281,8 @@ class purchasingController extends Controller
                         ->update(array(
                             'qty' => $sumQty,
                         ));
-                }else{}
+                } else {
+                }
                 // dd($getItemOnPI);
             }
         }
