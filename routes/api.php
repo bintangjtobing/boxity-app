@@ -225,6 +225,7 @@ Route::get('/count-item-group', 'apiController@countItemGroup');
 Route::delete('/item-group/{id}', 'apiController@deleteItemGroupById');
 
 // Inventory Item
+Route::get('/item', 'apiController@listItem');
 // Upload image
 Route::post('/inventory-item/images', 'apiController@imagesInventoryItemStore')->name('dropzoneImages');
 Route::delete('/inventory-item/images/{id}', 'apiController@imagesInventoryItemStoreDelete');

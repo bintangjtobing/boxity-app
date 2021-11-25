@@ -2410,4 +2410,30 @@ class apiController extends Controller
         $result = !empty($result) ? $result : $data;
         return response()->json($result);
     }
+    
+    public function listItem () {
+        $item = inventoryItem::with('warehouse')->get()->groupBy('item_code');
+        
+        $data = [];
+        foreach ($item as $key => $value) {
+            $data[$key] = [
+                "id" => $value[0]['id'],
+                "item_code" => $value[0]['item_code'],
+                "item_name" => $value[0]['item_name'],
+                "qty" => 0,
+                "warehouse" => []
+            ];
+            
+            foreach ($value as $index => $elm) {
+                $data[$key]["qty"] = $data[$key]["qty"] + $elm['qty'];
+                array_push($data[$key]['warehouse'], [
+                    "id" => $elm['warehouse']['id'],
+                    "warehouse_name" => $elm['warehouse']['warehouse_name'],
+                    'qty' => $elm['qty']
+                ]);
+            }
+        }
+        $data = array_values($data);
+        return response()->json($data);
+    }
 }
