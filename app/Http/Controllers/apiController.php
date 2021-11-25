@@ -2424,7 +2424,7 @@ class apiController extends Controller
                 "warehouse" => []
             ];
             
-            foreach ($value as $index => $elm) {
+            foreach ($value as $elm) {
                 $data[$key]["qty"] = $data[$key]["qty"] + $elm['qty'];
                 array_push($data[$key]['warehouse'], [
                     "id" => $elm['warehouse']['id'],
