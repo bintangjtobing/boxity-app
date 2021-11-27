@@ -20,7 +20,8 @@
         </div>
         <div class="row">
             <!-- Form Add -->
-            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}" v-if="permissions.includes('EditSalesInvoice')">
+            <div class="col-lg-12" :class="{unvisible: isVisibleAddForm}"
+                v-if="permissions.includes('EditSalesInvoice')">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row justify-content-between align-items-center" @click="isShowing()">
@@ -86,33 +87,16 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight In:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemAdd.weightIn"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
+                                        <input type="number" v-model="itemAdd.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight Out:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemAdd.weightOut"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        @change="calculateNettWeight"
-                                        @input="calculateNettWeight"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
+                                        <input type="number" v-model="itemAdd.weightOut" placeholder="0" id="" min="0"
+                                            @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
+                                            step="1" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -129,18 +113,10 @@
                                     </div>
                                 </div> -->
                                 <div class="form-group">
-                                        <span>Quantity Shipped/Nett Weight:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemAdd.qtyShipped"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
-                                    </div>
+                                    <span>Quantity Shipped/Nett Weight:</span>
+                                    <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
+                                        max="10000" step="1" class="form-control" />
+                                </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Unit:</span>
@@ -235,33 +211,16 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight In:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemModify.weightIn"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
+                                        <input type="number" v-model="itemModify.weightIn" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight Out:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemModify.weightOut"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        @change="calculateModifNettWeight"
-                                        @input="calculateModifNettWeight"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
+                                        <input type="number" v-model="itemModify.weightOut" placeholder="0" id=""
+                                            min="0" @change="calculateModifNettWeight" @input="calculateModifNettWeight"
+                                            max="10000" step="1" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -281,16 +240,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity Shipped/Nett Weight:</span>
-                                        <input
-                                        type="number"
-                                        v-model="itemModify.qtyShipped"
-                                        placeholder="0"
-                                        id=""
-                                        min="0"
-                                        max="10000"
-                                        step="1"
-                                        class="form-control"
-                                        />
+                                        <input type="number" v-model="itemModify.qtyShipped" placeholder="0" id=""
+                                            min="0" max="10000" step="1" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -551,9 +502,9 @@
                 itemCode: []
             }
         },
-        beforeMount(){                        
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
-        },   
+        },
         created() {
             this.loadData();
             this.loadLoggedUser();
@@ -570,7 +521,8 @@
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
                 this.isDisable.select = false;
-                const itemData = await axios.get('/api/inventory-item/w/' + param.id + "/" + this.itemAdd.customerid);
+                const itemData = await axios.get('/api/inventory-item/w/' + param.id + "/" + this.itemAdd
+                    .customerid);
                 this.items = itemData.data;
             },
             async onCustomerSelected(param) {
@@ -630,7 +582,7 @@
                 this.titleItemDescription = 'Add Sales Invoice Items';
                 this.isVisibleAddForm = false;
                 this.isVisibleModifyForm = true;
-                this.isShow.colapse=true;
+                this.isShow.colapse = true;
             },
             async loadData() {
                 // this.$Progress.start();
@@ -638,25 +590,28 @@
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
-                
+
                 const itemSalesingData = await axios.get('/api/si/item-sales/' + this.$route.params.si_number);
                 this.itemSalesingData = itemSalesingData.data;
                 this.selected.sales_related = itemSalesingData.data[0].sales_related
                 this.selected.customer = itemSalesingData.data[0].customer.company_name
                 this.salesInvoiceData.customer = itemSalesingData.data[0].customer.id
 
-                const {data} = await axios.get('/api/sales/order/customer/' + itemSalesingData.data[0].customerId);
+                const {
+                    data
+                } = await axios.get('/api/sales/order/customer/' + itemSalesingData.data.customerId);
                 const warehouseId = [];
-                data[0].items.forEach(elm => {
-                  if(elm.qtyOrdered > elm.qtyShipped && ((this.itemCode.includes(elm.item_code) === false) || (warehouseId.includes(elm.warehouseId) === false)) ) {
-                    this.itemCode.push(elm.item_code)
-                    warehouseId.push(elm.warehouseId)
-                  }
+                data.items.forEach(elm => {
+                    if (elm.qtyOrdered > elm.qtyShipped && ((this.itemCode.includes(elm.item_code) ===
+                            false) || (warehouseId.includes(elm.warehouseId) === false))) {
+                        this.itemCode.push(elm.item_code)
+                        warehouseId.push(elm.warehouseId)
+                    }
                 })
-                
+
                 const getWharehouse = await axios.get(`/api/warehouse?id=${warehouseId}`);
                 this.warehouse = getWharehouse.data;
-                
+
                 const salesInvoiceData = await axios.get('/api/sales/invoices/' + this.$route.params.si_number);
                 this.salesInvoiceData = salesInvoiceData.data;
                 const contactUsers = await axios.get('/api/contact-list');
