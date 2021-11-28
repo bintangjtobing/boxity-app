@@ -2321,9 +2321,9 @@ class apiController extends Controller
             'type' => ['in:warehouse,stock', 'required']
         ]);
         $payload->startDate = !empty($payload->startDate) ?
-            date('Y-m-d H:i:s', strtotime($payload->startDate)) : null;
+            date('Y-m-d', strtotime($payload->startDate)) : null;
         $payload->endDate = !empty($payload->endDate) ?
-            date('Y-m-d H:i:s', strtotime($payload->endDate) + 86399) : null;
+            date('Y-m-d', strtotime($payload->endDate) + 86399) : null;
 
         $inventoryItem = inventoryItem::where('customerId', $payload->customerId);
 
@@ -2340,12 +2340,12 @@ class apiController extends Controller
                 $history = itemHistory::whereIn('itemId', $value)
                     ->when($payload, function ($query) use ($payload) {
                         if (!empty($payload->startDate) && !empty($payload->endDate)) {
-                            return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
+                            return $query->whereBetween('date', [$payload->startDate, $payload->endDate]);
                         } else if (!empty($payload->startDate)) {
-                            return $query->where('created_at', '>=', $payload->startDate);
+                            return $query->where('date', '>=', $payload->startDate);
                         }
                     })
-                    ->with('item.warehouse', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
+                    ->with('item.warehouse', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
 
                 $data = array_map(function ($elm) {
                     $sumIn = array_reduce($elm, function ($temp, $item) {
@@ -2372,12 +2372,12 @@ class apiController extends Controller
             $history = itemHistory::whereIn('itemId', $itemIds)
                 ->when($payload, function ($query) use ($payload) {
                     if (!empty($payload->startDate) && !empty($payload->endDate)) {
-                        return $query->whereBetween('created_at', [$payload->startDate, $payload->endDate]);
+                        return $query->whereBetween('date', [$payload->startDate, $payload->endDate]);
                     } else if (!empty($payload->startDate)) {
-                        return $query->where('created_at', '>=', $payload->startDate);
+                        return $query->where('date', '>=', $payload->startDate);
                     }
                 })
-                ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('created_at', 'asc')->get()->groupBy('itemId')->toArray();
+                ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
 
             foreach ($item as $value) {
                 $firstData = [];
