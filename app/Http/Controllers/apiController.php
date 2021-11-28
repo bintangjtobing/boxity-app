@@ -2456,15 +2456,17 @@ class apiController extends Controller
                     "item_name" => $value[0]['item_name'],
                     "unit" => $value[0]['unit'],
                     "qty" => 0,
-                    "warehouse" => []
+                    "warehouse" => [],
+                    "warehouseDetail" => []
                 ];
 
                 foreach ($value as $elm) {
                     $data[$key]["qty"] = $data[$key]["qty"] + $elm['qty'];
-                    array_push($data[$key]['warehouse'], [
+                    array_push($data[$key]['warehouse'], $elm['warehouse']['warehouse_name'] );
+                    array_push($data[$key]['warehouseDetail'], [
                         "id" => $elm['warehouse']['id'],
                         "warehouse_name" => $elm['warehouse']['warehouse_name'],
-                        'qty' => $elm['qty']
+                        'qty' => $elm['qty']    
                     ]);
                 }
             }

@@ -28,11 +28,11 @@
                                 <v-data-table :loading="loadings" loading-text="Loading... Please wait..."
                                     :search="itemSearch" :headers="itemHeaders" multi-sort :items="calItems"
                                     :items-per-page="5" class="elevation-1">
-                                    <template v-slot:[`calItems.item_name`]="{ calItems }">
-                                        [{{calItems.item_code}}] {{calItems.item_name}}
+                                    <template v-slot:[`item.item_name`]="{ item }">
+                                        [{{item.item_code}}] {{item.item_name}}
                                     </template>
-                                    <template v-slot:[`calItems.qty`]="{ calItems }">
-                                        {{calItems.qty|toDecimal}}/{{calItems.unit}}
+                                    <template v-slot:[`item.qty`]="{ item }">
+                                        {{item.qty|toDecimal}}/{{item.unit}}
                                     </template>
                                 </v-data-table>
                             </div>
@@ -131,6 +131,9 @@
                 }, {
                     text: 'Ending Balance Quantity',
                     value: 'qty'
+                }, {
+                    text: 'Warehouse',
+                    value: 'warehouse'
                 }],
                 countItems: '0',
                 permissions: [],
