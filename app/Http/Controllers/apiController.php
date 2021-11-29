@@ -2355,15 +2355,18 @@ class apiController extends Controller
                         return $temp += $item['qtyOut'];
                     });
                     $firstData = $elm[0];
+                    $itemCode = $firstData['itemInId'] ?? $firstData['itemOutId'];
                     return [
                         'data' => $firstData,
+                        'warehouse' => $firstData['item']['warehouse']['warehouse_name'],
+                        'itemInIds' => !empty($itemCode) ? substr($itemCode, 3) : '-',
                         'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                         'qtyIn' => $sumIn,
                         'qtyOut' => $sumOut,
                         'qtyTotal' => $sumIn - $sumOut
                     ];
                 }, $history);
-                array_push($result, $data);
+                array_push($result, ...$data);
             }
         } else if ($payload->type === 'warehouse') {
             $item = $inventoryItem->where('warehouseId', $payload->warehouseId)->get()->toArray();
@@ -2394,11 +2397,12 @@ class apiController extends Controller
                         $firstData = $elm[0];
                     }
                 }
+                $itemCode = $firstData['itemInId'] ?? $firstData['itemOutId'];
                 array_push($data, [
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
-                    'itemInIds' => !empty($firstData['itemInId']) ? substr($firstData['itemInId'], 3) : '-',
+                    'itemInIds' => !empty($itemCode) ? substr($itemCode, 3) : '-',
                     'unit' => $firstData['item']['unit'] ?? 'unit',
                     'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,

@@ -236,7 +236,6 @@
                 console.log(this.req);
             },
             async searchData() {
-                console.log(this.req);
                 const resp = await axios.get('/api/report-card', {
                     params: {
                         customerId: this.req.customerid,

@@ -12,7 +12,8 @@
                                 <span>Select customer:</span>
                                 <select v-model="req.customerid" class="form-control">
                                     <option value="">Select customer</option>
-                                    <option v-for="customers in customers" :key="customers.id">
+                                    <option v-for="customers in customers" :key="customers.id"
+                                    :value="customers.id">
                                         {{customers.company_name}}</option>
                                 </select>
                             </div>
@@ -31,16 +32,14 @@
                         </div>
                         <div class="col-lg-1 mx-2">
                             <div class="form-group">
-                                <a @click="searchData" class="btn btn-primary-boxity" style="margin-top:22px;"><i
-                                        class="far fa-search"></i>
+                                <a @click="searchData" class="btn btn-primary-boxity" style="margin-top:22px;"><em class="far fa-search"></em>
                                     Search
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-1 text-left">
                             <div class="form-group">
-                                <a @click="exportData" class="btn btn-secondary-boxity" style="margin-top:22px;"><i
-                                        class="far fa-file-export"></i>
+                                <a @click="exportData" class="btn btn-secondary-boxity" style="margin-top:22px;"><em class="far fa-file-export"></em>
                                     Export
                                 </a>
                             </div>
@@ -54,7 +53,7 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
-                            :items="reports" :items-per-page="10" class="elevation-1">
+                            :items="reports" :items-per-page="10" class="elevation-1" group-by="warehouse">
                         </v-data-table>
                     </div>
                 </div>
@@ -63,7 +62,6 @@
     </div>
 </template>
 <script>
-    import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
 
     export default {
@@ -82,49 +80,7 @@
                 customers: {},
                 search: '',
                 key: 1,
-                reports: [{
-                    location: 'GDG 1',
-                    date: '01 Oktober 2021',
-                    category: 'Bongkar',
-                    type: 'Bag',
-                    po_number: 'PO.20210110.57869',
-                    item_code: 'B001',
-                    item_name: 'Pollar',
-                    supplier: 'Bungasari',
-                    no_pol: 'BK 0019 KK',
-                    no_cont: 'HASLIJ0192833',
-                    weight_in: '37.550 kg (500 bag)',
-                    weight_out: '12.300 kg (164 bag)',
-                    nett_weight: '25.200 kg (336 bag)',
-                }, {
-                    location: 'GDG 1',
-                    date: '03 Oktober 2021',
-                    category: 'Bongkar',
-                    type: 'Bag',
-                    po_number: 'PO.20210110.17463',
-                    item_code: 'B001',
-                    item_name: 'Pollar',
-                    supplier: 'Bungasari',
-                    no_pol: 'BK 8773 IO',
-                    no_cont: 'HASLIJ0174653',
-                    weight_in: '77.450 kg (1032 bag)',
-                    weight_out: '33.400 kg (445 bag)',
-                    nett_weight: '44.050 kg (587 bag)',
-                }, {
-                    location: 'GDG 2',
-                    date: '04 Oktober 2021',
-                    category: 'Muat',
-                    type: 'Bag',
-                    po_number: 'SO.20210110.65473',
-                    item_code: 'B011',
-                    item_name: 'Meat Bone Meal',
-                    supplier: 'Cargill Inc',
-                    no_pol: 'BK 7223 DC',
-                    no_cont: 'HAJSI98176128',
-                    weight_in: '9.375 kg (125 bag)',
-                    weight_out: '15.000 kg (2000 bag)',
-                    nett_weight: '5.625 kg (75 bag)',
-                }],
+                reports: [],
                 loading: true,
                 headers: [{
                     text: 'Location',
@@ -140,13 +96,13 @@
                     value: 'type'
                 }, {
                     text: 'PO No.',
-                    value: 'po_number'
+                    value: 'itemInIds'
                 }, {
-                    text: 'Code',
-                    value: 'item_code'
+                    text: 'Item code',
+                    value: 'data.item.item_code'
                 }, {
-                    text: 'Item',
-                    value: 'item_name'
+                    text: 'Item name',
+                    value: 'data.item.item_name'
                 }, {
                     text: 'Supplier',
                     value: 'supplier'
@@ -192,6 +148,15 @@
             },
             async searchData() {
                 console.log(this.req);
+                const resp = await axios.get('/api/report-card', {
+                    params: {
+                        customerId: this.req.customerid,
+                        startDate: this.req.from,
+                        endDate: this.req.to,
+                        type: 'stock'
+                    }
+                });
+                this.reports = resp.data;
             }
         },
     }
