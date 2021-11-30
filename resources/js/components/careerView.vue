@@ -3,7 +3,8 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Job vacancy - <span>{{careers.title}}</span></h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Job vacancy - <span>{{careers.title}}</span>
+                    </h2>
                 </div>
             </div>
         </div>
@@ -14,15 +15,15 @@
                         <figcaption>
                             <div class="explainCareers">
                                 <p>
-                                    Bagian lowongan pekerjaan yang terbuka: <span>{{careers.title}}</span>
-                                    Lokasi: <span>{{careers.location}}</span>
-                                    Departemen pekerjaan: <span>{{careers.divisi}} - {{careers.part}}</span>
+                                    Job title: <span>{{careers.title}}</span>
+                                    Job location: <span>{{careers.location}}</span>
+                                    Department - Part of: <span>{{careers.divisi}} - {{careers.part}}</span>
                                     <div class="descCareer">
-                                        Dekripsi pekerjaan: <br><span v-html="careers.description"></span>
+                                        Job description: <br><span v-html="careers.description"></span>
                                     </div>
                                 </p>
                                 <router-link :to="`/edit/career/${careers.id}`" class="
-                                btn btn-primary">Edit</router-link>
+                                btn btn-primary-boxity">Edit</router-link>
                             </div>
                         </figcaption>
                     </figure>
