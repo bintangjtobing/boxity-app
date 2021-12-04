@@ -27,5 +27,8 @@ public/imagePublic/
 composer.lock
 .htaccess
 .user.ini
-.error_log
+error_log
 php.ini
+package-lock.json
+public/.htaccess
+public/js/app.js.LICENSE.txt
