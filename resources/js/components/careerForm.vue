@@ -27,49 +27,21 @@
                                 <div class="form-row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.location"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Job location</option>
-                                                <option v-bind:value="`Medan`">Medan</option>
-                                                <option v-bind:value="`Jakarta`">Jakarta</option>
-                                                <option v-bind:value="`Palembang`">Palembang
-                                                </option>
-                                                <option v-bind:value="`Surabaya`">Surabaya
-                                                </option>
-                                                <option v-bind:value="`Makassar`">Makassar
-                                                </option>
-                                                <option v-bind:value="`Bali`">Bali
-                                                </option>
-                                            </select>
+                                            <input type="text" v-model="job.location" placeholder="Job Location"
+                                                required class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
+                                            <small>Such as: Country and location</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.divisi"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Department</option>
-                                                <option v-bind:value="`Antar-Pulau`">Antar-Pulau</option>
-                                                <option v-bind:value="`Ekspor`">Ekspor</option>
-                                                <option v-bind:value="`Impor`">Impor</option>
-                                                <option v-bind:value="`Trucking`">Trucking
-                                                </option>
-                                            </select>
+                                            <input type="text" v-model="job.divisi" placeholder="Department of" required
+                                                class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select v-model="job.part"
-                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light fa-select">
-                                                <option value="" disabled>Part of</option>
-                                                <option v-bind:value="`Personalia Umum`">Personalia Umum
-                                                </option>
-                                                <option v-bind:value="`Finance`">Finance
-                                                </option>
-                                                <option v-bind:value="`Document`">Document
-                                                </option>
-                                                <option v-bind:value="`Operational`">Operational
-                                                </option>
-                                            </select>
+                                            <input type="text" v-model="job.part" placeholder="Part of" required
+                                                class="form-control ih-medium ip-gray radius-xs b-ligh px-15">
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +63,7 @@
                                     <div class="form-row justify-content-end">
                                         <div class="layout-button mt-25">
                                             <button type="submit"
-                                                class="btn btn-secondary-boxity btn-default btn-squared px-30">submit</button>
+                                                class="btn btn-primary-boxity btn-default btn-squared px-30">submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +113,7 @@
                         text: 'Success New job vacancy.',
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                     this.$router.push('/career');
                 }).catch(error => {
                     this.$Progress.fail();

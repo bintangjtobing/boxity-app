@@ -32,7 +32,7 @@
                                         [{{item.item_code}}] {{item.item_name}}
                                     </template>
                                     <template v-slot:[`item.qty`]="{ item }">
-                                        {{item.qty|toDecimal}}/{{item.unit}}
+                                        {{item.qty|toDecimal}} {{item.unit}}
                                     </template>
                                 </v-data-table>
                             </div>
@@ -154,7 +154,6 @@
                 // for (let i = 0; i < resp.data.length; i++) {
                 this.inventoryItem = resp.data;
                 this.calItems = respItem.data;
-                console.log(this.calItems)
                 if (resp.data.length) {
                     this.loading = false
                 }
