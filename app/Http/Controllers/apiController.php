@@ -2402,7 +2402,7 @@ class apiController extends Controller
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
-                    'itemInIds' => !empty($itemCode) ? substr($itemCode, 3) : '-',
+                    'itemInIds' => !empty($firstData['itemInId']) ? substr( $firstData['itemInId'], 3) : '-',
                     'unit' => $firstData['item']['unit'] ?? 'unit',
                     'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,
@@ -2504,7 +2504,7 @@ class apiController extends Controller
                     }
                 })
                 ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
-    
+
             foreach ($item as $value) { 
                 $firstData = [];
                 $sumIn = 0;
@@ -2520,12 +2520,11 @@ class apiController extends Controller
                         $firstData = $elm[0];
                     }
                 }
-                $itemCode = $firstData['itemInId'] ?? $firstData['itemOutId'];
                 array_push($data, [
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
-                    'itemInIds' => !empty($itemCode) ? substr($itemCode, 3) : '-',
+                    'itemInIds' => !empty($firstData['itemInId']) ? substr( $firstData['itemInId'], 3) : '-',
                     'unit' => $firstData['item']['unit'] ?? 'unit',
                     'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,
