@@ -2397,7 +2397,7 @@ class apiController extends Controller
                         $firstData = $elm[0];
                     }
                 }
-                $itemCode = $firstData['itemInId'] ?? $firstData['itemOutId'];
+                $itemCode = $firstData['itemInId'];
                 array_push($data, [
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
@@ -2477,5 +2477,74 @@ class apiController extends Controller
             $data = array_values($data);
             return response()->json($data);
         }
+    }
+    
+    function printReportWarehouse (Request $payload) {
+        $payload->startDate = !empty($payload->startDate) && $payload->startDate != "undefined" ?
+            date('Y-m-d', strtotime($payload->startDate)) : null;
+        $payload->endDate = !empty($payload->endDate) && $payload->endDate != "undefined" ?
+            date('Y-m-d', strtotime($payload->endDate) + 86399) : null;
+        
+        $data = [];
+        if (!empty($payload->customerId)) {
+            $customer = customers::where('id', $payload->customerId)->first();
+            $warehouse = warehouseList::where('id', $payload->warehouseId)->first();
+            
+            $inventoryItem = inventoryItem::where('customerId', $payload->customerId);
+    
+            $item = $inventoryItem->where('warehouseId', $payload->warehouseId)->get()->toArray();
+            $itemIds = $inventoryItem->where('warehouseId', $payload->warehouseId)->select('id')->pluck('id')->toArray();
+    
+            $history = itemHistory::whereIn('itemId', $itemIds)
+                ->when($payload, function ($query) use ($payload) {
+                    if (!empty($payload->startDate) && !empty($payload->endDate)) {
+                        return $query->whereBetween('date', [$payload->startDate, $payload->endDate]);
+                    } else if (!empty($payload->startDate)) {
+                        return $query->where('date', '>=', $payload->startDate);
+                    }
+                })
+                ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
+    
+            foreach ($item as $value) { 
+                $firstData = [];
+                $sumIn = 0;
+                $sumOut = 0;
+                foreach ($history as $elm) {
+                    if (!empty($elm[0]['itemId']) && $elm[0]['itemId'] == $value['id']) {
+                        $sumIn = array_reduce($elm, function ($temp, $item) {
+                            return $temp += $item['qtyIn'];
+                        });
+                        $sumOut = array_reduce($elm, function ($temp, $item) {
+                            return $temp += $item['qtyOut'];
+                        });
+                        $firstData = $elm[0];
+                    }
+                }
+                $itemCode = $firstData['itemInId'] ?? $firstData['itemOutId'];
+                array_push($data, [
+                    'data' => $value,
+                    'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
+                    'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
+                    'itemInIds' => !empty($itemCode) ? substr($itemCode, 3) : '-',
+                    'unit' => $firstData['item']['unit'] ?? 'unit',
+                    'qtyInFirst' => $firstData['qtyIn'] ?? 0,
+                    'qtyIn' => $sumIn,
+                    'qtyOut' => $sumOut,
+                    'qtyTotal' => $sumIn - $sumOut
+                ]);
+            }
+        }
+        
+        $data = [
+            'startDate' => $payload->startDate,
+            'endDate' => $payload->endDate,
+            'customer' => $customer,
+            'warehouse' => $warehouse,
+            'image' => '',
+            'items' => $data,
+            'remark' => ''
+        ];        
+        $pdf = PDF::loadView('report.stockWarehouse', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
     }
 }

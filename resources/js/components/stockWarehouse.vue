@@ -41,16 +41,15 @@
                         </div>
                         <div class="col-lg-1 mx-2">
                             <div class="form-group">
-                                <a @click="searchData" class="btn btn-primary-boxity" style="margin-top:22px;"><i
-                                        class="far fa-search"></i>
+                                <a @click="searchData" class="btn btn-primary-boxity" style="margin-top:22px;"><em
+                                        class="far fa-search"></em>
                                     Search
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-1 text-left">
                             <div class="form-group">
-                                <a @click="exportData" class="btn btn-secondary-boxity" style="margin-top:22px;"><i
-                                        class="far fa-file-export"></i>
+                                <a :href="urlPrint+`?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`" target="_blank" class="btn btn-secondary-boxity" style="margin-top:22px;" ><em class="far fa-file-export"></em>
                                     Export
                                 </a>
                             </div>
@@ -89,7 +88,6 @@
     </div>
 </template>
 <script>
-    // import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
 
     export default {
@@ -109,59 +107,6 @@
                 warehouse: {},
                 search: '',
                 key: 1,
-                // reports: [{
-                //     item_code: 'B001',
-                //     item_name: 'Pollar',
-                //     // po_number: 'PO.20211010.817363',
-                //     // supplier: 'Bungasari',
-                //     // date_in: '10/10/2021',
-                //     // location: 'GDG 1 CARGILL',
-                //     beginning_stock: '60.000 kg',
-                //     qty_received: '',
-                //     qty_received_cum: '60.000 kg',
-                //     qty_delivery: '-',
-                //     qty_delivery_cum: '-',
-                //     qty_total: '',
-                // }, {
-                //     item_code: 'B001',
-                //     item_name: 'Pollar',
-                //     // po_number: 'PO.20211013.624534',
-                //     // supplier: 'Bungasari',
-                //     // date_in: '13/10/2021',
-                //     // location: 'GDG 1 CARGILL',
-                //     beginning_stock: '60.000 kg',
-                //     qty_received: '30.000 kg',
-                //     qty_received_cum: '90.000 kg',
-                //     qty_delivery: '-',
-                //     qty_delivery_cum: '-',
-                //     qty_total: '',
-                // }, {
-                //     item_code: 'B011',
-                //     item_name: 'Meat Bone Meal',
-                //     // po_number: 'PO.20211009.61451',
-                //     // supplier: 'Bungasari',
-                //     // date_in: '09/10/2021',
-                //     // location: 'GDG 1 CARGILL',
-                //     beginning_stock: '30.000 kg',
-                //     qty_received: '',
-                //     qty_received_cum: '30.000 kg',
-                //     qty_delivery: '-',
-                //     qty_delivery_cum: '-',
-                //     qty_total: '',
-                // }, {
-                //     item_code: 'B011',
-                //     item_name: 'Meat Bone Meal',
-                //     // po_number: 'PO.20211010.123445',
-                //     // supplier: 'Bungasari',
-                //     // date_in: '10/10/2021',
-                //     // location: 'GDG 1 CARGILL',
-                //     beginning_stock: '30.000 kg',
-                //     qty_received: '30.000 kg',
-                //     qty_received_cum: '60.000 kg',
-                //     qty_delivery: '-',
-                //     qty_delivery_cum: '-',
-                //     qty_total: '',
-                // }, ],
                 loading: true,
                 reports: [],
                 headers: [{
@@ -212,6 +157,7 @@
                         value: 'actions'
                     }
                 ],
+                urlPrint: "/print/report-warehouse"
                 // end datatable
             }
         },
@@ -220,7 +166,6 @@
         },
         methods: {
             async loadCard() {
-                // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/customers');
                 this.customers = resp.data;
@@ -229,11 +174,7 @@
                 if (resp.data.length) {
                     this.loading = false;
                 }
-                // this.$Progress.finish();
                 this.$isLoading(false);
-            },
-            async exportData() {
-                console.log(this.req);
             },
             async searchData() {
                 const resp = await axios.get('/api/report-card', {
@@ -246,6 +187,11 @@
                     }
                 });
                 this.reports = resp.data;
+                
+                this.urlPrint = '/print/report-warehouse'
+                if (this.req.warehouseid && this.req.customerid) {
+                    this.urlPrint = this.urlPrint + `?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`
+                }
             }
         },
     }

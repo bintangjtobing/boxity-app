@@ -456,9 +456,6 @@ class salesController extends Controller
         $tax = 10;
         $taxVat = $total * $tax / 100;
 
-        $tax = 10;
-        $taxVat = $total * $tax / 100;
-
         $data = [
             "title" => "SALES ORDER",
             "companyName" => $company->company_name,
@@ -641,9 +638,6 @@ class salesController extends Controller
             ];
             array_push($item, $data);
         }
-
-        $tax = 10;
-        $taxVat = $total * $tax / 100;
 
         $tax = 10;
         $taxVat = $total * $tax / 100;

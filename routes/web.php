@@ -36,6 +36,8 @@ Route::get('/sign-out', function (Request $request) {
     return redirect('/');
 });
 
+Route::get('/print/report-warehouse', 'apiController@printReportWarehouse');
+
 // Auth url
 Route::get('/login', function () {
     session()->regenerate();
@@ -75,3 +77,4 @@ Route::get('/generate/pdf/{id}', function ($id) {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/{any}', 'spaController@index')->where('any', '.*');
 });
+

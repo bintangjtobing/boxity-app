@@ -53,11 +53,11 @@
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <a :href="`/report/sales/order/${item.so_number}`" target="_blank" class="view">
-                                            <i class="fad fa-print"></i></a>
+                                            <em class="fad fa-print"></em></a>
                                         <router-link :to="`/detail/sales/order/${item.id}`" class="edit">
-                                            <i class="fad fa-eye"></i></router-link>
+                                            <em class="fad fa-eye"></em></router-link>
                                         <a v-on:click="deleteInventoryItem(item.id)" class="remove" v-if="permissions.includes('DeleteSalesOrder')">
-                                            <i class="fad fa-trash"></i></a>
+                                            <em class="fad fa-trash"></em></a>
                                     </template>
                                 </v-data-table>
                             </div>
