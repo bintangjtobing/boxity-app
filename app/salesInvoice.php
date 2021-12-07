@@ -13,7 +13,7 @@ class salesInvoice extends Model
     ];
     public function items()
     {
-        return $this->hasMany('App\ItemsSales', 'salesingId', 'si_number');
+        return $this->hasMany(ItemsSales::class, 'salesingId', 'si_number');
     }
     public function customers()
     {

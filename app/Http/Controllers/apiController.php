@@ -2397,7 +2397,7 @@ class apiController extends Controller
                         $firstData = $elm[0];
                     }
                 }
-                $itemCode = $firstData['itemInId'];
+
                 array_push($data, [
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
