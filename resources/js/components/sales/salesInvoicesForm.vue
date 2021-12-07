@@ -599,8 +599,9 @@
 
                 const {
                     data
-                } = await axios.get('/api/sales/order/customer/' + itemSalesingData.data.customerId);
+                } = await axios.get('/api/sales/order/customer/' + itemSalesingData.data[0].customerId);
                 const warehouseId = [];
+                data.items = []
                 data.items.forEach(elm => {
                     if (elm.qtyOrdered > elm.qtyShipped && ((this.itemCode.includes(elm.item_code) ===
                             false) || (warehouseId.includes(elm.warehouseId) === false))) {
