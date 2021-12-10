@@ -336,10 +336,12 @@
     import Swal from 'sweetalert2';
     import Editor from '@tinymce/tinymce-vue';
     import SelectSearch from "../item/selectSearch.vue";
+    import VueNumeric from 'vue-numeric';
     export default {
         components: {
             'editor': Editor,
             selectSearch: SelectSearch,
+            VueNumeric
         },
         title() {
             return `New Purchase Order`;
