@@ -31,7 +31,7 @@
                         </div>
                         <div v-show="isShow.colapse">
                             <div class="form-row">
-                                <div class="col-lg-3">
+                                <div class="col-lg">
                                     <div class="form-group">
                                         <span>Customer:</span>
                                         <selectSearch v-model="selected.customer" v-bind="{
@@ -43,8 +43,8 @@
                                         }" @dataSelected="onCustomerSelected"></selectSearch>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
+                                <div class="col-lg-3" v-show="formSO">
+                                    <div class="form-group" >
                                         <span>Sales Order:</span>
                                         <selectSearch v-model="selected.salesOrder" v-bind="{
                                             datas: salesOrder,
@@ -85,6 +85,12 @@
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="checkbox-theme-default custom-checkbox">
+                                <input v-model="formSO" class="checkbox" type="checkbox" id="check-1" />
+                                <label for="check-1">
+                                    <span class="checkbox-text">Need Sales Order?</span>
+                                </label>
                             </div>
                             <div class="form-row">
                                 <div class="col-lg-2">
@@ -489,6 +495,7 @@
         },
         data() {
             return {
+                formSO: true,
                 expanded: [],
                 isWriteForm: false,
                 isShow: {
@@ -595,7 +602,6 @@
               })
               const getWharehouse = await axios.get(`/api/warehouse?id=${warehouseId}`);
               this.warehouse = getWharehouse.data;
-              this.isDisable.warehouseSelected = false;
             },
             calculateNettWeight() {
                 this.itemAdd.qtyShipped = parseInt(this.itemAdd.weightIn) - parseInt(this.itemAdd.weightOut);
@@ -663,6 +669,7 @@
                 this.selected.customer = param.company_name;
                 this.salesInvoiceData.customer = param.id;
                 this.isDisable.SalesOrderSelected = false;
+                this.isDisable.warehouseSelected = false;   
             },
             onQtyInc() {
                 this.isShow.qty = this.itemAdd.qtyShipped > this.qtyItem ? true : false;
