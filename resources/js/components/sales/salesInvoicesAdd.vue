@@ -658,7 +658,12 @@
                 this.itemAdd.warehouseid = param.id;
                 this.itemModify.warehouseid = param.id;
                 this.selected.warehouse = param.warehouse_name;
-                const itemDataGet = await axios.get(`/api/inventory-item/warehouse/${param.id}?id=${this.itemCode}`);
+                var url = "/api/inventory-item/w/" + param.id + "/" + this.itemAdd.customerid
+                console.log(this.itemCode)
+                if (this.itemCode.length > 0) {
+                    url = `/api/inventory-item/warehouse/${param.id}?id=${this.itemCode}`
+                }
+                const itemDataGet = await axios.get(url);
                 this.items = itemDataGet.data;
                 this.isDisable.select = false;
             },
