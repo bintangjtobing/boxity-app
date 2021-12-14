@@ -2,11 +2,19 @@
     <div>
         <div class="row mt-4">
             <div class="col-lg-12">
-                <div class="breadcrumb-main user-member justify-content-sm-between ">
-                    <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
-                        <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Inventory item data - <abbr
-                                    :title="inventorydata.item_name">{{inventorydata.item_name}}</abbr></h4>
+                <div class="breadcrumb-main">
+                    <h4 class="text-capitalize fw-500 breadcrumb-title">Inventory item data - <abbr
+                            :title="inventorydata.item_name">{{inventorydata.item_name}}</abbr></h4>
+                    <div class="breadcrumb-action justify-content-end flex-wrap">
+                        <div class="action-btn">
+                            <a class="btn btn-sm btn-primary-boxity btn-add">
+                                Item ID : &nbsp;
+                                <b>{{inventorydata.id}}</b></a>
+                        </div>
+                        <div class="action-btn">
+                            <a class="btn btn-sm btn-primary-boxity btn-add">
+                                Warehouse name : &nbsp; <b>{{inventorydata.warehouse.warehouse_name}}</b>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -539,7 +547,7 @@
                 this.$isLoading(true);
                 const response = await axios.get('/api/inventory-item/' + this.$route.params.id);
                 this.inventorydata = response.data;
-                
+
                 const beginning = await axios.get('/api/beginning/item-history/' + this.$route.params.id);
                 this.beginningQty = beginning.data;
 

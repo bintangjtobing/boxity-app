@@ -1994,7 +1994,7 @@ class apiController extends Controller
     }
     public function getInventoryItemById($id)
     {
-        return response()->json(inventoryItem::find($id));
+        return response()->json(inventoryItem::with('warehouse')->find($id));
     }
     public function getImageInventoryItem($id)
     {
@@ -2402,7 +2402,7 @@ class apiController extends Controller
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
-                    'itemInIds' => !empty($firstData['itemInId']) ? substr( $firstData['itemInId'], 3) : '-',
+                    'itemInIds' => !empty($firstData['itemInId']) ? substr($firstData['itemInId'], 3) : '-',
                     'unit' => $firstData['item']['unit'] ?? 'unit',
                     'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,
@@ -2441,11 +2441,11 @@ class apiController extends Controller
 
                 foreach ($value as $elm) {
                     $data[$key]["qty"] = $data[$key]["qty"] + $elm['qty'];
-                    array_push($data[$key]['warehouse'], $elm['warehouse']['warehouse_name'] );
+                    array_push($data[$key]['warehouse'], $elm['warehouse']['warehouse_name']);
                     array_push($data[$key]['warehouseDetail'], [
                         "id" => $elm['warehouse']['id'],
                         "warehouse_name" => $elm['warehouse']['warehouse_name'],
-                        'qty' => $elm['qty']    
+                        'qty' => $elm['qty']
                     ]);
                 }
             }
@@ -2468,11 +2468,11 @@ class apiController extends Controller
 
                 foreach ($value as $elm) {
                     $data[$key]["qty"] = $data[$key]["qty"] + $elm['qty'];
-                    array_push($data[$key]['warehouse'], $elm['warehouse']['warehouse_name'] );
+                    array_push($data[$key]['warehouse'], $elm['warehouse']['warehouse_name']);
                     array_push($data[$key]['warehouseDetail'], [
                         "id" => $elm['warehouse']['id'],
                         "warehouse_name" => $elm['warehouse']['warehouse_name'],
-                        'qty' => $elm['qty']    
+                        'qty' => $elm['qty']
                     ]);
                 }
             }
@@ -2480,23 +2480,24 @@ class apiController extends Controller
             return response()->json($data);
         }
     }
-    
-    function printReportWarehouse (Request $payload) {
+
+    function printReportWarehouse(Request $payload)
+    {
         $payload->startDate = !empty($payload->startDate) && $payload->startDate != "undefined" ?
             date('Y-m-d', strtotime($payload->startDate)) : null;
         $payload->endDate = !empty($payload->endDate) && $payload->endDate != "undefined" ?
             date('Y-m-d', strtotime($payload->endDate) + 86399) : null;
-        
+
         $data = [];
         if (!empty($payload->customerId)) {
             $customer = customers::where('id', $payload->customerId)->first();
             $warehouse = warehouseList::where('id', $payload->warehouseId)->first();
-            
+
             $inventoryItem = inventoryItem::where('customerId', $payload->customerId);
-    
+
             $item = $inventoryItem->where('warehouseId', $payload->warehouseId)->get()->toArray();
             $itemIds = $inventoryItem->where('warehouseId', $payload->warehouseId)->select('id')->pluck('id')->toArray();
-    
+
             $history = itemHistory::whereIn('itemId', $itemIds)
                 ->when($payload, function ($query) use ($payload) {
                     if (!empty($payload->startDate) && !empty($payload->endDate)) {
@@ -2507,7 +2508,7 @@ class apiController extends Controller
                 })
                 ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
 
-            foreach ($item as $value) { 
+            foreach ($item as $value) {
                 $firstData = [];
                 $sumIn = 0;
                 $sumOut = 0;
@@ -2526,7 +2527,7 @@ class apiController extends Controller
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
-                    'itemInIds' => !empty($firstData['itemInId']) ? substr( $firstData['itemInId'], 3) : '-',
+                    'itemInIds' => !empty($firstData['itemInId']) ? substr($firstData['itemInId'], 3) : '-',
                     'unit' => $firstData['item']['unit'] ?? 'unit',
                     'qtyInFirst' => $firstData['qtyIn'] ?? 0,
                     'qtyIn' => $sumIn,
@@ -2535,7 +2536,7 @@ class apiController extends Controller
                 ]);
             }
         }
-        
+
         $data = [
             'startDate' => $payload->startDate,
             'endDate' => $payload->endDate,
@@ -2544,7 +2545,7 @@ class apiController extends Controller
             'image' => '',
             'items' => $data,
             'remark' => ''
-        ];        
+        ];
         $pdf = PDF::loadView('report.stockWarehouse', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
