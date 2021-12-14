@@ -669,6 +669,10 @@
             },
             async onCustomerSelected(param) {
                 const getSalesOrder = await axios.get('/api/sales/order/customer/' + param.id);
+                const warehouseData = await axios.get(
+                    "/api/warehouse-customers/" + param.id
+                );
+                this.warehouse = warehouseData.data;
                 this.salesOrder = getSalesOrder.data;
                 this.itemAdd.customerid = param.id
                 this.selected.customer = param.company_name;
@@ -725,8 +729,6 @@
                 // Load data relation
                 const resp = await axios.get('/api/customers');
                 this.customer = resp.data;
-                const respWarehouse = await axios.get('/api/warehouse');
-                this.warehouse = respWarehouse.data;
                 const itemSalesingData = await axios.get('/api/si/item-sales');
                 this.itemSalesingData = itemSalesingData.data;
                 // this.$Progress.finish();
