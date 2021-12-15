@@ -56,6 +56,33 @@ body.my-login-page {
     padding: 12px 10px;
 }
 
+.bg-orange {
+    background: #F95B12;
+}
+
+/* input.input-style:focus {
+    outline: none !important;
+    outline-width: 0 !important;
+} */
+
+input:focus,
+input.form-control:focus {
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.bg-input-new {
+    background: #EDF2F5;
+}
+
+.text-grey {
+    color: #868282;
+}
+
+
 .my-login-page .footer {
     margin: 40px 0;
     color: #888;
