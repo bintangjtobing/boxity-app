@@ -40,7 +40,7 @@
                 <div style="font-size: 12px; color: #190902;">{{ $customerName }}</div>
                 <div style="font-size: 10px; color: #190902;">{{ $customerAddress }}</div>
                 <br>
-                {{-- <div style="font-size: 12px; color: #190902;">021 - 5978 - 9900</div> --}}
+                <div style="font-size: 12px; color: #190902;">Pengiriman tipe <u>{{$customerCourier}}</u></div>
                 <div style="font-size: 12px; color: #190902;">{{ $customerEmail }}</div>
             </div>
             <div id="invoice">
