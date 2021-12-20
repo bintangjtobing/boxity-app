@@ -120,6 +120,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group mt-2">
+                                    <div class="form-row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <span>Description:</span>
+                                                <textarea v-model="inventorydata.descriptions" id=""
+                                                    class="form-control" cols="30" rows="6"
+                                                    placeholder="Your item descriptions..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr style="margin-top:10px; margin-bottom:10px;">
                                 <h5>Dimension and Weight</h5>
                                 <p class="muted-text">You can use mm/unit/kg/ or anything else as a unit</p>

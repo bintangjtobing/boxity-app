@@ -1968,6 +1968,7 @@ class apiController extends Controller
         $inventory->brand = $request->brand;
         $inventory->item_group = $request->item_group;
         $inventory->stock_group = $request->stock_group;
+        $inventory->descriptions = $request->descriptions;
         $inventory->width = $request->width;
         $inventory->length = $request->length;
         $inventory->thickness = $request->thickness;
@@ -2010,6 +2011,7 @@ class apiController extends Controller
         $inventory->brand = $request->brand;
         $inventory->item_group = $request->item_group;
         $inventory->stock_group = $request->stock_group;
+        $inventory->descriptions = $request->descriptions;
         $inventory->width = $request->width;
         $inventory->length = $request->length;
         $inventory->thickness = $request->thickness;
