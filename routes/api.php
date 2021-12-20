@@ -475,19 +475,9 @@ Route::get('/report-card', 'apiController@getReportCard');
 
 Route::get('/department', 'apiController@getDepartment');
 Route::get('/department/sub', 'apiController@getSubDepartment');
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> ac752c7 (update lil bit of Payroll management and UAT FIX)
-
 // Payroll Management API
 Route::get('/payroll', 'apiController@getPayroll');
 Route::post('/payroll', 'apiController@newPayroll');
 Route::get('/payroll/{id}', 'apiController@getPayrollById');
 Route::patch('/payroll/{id}', 'apiController@patchPayrollById');
 Route::delete('/payroll/{id}', 'apiController@deletePayroll');
-<<<<<<< HEAD
-=======
->>>>>>> 30b76a8 (continue employee data detail)
-=======
->>>>>>> ac752c7 (update lil bit of Payroll management and UAT FIX)
