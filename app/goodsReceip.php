@@ -9,7 +9,9 @@ class goodsReceip extends Model
     protected $table = 'goods_receipts';
     protected $fillable = [
         'userid',
+        'type',
         'receiverid',
+        'companies_receiver',
         'typeOfGoods',
         'courier',
         'receiptNumber',

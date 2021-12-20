@@ -29,22 +29,23 @@
                                 <v-data-table :loading="loading" loading-text="Loading... Please wait"
                                     :headers="headers" :items="goodsData" :search="search" :items-per-page="10"
                                     class="elevation-1">
-                                    <template v-slot:[`item.typeOfGoods`]="{ item }">
-                                        <div class="userDatatable-inline-title my-3">
-                                            <a href="#" class="text-dark fw-500">
-                                                <h6 v-if="item.typeOfGoods == 1" title="Document"><i
-                                                        class="fad fa-file-contract"></i></h6>
-                                                <h6 v-if="item.typeOfGoods == 2" title="Packet"><i
-                                                        class="fad fa-box-full"></i></h6>
-                                            </a>
-                                        </div>
+                                    <template v-slot:[`item.type`]="{ item }">
+                                        <span class="media-badge color-white bg-success" v-if="item.type=='incoming'"><i
+                                                class="fad fa-inbox-in"></i> Incoming Goods</span>
+                                        <span class="media-badge color-white bg-danger" v-if="item.type=='outgoing'"><i
+                                                class="fad fa-inbox-out"></i> Outgoing
+                                            Goods</span>
                                     </template>
                                     <template v-slot:[`item.receiptNumber`]="{item}">
                                         <div class="userDatatable-inline-title my-3">
                                             <h6>#{{item.receiptNumber}}</h6>
                                             <p class="pt-1 d-block mb-0">
-                                                <i class="far fa-dolly"></i> via {{item.courier}} • Received at
-                                                {{item.created_at}}
+                                                <i class="far fa-dolly"></i> via {{item.courier}} • <span
+                                                    v-if="item.type=='incoming'">Received at
+                                                    {{item.created_at}}</span>
+                                                <i class="far fa-dolly"></i> via {{item.courier}} • <span
+                                                    v-if="item.type=='outgoing'">Sent at
+                                                    {{item.created_at}}</span>
                                             </p>
                                         </div>
                                     </template>
@@ -56,6 +57,8 @@
                                             received</span>
                                         <span class="media-badge color-white bg-danger"
                                             v-if="item.status==2">Terminated</span>
+                                        <span class="media-badge color-white bg-success" v-if="item.status==3">Already
+                                            sent by courier</span>
                                     </template>
                                     <template v-slot:[`item.actions`]="{item}">
                                         <a href="#" v-on:click="receivedAction(item.id)" v-if="item.status==0"><span
@@ -64,6 +67,8 @@
                                         <a v-if="item.status==1"><span style="color:green;"><i
                                                     class="fal fa-check-circle"></i>
                                                 Done</span></a>
+                                        <a v-if="item.status==3"><span style="color:green;">
+                                                Sent</span></a>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -85,9 +90,16 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <span>Company Receiver: </span>
+                                            <input type="text" v-model="goods.companies_receiver" class="form-control"
+                                                id="text">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-8">
                                         <div class="form-group">
-                                            <span>Recipient: </span>
+                                            <span>User Sender/Receiver: </span>
                                             <selectSearch v-model="selected.receiverid" v-bind="{
                         datas: user,
                         width: '100%',
@@ -144,7 +156,7 @@
                                 <div class="form-group my-2">
                                     <span>Receipt Details: </span>
                                     <input type="text" v-model="goods.receiptNumber" class="form-control"
-                                        placeholder="Receipt number, sender name, etc..." id="text" required>
+                                        placeholder="Receipt number, sender name, etc..." id="text">
                                 </div>
                                 <div class="form-group my-2">
                                     <span>Remarks: </span>
@@ -195,6 +207,7 @@
                     courier: '',
                     typeOfGoods: '',
                     receiverid: '',
+                    type: 'incoming',
                 },
                 // datatable
                 search: '',
@@ -202,13 +215,13 @@
                 goodsData: [],
                 headers: [{
                     text: 'Type',
-                    value: 'typeOfGoods',
+                    value: 'type',
                     align: 'center',
                 }, {
                     text: 'Receipt No.',
                     value: 'receiptNumber'
                 }, {
-                    text: 'Recipient',
+                    text: 'Recipient/Sender',
                     value: 'receiver.name'
                 }, {
                     text: 'Status',
@@ -252,21 +265,30 @@
             },
             async submitHandle() {
                 // this.$Progress.start();
-                this.$isLoading(true);
+                // this.$isLoading(true);
+                if (this.goods.companies_receiver) {
+                    this.goods.type = 'outgoing';
+                    console.log('outgoing:', this.goods.type);
+                } else {
+                    this.goods.type = 'incoming';
+                    console.log('incoming: ', this.goods.type);
+                }
+                // console.log(this.goods);
                 await axios.post('/api/goods-receipt', this.goods).then(response => {
                     this.loadGoods();
                     document.getElementById('ding').play();
-
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success New good receipt',
+                        text: 'Success create new good receipt.',
                     });
                     // this.$Progress.finish();
                     this.$isLoading(false);
                     this.goods = {
                         courier: '',
                         typeOfGoods: '',
+                        companies_receiver: '',
+                        type: 'incoming',
                         receiverid: '',
                         receiptNumber: '',
                         description: '',

@@ -18,6 +18,10 @@ class blog extends Model
     {
         return $this->belongsTo(User::class, 'userid');
     }
+    public function image()
+    {
+        return $this->belongsTo(blogImages::class, 'id', 'blog_id');
+    }
     protected $casts = [
         'created_at' => 'datetime:d M, Y',
     ];
