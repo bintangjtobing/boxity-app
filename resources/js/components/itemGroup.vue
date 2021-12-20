@@ -156,7 +156,7 @@
                 permissions: []
             }
         },
-        beforeMount() {
+        beforeMount(){
             this.permissions = this.$store.getters.getPermissions;
         },
         created() {

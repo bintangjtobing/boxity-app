@@ -53,6 +53,7 @@ import issueClossed from './components/issueClossed.vue';
 import Quote from './components/quote.vue';
 import Gallery from './components/gallery.vue';
 import Blog from './components/blog.vue';
+import BlogAdd from './components/blogAdd.vue';
 import TrackDev from './components/trackDelivery.vue';
 import userForm from './components/userForm.vue';
 import ContactLists from './components/contactList.vue';
@@ -231,6 +232,10 @@ const routes = [{
         name: 'blog',
         path: '/blog-management',
         component: Blog
+    }, {
+        name: 'blogAdd',
+        path: '/blog-management/create',
+        component: BlogAdd
     }, {
         name: 'track-delivery',
         path: '/track-delivery',
