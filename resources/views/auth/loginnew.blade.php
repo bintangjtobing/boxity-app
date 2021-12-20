@@ -108,7 +108,7 @@
                             &copy;<?php $y = date('Y'); echo $y; ?> - Boxity Central Indonesia. All Rights Reserved.
                             <br> Partner
                             with {{$company->company_name}}.<br>
-                            Web App Version 1.0.5<br>
+                            Web App Version 1.1.0<br>
                             <!-- <?php $y = date('Y'); ?>
                         &copy; 2018-{{$y}}&nbsp;{{$company->company_id}}. All Rights Reserved.<br>
                         Web Platform | Beta Version 1.0.9 -->

@@ -518,9 +518,9 @@
                             <div class="footer-menu text-right">
                                 <ul>
                                     <li>
-                                        <a href="https://help.boxity.id/platform/releases#v109" target="_blank">
+                                        <a href="https://help.boxity.id/platform/releases#v110" target="_blank">
                                             Web Platform | Beta
-                                            version 1.0.9</a>
+                                            version 1.1.0</a>
                                     </li>
                                 </ul>
                             </div>
