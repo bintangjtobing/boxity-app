@@ -109,9 +109,9 @@
                                         <span>Weight In:</span>
                                         <!-- <input type="number" v-model="itemAdd.weightIn" placeholder="0" id="" min="0"
                                             max="10000" step="1" class="form-control" :disabled="isWriteForm" /> -->
-                                            <vue-numeric class="form-control" v-bind:precision="0"
-                                                v-model="itemAdd.weightIn">
-                                            </vue-numeric>
+                                        <vue-numeric class="form-control" v-bind:precision="0"
+                                            v-model="itemAdd.weightIn">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
@@ -120,9 +120,9 @@
                                         <!-- <input type="number" v-model="itemAdd.weightOut" placeholder="0" id="" min="0"
                                             @change="calculateNettWeight" @input="calculateNettWeight" max="10000"
                                             step="1" class="form-control" :disabled="isWriteForm" /> -->
-                                            <vue-numeric class="form-control" v-bind:precision="0"
-                                                v-model="itemAdd.weightOut">
-                                            </vue-numeric>
+                                        <vue-numeric @change="calculateNettWeight" @input="calculateNettWeight"
+                                            class="form-control" v-bind:precision="0" v-model="itemAdd.weightOut">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                             </div>
@@ -138,9 +138,9 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <span>Quantity Shipped/Nett Weight:</span>
-                                            <vue-numeric class="form-control" v-bind:precision="0"
-                                                v-model="itemAdd.qtyShipped">
-                                            </vue-numeric>
+                                        <vue-numeric class="form-control" v-bind:precision="0"
+                                            v-model="itemAdd.qtyShipped">
+                                        </vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">

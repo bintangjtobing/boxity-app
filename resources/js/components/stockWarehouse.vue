@@ -49,7 +49,9 @@
                         </div>
                         <div class="col-lg-1 text-left">
                             <div class="form-group">
-                                <a :href="urlPrint+`?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`" target="_blank" class="btn btn-secondary-boxity" style="margin-top:22px;" ><em class="far fa-file-export"></em>
+                                <a :href="urlPrint+`?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`"
+                                    target="_blank" class="btn btn-secondary-boxity" style="margin-top:22px;"><em
+                                        class="far fa-file-export"></em>
                                     Export
                                 </a>
                             </div>
@@ -76,10 +78,10 @@
                             <template v-slot:item.qtyTotal="{ item }">
                                 {{item.qtyTotal|toDecimal}} {{item.unit}}
                             </template>
-                            <!-- <template v-slot:item.actions="reports">
-                                <router-link :to="`/detail/inventory-item/${item.id}`" class="edit">
+                            <template v-slot:item.actions="{item}">
+                                <router-link :to="`/detail/inventory-item/${item.data.id}`" class="edit">
                                     <i class="fad fa-eye"></i></router-link>
-                            </template> -->
+                            </template>
                         </v-data-table>
                     </div>
                 </div>
@@ -121,7 +123,7 @@
                         value: 'itemInIds'
                     }, {
                         text: 'First Supplier In',
-                        value: 'date_item_out'
+                        value: 'supplier'
                     }, {
                         text: 'First Date In',
                         value: 'date_item_in'
@@ -187,10 +189,11 @@
                     }
                 });
                 this.reports = resp.data;
-                
+
                 this.urlPrint = '/print/report-warehouse'
                 if (this.req.warehouseid && this.req.customerid) {
-                    this.urlPrint = this.urlPrint + `?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`
+                    this.urlPrint = this.urlPrint +
+                        `?customerId=${this.req.customerid}&warehouseId=${this.req.warehouseid}&startDate=${this.req.from}&endDate=${this.req.to}`
                 }
             }
         },

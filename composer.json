@@ -23,7 +23,8 @@
         "laraveldaily/laravel-invoices": "^1.3",
         "pusher/pusher-php-server": "~3.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
-        "simplesoftwareio/simple-qrcode": "~4"
+        "simplesoftwareio/simple-qrcode": "~4",
+        "understand/understand-laravel": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

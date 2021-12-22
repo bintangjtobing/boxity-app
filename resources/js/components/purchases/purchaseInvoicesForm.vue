@@ -216,7 +216,7 @@
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <span>Weight In:</span>
-                                        <vue-numeric class="form-control" readonly v-bind:precision="0"
+                                        <vue-numeric class="form-control" v-bind:precision="0"
                                             v-model="itemModify.weightIn">
                                         </vue-numeric>
                                     </div>
@@ -225,7 +225,7 @@
                                     <div class="form-group">
                                         <span>Weight Out:</span>
                                         <vue-numeric class="form-control" @change="calculateNettWeight"
-                                            @input="calculateNettWeight" readonly v-bind:precision="0"
+                                            @input="calculateNettWeight" v-bind:precision="0"
                                             v-model="itemModify.weightOut">
                                         </vue-numeric>
                                     </div>

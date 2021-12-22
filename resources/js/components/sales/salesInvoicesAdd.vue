@@ -123,9 +123,18 @@
                                 </div> -->
                                 <div class="col-lg-3">
                                     <div class="form-group">
+<<<<<<< HEAD
                                         <span>Quantity Shipped/Nett Weight:</span>
                                         <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
                                             max="10000" step="1" class="form-control" />
+=======
+                                        <span>Quantity Shipped/Nett Weight:</span> <br>
+                                        <span v-show="qtyItem!= null" id="qtyItem"
+                                            style="color: #f06532;">{{ "(Quantity Item = " + qtyItem + ")" }}</span>
+                                        <input type="number" v-model="itemAdd.qtyShipped" placeholder="0" id="" min="0"
+                                            max="10000" step="1" class="form-control" />
+                                        <span v-show="isShow.qty" id="qty">Can't be more than quantity items</span>
+>>>>>>> fc8bf6f7d8fa44ea8e97f50e39169531133625d0
                                     </div>
                                 </div>
                                 <div class="col-lg-3">

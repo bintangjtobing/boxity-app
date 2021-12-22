@@ -2380,13 +2380,14 @@ class apiController extends Controller
                         return $query->where('date', '>=', $payload->startDate);
                     }
                 })
-                ->with('item', 'detailItemIn', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
-
+                ->with('item', 'detailItemIn.suppliers', 'detailItemOut')->orderBy('date', 'asc')->get()->groupBy('itemId')->toArray();
+            // dd($history);
             foreach ($item as $value) {
                 $firstData = [];
                 $sumIn = 0;
                 $sumOut = 0;
                 foreach ($history as $elm) {
+                    // dd($elm);
                     if (!empty($elm[0]['itemId']) && $elm[0]['itemId'] == $value['id']) {
                         $sumIn = array_reduce($elm, function ($temp, $item) {
                             return $temp += $item['qtyIn'];
@@ -2399,6 +2400,7 @@ class apiController extends Controller
                 }
 
                 array_push($data, [
+                    'supplier' => $firstData['detail_item_in']['suppliers']['supplier_name'] ?? '-',
                     'data' => $value,
                     'date_item_in' => $firstData['detail_item_in']['invoice_date'] ?? '-',
                     'date_item_out' => $firstData['detail_item_out']['invoice_date'] ?? '-',
