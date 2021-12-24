@@ -32,6 +32,17 @@
                                             <i class="fad fa-trash"></i>
                                         </a>
                                     </template>
+                                    <template v-slot:item.status="{item}">
+                                        <span class="rounded-pill userDatatable-content-status color-success
+                                            bg-opacity-success text-capitalize" v-if="item.status ==null">Waiting for
+                                            checking...</span>
+                                        <span class="rounded-pill userDatatable-content-status color-danger
+                                            bg-opacity-danger text-capitalize"
+                                            v-if="item.status ==false">Rejected</span>
+                                        <span class="rounded-pill userDatatable-content-status color-primary
+                                            bg-opacity-primary text-capitalize" v-if="item.status ==true">Requested for
+                                            Interview</span>
+                                    </template>
                                 </v-data-table>
                             </div>
                         </div>
@@ -68,6 +79,9 @@
                 }, {
                     text: 'Pendidikan',
                     value: 'pendidikan_akhir'
+                }, {
+                    text: 'Status',
+                    value: 'status'
                 }, {
                     text: 'Actions',
                     value: 'actions',

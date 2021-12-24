@@ -132,6 +132,7 @@ Route::post('/popup-management', 'apiController@postPopup');
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
 Route::patch('/candidates/{id}', 'apiController@patchCandidateById');
+Route::patch('/candidates/a/{id}', 'apiController@patchACandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
 
 // Employee API

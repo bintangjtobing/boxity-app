@@ -38,6 +38,7 @@ use App\Mail\confirmUpdateProfile;
 use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
 use App\Mail\rejectCandidate;
+use App\Mail\inviteCandidate;
 use App\messages;
 use App\notepad;
 use App\quotes;
@@ -1171,7 +1172,12 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id));
+        $id = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
+        if ($id->provinsi == NULL && $id->domisili == NULL && $id->kecamatan == NULL && $id->kelurahan == NULL && $id->agama == NULL && $id->suku == NULL) {
+            return response()->json(candidates::with('posisi')->find($id)->first());
+        } else {
+            return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id)->first());
+        }
 
         // return response()->json(candidates::with('posisi')->find($id));
     }
@@ -1179,11 +1185,22 @@ class apiController extends Controller
     {
         $candidate = candidates::with('posisi')->find($id);
         $candidate->status = false;
-        $candidate->updated_by = Auth::user()->name;
+        $candidate->updated_by = Auth::user()->name ?? 'Creator';
         $candidate->save();
         $company = company_details::where('id', 1)->first();
 
         Mail::to($candidate->email)->send(new rejectCandidate($candidate, $company));
+        return response()->json(200);
+    }
+    public function patchACandidateById($id)
+    {
+        $candidate = candidates::with('posisi')->find($id);
+        $candidate->status = true;
+        $candidate->updated_by = Auth::user()->name ?? 'Creator';
+        $candidate->save();
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($candidate->email)->send(new inviteCandidate($candidate, $company));
         return response()->json(200);
     }
 
@@ -2237,7 +2254,7 @@ class apiController extends Controller
         $ddrGet = documentsDelivery::where('ddr_number', $deliveryDocOrd->ddr_number)->with('sender', 'createdBy', 'updatedBy')->first();
         $company = company_details::where('id', 1)->first();
 
-        Mail::to('ga2@btsa.co.id')->send(new newDocumentDelivery($ddrGet, $company));
+        Mail::to('hrd@' + $company->site)->send(new newDocumentDelivery($ddrGet, $company));
 
         return response()->json($deliveryDocOrd, 200);
     }
