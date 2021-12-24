@@ -24,6 +24,9 @@
                                 <v-data-table :loading="loading" loading-text="Loading... Please wait..."
                                     :search="search" :headers="headers" multi-sort :items="careers" :items-per-page="10"
                                     show-expand class="elevation-1">
+                                    <template v-slot:[`item.views`]="{item}">
+                                        <span>{{item.views}} Clicks</span>
+                                    </template>
                                     <template v-slot:[`item.actions`]="{item}">
                                         <router-link :to="`/career/${item.id}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
@@ -68,23 +71,28 @@
                 key: 1,
                 loading: true,
                 headers: [{
-                    text: 'Job Title',
-                    value: 'title'
-                }, {
-                    text: 'Location',
-                    value: 'location'
-                }, {}, {
-                    text: 'Status',
-                    value: 'status'
-                }, {
-                    text: 'Department',
-                    value: 'divisi'
-                }, {
-                    text: 'Actions',
-                    value: 'actions',
-                    filterable: false,
-                    sortable: false
-                }],
+                        text: 'Job Title',
+                        value: 'title'
+                    }, {
+                        text: 'Location',
+                        value: 'location'
+                    }, {}, {
+                        text: 'Status',
+                        value: 'status'
+                    }, {
+                        text: 'Department',
+                        value: 'divisi'
+                    },
+                    {
+                        text: 'Views',
+                        value: 'views',
+                    }, {
+                        text: 'Actions',
+                        value: 'actions',
+                        filterable: false,
+                        sortable: false
+                    }
+                ],
                 careers: [],
             }
         },

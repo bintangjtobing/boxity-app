@@ -40,6 +40,7 @@ use App\Mail\makeNewIssue;
 use App\Mail\rejectCandidate;
 use App\Mail\inviteCandidate;
 use App\messages;
+use App\careerViews;
 use App\notepad;
 use App\quotes;
 use App\stockGroup;
@@ -520,7 +521,12 @@ class apiController extends Controller
     // API FOR JOB
     public function getJob()
     {
-        return jobvacancy::orderBy('created_at', 'desc')->get();
+        $job = DB::table('jobvacancies')
+            ->join('jobvacancies_views', 'jobvacancies.id', 'jobvacancies_views.job_id')
+            ->get();
+        // return jobvacancy::orderBy('created_at', 'desc')->get();
+        return response()->json($job);
+        // return '0';
     }
     public function addJob(Request $request)
     {
@@ -539,6 +545,12 @@ class apiController extends Controller
         $saveLogs->save();
 
         $job->save();
+
+        $jobViews = new careerViews();
+        $jobViews->ip_address = $request->ip();
+        $jobViews->views = 0;
+        $jobViews->job_id = $job->id;
+        $jobViews->save();
         return response()->json($job, 201);
     }
     public function closeJob($id, Request $request)
