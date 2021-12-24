@@ -173,6 +173,9 @@
                 if (this.candidates.status == false || this.candidates.status == true) {
                     this.isDisabled = true;
                     this.isDisabledInvite = true;
+                } else {
+                    this.isDisabled = false;
+                    this.isDisabledInvite = false;
                 }
                 // this.$Progress.finish();
                 this.$isLoading(false);
