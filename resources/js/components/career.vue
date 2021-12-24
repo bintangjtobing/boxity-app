@@ -27,8 +27,16 @@
                                     <template v-slot:[`item.actions`]="{item}">
                                         <router-link :to="`/career/${item.id}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
+                                        <a v-on:click="closeCareer(item.id)" class="remove">
+                                            <i class="fad fa-times"></i></a>
                                         <a v-on:click="deleteCareer(item.id)" class="remove">
                                             <i class="fad fa-trash"></i></a>
+                                    </template>
+                                    <template v-slot:item.status="{item}">
+                                        <span class="rounded-pill userDatatable-content-status color-success
+                                            bg-opacity-success text-capitalize" v-if="item.status ==0">Open</span>
+                                        <span class="rounded-pill userDatatable-content-status color-danger
+                                            bg-opacity-danger text-capitalize" v-if="item.status ==2">Closed</span>
                                     </template>
                                     <template v-slot:expanded-item="{ headers,item }">
                                         <td :colspan="headers.length">
@@ -65,6 +73,9 @@
                 }, {
                     text: 'Location',
                     value: 'location'
+                }, {}, {
+                    text: 'Status',
+                    value: 'status'
                 }, {
                     text: 'Department',
                     value: 'divisi'
@@ -111,6 +122,29 @@
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current job vacancy'
+                    });
+                    // this.$Progress.finish();
+                    this.$isLoading(false);
+                }
+            },
+            async closeCareer(id) {
+                document.getElementById('failding').play();
+                const result = await Swal.fire({
+                    title: 'Close job vacancy?',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: `Close`,
+                });
+                if (result.isConfirmed) {
+                    // this.$Progress.start();
+                    this.$isLoading(true);
+                    await axios.patch('api/career/c/' + id);
+                    this.loadCareers();
+                    document.getElementById('ding').play();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Closed',
+                        text: 'Success closed current job vacancy'
                     });
                     // this.$Progress.finish();
                     this.$isLoading(false);

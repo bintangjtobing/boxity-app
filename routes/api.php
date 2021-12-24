@@ -66,6 +66,7 @@ Route::get('/career/{id}', 'apiController@getJobbyId');
 Route::post('/career', 'apiController@addJob');
 Route::get('/career', 'apiController@getJob');
 Route::delete('/career/{id}', 'apiController@deleteJob');
+Route::patch('/career/c/{id}', 'apiController@closeJob');
 Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API

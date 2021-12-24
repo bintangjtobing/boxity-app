@@ -541,6 +541,21 @@ class apiController extends Controller
         $job->save();
         return response()->json($job, 201);
     }
+    public function closeJob($id, Request $request)
+    {
+        $career = jobvacancy::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Close job vacancy ' . $career->title . '.';
+        $saveLogs->save();
+
+        $career->status = 2;
+        $career->save();
+        return response()->json([], 204);
+    }
     public function deleteJob($id, Request $request)
     {
         $career = jobvacancy::find($id);
