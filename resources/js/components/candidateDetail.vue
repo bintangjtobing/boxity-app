@@ -126,11 +126,7 @@
                                             target="_blank"
                                             class="btn btn-default btn-rounded btn-outline-primary-boxity mr-1">Download
                                         </a>
-<<<<<<< HEAD
-                                        <a v-if="candidates.noktp" :href="`/generate/pdf/`+candidates.id" download
-=======
                                         <a v-if="candidates.noktp" :href="`/generate/pdf/`+candidates.id"
->>>>>>> 71a3774 (candidate upgrade view and details)
                                             target="_blank"
                                             class="btn btn-default btn-rounded btn-outline-primary-boxity">Export
                                         </a>
@@ -178,11 +174,17 @@
                     this.isDisabled = true;
                     this.isDisabledInvite = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 } else {
                     this.isDisabled = false;
                     this.isDisabledInvite = false;
 =======
 >>>>>>> 71a3774 (candidate upgrade view and details)
+=======
+                } else {
+                    this.isDisabled = false;
+                    this.isDisabledInvite = false;
+>>>>>>> e26bc74 (button at candidate detail fix)
                 }
                 // this.$Progress.finish();
                 this.$isLoading(false);
