@@ -71,10 +71,11 @@
                                     <editor placeholder="Remarks..." v-model="itemgroup.remarks"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 150,
-                                                                menubar: false,
+                                                                menubar: true,
                                                                 branding: false,
+                                                                plugins: 'code',
                                                                 toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | \
                                                                     alignleft aligncenter alignright alignjustify | \
                                                                     bullist numlist outdent indent | removeformat'
                                                         }" />
@@ -138,7 +139,7 @@
                 permissions: []
             }
         },
-        beforeMount(){                        
+        beforeMount(){
             this.permissions = this.$store.getters.getPermissions;
         },
         created() {
