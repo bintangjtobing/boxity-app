@@ -523,6 +523,7 @@ class apiController extends Controller
     {
         $job = DB::table('jobvacancies')
             ->join('jobvacancies_views', 'jobvacancies.id', 'jobvacancies_views.job_id')
+            ->select('jobvacancies.*', 'jobvacancies_views.views')
             ->get();
         // return jobvacancy::orderBy('created_at', 'desc')->get();
         return response()->json($job);
