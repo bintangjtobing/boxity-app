@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "abf627934805ed87d3b4579f440314be",
+=======
+    "content-hash": "020b1d35f7dade1f9f1a42cf9dfd3fff",
+>>>>>>> 0f4ef33 (update automation)
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -3028,6 +3032,7 @@
             "time": "2021-07-05T08:18:36+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "nao-pon/flysystem-cached-extra",
             "version": "1.0.3",
             "source": {
@@ -3126,6 +3131,8 @@
             "time": "2020-07-30T01:26:26+00:00"
         },
         {
+=======
+>>>>>>> 0f4ef33 (update automation)
             "name": "nesbot/carbon",
             "version": "2.53.1",
             "source": {
