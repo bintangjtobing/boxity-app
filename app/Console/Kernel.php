@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(BackupData::backup())
+        $backupData = new BackupData;
+        $schedule->call($backupData->backup())
                  ->everyMinute()
                  -> appendOutputTo ('/logs/schedule.log');
     }
