@@ -126,7 +126,7 @@
                                             target="_blank"
                                             class="btn btn-default btn-rounded btn-outline-primary-boxity mr-1">Download
                                         </a>
-                                        <a v-if="candidates.noktp" :href="`/generate/pdf/`+candidates.id"
+                                        <a v-if="candidates.noktp" :href="`/generate/pdf/`+candidates.id" download
                                             target="_blank"
                                             class="btn btn-default btn-rounded btn-outline-primary-boxity">Export
                                         </a>
