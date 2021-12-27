@@ -147,9 +147,10 @@
                                                         position at
                                                         {{$company->company_name}} in
                                                         {{$candidate->posisi()->first()->location}}.
-                                                        Unfortunately, we will not be moving forward with
-                                                        your application but we appreciate your time and interest in
-                                                        {{$company->company_name}}.
+                                                        We invite you to attend your first interview, and our HR will
+                                                        contact you as soon as possible, and tell you what you need to
+                                                        bring, and where is the location of the interview. <br><br>
+                                                        Prepare for yourself to join our great team!
                                                         <br><br>
                                                         Thank you ^_^ <br>
                                                         Best Regards, <br>

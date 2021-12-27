@@ -66,6 +66,7 @@ Route::get('/career/{id}', 'apiController@getJobbyId');
 Route::post('/career', 'apiController@addJob');
 Route::get('/career', 'apiController@getJob');
 Route::delete('/career/{id}', 'apiController@deleteJob');
+Route::patch('/career/c/{id}', 'apiController@closeJob');
 Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API
@@ -132,6 +133,7 @@ Route::post('/popup-management', 'apiController@postPopup');
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
 Route::patch('/candidates/{id}', 'apiController@patchCandidateById');
+Route::patch('/candidates/a/{id}', 'apiController@patchACandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
 
 // Employee API
