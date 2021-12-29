@@ -165,8 +165,8 @@
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         Simpan lihat issue tersebut di link yang sudah
                                                         tersedia: <br>
-                                                        <span><a href="https://{{$company->site}}/tools/issues/{{$issues->id}} "
-                                                                target="_blank">https://{{$company->site}}/tools/issues/{{$issues->id}}</a></span>
+                                                        <span><a href="https://tools/{{$company->site}}/issues/{{$issues->id}} "
+                                                                target="_blank">https://tools/{{$company->site}}/issues/{{$issues->id}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">

@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4">
-                <img src="https://{{$company->site}}/tools/webpage/images/logo.png">
+                <img src="https://tools/{{$company->site}}/webpage/images/logo.png">
             </div>
             <div class="col-lg-4">
                 <h1>PT BERLIAN TRANSTAR ABADI</h1>

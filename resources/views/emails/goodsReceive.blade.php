@@ -151,7 +151,7 @@
                                                         update penerimaan barang melalui tools yang telah disediakan ya.
                                                         <br>
                                                         Atau kamu bisa langsung direct ke link tersebut. <a
-                                                            href="https://{{$company->site}}/tools/goods-receipt">https://{{$company->site}}/tools/goods-receipt</a>
+                                                            href="https://tools/{{$company->site}}/goods-receipt">https://tools/{{$company->site}}/goods-receipt</a>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
