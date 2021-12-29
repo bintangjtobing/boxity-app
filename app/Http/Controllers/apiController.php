@@ -77,6 +77,7 @@ use App\imagesInventoryItem;
 use App\imagesItemGroup;
 use App\imagesStockGroup;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use DateTime;
 use Mail;
 use PDF;
 
@@ -1297,7 +1298,23 @@ class apiController extends Controller
     }
     public function getEmployeeById($id)
     {
-        return response()->json(employee::with('department', 'subdepartment')->find($id));
+
+        $getEmployee = employee::with('department', 'subdepartment')
+            ->find($id);
+
+        $joinDate = new \DateTime($getEmployee->date_join);
+        $dateOfBirth = new \DateTime($getEmployee->birth_date);
+        $currentDate = new \DateTime(date("Y-m-d"));
+        $interval = $joinDate->diff($currentDate);
+        $getAge = $dateOfBirth->diff($currentDate);
+        $getEmployee->employee_working_duration = $interval->y . "y, " . $interval->m . "m, " . $interval->d . "d ";
+        $getEmployee->employee_age = $getAge->y;
+        if ($getEmployee->employee_sex == 0) {
+            $getEmployee->employee_sex = 'Female';
+        } else {
+            $getEmployee->employee_sex = 'Male';
+        }
+        return response()->json($getEmployee, 200);
 
         // return response()->json(candidates::with('posisi')->find($id));
     }
