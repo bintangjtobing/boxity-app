@@ -252,9 +252,9 @@ class apiController extends Controller
         Mail::to($user->email)->send(new confirmUpdateIssue($user, $company));
 
         // sendToTelegram
-        // if ($user->telegram_id) {
-        //     $user->notify(new updateProfileFromAdminNotifier($user));
-        // }
+        if ($user->telegram_id) {
+            $user->notify(new updateProfileFromAdminNotifier($user));
+        }
 
         return response()->json($user);
     }
@@ -291,9 +291,9 @@ class apiController extends Controller
             Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
             // sendToTelegram
-            // if ($issues->assigne->telegram_id) {
-            //     $issues->notify(new approveIssueNotification($issues));
-            // }
+            if ($issues->assigne->telegram_id) {
+                $issues->notify(new approveIssueNotification($issues));
+            }
         }
         return response()->json($issue, 201);
     }
@@ -454,9 +454,9 @@ class apiController extends Controller
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
         // sendToTelegram
-        // if ($issues->assigne->telegram_id) {
-        //     $issues->notify(new approveIssueNotification($issues));
-        // }
+        if ($issues->assigne->telegram_id) {
+            $issues->notify(new approveIssueNotification($issues));
+        }
 
         return response()->json($issues, 201);
         // return response()->json($issues);
@@ -482,9 +482,9 @@ class apiController extends Controller
         Mail::to($sendTo)->send(new closedIssue($issues, $company));
 
         // sendToTelegram
-        // if ($issues->user->telegram_id) {
-        //     $issues->notify(new closedIssueNotify($issues));
-        // }
+        if ($issues->user->telegram_id) {
+            $issues->notify(new closedIssueNotify($issues));
+        }
 
 
         return response()->json($issues, 201);
@@ -693,9 +693,9 @@ class apiController extends Controller
         Mail::to($profile->email)->send(new confirmUpdateProfile($profile, $company));
 
         // sendToTelegram
-        // if ($profile->telegram_id) {
-        //     $profile->notify(new updateProfileNotifier($profile));
-        // }
+        if ($profile->telegram_id) {
+            $profile->notify(new updateProfileNotifier($profile));
+        }
 
         return response()->json($profile, 201);
         // return response($filename);
