@@ -15,6 +15,7 @@ class CreateEmployeeSubDepartmentsTable extends Migration
     {
         Schema::create('employee_sub_departments', function (Blueprint $table) {
             $table->id();
+            $table->integer('departement_id');
             $table->string('subdepartments_name');
             $table->longText('subdepartments_descriptions')->nullable();
             $table->timestamps();

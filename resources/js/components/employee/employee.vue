@@ -30,6 +30,16 @@
                                     <span><i class="far fa-venus"></i> Female</span>
                                 </div>
                             </template>
+                            <template v-slot:[`item.status`]="{ item }">
+                                <span class="rounded-pill userDatatable-content-status color-success
+                                            bg-opacity-success text-capitalize" v-if="item.status ==1"> Active</span>
+                                <span class="rounded-pill userDatatable-content-status color-danger
+                                            bg-opacity-danger text-capitalize" v-if="item.status ==0"> Resigned</span>
+                            </template>
+                            <template v-slot:[`item.actions`]="{item}">
+                                <router-link :to="`/employee/detail/${item.id}`" class="edit">
+                                    <i class="fad fa-eye"></i></router-link>
+                            </template>
                         </v-data-table>
                     </div>
                 </div>
@@ -63,6 +73,10 @@
                 }, {
                     text: 'Status',
                     value: 'status'
+                }, {
+                    text: 'Action',
+                    align: 'center',
+                    value: 'actions'
                 }],
                 // end datatable
             }
