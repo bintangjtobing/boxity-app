@@ -835,7 +835,8 @@
                                     <div class="card card-vertical card-default card-md mb-4">
                                         <div class="card-body pb-md-30">
                                             <div class="vertical-form">
-                                                <form @submit.prevent="handleSubmit">
+                                                <form @submit.prevent="handleSubmit" enctype="multipart/form-data"
+                                                    method="POST">
                                                     <h5>Details</h5>
                                                     <div class="form-row">
                                                         <div class="col-lg-2">
@@ -862,8 +863,8 @@
                                                                     :disabled="!permissions.includes('EditInventoryItem')">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="account-profile d-flex justify-content-center ">
+                                                        <!-- <div class="col-lg-4 px-5">
+                                                            <div class="account-profile justify-content-center ">
                                                                 <div class="ap-img pro_img_wrapper">
                                                                     <input id="file-upload" type="file"
                                                                         name="fileUpload" class="d-none"
@@ -871,7 +872,7 @@
                                                                     <label for="file-upload">
                                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                                             :src="`/dashboard/img/author/profile/`+employeeData.employee_pic"
-                                                                            v-if="imagePreview">
+                                                                            v-if="!imagePreview" alt="employee picture">
                                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                                             :src="imagePreview" alt="profile img"
                                                                             v-if="imagePreview">
@@ -881,7 +882,7 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col-lg-3">
@@ -921,17 +922,29 @@
                                                         <div class="col-lg-5">
                                                             <div class="form-group">
                                                                 <span>Religion:</span>
-                                                                <input type="text" v-model="employeeData.religion"
-                                                                    placeholder="Religion" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                <select v-model="employeeData.religion"
+                                                                    class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
+                                                                    id="">
+                                                                    <option value="Islam">Islam</option>
+                                                                    <option value="Protestan">Protestan</option>
+                                                                    <option value="Katolik">Katolik</option>
+                                                                    <option value="Hindu">Hindu</option>
+                                                                    <option value="Buddha">Buddha</option>
+                                                                    <option value="Konghucu">Konghucu</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <span>Blood Type:</span>
-                                                                <input type="text" v-model="employeeData.blood_type"
-                                                                    placeholder="Blood Type" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                <select v-model="employeeData.blood_type"
+                                                                    class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                                                    id="">
+                                                                    <option value="O">O</option>
+                                                                    <option value="A">A</option>
+                                                                    <option value="B">B</option>
+                                                                    <option value="AB">AB</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1003,6 +1016,72 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="button-group d-flex pt-25"
+                                                v-if="permissions.includes('EditInventoryItem')">
+                                                <button @click="handleSubmit"
+                                                    class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade  show" id="v-pills-advanced" role="tabpanel"
+                            aria-labelledby="v-pills-contact-info-medical-tab">
+                            <div class="row mx-4">
+                                <div class="col-lg-12">
+                                    <div class="card card-vertical card-default card-md mb-4">
+                                        <div class="card-body pb-md-30">
+                                            <div class="vertical-form">
+                                                <h5>Job</h5>
+                                                <div class="form-row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group mb-10">
+                                                            <span>Job type:</span>
+                                                            <!-- <input type="text" v-model="employeeData.job_type" id=""
+                                                                class="form-control"> -->
+                                                            <select v-model="employeeData.job_type"
+                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                                                id="">
+                                                                <option value="Probation">Probation</option>
+                                                                <option value="Internship">Internship</option>
+                                                                <option value="Contract">Contract</option>
+                                                                <option value="Full-time">Full-time</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group mb-10">
+                                                            <span>Department:</span>
+                                                            <input type="text"
+                                                                v-model="employeeData.department.departments_name" id=""
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group mb-10">
+                                                            <span>Job title:</span>
+                                                            <input type="text" v-model="employeeData.job_title" id=""
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group mb-10">
+                                                            <span>Sub Department:</span>
+                                                            <input type="text"
+                                                                v-model="employeeData.subdepartment.subdepartments_name"
+                                                                id="" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="button-group d-flex pt-25"
+                                                v-if="permissions.includes('EditInventoryItem')">
+                                                <button @click="handleSubmit"
+                                                    class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1030,7 +1109,6 @@
         },
         data() {
             return {
-<<<<<<< HEAD
                 banks: {
                     bank_id: '',
                 },
@@ -1050,8 +1128,6 @@
                     filterable: false,
                     sortable: false
                 }],
-=======
->>>>>>> ec3a035 (based employee detail)
                 employeeData: {},
                 imagePreview: null,
                 departmentOpt: {},
@@ -1077,6 +1153,7 @@
             },
             fileUpload(e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 this.employeeData.employee_pic = e.target.files[0];
                 let reader = new FileReader();
                 reader.readAsDataURL(this.employeeData.employee_pic)
@@ -1085,6 +1162,11 @@
                 let reader = new FileReader();
                 reader.readAsDataURL(this.imageLocation)
 >>>>>>> ec3a035 (based employee detail)
+=======
+                this.employeeData.employee_pic = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(this.employeeData.employee_pic)
+>>>>>>> 30b76a8 (continue employee data detail)
                 reader.onload = e => {
                     this.imagePreview = e.target.result;
                 }
@@ -1108,6 +1190,7 @@
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
+<<<<<<< HEAD
             async deleteBankAccount(id) {
                 document.getElementById('failding').play();
                 await axios.delete('/api/employee-details/bank/' + id);
@@ -1149,6 +1232,8 @@
                 });
                 this.$isLoading(false);
             },
+=======
+>>>>>>> 30b76a8 (continue employee data detail)
             async handleSubmit() {
                 // const data = new FormData();
                 // data.append('birth_date', this.employeeData.birth_date);
