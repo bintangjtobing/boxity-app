@@ -466,3 +466,5 @@ Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');
 
 Route::get('/report-card', 'apiController@getReportCard');
 
+Route::get('/department', 'apiController@getDepartment');
+Route::get('/department/sub', 'apiController@getSubDepartment');

@@ -1318,15 +1318,41 @@ class apiController extends Controller
 
         // return response()->json(candidates::with('posisi')->find($id));
     }
-    public function patchEmployeeById($id)
+    public function patchEmployeeById($id, Request $request)
     {
-        $candidate = employee::with('posisi')->find($id);
-        $candidate->status = false;
-        $candidate->updated_by = Auth::user()->name;
-        $candidate->save();
-        $company = company_details::where('id', 1)->first();
+        $employee = employee::with('department', 'subdepartment')->find($id);
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        if ($request->employee_sex == 'Female') {
+            $employee->employee_sex == 0;
+        } else {
+            $employee->employee_sex == 1;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments;
+        $employee->sub_departments = $request->sub_departments;
+        $employee->status = $request->status;
+        $employee->save();
+        // $company = company_details::where('id', 1)->first();
 
         return response()->json(200);
+        // dd($request->all());
     }
 
     // Chat API
@@ -2614,5 +2640,13 @@ class apiController extends Controller
         ];
         $pdf = PDF::loadView('report.stockWarehouse', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
+    }
+    public function getDepartment()
+    {
+        return response()->json(DB::table('employee_departments')->get());
+    }
+    public function getSubDepartment()
+    {
+        return response()->json(DB::table('employee_sub_departments')->get());
     }
 }
