@@ -23,7 +23,7 @@ class approveIssueNotification extends Notification
     public function __construct($issues, $url = '', $file = '')
     {
         $this->issues = $issues;
-        $this->url = 'https://tools.btsa.co.id/issues/' . $this->issues->id;
+        $this->url = env('APP_URL') + '/' + 'issues/' . $this->issues->id;
     }
 
     /**

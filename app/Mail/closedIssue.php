@@ -11,6 +11,7 @@ use App\company_details;
 class closedIssue extends Mailable
 {
     public $issues;
+    public $company;
     use Queueable, SerializesModels;
 
     /**
@@ -18,9 +19,10 @@ class closedIssue extends Mailable
      *
      * @return void
      */
-    public function __construct($issues)
+    public function __construct($issues, $company)
     {
         $this->issues = $issues;
+        $this->company = $company;
     }
 
     /**
