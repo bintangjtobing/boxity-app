@@ -144,7 +144,7 @@
                                                         {{$candidate->nama_lengkap}}, sudah melamar posisi yang tersedia
                                                         di lowongan pekerjaan {{$company->company_name}}. <br> Kamu bisa lihat
                                                         profile {{$candidate->nama_lengkap}} di <a
-                                                            href="https://tools/{{$company->site}}/candidate/detail/{{$candidate->id}}">sistem
+                                                            href="{{env('APP_URL')}}/candidate/detail/{{$candidate->id}}">sistem
                                                             {{$company->company_name}}</a>
                                                         <br><br>
                                                         Silahkan seleksi dan kabari kandidat untuk mengetahui status
