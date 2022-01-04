@@ -5,7 +5,8 @@
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Item Group <span>- {{countStocks}} Items</span>
                     </h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateItemGroup')">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="permissions.includes('CreateItemGroup')">
                         <div class="action-btn">
                             <router-link to="/item-group/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>Add Item Group</router-link>
@@ -32,7 +33,8 @@
                                     <template v-slot:item.actions="{item}">
                                         <router-link :to="`/detail/item-group/${item.id}`" class="edit">
                                             <i class="fad fa-edit"></i></router-link>
-                                        <a v-on:click="deleteItemGroup(item.id)" class="remove" v-if="permissions.includes('DeleteItemGroup')">
+                                        <a v-on:click="deleteItemGroup(item.id)" class="remove"
+                                            v-if="permissions.includes('DeleteItemGroup')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -92,6 +94,21 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">reach out to our
+                                    team</router-link>, we'd happy to help.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -138,7 +155,7 @@
                 permissions: []
             }
         },
-        beforeMount(){                        
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         created() {

@@ -218,6 +218,21 @@
             </div>
 
         </div>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">reach out to our
+                                    team</router-link>, we'd happy to help.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -310,7 +325,7 @@
                         text: 'Success New notepad',
                     });
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                 }).catch(error => {
                     this.$Progress.fail();
                     document.getElementById('failding').play();
@@ -339,10 +354,10 @@
                 });
                 if (result.isConfirmed) {
                     // this.$Progress.start();
-                this.$isLoading(true);
+                    this.$isLoading(true);
                     await axios.delete('/api/notepad/' + id);
                     // this.$Progress.finish();
-                this.$isLoading(false);
+                    this.$isLoading(false);
                     this.loadNote();
                 }
             },
