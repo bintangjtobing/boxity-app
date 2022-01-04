@@ -153,12 +153,12 @@
                                                     <hr>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         Don't reply to this email directly or <a
-                                                            href="https://tools/{{$company->site}}/issues/{{$userfind->issueId}}">reply
+                                                            href="{{env('APP_URL')}}/issues/{{$userfind->issueId}}">reply
                                                             it on Issue Center</a>.
                                                         You're receiving this email because of your account on
                                                         our system.<br>
-                                                        <span><a href="https://tools/{{$company->site}}/issues/{{$userfind->issueId}} "
-                                                                target="_blank">https://tools/{{$company->site}}/issues/{{$userfind->issueId}}</a></span>
+                                                        <span><a href="{{env('APP_URL')}}/issues/{{$userfind->issueId}} "
+                                                                target="_blank">{{env('APP_URL')}}/issues/{{$userfind->issueId}}</a></span>
                                                     </p>
                                                     <br>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">

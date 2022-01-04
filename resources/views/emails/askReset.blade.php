@@ -147,7 +147,7 @@
                                                         ?>
                                                         <span>Berikut link untuk reset password kamu: <br>
                                                             <a
-                                                                href="https://tools/{{$company->site}}/reset-password/{{$user->id}}">Click
+                                                                href="{{env('APP_URL')}}/reset-password/{{$user->id}}">Click
                                                                 This Link</a>
                                                         </span>
                                                     </p>
