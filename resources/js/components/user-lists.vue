@@ -49,9 +49,11 @@
                                     &nbsp;{{item.role}}</span>
                             </template>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/user/${item.id}`" class="edit" v-if="permissions.includes('EditUsers')">
+                                <router-link :to="`/detail/user/${item.id}`" class="edit"
+                                    v-if="permissions.includes('EditUsers')">
                                     <i class="fad fa-edit"></i></router-link>
-                                <a v-on:click="deleteData(item.id)" class="remove" v-if="permissions.includes('TerminateUsers')">
+                                <a v-on:click="deleteData(item.id)" class="remove"
+                                    v-if="permissions.includes('TerminateUsers')">
                                     <i class="fad fa-trash"></i></a>
                             </template>
                         </v-data-table>
@@ -59,9 +61,22 @@
                 </div>
             </div>
         </div>
-        <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? You can see and learn from
-            <a href="https://help.boxity.id/associate/users-management" target="_blank">Help and
-                Documentation</a>'s page.</span>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">
+                                    reach out to our
+                                    team</router-link>, we'd happy to help.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -116,7 +131,7 @@
                 permissions: []
             };
         },
-        beforeMount(){                        
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         mounted() {

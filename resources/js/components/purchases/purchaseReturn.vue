@@ -4,7 +4,8 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Purchase Return<br></h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreatePurchaseReturn')">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="permissions.includes('CreatePurchaseReturn')">
                         <div class="action-btn">
                             <router-link to="/purchase/return/add" class="btn btn-sm btn-primary-boxity btn-add">
                                 <i class="las la-plus fs-16"></i>New Purchase Return</router-link>
@@ -31,11 +32,27 @@
                                             <i class="fad fa-print"></i></a>
                                         <router-link :to="`/detail/purchase/return/${item.pr_number}`" class="edit">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deletePurchaseReturnItem(item.id)" class="remove" v-if="permissions.includes('DeletePurchaseReturn')">
+                                        <a v-on:click="deletePurchaseReturnItem(item.id)" class="remove"
+                                            v-if="permissions.includes('DeletePurchaseReturn')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">reach out to our
+                                    team</router-link>, we'd happy to help.</span>
                         </div>
                     </div>
                 </div>
@@ -80,8 +97,8 @@
                 permissions: []
             }
         },
-        beforeMount(){
-          this.permissions = this.$store.getters.getPermissions;  
+        beforeMount() {
+            this.permissions = this.$store.getters.getPermissions;
         },
         created() {
             this.loadItem();

@@ -6,7 +6,8 @@
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Customers
                     </h2>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer" v-if="permissions.includes('CreateUsers')">
+                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newCustomer"
+                            v-if="permissions.includes('CreateUsers')">
                             <i class="las la-plus fs-16"></i>New customer</a>
                         <!-- Modal -->
                         <div class="modal fade new-member" data-backdrop="static" ref="modalAdd" id="newCustomer"
@@ -109,9 +110,11 @@
                             :items="members" :items-per-page="10" class="elevation-1" :search="search"
                             :expanded.sync="expanded" show-expand>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/customer/${item.id}`" class="edit" v-if="permissions.includes('EditUsers')">
+                                <router-link :to="`/detail/customer/${item.id}`" class="edit"
+                                    v-if="permissions.includes('EditUsers')">
                                     <i class="fad fa-eye"></i></router-link>
-                                <a v-on:click="deleteData(item.id)" class="remove" v-if="permissions.includes('TerminateUsers')">
+                                <a v-on:click="deleteData(item.id)" class="remove"
+                                    v-if="permissions.includes('TerminateUsers')">
                                     <i class="fad fa-trash"></i></a>
                             </template>
                             <template v-slot:item.email="{item}">
@@ -132,9 +135,21 @@
                 </div>
             </div>
         </div>
-        <span class="my-3"><i class="fad fa-info-circle"></i> Having a trouble? You can see and learn from
-            <a href="https://help.boxity.id/associate/customers" target="_blank">Help and
-                Documentation</a>'s page.</span>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">reach out to our
+                                    team</router-link>, we'd happy to help.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -172,7 +187,7 @@
                 permissions: []
             };
         },
-        beforeMount(){
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         mounted() {

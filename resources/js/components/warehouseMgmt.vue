@@ -4,7 +4,8 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Warehouse List</h2>
-                    <div class="breadcrumb-action justify-content-center flex-wrap" v-if="permissions.includes('CreateWarehouse')">
+                    <div class="breadcrumb-action justify-content-center flex-wrap"
+                        v-if="permissions.includes('CreateWarehouse')">
                         <div class="action-btn">
                             <a href="#" data-toggle="modal" data-target="#addWarehouse"
                                 class="btn btn-sm btn-primary-boxity btn-add">
@@ -32,9 +33,11 @@
                                         </td>
                                     </template>
                                     <template v-slot:item.actions="{item}">
-                                        <router-link :to="`/detail/warehouse/${item.id}`" class="edit" v-if="permissions.includes('EditWarehouse')">
+                                        <router-link :to="`/detail/warehouse/${item.id}`" class="edit"
+                                            v-if="permissions.includes('EditWarehouse')">
                                             <i class="fad fa-eye"></i></router-link>
-                                        <a v-on:click="deleteWarehouse(item.id)" class="remove" v-if="permissions.includes('DeleteWarehouse')">
+                                        <a v-on:click="deleteWarehouse(item.id)" class="remove"
+                                            v-if="permissions.includes('DeleteWarehouse')">
                                             <i class="fad fa-trash"></i></a>
                                     </template>
                                 </v-data-table>
@@ -100,6 +103,21 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12 mb-25">
+                <div class="feature-cards5 d-flex justify-content-between border-0 radius-xl bg-white p-25">
+                    <div class="application-task d-flex align-items-center">
+                        <div class="application-task-content">
+                            <span><strong>Need help?</strong> Check out our <a href="https://help.boxity.id"
+                                    target="_blank">documentation</a> or our <a href="#">getting
+                                    started video series</a> to quickly learn the basics or <router-link
+                                    to="/new-issue">reach out to our
+                                    team</router-link>, we'd happy to help.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -137,7 +155,7 @@
                 permissions: []
             }
         },
-        beforeMount(){                        
+        beforeMount() {
             this.permissions = this.$store.getters.getPermissions;
         },
         created() {
