@@ -192,6 +192,11 @@ td {
     font-size: 14px;
 }
 
+.cci__comment-text img {
+    max-width: 100%;
+    height: auto;
+}
+
 .header-top {
     z-index: 1000;
 }
