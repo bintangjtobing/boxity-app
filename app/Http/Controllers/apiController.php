@@ -98,7 +98,7 @@ class apiController extends Controller
     }
     public function checkCustomerConnected()
     {
-        return companiesPic::where('user_id', Auth::id())->get();
+        return companiesPic::where('user_id', Auth::id())->with('companyDetail')->get();
     }
     public function customerRelateWarehouse()
     {
