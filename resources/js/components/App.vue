@@ -11,9 +11,9 @@
                         <img class="svg dark" :src="company.logoblack" alt="company-logo">
                         <img class="light" :src="company.logo" alt="company-logo">
                     </a>
-                    <div>
-                        <span>{{user.customerCity}}</span>
-                        <h4>{{user.customerName}}</h4>
+                    <div v-if="customers" class="customerConnected">
+                        <h4>{{customers.company_name}}</h4>
+                        <span>{{customers.city}}</span>
                     </div>
                 </div>
                 <div class="navbar-right">
@@ -557,6 +557,7 @@
                 user: {},
                 version: {},
                 company: {},
+                customers: {},
                 sidebar: true,
                 isMore: false,
                 isMobile: false,
@@ -595,6 +596,15 @@
             },
             async userGet() {
                 const resp = await axios.get('/getUserLoggedIn');
+                const customerGet = await axios.get('api/customer-connected');
+                if (customerGet.data.length === 0) {
+                    this.customers = {
+                        company_name: '',
+                        city: '',
+                    };
+                } else {
+                    this.customers = customerGet.data[0].company_detail;
+                }
                 this.user = resp.data;
                 this.permission = resp.data.permission;
                 this.$store.dispatch("SET_PERMISSIONS", resp.data.permission)
