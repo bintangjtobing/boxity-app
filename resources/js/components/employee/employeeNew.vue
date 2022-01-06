@@ -427,7 +427,7 @@
             async handleSubmit() {
                 await axios.post('/api/employee/', this.employeeData).then(response => {
                     document.getElementById('ding').play();
-                    this.router.push('/employee');
+                    this.$router.push('/employee');
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
