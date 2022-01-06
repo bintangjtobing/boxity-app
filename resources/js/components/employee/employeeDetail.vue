@@ -938,7 +938,7 @@
                                                             <div class="form-group">
                                                                 <span>Blood Type:</span>
                                                                 <select v-model="employeeData.blood_type"
-                                                                    class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                                                    class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                                                     id="">
                                                                     <option value="O">O</option>
                                                                     <option value="A">A</option>
@@ -1042,7 +1042,7 @@
                                                             <!-- <input type="text" v-model="employeeData.job_type" id=""
                                                                 class="form-control"> -->
                                                             <select v-model="employeeData.job_type"
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                                                class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                                                 id="">
                                                                 <option value="Probation">Probation</option>
                                                                 <option value="Internship">Internship</option>
@@ -1054,9 +1054,13 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group mb-10">
                                                             <span>Department:</span>
-                                                            <input type="text"
-                                                                v-model="employeeData.department.departments_name" id=""
-                                                                class="form-control">
+                                                            <select v-model="employeeData.departments_name"
+                                                                class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
+                                                                id="">
+                                                                <option v-for="department in departmentOpt"
+                                                                    v-bind:key="department.id" :value="department.id">
+                                                                    {{department.departments_name}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -1069,9 +1073,14 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group mb-10">
                                                             <span>Sub Department:</span>
-                                                            <input type="text"
-                                                                v-model="employeeData.subdepartment.subdepartments_name"
-                                                                id="" class="form-control">
+                                                            <select v-model="employeeData.subdepartments_name"
+                                                                class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
+                                                                id="">
+                                                                <option v-for="subdepartment in subDepartmentOpt"
+                                                                    v-bind:key="subdepartment.id"
+                                                                    :value="subdepartment.id">
+                                                                    {{subdepartment.subdepartments_name}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
