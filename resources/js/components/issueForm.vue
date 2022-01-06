@@ -70,7 +70,7 @@
                                 <div class="form-group my-3">
                                     <label for="">Priority:</label>
                                     <select v-model="issue.priority" id=""
-                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                        class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                         required>
                                         <option value="" disabled>Set priority</option>
                                         <option v-bind:value="`4`" class="priority-highest">Highest

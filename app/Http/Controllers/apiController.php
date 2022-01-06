@@ -1252,14 +1252,12 @@ class apiController extends Controller
             ])->getSecurePath();
             $employee->employee_pic = $uploadFile;
         }
-        $employee->employee_working_duration = $request->employee_working_duration;
         $employee->birth_place = $request->birth_place;
         $employee->birth_date = $request->birth_date;
         $employee->date_join = $request->date_join;
         $employee->nationality = $request->nationality;
         $employee->identity_no = $request->identity_no;
         $employee->religion = $request->religion;
-        $employee->event = $request->event;
         $employee->weight = $request->weight;
         $employee->height = $request->height;
         $employee->blood_type = $request->blood_type;
@@ -1269,8 +1267,9 @@ class apiController extends Controller
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         $employee->job_title = $request->job_title;
-        $employee->departments = $request->departments;
-        $employee->sub_departments = $request->sub_departments;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments_name;
+        $employee->sub_departments = $request->subdepartments_name;
         $employee->save();
 
         // Save to logs
@@ -1280,7 +1279,7 @@ class apiController extends Controller
         $saveLogs->notes = 'Create New employee.';
         $saveLogs->save();
 
-        return response()->json(200, $employee);
+        return response()->json(200);
     }
     public function deleteEmployee($id, Request $request)
     {

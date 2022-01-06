@@ -98,6 +98,7 @@ import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
 import subscrips from './components/subscriptions.vue';
 import employee from './components/employee/employee.vue';
+import employeeNew from './components/employee/employeeNew.vue';
 import employeeDetail from './components/employee/employeeDetail.vue';
 import inbox from './components/inbox.vue';
 import stockCard from './components/stockCard.vue';
@@ -185,6 +186,10 @@ const routes = [{
         name: 'employee',
         path: '/employee',
         component: employee
+    }, {
+        name: 'employee-new',
+        path: '/employee/new',
+        component: employeeNew
     }, {
         name: 'employee-detal',
         path: '/employee/detail/:id',

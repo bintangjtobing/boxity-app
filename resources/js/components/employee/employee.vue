@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="action-btn">
-                        <router-link to="/employee/add" class="btn btn-sm btn-primary-boxity btn-add">
+                        <router-link to="/employee/new" class="btn btn-sm btn-primary-boxity btn-add">
                             <em class="las la-plus fs-16"></em>New employee</router-link>
                     </div>
                 </div>
