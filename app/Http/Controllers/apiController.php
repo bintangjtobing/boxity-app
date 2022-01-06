@@ -1279,7 +1279,7 @@ class apiController extends Controller
         $saveLogs->notes = 'Create New employee.';
         $saveLogs->save();
 
-        return response()->json(200);
+        return response()->json($employee, 200);
     }
     public function deleteEmployee($id, Request $request)
     {
