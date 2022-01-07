@@ -105,7 +105,7 @@
                                                                 <span>Birth place:</span>
                                                                 <input type="text" v-model="employeeData.birth_place"
                                                                     placeholder="Birth place" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem') ">
+                                                                    :disabled="!permissions.includes('EditEmployee') ">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -113,7 +113,7 @@
                                                                 <span>Birth date:</span>
                                                                 <input type="date" v-model="employeeData.birth_date"
                                                                     placeholder="Birth date" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -121,7 +121,7 @@
                                                                 <span>Join of Date:</span>
                                                                 <input type="date" v-model="employeeData.date_join"
                                                                     placeholder="Join of Date" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-lg-4 px-5">
@@ -151,7 +151,7 @@
                                                                 <span>Nationality:</span>
                                                                 <input type="text" v-model="employeeData.nationality"
                                                                     placeholder="Nationality" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-9">
@@ -159,7 +159,7 @@
                                                                 <span>Identity No:</span>
                                                                 <input type="number" v-model="employeeData.identity_no"
                                                                     placeholder="Identity number" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -169,7 +169,7 @@
                                                                 <span>Weight:</span>
                                                                 <input type="number" v-model="employeeData.weight"
                                                                     placeholder="Weight" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
@@ -177,7 +177,7 @@
                                                                 <span>Height:</span>
                                                                 <input type="number" v-model="employeeData.height"
                                                                     placeholder="Height" class="form-control"
-                                                                    :disabled="!permissions.includes('EditInventoryItem')">
+                                                                    :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-5">
@@ -218,7 +218,7 @@
                                                                     <span>Tax ID</span>
                                                                     <input type="number" v-model="employeeData.tax_id"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditInventoryItem')">
+                                                                        :disabled="!permissions.includes('EditEmployee')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -226,7 +226,7 @@
                                                                     <span>BPJS/Kesehatan</span>
                                                                     <input type="number" v-model="employeeData.bpjskes"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditInventoryItem')">
+                                                                        :disabled="!permissions.includes('EditEmployee')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -234,13 +234,13 @@
                                                                     <span>BPJS/Tenaga Kerja</span>
                                                                     <input type="text" v-model="employeeData.bpjstk"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditInventoryItem')">
+                                                                        :disabled="!permissions.includes('EditEmployee')">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="button-group d-flex pt-25"
-                                                        v-if="permissions.includes('EditInventoryItem')">
+                                                        v-if="permissions.includes('EditEmployee')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -278,7 +278,7 @@
                                                 </div>
                                             </div>
                                             <div class="button-group d-flex pt-25"
-                                                v-if="permissions.includes('EditInventoryItem')">
+                                                v-if="permissions.includes('EditEmployee')">
                                                 <button @click="handleSubmit"
                                                     class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                 </button>
@@ -347,7 +347,7 @@
                                                 </div>
                                             </div>
                                             <div class="button-group d-flex pt-25"
-                                                v-if="permissions.includes('EditInventoryItem')">
+                                                v-if="permissions.includes('EditEmployee')">
                                                 <button @click="handleSubmit"
                                                     class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                 </button>
