@@ -22,33 +22,33 @@ class authController extends Controller
     public function index()
     {
         $company = company_details::first();
-        if(!$company) {
+        if (!$company) {
             return view('auth.setcompanyone');
         }
-        if(!$company->company_id || 
-        !$company->company_name || 
-        !$company->city || 
-        !$company->state || 
-        !$company->country ||
-        !$company->phone ||
-        !$company->email || 
-        !$company->site
+        if (
+            !$company->company_id ||
+            !$company->company_name ||
+            !$company->city ||
+            !$company->state ||
+            !$company->country ||
+            !$company->phone ||
+            !$company->email ||
+            !$company->site
         ) {
             return view('auth.setcompanyone');
-        } else if(!$company->meta_description || !$company->meta_keywords || !$company->taxNumber) {
+        } else if (!$company->meta_description || !$company->meta_keywords || !$company->taxNumber) {
             return view('auth.setcompanytwo');
-        } else if(!$company->icon|| !$company->logo || !$company->logoblack)  {
+        } else if (!$company->icon || !$company->logo || !$company->logoblack) {
             return view('auth.setcompanythree');
             // return view('auth.loginnew', ['company' => $company]);
         } else {
             return view('auth.loginnew', ['company' => $company]);
         }
-       
-        
     }
-    
-    public function CompanyDetailsStepOne(Request $request) {
-        
+
+    public function CompanyDetailsStepOne(Request $request)
+    {
+
         // $this->validate($request, [
         //     'company_id' => 'required|unique:company_details',
         //     'company_name' => 'required|unique:company_details',
@@ -59,7 +59,7 @@ class authController extends Controller
         //     'email' => 'required|email',
         //     'site' => 'required'
         // ]);
-        
+
         // var_dump($errors);
         // dd($request);
         // return view('auth.setcompanyone',['data' => $request]);
@@ -73,12 +73,12 @@ class authController extends Controller
             'email' => 'required|email',
             'site' => 'required'
         ]);
-        
-        
+
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }  
-        
+        }
+
         $company = company_details::create([
             'company_id' => $request->company_id,
             'company_name' => $request->company_name,
@@ -89,67 +89,67 @@ class authController extends Controller
             'email' => $request->email,
             'site' => $request->site
         ]);
-        
-        if($company){
+
+        if ($company) {
             return view('auth.setcompanytwo');
         }
-        
     }
-    
-    public function CompanyDetailsStepTwo(Request $request) {
-        
+
+    public function CompanyDetailsStepTwo(Request $request)
+    {
+
         $validator = Validator::make($request->all(), [
             'meta_description' => 'required',
             'meta_keywords' => 'required',
             'taxNumber' => 'required',
         ]);
-        
-        
+
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }  
-            
-        
+        }
+
+
         $company = company_details::first();
         $company->meta_description = $request->meta_description;
         $company->meta_keywords = $request->meta_keywords;
         $company->taxNumber = $request->taxNumber;
-        
+
         $company->save();
-       
-        
-        if($company){
+
+
+        if ($company) {
             return view('auth.setcompanythree');
         }
-        
     }
-    
-    public function CompanyDetailsStepThree(Request $request) {
-        
+
+    public function CompanyDetailsStepThree(Request $request)
+    {
+
         // $validator = Validator::make($request->all(), [
         //     'icon' => 'required',
         //     'primary' => 'required',
         //     'secondary' => 'required',
         // ]);
-        
-        
+
+
         // if ($validator->fails()) {
         //     return redirect()->back()->withErrors($validator)->withInput();
-        // }  
-        
+        // }
+
         $uploadFileIcon = Cloudinary::upload($request->file('icon')->getRealPath(), [
             'folder' => 'asset/company'
         ])->getSecurePath();
-        
+
         $uploadFilePrimaryLogo = Cloudinary::upload($request->file('primary')->getRealPath(), [
             'folder' => 'asset/company'
         ])->getSecurePath();
-        
+
         $uploadFileSecondaryLogo = Cloudinary::upload($request->file('secondary')->getRealPath(), [
             'folder' => 'asset/company'
         ])->getSecurePath();
-       
-        
+
+
         $company = company_details::first();
         $company->icon = $uploadFileIcon;
         $company->logo = $uploadFilePrimaryLogo;
@@ -158,14 +158,13 @@ class authController extends Controller
         // if($company){
         //     return view('auth.);
         // }
-        
+
         $company = company_details::first();
-        if($company) {
+        if ($company) {
             return view('auth.successsetupcompany', ['company' => $company]);
         }
-        
     }
-    
+
     public function forgotPassword()
     {
         $company = company_details::first();
@@ -185,7 +184,7 @@ class authController extends Controller
         $saveLogs->notes = 'Asking for reset password';
         $saveLogs->save();
 
-        Mail::to($email)->send(new askReset($user));
+        Mail::to($email)->send(new askReset($user, $company));
         return view('auth.doneForgot', ['company' => $company]);
     }
     public function resetPassword($id)
@@ -211,7 +210,7 @@ class authController extends Controller
         $saveLogs->notes = 'Successfully reset password.';
         $saveLogs->save();
 
-        Mail::to($user->email)->send(new doneReset($user));
+        Mail::to($user->email)->send(new doneReset($user, $company));
         return view('auth.doneReset', ['company' => $company]);
     }
     public function loginProcess(Request $request)
