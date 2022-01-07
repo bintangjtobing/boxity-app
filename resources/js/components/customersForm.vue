@@ -53,53 +53,53 @@
                                                             <span>Company code:</span>
                                                             <input type="text" class="form-control" required
                                                                 v-model="user.company_code" autofocus
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <span>Company name:</span>
                                                             <input type="text" v-model="user.company_name"
                                                                 class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <span>Address:</span>
                                                             <textarea class="form-control" v-model="user.address" id=""
                                                                 rows="2"
-                                                                :disabled="!permissions.includes('EditUsers')"></textarea>
+                                                                :disabled="permissions.includes('EditCustomers')"></textarea>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>NPWP:</span>
                                                             <input type="text" v-model="user.npwp" class="form-control"
                                                                 placeholder="City"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-2">
                                                             <span>City:</span>
                                                             <input type="text" v-model="user.city" class="form-control"
                                                                 placeholder="City"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-3">
                                                             <span>Phone number:</span>
                                                             <input type="tel" v-model="user.phone" class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>Email:</span>
                                                             <input type="email" v-model="user.email"
                                                                 class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-5">
                                                             <span>Site:</span>
                                                             <input type="url" v-model="user.site" class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>Bank:</span>
                                                             <select class="form-control form-control-default"
                                                                 v-model="user.bank_code"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                                 <option value="">Select bank code:</option>
                                                                 <option v-for="bank in bank" :key="bank.id"
                                                                     v-bind:value="bank.code">
@@ -111,18 +111,17 @@
                                                             <span>Bank account:</span>
                                                             <input type="number" v-model="user.bank_account"
                                                                 class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <span>Bank account holder:</span>
                                                             <input type="text" v-model="user.bank_name"
                                                                 class="form-control"
-                                                                :disabled="!permissions.includes('EditUsers')">
+                                                                :disabled="permissions.includes('EditCustomers')">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="button-group d-flex pt-25"
-                                                    v-if="permissions.includes('EditUsers')">
+                                                <div class="button-group d-flex pt-25">
                                                     <button v-on:click="handleSubmit"
                                                         class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                     </button>
@@ -185,8 +184,7 @@
                                                         :headers="headers" multi-sort :items="userRelated"
                                                         :items-per-page="10" class="elevation-1">
                                                         <template v-slot:item.actions="{item}">
-                                                            <a v-on:click="deleteUserCompany(item.id)" class="remove"
-                                                                v-if="permissions.includes('EditUsers')">
+                                                            <a v-on:click="deleteUserCompany(item.id)" class="remove">
                                                                 <i class="fad fa-trash"></i></a>
                                                         </template>
                                                     </v-data-table>
@@ -343,7 +341,7 @@
             async handleSubmit() {
                 // this.$Progress.start();
                 this.$isLoading(true);
-                await axios.patch('/api/customers/' + this.$route.params.id, this.warehouse);
+                await axios.patch('/api/customers/' + this.$route.params.id, this.user);
                 document.getElementById('ding').play();
 
                 Swal.fire({
@@ -353,7 +351,7 @@
                 });
                 // this.$Progress.finish();
                 this.$isLoading(false);
-                this.$router.push('/user-list');
+                this.$router.push('/customers');
             },
             async addUserToCompany() {
                 await axios.post('/api/user-customer/' + this.$route.params.id, this.userComp);

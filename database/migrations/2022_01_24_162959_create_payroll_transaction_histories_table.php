@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeSubDepartmentsTable extends Migration
+class CreatePayrollTransactionHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateEmployeeSubDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_sub_departments', function (Blueprint $table) {
+        Schema::create('payroll_transaction_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('departement_id');
-            $table->string('subdepartments_name');
-            $table->longText('subdepartments_descriptions')->nullable();
+            $table->string('transaction_name');
+            $table->integer('status');
+            $table->string('batch_file');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateEmployeeSubDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_sub_departments');
+        Schema::dropIfExists('payroll_transaction_histories');
     }
 }

@@ -81,7 +81,7 @@
                                                         <div class="form-group">
                                                             <span for="">Gender</span>
                                                             <select v-model="user.gender" id=""
-                                                                class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select">
+                                                                class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select">
                                                                 <option :value="`M`">Male</option>
                                                                 <option :value="`F`">Female</option>
                                                             </select>

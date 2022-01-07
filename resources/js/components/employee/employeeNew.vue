@@ -3,8 +3,7 @@
         <div class="row mt-4">
             <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                    <h4 class="text-capitalize fw-500 breadcrumb-title">Employee data - <abbr
-                            :title="employeeData.employee_name">{{employeeData.employee_name}}</abbr></h4>
+                    <h4 class="text-capitalize fw-500 breadcrumb-title">Create new employee data</h4>
                 </div>
             </div>
         </div>
@@ -22,29 +21,30 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <span>Employee code:</span>
-                                    <input v-model="employeeData.employee_code" type="text" readonly
-                                        class="form-control" />
+                                    <input v-model="employeeData.employee_code" type="text" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <span>Employee name:</span>
-                                    <input v-model="employeeData.employee_name" type="text" readonly
-                                        class="form-control" />
+                                    <input v-model="employeeData.employee_name" type="text" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <span>Nickname:</span>
-                                    <input v-model="employeeData.employee_nickname" readonly type="text"
-                                        class="form-control" />
+                                    <input v-model="employeeData.employee_nickname" type="text" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <span>Sex:</span>
-                                    <input v-model="employeeData.employee_sex" readonly type="text"
-                                        class="form-control" />
+                                    <select v-model="employeeData.employee_sex"
+                                        class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
+                                        id="">
+                                        <option value="0">Female</option>
+                                        <option value="1">Male</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-1">
@@ -105,7 +105,7 @@
                                                                 <span>Birth place:</span>
                                                                 <input type="text" v-model="employeeData.birth_place"
                                                                     placeholder="Birth place" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee') ">
+                                                                    :disabled="!permissions.includes('CreateEmployee') ">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -113,7 +113,7 @@
                                                                 <span>Birth date:</span>
                                                                 <input type="date" v-model="employeeData.birth_date"
                                                                     placeholder="Birth date" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -121,18 +121,7 @@
                                                                 <span>Join of Date:</span>
                                                                 <input type="date" v-model="employeeData.date_join"
                                                                     placeholder="Join of Date" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <span>Status:</span>
-                                                                <select v-model="employeeData.status"
-                                                                    class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
-                                                                    id="">
-                                                                    <option value="1">Active</option>
-                                                                    <option value="2">Not Active</option>
-                                                                </select>
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                         <!-- <div class="col-lg-4 px-5">
@@ -162,7 +151,7 @@
                                                                 <span>Nationality:</span>
                                                                 <input type="text" v-model="employeeData.nationality"
                                                                     placeholder="Nationality" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-9">
@@ -170,7 +159,7 @@
                                                                 <span>Identity No:</span>
                                                                 <input type="number" v-model="employeeData.identity_no"
                                                                     placeholder="Identity number" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -180,7 +169,7 @@
                                                                 <span>Weight:</span>
                                                                 <input type="number" v-model="employeeData.weight"
                                                                     placeholder="Weight" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-2">
@@ -188,7 +177,7 @@
                                                                 <span>Height:</span>
                                                                 <input type="number" v-model="employeeData.height"
                                                                     placeholder="Height" class="form-control"
-                                                                    :disabled="!permissions.includes('EditEmployee')">
+                                                                    :disabled="!permissions.includes('CreateEmployee')">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-5">
@@ -229,7 +218,7 @@
                                                                     <span>Tax ID</span>
                                                                     <input type="number" v-model="employeeData.tax_id"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditEmployee')">
+                                                                        :disabled="!permissions.includes('CreateEmployee')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -237,7 +226,7 @@
                                                                     <span>BPJS/Kesehatan</span>
                                                                     <input type="number" v-model="employeeData.bpjskes"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditEmployee')">
+                                                                        :disabled="!permissions.includes('CreateEmployee')">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -245,40 +234,13 @@
                                                                     <span>BPJS/Tenaga Kerja</span>
                                                                     <input type="text" v-model="employeeData.bpjstk"
                                                                         class="form-control"
-                                                                        :disabled="!permissions.includes('EditEmployee')">
+                                                                        :disabled="!permissions.includes('CreateEmployee')">
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr style="margin-top:10px; margin-bottom:10px;">
-                                                    <h5>Bank Account</h5>
-                                                    <div class="form-group">
-                                                        <div class="form-row">
-                                                            <div class="col-xxl-6 col-lg-12 col-sm-12">
-                                                                <div
-                                                                    class="userDatatable projectDatatable project-table bg-white border-0 mb-3">
-                                                                    <div class="table-responsive">
-                                                                        <v-data-table :headers="headers" multi-sort
-                                                                            :items="bankData" :items-per-page="5"
-                                                                            class="elevation-1">
-                                                                            <template v-slot:item.actions="{item}">
-                                                                                <a v-on:click="deleteBankAccount(item.id)"
-                                                                                    class="remove">
-                                                                                    <i class="fad fa-trash"></i></a>
-                                                                            </template>
-                                                                        </v-data-table>
-                                                                    </div>
-                                                                </div>
-                                                                <a href="#" data-toggle="modal"
-                                                                    data-target="#addBankAccount"
-                                                                    class="btn btn-secondary-boxity btn-block btn-sm">Add
-                                                                    bank
-                                                                    account</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="button-group d-flex pt-25"
-                                                        v-if="permissions.includes('EditEmployee')">
+                                                        v-if="permissions.includes('CreateEmployee')">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                         </button>
@@ -316,7 +278,7 @@
                                                 </div>
                                             </div>
                                             <div class="button-group d-flex pt-25"
-                                                v-if="permissions.includes('EditEmployee')">
+                                                v-if="permissions.includes('CreateEmployee')">
                                                 <button @click="handleSubmit"
                                                     class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                 </button>
@@ -353,7 +315,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group mb-10">
                                                             <span>Department:</span>
-                                                            <select v-model="employeeData.departments_name"
+                                                            <select v-model="employeeData.departments"
                                                                 class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                                                 id="">
                                                                 <option v-for="department in departmentOpt"
@@ -372,7 +334,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group mb-10">
                                                             <span>Sub Department:</span>
-                                                            <select v-model="employeeData.subdepartments_name"
+                                                            <select v-model="employeeData.sub_departments"
                                                                 class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                                                 id="">
                                                                 <option v-for="subdepartment in subDepartmentOpt"
@@ -385,59 +347,12 @@
                                                 </div>
                                             </div>
                                             <div class="button-group d-flex pt-25"
-                                                v-if="permissions.includes('EditEmployee')">
+                                                v-if="permissions.includes('CreateEmployee')">
                                                 <button @click="handleSubmit"
                                                     class="btn btn-primary-boxity btn-default btn-squared text-capitalize">Update
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="addBankAccount" tabindex="-1" role="dialog"
-                            aria-labelledby="addBankAccount" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                <div class="modal-content" v-on:keyup.enter="submitBankAccount">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add bank account</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <span>Bank:</span>
-                                                        <select class="form-control form-control-default"
-                                                            v-model="banks.bank_id">
-                                                            <option value="">Select bank code:</option>
-                                                            <option v-for="bank in bank" :key="bank.id"
-                                                                v-bind:value="bank.id">
-                                                                {{bank.name}} - {{bank.code}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <span>Bank account:</span>
-                                                        <input type="number" v-model="banks.account_no"
-                                                            class="form-control">
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <span>Bank account holder:</span>
-                                                        <input type="text" v-model="banks.account_name"
-                                                            class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" @click="submitBankAccount"
-                                            class="btn btn-primary-boxity">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -460,29 +375,10 @@
             VueNumeric
         },
         title() {
-            return `Employee data`;
+            return `New Employee data`;
         },
         data() {
             return {
-                banks: {
-                    bank_id: '',
-                },
-                bankData: [],
-                headers: [{
-                    text: 'Bank',
-                    value: 'bank.name'
-                }, {
-                    text: 'Account No.',
-                    value: 'account_no'
-                }, {}, {
-                    text: 'Account Holder',
-                    value: 'account_name'
-                }, {
-                    text: 'Actions',
-                    value: 'actions',
-                    filterable: false,
-                    sortable: false
-                }],
                 employeeData: {},
                 imagePreview: null,
                 departmentOpt: {},
@@ -517,13 +413,8 @@
             async loadEmployeeData() {
                 // this.$Progress.start();
                 this.$isLoading(true);
-                axios.get('/api/bank').then(resp => {
-                    this.bank = resp.data;
-                });
-                const respBank = await axios.get('/api/employee-details/bank/' + this.$route.params.id);
-                this.bankData = respBank.data;
-                const response = await axios.get('/api/employee/' + this.$route.params.id);
-                this.employeeData = response.data;
+                // const response = await axios.get('/api/employee/' + this.$route.params.id);
+                // this.employeeData = response.data;
 
                 // Load data relation
                 const resp = await axios.get('/api/department');
@@ -533,90 +424,27 @@
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
-            async deleteBankAccount(id) {
-                document.getElementById('failding').play();
-                await axios.delete('/api/employee-details/bank/' + id);
-                this.loadEmployeeData();
-                this.$isLoading(false);
-                document.getElementById('ding').play();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Successfully deleted.',
-                    text: 'Success delete the account number.'
-                });
-                // this.$Progress.finish();
-            },
-            async submitBankAccount() {
-                this.$isLoading(true);
-                $('#addBankAccount').modal('hide');
-                $(".modal-backdrop").remove();
-                await axios.post('/api/employee-details/bank/' + this.$route.params.id, this.banks).then((
-                    response) => {
-                    document.getElementById('ding').play();
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'center',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Bank account has been added.'
-                    })
-                    this.banks = {};
-                    this.loadEmployeeData();
-                });
-                this.$isLoading(false);
-            },
             async handleSubmit() {
-                // const data = new FormData();
-                // data.append('birth_date', this.employeeData.birth_date);
-                // data.append('birth_place', this.employeeData.birth_place);
-                // data.append('blood_type', this.employeeData.blood_type);
-                // data.append('bpjskes', this.employeeData.bpjskes);
-                // data.append('bpjstk', this.employeeData.bpjstk);
-                // data.append('date_join', this.employeeData.date_join);
-                // data.append('departments', this.employeeData.departments);
-                // data.append('email', this.employeeData.email);
-                // data.append('employee_age', this.employeeData.employee_age);
-                // data.append('employee_code', this.employeeData.employee_code);
-                // data.append('employee_name', this.employeeData.employee_name);
-                // data.append('employee_nickname', this.employeeData.employee_nickname);
-                // data.append('employee_pic', this.employeeData.employee_pic);
-                // data.append('employee_sex', this.employeeData.employee_sex);
-                // data.append('height', this.employeeData.height);
-                // data.append('identity_no', this.employeeData.identity_no);
-                // data.append('job_title', this.employeeData.job_title);
-                // data.append('job_type', this.employeeData.job_type);
-                // data.append('nationality', this.employeeData.nationality);
-                // data.append('phone', this.employeeData.phone);
-                // data.append('religion', this.employeeData.religion);
-                // data.append('status', this.employeeData.status);
-                // data.append('sub_departments', this.employeeData.sub_departments);
-                // data.append('tax_id', this.employeeData.tax_id);
-                // data.append('weight', this.employeeData.weight);
-                // console.log('Data submit: ', data);
-                await axios.patch('/api/employee/' + this.$route.params.id, this.employeeData).then(response => {
+                await axios.post('/api/employee', this.employeeData).then(response => {
                     document.getElementById('ding').play();
-                    this.routerRefresh();
+                    this.$router.push('/employee');
                     Swal.fire({
                         icon: 'success',
                         title: 'Congratulations',
-                        text: 'Success update employee data',
+                        text: 'Success create new employee data',
                     });
                     // this.$router.push('/employee/detail/' + this.$route.params.id);
                 }).catch(err => {
                     this.routerRefresh();
+                    document.getElementById('failding').play();
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: err.response.data.message,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
                     });
                 });
             },

@@ -140,36 +140,22 @@
                                                 <div style="   font-family: Helvetica, sans-serif; ">
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         <span style="">Hallo
-                                                            {{$user->name}},</span></p>
+                                                            {{$candidate->nama_lengkap}},</span></p>
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        You have been added to our system, <br>you can now use the
-                                                        system by running it on your browser <a
-                                                            href="{{env('APP_URL')}}">{{env('APP_URL')}}</a>
+                                                        Thanks for your interest in the
+                                                        {{$candidate->posisi()->first()->title}}
+                                                        position at
+                                                        {{$company->company_name}} in
+                                                        {{$candidate->posisi()->first()->location}}.
+                                                        We invite you to attend your first interview, and our HR will
+                                                        contact you as soon as possible, and tell you what you need to
+                                                        bring, and where is the location of the interview. <br><br>
+                                                        Prepare for yourself to join our great team!
                                                         <br><br>
-                                                        by using this credential: <br>
-                                                        email: {{$user->email}} <br>
-                                                        password: {{$user->unpassword}}
-                                                        <br><br>
-                                                        <br><br>
-                                                        Please change your password on Edit Profile section, and go to
-                                                        security tab.
-                                                        Save your credential login information, and dont let anyone
-                                                        knows your credential.
+                                                        Thank you ^_^ <br>
+                                                        Best Regards, <br>
+                                                        {{$company->company_name}}
                                                     </p>
-                                                    <br>
-                                                    <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        <span style="">Don't reply this email. <br>
-                                                            If you have any questions or need help, please do not
-                                                            hesitate to contact us. <br><br>
-                                                            Best regards, <br>
-                                                            Support System {{$company->company_name}}
-                                                            <br><br>
-                                                            E-mail: <a
-                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
-                                                            @if ($company->phone)
-                                                            Tel: {{$company->phone}}
-                                                            @endif
-                                                        </span></p>
                                                 </div>
                                             </div>
                                         </div>

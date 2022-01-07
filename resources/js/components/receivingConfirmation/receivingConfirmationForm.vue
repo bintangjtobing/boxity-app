@@ -230,7 +230,7 @@
                                     <span>Status:</span>
                                     <select v-bind:disabled="checkedPO === false"
                                         v-model="receivingConfirmationData.status" id=""
-                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                        class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                         required>
                                         <option value="" disabled>Choose status:</option>
                                         <option v-bind:value="`2`" class="priority-medium">Putted on rack

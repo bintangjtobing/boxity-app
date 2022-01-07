@@ -28,7 +28,7 @@ class CreateEmployeesTable extends Migration
             $table->date('birth_date')->nullable();
             $table->date('date_join')->nullable();
             $table->string('nationality')->nullable();
-            $table->integer('identity_no')->nullable();
+            $table->bigInteger('identity_no')->nullable();
             $table->string('religion')->nullable();
             $table->string('event')->nullable();
             $table->string('weight')->nullable();
@@ -36,16 +36,17 @@ class CreateEmployeesTable extends Migration
             $table->string('blood_type')->nullable();
 
             // Miscellaneous
-            $table->integer('tax_id')->nullable();
-            $table->integer('bpjstk')->nullable();
-            $table->integer('bpjskes')->nullable();
+            $table->bigInteger('tax_id')->nullable();
+            $table->bigInteger('bpjstk')->nullable();
+            $table->bigInteger('bpjskes')->nullable();
 
             // contact us
             $table->string('email')->nullable();
-            $table->integer('phone')->nullable();
+            $table->bigInteger('phone')->nullable();
 
             // job
             $table->string('job_title')->nullable();
+            $table->string('job_type')->nullable();
             $table->integer('departments')->nullable()->index('departments');
             $table->integer('sub_departments')->nullable()->index('sub_departments');
 

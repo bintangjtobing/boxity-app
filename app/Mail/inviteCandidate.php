@@ -8,9 +8,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\company_details;
 
-class askReset extends Mailable
+class inviteCandidate extends Mailable
 {
-    public $user;
+    public $candidate;
     public $company;
     use Queueable, SerializesModels;
 
@@ -19,9 +19,9 @@ class askReset extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $company)
+    public function __construct($candidate, $company)
     {
-        $this->user = $user;
+        $this->candidate = $candidate;
         $this->company = $company;
     }
 
@@ -35,8 +35,8 @@ class askReset extends Mailable
         $company = company_details::where('id', 1)->first();
 
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@' . $company->site, $company->company_name . 'Support System')
-            ->subject('Password Reset for your account: ' . $this->user->name)
-            ->markdown('emails.askReset');
+        return $this->from('hr@' . $company->site, $company->company_name . ' Human Resources System')
+            ->subject('We wanna like to invite you to interview!')
+            ->markdown('emails.confirmInviteToCandidate');
     }
 }

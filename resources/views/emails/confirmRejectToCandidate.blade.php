@@ -155,18 +155,6 @@
                                                         Best Regards, <br>
                                                         {{$company->company_name}}
                                                     </p>
-                                                    <br>
-                                                    <p style="text-align: left;  word-break: break-word;   margin: 0;">
-                                                        <span style="">Don't reply this email. <br>
-                                                            If you have any questions or need help, please do not
-                                                            hesitate to contact us. <br><br>
-
-                                                            E-mail: <a
-                                                                href="mailto:support&#64;{{$company->site}}">support&#64;{{$company->site}}</a><br>
-                                                            @if ($company->phone)
-                                                            Tel: {{$company->phone}}
-                                                            @endif
-                                                        </span></p>
                                                 </div>
                                             </div>
                                         </div>

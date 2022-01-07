@@ -98,6 +98,7 @@ import inventoryItemForm from './components/inventoryItemForm.vue';
 import userLogs from './components/userLogs.vue';
 import subscrips from './components/subscriptions.vue';
 import employee from './components/employee/employee.vue';
+import employeeNew from './components/employee/employeeNew.vue';
 import employeeDetail from './components/employee/employeeDetail.vue';
 import inbox from './components/inbox.vue';
 import stockCard from './components/stockCard.vue';
@@ -140,6 +141,9 @@ import ESalesOrderForm from './components/ecommerce/salesOrderForm.vue';
 import receivingConfirmation from './components/receivingConfirmation/receivingConfirmation.vue';
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
 import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
+
+// Payroll Management
+import payrollTransaction from './components/payroll/payroll.vue';
 
 import permissionRole from './components/permissionRole.vue';
 
@@ -186,10 +190,28 @@ const routes = [{
         path: '/employee',
         component: employee
     }, {
+        name: 'employee-new',
+        path: '/employee/new',
+        component: employeeNew
+    }, {
         name: 'employee-detal',
         path: '/employee/detail/:id',
         component: employeeDetail
-    }, {
+    }, , {
+        name: 'payroll',
+        path: '/payroll',
+        component: payrollTransaction
+    },
+    // {
+    //     name: 'payroll-new',
+    //     path: '/payroll/new',
+    //     component: payrollTransactionNew
+    // }, {
+    //     name: 'payroll-detal',
+    //     path: '/payroll/detail/:id',
+    //     component: payrollTransactionDetail
+    // },
+    {
         name: 'issues',
         path: '/issues',
         component: Issue

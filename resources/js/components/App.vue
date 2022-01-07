@@ -260,6 +260,60 @@
                                 </menuCollapse>
                             </li>
                         </div>
+                        <div v-if="permission.includes('ViewStockGroup')">
+                            <li>
+                                <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Payroll Management' , icon: 'local_atm' ,
+                            listId:'menuCollapse21' }">
+                                    <ul id="menuCollapse21" style="padding: 0;">
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Payroll Transaction">
+                                            <router-link style="margin:0; width:100%" to="/payroll">
+                                                <span>Payroll Transaction</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </li>
+                        </div>
+                        <div v-if="permission.includes('ViewStockGroup')">
+                            <li>
+                                <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Point of Sales (POS)' , icon: 'point_of_sale' ,
+                            listId:'menuCollapse20' }">
+                                    <ul id="menuCollapse20" style="padding: 0;">
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="POS System">
+                                            <a style="margin:0; width:100%" href="#" target="_blank">
+                                                <span><i class="fad fa-external-link"></i> POS System</span>
+                                            </a>
+                                        </li>
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Products">
+                                            <router-link style="margin:0; width:100%" to="#">
+                                                <span>Products</span>
+                                            </router-link>
+                                        </li>
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Sales">
+                                            <router-link style="margin:0; width:100%" to="#">
+                                                <span>Sales</span>
+                                            </router-link>
+                                        </li>
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Purchases">
+                                            <router-link style="margin:0; width:100%" to="#">
+                                                <span>Purchases</span>
+                                            </router-link>
+                                        </li>
+                                        <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Stores">
+                                            <router-link style="margin:0; width:100%" to="#">
+                                                <span>Stores</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </li>
+                        </div>
                         <div v-if="permission.includes('ViewWarehouse') || permission.includes('ViewStockGroup') ||
                             permission.includes('ViewItemGroup')">
                             <li>

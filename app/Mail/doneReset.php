@@ -11,6 +11,7 @@ use App\company_details;
 class doneReset extends Mailable
 {
     public $user;
+    public $company;
     use Queueable, SerializesModels;
 
     /**
@@ -18,9 +19,10 @@ class doneReset extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $company)
     {
         $this->user = $user;
+        $this->company = $company;
     }
 
     /**
