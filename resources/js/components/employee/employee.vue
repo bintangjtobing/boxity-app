@@ -20,8 +20,12 @@
             <div class="col-lg-12">
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 mb-30">
                     <div class="table-responsive">
-                        <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
-                            :items="employeeData" :items-per-page="10" class="elevation-1">
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Search here..." single-line
+                                hide-details></v-text-field>
+                        </v-card-title>
+                        <v-data-table :loading="loading" :search="search" loading-text="Loading... Please wait"
+                            :headers="headers" :items="employeeData" :items-per-page="10" class="elevation-1">
                             <template v-slot:[`item.employee_sex`]="{ item }">
                                 <div v-if="item.employee_sex==true">
                                     <span><i class="far fa-mars"></i> Male</span>
@@ -70,6 +74,7 @@
         data() {
             return {
                 // datatable
+                search: '',
                 employeeData: [],
                 key: 1,
                 loading: true,
