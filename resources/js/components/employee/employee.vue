@@ -83,6 +83,12 @@
                     text: 'Sex',
                     value: 'employee_sex'
                 }, {
+                    text: 'Department',
+                    value: 'department.departments_name'
+                }, {
+                    text: 'Sub Department',
+                    value: 'subdepartment.subdepartments_name'
+                }, {
                     text: 'Join Date',
                     value: 'date_join'
                 }, {

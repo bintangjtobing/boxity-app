@@ -239,6 +239,33 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <hr style="margin-top:10px; margin-bottom:10px;">
+                                                    <h5>Bank Account</h5>
+                                                    <div class="form-group">
+                                                        <div class="form-row">
+                                                            <div class="col-xxl-6 col-lg-12 col-sm-12">
+                                                                <div
+                                                                    class="userDatatable projectDatatable project-table bg-white border-0 mb-3">
+                                                                    <div class="table-responsive">
+                                                                        <v-data-table :headers="headers" multi-sort
+                                                                            :items="bankData" :items-per-page="5"
+                                                                            class="elevation-1">
+                                                                            <template v-slot:item.actions="{item}">
+                                                                                <a v-on:click="deleteBankAccount(item.id)"
+                                                                                    class="remove">
+                                                                                    <i class="fad fa-trash"></i></a>
+                                                                            </template>
+                                                                        </v-data-table>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="#" data-toggle="modal"
+                                                                    data-target="#addBankAccount"
+                                                                    class="btn btn-secondary-boxity btn-block btn-sm">Add
+                                                                    bank
+                                                                    account</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="button-group d-flex pt-25"
                                                         v-if="permissions.includes('EditEmployee')">
                                                         <button type="submit"
@@ -357,6 +384,53 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="addBankAccount" tabindex="-1" role="dialog"
+                            aria-labelledby="addBankAccount" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                <div class="modal-content" v-on:keyup.enter="submitBankAccount">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add bank account</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <span>Bank:</span>
+                                                        <select class="form-control form-control-default"
+                                                            v-model="banks.bank_id">
+                                                            <option value="">Select bank code:</option>
+                                                            <option v-for="bank in bank" :key="bank.id"
+                                                                v-bind:value="bank.id">
+                                                                {{bank.name}} - {{bank.code}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <span>Bank account:</span>
+                                                        <input type="number" v-model="banks.account_no"
+                                                            class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <span>Bank account holder:</span>
+                                                        <input type="text" v-model="banks.account_name"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" @click="submitBankAccount"
+                                            class="btn btn-primary-boxity">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -379,6 +453,25 @@
         },
         data() {
             return {
+                banks: {
+                    bank_id: '',
+                },
+                bankData: [],
+                headers: [{
+                    text: 'Bank',
+                    value: 'bank.name'
+                }, {
+                    text: 'Account No.',
+                    value: 'account_no'
+                }, {}, {
+                    text: 'Account Holder',
+                    value: 'account_name'
+                }, {
+                    text: 'Actions',
+                    value: 'actions',
+                    filterable: false,
+                    sortable: false
+                }],
                 employeeData: {},
                 imagePreview: null,
                 departmentOpt: {},
@@ -413,6 +506,11 @@
             async loadEmployeeData() {
                 // this.$Progress.start();
                 this.$isLoading(true);
+                axios.get('/api/bank').then(resp => {
+                    this.bank = resp.data;
+                });
+                const respBank = await axios.get('/api/employee-details/bank/' + this.$route.params.id);
+                this.bankData = respBank.data;
                 const response = await axios.get('/api/employee/' + this.$route.params.id);
                 this.employeeData = response.data;
 
@@ -422,6 +520,47 @@
                 const respSub = await axios.get('/api/department/sub');
                 this.subDepartmentOpt = respSub.data;
                 // this.$Progress.finish();
+                this.$isLoading(false);
+            },
+            async deleteBankAccount(id) {
+                document.getElementById('failding').play();
+                await axios.delete('/api/employee-details/bank/' + id);
+                this.loadEmployeeData();
+                this.$isLoading(false);
+                document.getElementById('ding').play();
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully deleted.',
+                    text: 'Success delete the account number.'
+                });
+                // this.$Progress.finish();
+            },
+            async submitBankAccount() {
+                this.$isLoading(true);
+                $('#addBankAccount').modal('hide');
+                $(".modal-backdrop").remove();
+                await axios.post('/api/employee-details/bank/' + this.$route.params.id, this.banks).then((
+                    response) => {
+                    document.getElementById('ding').play();
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Bank account has been added.'
+                    })
+                    this.banks = {};
+                    this.loadEmployeeData();
+                });
                 this.$isLoading(false);
             },
             async handleSubmit() {

@@ -8,7 +8,7 @@ class employeeBanks extends Model
 {
     protected $table = 'employee_banks';
     protected $fillable = [
-        'employee_id', 'bank_id', 'account_no'
+        'employee_id', 'bank_id', 'account_no', 'account_name'
     ];
     public function employee()
     {

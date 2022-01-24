@@ -69,6 +69,7 @@ use App\Permission;
 use App\suppliers;
 use App\bank;
 use App\BankCompany;
+use App\employeeBanks;
 use App\inboxMessage;
 use App\subscription;
 use App\employee;
@@ -1353,6 +1354,24 @@ class apiController extends Controller
         return response()->json(200);
         // dd($request->all());
     }
+    public function bankEmployee($id)
+    {
+        return response()->json(employeeBanks::where('employee_id', $id)->with('employee', 'bank')->get());
+    }
+    public function bankEmployeeAdd(Request $request, $id)
+    {
+        $bank = new employeeBanks();
+        $bank->employee_id = $id;
+        $bank->bank_id = $request->bank_id;
+        $bank->account_no = $request->account_no;
+        $bank->account_name = $request->account_name;
+        $bank->save();
+        return response()->json($bank);
+    }
+    public function bankEmployeeDelete($id)
+    {
+        return response()->json(employeeBanks::find($id)->delete());
+    }
 
     // Chat API
     public function getChatFor($id)
@@ -2525,6 +2544,7 @@ class apiController extends Controller
                     "item_code" => $value[0]['item_code'],
                     "item_name" => $value[0]['item_name'],
                     "unit" => $value[0]['unit'],
+                    "price" => $value[0]['price'],
                     "qty" => 0,
                     "warehouse" => [],
                     "warehouseDetail" => []
@@ -2552,6 +2572,7 @@ class apiController extends Controller
                     "item_code" => $value[0]['item_code'],
                     "item_name" => $value[0]['item_name'],
                     "unit" => $value[0]['unit'],
+                    "price" => $value[0]['price'],
                     "qty" => 0,
                     "warehouse" => [],
                     "warehouseDetail" => []

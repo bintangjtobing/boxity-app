@@ -142,6 +142,9 @@ Route::post('/employee', 'apiController@newEmployee');
 Route::get('/employee/{id}', 'apiController@getEmployeeById');
 Route::patch('/employee/{id}', 'apiController@patchEmployeeById');
 Route::delete('/employee/{id}', 'apiController@deleteEmployee');
+Route::get('/employee-details/bank/{id}', 'apiController@bankEmployee');
+Route::post('/employee-details/bank/{id}', 'apiController@bankEmployeeAdd');
+Route::delete('/employee-details/bank/{id}', 'apiController@bankEmployeeDelete');
 
 // CHAT API
 Route::get('/chat/{id}', 'apiController@getChatFor');
