@@ -17,7 +17,7 @@ class CreateCompanyDetailsTable extends Migration
             $table->id();
             $table->string('company_id');
             $table->string('company_name');
-            $table->longText('address');
+            $table->longText('address')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('country');

@@ -167,6 +167,7 @@ return [
         Understand\UnderstandLaravel5\UnderstandLaravel5ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
 
         /*
          * Package Service Providers...

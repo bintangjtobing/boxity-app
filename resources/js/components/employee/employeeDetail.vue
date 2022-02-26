@@ -124,6 +124,17 @@
                                                                     :disabled="!permissions.includes('EditEmployee')">
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <span>Status:</span>
+                                                                <select v-model="employeeData.status"
+                                                                    class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
+                                                                    id="">
+                                                                    <option value="1">Active</option>
+                                                                    <option value="2">Not Active</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                         <!-- <div class="col-lg-4 px-5">
                                                             <div class="account-profile justify-content-center ">
                                                                 <div class="ap-img pro_img_wrapper">

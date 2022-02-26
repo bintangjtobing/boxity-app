@@ -77,6 +77,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use App\imagesItemGroup;
 use App\imagesStockGroup;
+use App\PayrollTransactionHistory;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use DateTime;
 use Mail;
@@ -1513,7 +1514,7 @@ class apiController extends Controller
     }
     public function deleteCustomer($id)
     {
-        $getCustomers = customers::find($id);
+        $getCustomers = suppliers::find($id);
         // $getUser->status = '2';
         $getCustomers->delete();
         return response()->json([], 204);
@@ -1691,7 +1692,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $supplier->save();
-        return response()->json($user);
+        return response()->json($supplier);
     }
 
     // Warehouse
@@ -2668,5 +2669,125 @@ class apiController extends Controller
     public function getSubDepartment()
     {
         return response()->json(DB::table('employee_sub_departments')->get());
+    }
+    // Payroll API
+    public function getPayroll()
+    {
+        return response()->json(PayrollTransactionHistory::orderBy('created_at', 'DESC')->get());
+    }
+    public function newPayroll(Request $request)
+    {
+        $employee = new PayrollTransactionHistory();
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        $employee->employee_sex = $request->employee_sex;
+        $employee->employee_age = $request->employee_age;
+        if ($request->employee_pic) {
+            $uploadFile = Cloudinary::upload($request->file('employee_pic')->getRealPath(), [
+                'folder' => 'asset/employee'
+            ])->getSecurePath();
+            $employee->employee_pic = $uploadFile;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments_name;
+        $employee->sub_departments = $request->subdepartments_name;
+        $employee->save();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Create New employee.';
+        $saveLogs->save();
+
+        return response()->json($employee, 200);
+    }
+    public function deletePayroll($id, Request $request)
+    {
+        $getUser = PayrollTransactionHistory::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete employee.';
+        $saveLogs->save();
+
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function getPayrollById($id)
+    {
+
+        $getEmployee = PayrollTransactionHistory::with('department', 'subdepartment')
+            ->find($id);
+
+        $joinDate = new \DateTime($getEmployee->date_join);
+        $dateOfBirth = new \DateTime($getEmployee->birth_date);
+        $currentDate = new \DateTime(date("Y-m-d"));
+        $interval = $joinDate->diff($currentDate);
+        $getAge = $dateOfBirth->diff($currentDate);
+        $getEmployee->employee_working_duration = $interval->y . "y, " . $interval->m . "m, " . $interval->d . "d ";
+        $getEmployee->employee_age = $getAge->y;
+        if ($getEmployee->employee_sex == 0) {
+            $getEmployee->employee_sex = 'Female';
+        } else {
+            $getEmployee->employee_sex = 'Male';
+        }
+        return response()->json($getEmployee, 200);
+
+        // return response()->json(candidates::with('posisi')->find($id));
+    }
+    public function patchPayrollById($id, Request $request)
+    {
+        $employee = PayrollTransactionHistory::with('department', 'subdepartment')->find($id);
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        if ($request->employee_sex == 'Female') {
+            $employee->employee_sex == 0;
+        } else {
+            $employee->employee_sex == 1;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments;
+        $employee->sub_departments = $request->sub_departments;
+        $employee->status = $request->status;
+        $employee->save();
+        // $company = company_details::where('id', 1)->first();
+
+        return response()->json(200);
+        // dd($request->all());
     }
 }

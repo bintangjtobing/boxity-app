@@ -266,9 +266,9 @@
                             listId:'menuCollapse21' }">
                                     <ul id="menuCollapse21" style="padding: 0;">
                                         <li v-if="permission.includes('ViewStockGroup')" data-bs-toggle="tooltip"
-                                            data-bs-placement="right" title="Payroll History">
-                                            <router-link style="margin:0; width:100%" to="#">
-                                                <span>Payroll history</span>
+                                            data-bs-placement="right" title="Payroll Transaction">
+                                            <router-link style="margin:0; width:100%" to="/payroll">
+                                                <span>Payroll Transaction</span>
                                             </router-link>
                                         </li>
                                     </ul>

@@ -471,3 +471,10 @@ Route::get('/report-card', 'apiController@getReportCard');
 
 Route::get('/department', 'apiController@getDepartment');
 Route::get('/department/sub', 'apiController@getSubDepartment');
+
+// Payroll Management API
+Route::get('/payroll', 'apiController@getPayroll');
+Route::post('/payroll', 'apiController@newPayroll');
+Route::get('/payroll/{id}', 'apiController@getPayrollById');
+Route::patch('/payroll/{id}', 'apiController@patchPayrollById');
+Route::delete('/payroll/{id}', 'apiController@deletePayroll');

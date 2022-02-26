@@ -142,6 +142,9 @@ import receivingConfirmation from './components/receivingConfirmation/receivingC
 import receivingConfirmationDetail from './components/receivingConfirmation/receivingConfirmationForm.vue';
 import receivingConfirmationAdd from './components/receivingConfirmation/receivingConfirmationAdd.vue';
 
+// Payroll Management
+import payrollTransaction from './components/payroll/payroll.vue';
+
 import permissionRole from './components/permissionRole.vue';
 
 // membuat router
@@ -194,7 +197,21 @@ const routes = [{
         name: 'employee-detal',
         path: '/employee/detail/:id',
         component: employeeDetail
-    }, {
+    }, , {
+        name: 'payroll',
+        path: '/payroll',
+        component: payrollTransaction
+    },
+    // {
+    //     name: 'payroll-new',
+    //     path: '/payroll/new',
+    //     component: payrollTransactionNew
+    // }, {
+    //     name: 'payroll-detal',
+    //     path: '/payroll/detail/:id',
+    //     component: payrollTransactionDetail
+    // },
+    {
         name: 'issues',
         path: '/issues',
         component: Issue
