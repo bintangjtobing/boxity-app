@@ -5,13 +5,13 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Employee</h4>
-                            <span class="sub-title ml-sm-25 pl-sm-25">{{employeeCount}} Employees</span>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Payroll Management</h4>
+                            <span class="sub-title ml-sm-25 pl-sm-25">{{payrollCount}} Transaction</span>
                         </div>
                     </div>
                     <div class="action-btn">
-                        <router-link to="/employee/new" class="btn btn-sm btn-primary-boxity btn-add">
-                            <em class="las la-plus fs-16"></em>New employee</router-link>
+                        <router-link to="/payroll/new" class="btn btn-sm btn-primary-boxity btn-add">
+                            <em class="las la-plus fs-16"></em>New transaction</router-link>
                     </div>
                 </div>
             </div>
@@ -25,26 +25,15 @@
                                 hide-details></v-text-field>
                         </v-card-title>
                         <v-data-table :loading="loading" :search="search" loading-text="Loading... Please wait"
-                            :headers="headers" :items="employeeData" :items-per-page="10" class="elevation-1">
-                            <template v-slot:[`item.employee_sex`]="{ item }">
-                                <div v-if="item.employee_sex==true">
-                                    <span><i class="far fa-mars"></i> Male</span>
-                                </div>
-                                <div v-if="item.employee_sex==false">
-                                    <span><i class="far fa-venus"></i> Female</span>
-                                </div>
-                            </template>
+                            :headers="headers" :items="payrollData" :items-per-page="10" class="elevation-1">
                             <template v-slot:[`item.status`]="{ item }">
                                 <span class="rounded-pill userDatatable-content-status color-success
                                             bg-opacity-success text-capitalize" v-if="item.status ==1"> Active</span>
                                 <span class="rounded-pill userDatatable-content-status color-danger
                                             bg-opacity-danger text-capitalize" v-if="item.status ==0"> Resigned</span>
-                                <span class="rounded-pill userDatatable-content-status color-danger
-                                            bg-opacity-danger text-capitalize" v-if="item.status ==2"> Not
-                                    Active</span>
                             </template>
                             <template v-slot:[`item.actions`]="{item}">
-                                <router-link :to="`/employee/detail/${item.id}`" class="edit">
+                                <router-link :to="`/payroll/detail/${item.id}`" class="edit">
                                     <i class="fad fa-eye"></i></router-link>
                             </template>
                         </v-data-table>
@@ -78,29 +67,20 @@
             return {
                 // datatable
                 search: '',
-                employeeData: [],
+                payrollData: [],
                 key: 1,
                 loading: true,
                 headers: [{
-                    text: 'Employee Code',
-                    value: 'employee_code'
+                    text: 'Transaction Name',
+                    value: 'transaction_name'
                 }, {
-                    text: 'Full Name',
-                    value: 'employee_name'
+                    text: 'Batch File',
+                    value: 'batch_file'
                 }, {
-                    text: 'Sex',
-                    value: 'employee_sex'
+                    text: 'Upload Date',
+                    value: 'created_at'
                 }, {
-                    text: 'Department',
-                    value: 'department.departments_name'
-                }, {
-                    text: 'Sub Department',
-                    value: 'subdepartment.subdepartments_name'
-                }, {
-                    text: 'Join Date',
-                    value: 'date_join'
-                }, {
-                    text: 'Status',
+                    text: 'Transaction Status',
                     value: 'status'
                 }, {
                     text: 'Action',
@@ -111,22 +91,22 @@
             }
         },
         computed: {
-            employeeCount() {
-                return this.employeeData.length
+            payrollCount() {
+                return this.payrollData.length
             }
         },
         created() {
-            this.loadEmployee();
+            this.loadPayrollData();
         },
         methods: {
-            async loadEmployee() {
+            async loadPayrollData() {
                 // this.$Progress.start();
                 this.$isLoading(true);
                 const resp = await axios.get('/api/employee');
                 if (resp.data.length) {
                     this.loading = false;
                 }
-                this.employeeData = resp.data;
+                this.payrollData = resp.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },

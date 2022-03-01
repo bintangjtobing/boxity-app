@@ -27,10 +27,11 @@
                                     <editor placeholder="Leave an issue explanation..." v-model="issue.description"
                                         api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 300,
-                                                                menubar: false,
+                                                                menubar: true,
                                                                 branding: false,
+                                                                plugins: 'code',
                                                                 toolbar:
-                                                                    'undo redo | formatselect | bold italic backcolor | \
+                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | \
                                                                     alignleft aligncenter alignright alignjustify | \
                                                                     bullist numlist outdent indent | removeformat'
                                                         }" />
@@ -69,7 +70,7 @@
                                 <div class="form-group my-3">
                                     <label for="">Priority:</label>
                                     <select v-model="issue.priority" id=""
-                                        class="form-control form-control-default ih-medium ip-gray radius-xs b-light px-15 fa-select"
+                                        class="form-control form-control-default ip-gray radius-xs b-light px-15 fa-select"
                                         required>
                                         <option value="" disabled>Set priority</option>
                                         <option v-bind:value="`4`" class="priority-highest">Highest

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\User;
 use App\customers;
@@ -38,7 +39,9 @@ use App\Mail\confirmUpdateProfile;
 use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
 use App\Mail\rejectCandidate;
+use App\Mail\inviteCandidate;
 use App\messages;
+use App\careerViews;
 use App\notepad;
 use App\quotes;
 use App\stockGroup;
@@ -67,6 +70,7 @@ use App\Permission;
 use App\suppliers;
 use App\bank;
 use App\BankCompany;
+use App\employeeBanks;
 use App\inboxMessage;
 use App\subscription;
 use App\employee;
@@ -74,7 +78,9 @@ use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use App\imagesItemGroup;
 use App\imagesStockGroup;
+use App\PayrollTransactionHistory;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use DateTime;
 use Mail;
 use PDF;
 
@@ -284,16 +290,21 @@ class apiController extends Controller
         $saveLogs->save();
 
         $issue->save();
-        if ($issue->status = '1') {
-            $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
-            $company = company_details::where('id', 1)->first();
 
-            Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
+        try {
+            if ($issue->status = '1') {
+                $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
+                $company = company_details::where('id', 1)->first();
 
-            // sendToTelegram
-            if ($issues->assigne->telegram_id) {
-                $issues->notify(new approveIssueNotification($issues));
+                Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
+
+                // sendToTelegram
+                if ($issues->assigne->telegram_id) {
+                    $issues->notify(new approveIssueNotification($issues));
+                }
             }
+        } catch (ModelNotFoundException $e) {
+            return response()->json($issue, 201);
         }
         return response()->json($issue, 201);
     }
@@ -519,7 +530,13 @@ class apiController extends Controller
     // API FOR JOB
     public function getJob()
     {
-        return jobvacancy::orderBy('created_at', 'desc')->get();
+        $job = DB::table('jobvacancies')
+            ->join('jobvacancies_views', 'jobvacancies.id', 'jobvacancies_views.job_id')
+            ->select('jobvacancies.*', 'jobvacancies_views.views')
+            ->get();
+        // return jobvacancy::orderBy('created_at', 'desc')->get();
+        return response()->json($job);
+        // return '0';
     }
     public function addJob(Request $request)
     {
@@ -538,7 +555,28 @@ class apiController extends Controller
         $saveLogs->save();
 
         $job->save();
+
+        $jobViews = new careerViews();
+        $jobViews->ip_address = $request->ip();
+        $jobViews->views = 0;
+        $jobViews->job_id = $job->id;
+        $jobViews->save();
         return response()->json($job, 201);
+    }
+    public function closeJob($id, Request $request)
+    {
+        $career = jobvacancy::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Close job vacancy ' . $career->title . '.';
+        $saveLogs->save();
+
+        $career->status = 2;
+        $career->save();
+        return response()->json([], 204);
     }
     public function deleteJob($id, Request $request)
     {
@@ -1171,7 +1209,12 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id));
+        $id = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
+        if ($id->provinsi == NULL && $id->domisili == NULL && $id->kecamatan == NULL && $id->kelurahan == NULL && $id->agama == NULL && $id->suku == NULL) {
+            return response()->json(candidates::with('posisi')->find($id)->first());
+        } else {
+            return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id)->first());
+        }
 
         // return response()->json(candidates::with('posisi')->find($id));
     }
@@ -1179,11 +1222,22 @@ class apiController extends Controller
     {
         $candidate = candidates::with('posisi')->find($id);
         $candidate->status = false;
-        $candidate->updated_by = Auth::user()->name;
+        $candidate->updated_by = Auth::user()->name ?? 'Creator';
         $candidate->save();
         $company = company_details::where('id', 1)->first();
 
         Mail::to($candidate->email)->send(new rejectCandidate($candidate, $company));
+        return response()->json(200);
+    }
+    public function patchACandidateById($id)
+    {
+        $candidate = candidates::with('posisi')->find($id);
+        $candidate->status = true;
+        $candidate->updated_by = Auth::user()->name ?? 'Creator';
+        $candidate->save();
+        $company = company_details::where('id', 1)->first();
+
+        Mail::to($candidate->email)->send(new inviteCandidate($candidate, $company));
         return response()->json(200);
     }
 
@@ -1206,14 +1260,12 @@ class apiController extends Controller
             ])->getSecurePath();
             $employee->employee_pic = $uploadFile;
         }
-        $employee->employee_working_duration = $request->employee_working_duration;
         $employee->birth_place = $request->birth_place;
         $employee->birth_date = $request->birth_date;
         $employee->date_join = $request->date_join;
         $employee->nationality = $request->nationality;
         $employee->identity_no = $request->identity_no;
         $employee->religion = $request->religion;
-        $employee->event = $request->event;
         $employee->weight = $request->weight;
         $employee->height = $request->height;
         $employee->blood_type = $request->blood_type;
@@ -1223,8 +1275,9 @@ class apiController extends Controller
         $employee->email = $request->email;
         $employee->phone = $request->phone;
         $employee->job_title = $request->job_title;
-        $employee->departments = $request->departments;
-        $employee->sub_departments = $request->sub_departments;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments_name;
+        $employee->sub_departments = $request->subdepartments_name;
         $employee->save();
 
         // Save to logs
@@ -1234,7 +1287,7 @@ class apiController extends Controller
         $saveLogs->notes = 'Create New employee.';
         $saveLogs->save();
 
-        return response()->json(200, $employee);
+        return response()->json($employee, 200);
     }
     public function deleteEmployee($id, Request $request)
     {
@@ -1252,19 +1305,79 @@ class apiController extends Controller
     }
     public function getEmployeeById($id)
     {
-        return response()->json(employee::with('department', 'subdepartment')->find($id));
+
+        $getEmployee = employee::with('department', 'subdepartment')
+            ->find($id);
+
+        $joinDate = new \DateTime($getEmployee->date_join);
+        $dateOfBirth = new \DateTime($getEmployee->birth_date);
+        $currentDate = new \DateTime(date("Y-m-d"));
+        $interval = $joinDate->diff($currentDate);
+        $getAge = $dateOfBirth->diff($currentDate);
+        $getEmployee->employee_working_duration = $interval->y . "y, " . $interval->m . "m, " . $interval->d . "d ";
+        $getEmployee->employee_age = $getAge->y;
+        if ($getEmployee->employee_sex == 0) {
+            $getEmployee->employee_sex = 'Female';
+        } else {
+            $getEmployee->employee_sex = 'Male';
+        }
+        return response()->json($getEmployee, 200);
 
         // return response()->json(candidates::with('posisi')->find($id));
     }
-    public function patchEmployeeById($id)
+    public function patchEmployeeById($id, Request $request)
     {
-        $candidate = employee::with('posisi')->find($id);
-        $candidate->status = false;
-        $candidate->updated_by = Auth::user()->name;
-        $candidate->save();
-        $company = company_details::where('id', 1)->first();
+        $employee = employee::with('department', 'subdepartment')->find($id);
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        if ($request->employee_sex == 'Female') {
+            $employee->employee_sex == 0;
+        } else {
+            $employee->employee_sex == 1;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments;
+        $employee->sub_departments = $request->sub_departments;
+        $employee->status = $request->status;
+        $employee->save();
+        // $company = company_details::where('id', 1)->first();
 
         return response()->json(200);
+        // dd($request->all());
+    }
+    public function bankEmployee($id)
+    {
+        return response()->json(employeeBanks::where('employee_id', $id)->with('employee', 'bank')->get());
+    }
+    public function bankEmployeeAdd(Request $request, $id)
+    {
+        $bank = new employeeBanks();
+        $bank->employee_id = $id;
+        $bank->bank_id = $request->bank_id;
+        $bank->account_no = $request->account_no;
+        $bank->account_name = $request->account_name;
+        $bank->save();
+        return response()->json($bank);
+    }
+    public function bankEmployeeDelete($id)
+    {
+        return response()->json(employeeBanks::find($id)->delete());
     }
 
     // Chat API
@@ -1325,7 +1438,7 @@ class apiController extends Controller
     // Company API
     public function getCompanyDetails()
     {
-        return response()->json(company_details::where('id', 1)->first());
+        return response()->json(company_details::orderBy('created_at', 'DESC')->first());
     }
     public function saveCompanyDetails(Request $request)
     {
@@ -1407,7 +1520,7 @@ class apiController extends Controller
     }
     public function deleteCustomer($id)
     {
-        $getCustomers = customers::find($id);
+        $getCustomers = suppliers::find($id);
         // $getUser->status = '2';
         $getCustomers->delete();
         return response()->json([], 204);
@@ -1585,7 +1698,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $supplier->save();
-        return response()->json($user);
+        return response()->json($supplier);
     }
 
     // Warehouse
@@ -2237,7 +2350,7 @@ class apiController extends Controller
         $ddrGet = documentsDelivery::where('ddr_number', $deliveryDocOrd->ddr_number)->with('sender', 'createdBy', 'updatedBy')->first();
         $company = company_details::where('id', 1)->first();
 
-        Mail::to('ga2@btsa.co.id')->send(new newDocumentDelivery($ddrGet, $company));
+        Mail::to('hrd@' + $company->site)->send(new newDocumentDelivery($ddrGet, $company));
 
         return response()->json($deliveryDocOrd, 200);
     }
@@ -2438,6 +2551,7 @@ class apiController extends Controller
                     "item_code" => $value[0]['item_code'],
                     "item_name" => $value[0]['item_name'],
                     "unit" => $value[0]['unit'],
+                    "price" => $value[0]['price'],
                     "qty" => 0,
                     "warehouse" => [],
                     "warehouseDetail" => []
@@ -2465,6 +2579,7 @@ class apiController extends Controller
                     "item_code" => $value[0]['item_code'],
                     "item_name" => $value[0]['item_name'],
                     "unit" => $value[0]['unit'],
+                    "price" => $value[0]['price'],
                     "qty" => 0,
                     "warehouse" => [],
                     "warehouseDetail" => []
@@ -2552,5 +2667,133 @@ class apiController extends Controller
         ];
         $pdf = PDF::loadView('report.stockWarehouse', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
+    }
+    public function getDepartment()
+    {
+        return response()->json(DB::table('employee_departments')->get());
+    }
+    public function getSubDepartment()
+    {
+        return response()->json(DB::table('employee_sub_departments')->get());
+    }
+    // Payroll API
+    public function getPayroll()
+    {
+        return response()->json(PayrollTransactionHistory::orderBy('created_at', 'DESC')->get());
+    }
+    public function newPayroll(Request $request)
+    {
+        $employee = new PayrollTransactionHistory();
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        $employee->employee_sex = $request->employee_sex;
+        $employee->employee_age = $request->employee_age;
+        if ($request->employee_pic) {
+            $uploadFile = Cloudinary::upload($request->file('employee_pic')->getRealPath(), [
+                'folder' => 'asset/employee'
+            ])->getSecurePath();
+            $employee->employee_pic = $uploadFile;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments_name;
+        $employee->sub_departments = $request->subdepartments_name;
+        $employee->save();
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Create New employee.';
+        $saveLogs->save();
+
+        return response()->json($employee, 200);
+    }
+    public function deletePayroll($id, Request $request)
+    {
+        $getUser = PayrollTransactionHistory::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete employee.';
+        $saveLogs->save();
+
+        $getUser->delete();
+        return response()->json([], 204);
+    }
+    public function getPayrollById($id)
+    {
+
+        $getEmployee = PayrollTransactionHistory::with('department', 'subdepartment')
+            ->find($id);
+
+        $joinDate = new \DateTime($getEmployee->date_join);
+        $dateOfBirth = new \DateTime($getEmployee->birth_date);
+        $currentDate = new \DateTime(date("Y-m-d"));
+        $interval = $joinDate->diff($currentDate);
+        $getAge = $dateOfBirth->diff($currentDate);
+        $getEmployee->employee_working_duration = $interval->y . "y, " . $interval->m . "m, " . $interval->d . "d ";
+        $getEmployee->employee_age = $getAge->y;
+        if ($getEmployee->employee_sex == 0) {
+            $getEmployee->employee_sex = 'Female';
+        } else {
+            $getEmployee->employee_sex = 'Male';
+        }
+        return response()->json($getEmployee, 200);
+
+        // return response()->json(candidates::with('posisi')->find($id));
+    }
+    public function patchPayrollById($id, Request $request)
+    {
+        $employee = PayrollTransactionHistory::with('department', 'subdepartment')->find($id);
+        $employee->employee_code = $request->employee_code;
+        $employee->employee_name = $request->employee_name;
+        $employee->employee_nickname = $request->employee_nickname;
+        if ($request->employee_sex == 'Female') {
+            $employee->employee_sex == 0;
+        } else {
+            $employee->employee_sex == 1;
+        }
+        $employee->birth_place = $request->birth_place;
+        $employee->birth_date = $request->birth_date;
+        $employee->date_join = $request->date_join;
+        $employee->nationality = $request->nationality;
+        $employee->identity_no = $request->identity_no;
+        $employee->religion = $request->religion;
+        $employee->weight = $request->weight;
+        $employee->height = $request->height;
+        $employee->blood_type = $request->blood_type;
+        $employee->tax_id = $request->tax_id;
+        $employee->bpjstk = $request->bpjstk;
+        $employee->bpjskes = $request->bpjskes;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+        $employee->job_title = $request->job_title;
+        $employee->job_type = $request->job_type;
+        $employee->departments = $request->departments;
+        $employee->sub_departments = $request->sub_departments;
+        $employee->status = $request->status;
+        $employee->save();
+        // $company = company_details::where('id', 1)->first();
+
+        return response()->json(200);
+        // dd($request->all());
     }
 }

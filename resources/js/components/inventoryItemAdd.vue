@@ -21,12 +21,13 @@
                                             <span>For Customer:</span>
                                             <select v-model="inventorydata.customerId"
                                                 class="form-control form-control-default"
-                                                v-on:change="selectCustomer($event)">
+                                                v-on:change="selectCustomer($event)" required>
                                                 <option value="" disabled>Select Customer Connected</option>
                                                 <option v-for="customers in customers" :key="customers.id"
                                                     :value="customers.id">
                                                     {{customers.company_name}}</option>
                                             </select>
+                                            <span class="text-danger">{{errors.customer}}</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -34,13 +35,14 @@
                                             <span>In Warehouse:</span>
                                             <select v-model="inventorydata.warehouseid"
                                                 class="form-control form-control-default"
-                                                @change="selectWarehouse($event)" :disabled="warehouseSelect">
+                                                @change="selectWarehouse($event)" :disabled="warehouseSelect" required>
                                                 <option value="" disabled>Select Warehouse</option>
                                                 <option v-for="warehouses in warehouses"
                                                     :key="warehouses.warehouse_detail.id"
                                                     :value="warehouses.warehouse_detail.id">
                                                     {{warehouses.warehouse_detail.warehouse_name}}</option>
                                             </select>
+                                            <span class="text-danger">{{errors.warehouse}}</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -48,6 +50,7 @@
                                             <span>Item Code:</span>
                                             <input type="text" v-model="inventorydata.item_code" placeholder="Item Code"
                                                 class="form-control">
+                                            <span class="text-danger">{{errors.item_code}}</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-7">
@@ -239,6 +242,10 @@
                 inventoryGroup: {},
                 customers: {},
                 warehouses: {},
+                errors: {
+                    customer: '',
+                    warehouse: '',
+                },
                 warehouseSelect: true,
 
                 // Image
@@ -273,47 +280,61 @@
             },
             async submitHandle() {
                 // this.$Progress.start();
-                this.$isLoading(true);
-                await axios.post('/api/inventory-item', this.inventorydata).then(response => {
-                    this.loadItem();
-                    document.getElementById('ding').play();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Congratulations',
-                        text: 'Success add Inventory Item',
+                if (!this.inventorydata.customerId) {
+                    this.errors.customer = 'Customer required.';
+                }
+                if (!this.inventorydata.warehouseid) {
+                    this.errors.warehouse = 'Warehouse for customer required.';
+                }
+                if (!this.inventorydata.item_code) {
+                    this.errors.item_code = 'Item code required.';
+                }
+                if (this.inventorydata.customerId && this.inventorydata.warehouseid && this.inventorydata
+                    .item_code) {
+                    this.$isLoading(true);
+                    await axios.post('/api/inventory-item', this.inventorydata).then(response => {
+                        this.loadItem();
+                        document.getElementById('ding').play();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Congratulations',
+                            text: 'Success add Inventory Item',
+                        });
+                        this.inventorydata = {
+                            item_code: '',
+                            item_name: '',
+                            type: '',
+                            item_group: '',
+                            brand: '',
+                            width: '',
+                            length: '',
+                            thickness: '',
+                            nt_weight: '',
+                            gr_weight: '',
+                            volume: '',
+                        };
+                        this.$router.push('/inventory-item');
+                        // this.$Progress.finish();
+                        this.$isLoading(false);
+                    }).catch(error => {
+                        this.$Progress.fail();
+                        document.getElementById('failding').play();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Something wrong.',
+                            confirmButtonText: `Ok`,
+                            html: `There is something wrong on my side. Please click ok to refresh this page and see what is it.
+                    If
+                    it still exist, you can contact our developer. <br><br>Error message: ` +
+                                error,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
                     });
-                    this.inventorydata = {
-                        item_code: '',
-                        item_name: '',
-                        type: '',
-                        item_group: '',
-                        brand: '',
-                        width: '',
-                        length: '',
-                        thickness: '',
-                        nt_weight: '',
-                        gr_weight: '',
-                        volume: '',
-                    };
-                    this.$router.push('/inventory-item');
-                    // this.$Progress.finish();
-                    this.$isLoading(false);
-                }).catch(error => {
-                    this.$Progress.fail();
-                    document.getElementById('failding').play();
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Something wrong.',
-                        confirmButtonText: `Ok`,
-                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-            it still exist, you can contact our developer. <br><br>Error message: ` +
-                            error,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-                });
+                }
+
             },
             async selectCustomer(event) {
                 this.warehouseSelect = false;

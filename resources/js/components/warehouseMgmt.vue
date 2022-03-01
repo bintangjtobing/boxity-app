@@ -227,11 +227,12 @@
                     await axios.delete('/api/warehouse/' + id);
                     this.loadWarehouse();
                     document.getElementById('ding').play();
-                    await Swal.fire({
+                    Swal.fire({
                         icon: 'success',
                         title: 'Successfully Deleted',
                         text: 'Success deleted current warehouse.'
                     });
+                    this.$router.push('/warehouse-list');
                     // this.$Progress.finish();
                     this.$isLoading(false);
                 }

@@ -29,6 +29,7 @@ class employee extends Model
         'bpjskes',
         'email', 'phone',
         'job_title',
+        'job_type',
         'departments',
         'sub_departments'
     ];

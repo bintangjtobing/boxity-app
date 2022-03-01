@@ -66,6 +66,7 @@ Route::get('/career/{id}', 'apiController@getJobbyId');
 Route::post('/career', 'apiController@addJob');
 Route::get('/career', 'apiController@getJob');
 Route::delete('/career/{id}', 'apiController@deleteJob');
+Route::patch('/career/c/{id}', 'apiController@closeJob');
 Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API
@@ -132,6 +133,7 @@ Route::post('/popup-management', 'apiController@postPopup');
 Route::get('/candidates', 'apiController@getCandidate');
 Route::get('/candidates/{id}', 'apiController@getCandidateById');
 Route::patch('/candidates/{id}', 'apiController@patchCandidateById');
+Route::patch('/candidates/a/{id}', 'apiController@patchACandidateById');
 Route::delete('/candidates/{id}', 'apiController@deleteCandidate');
 
 // Employee API
@@ -140,6 +142,9 @@ Route::post('/employee', 'apiController@newEmployee');
 Route::get('/employee/{id}', 'apiController@getEmployeeById');
 Route::patch('/employee/{id}', 'apiController@patchEmployeeById');
 Route::delete('/employee/{id}', 'apiController@deleteEmployee');
+Route::get('/employee-details/bank/{id}', 'apiController@bankEmployee');
+Route::post('/employee-details/bank/{id}', 'apiController@bankEmployeeAdd');
+Route::delete('/employee-details/bank/{id}', 'apiController@bankEmployeeDelete');
 
 // CHAT API
 Route::get('/chat/{id}', 'apiController@getChatFor');
@@ -464,3 +469,12 @@ Route::delete('/e/sales/order/{id}', 'salesController@deleteESalesOrderById');
 
 Route::get('/report-card', 'apiController@getReportCard');
 
+Route::get('/department', 'apiController@getDepartment');
+Route::get('/department/sub', 'apiController@getSubDepartment');
+
+// Payroll Management API
+Route::get('/payroll', 'apiController@getPayroll');
+Route::post('/payroll', 'apiController@newPayroll');
+Route::get('/payroll/{id}', 'apiController@getPayrollById');
+Route::patch('/payroll/{id}', 'apiController@patchPayrollById');
+Route::delete('/payroll/{id}', 'apiController@deletePayroll');
