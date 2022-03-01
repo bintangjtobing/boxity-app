@@ -1432,7 +1432,7 @@ class apiController extends Controller
     // Company API
     public function getCompanyDetails()
     {
-        return response()->json(company_details::where('id', 1)->first());
+        return response()->json(company_details::orderBy('created_at', 'DESC')->first());
     }
     public function saveCompanyDetails(Request $request)
     {
