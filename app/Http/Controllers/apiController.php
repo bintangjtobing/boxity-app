@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\User;
 use App\customers;
@@ -289,16 +290,21 @@ class apiController extends Controller
         $saveLogs->save();
 
         $issue->save();
-        if ($issue->status = '1') {
-            $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
-            $company = company_details::where('id', 1)->first();
 
-            Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
+        try {
+            if ($issue->status = '1') {
+                $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
+                $company = company_details::where('id', 1)->first();
 
-            // sendToTelegram
-            if ($issues->assigne->telegram_id) {
-                $issues->notify(new approveIssueNotification($issues));
+                Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
+
+                // sendToTelegram
+                if ($issues->assigne->telegram_id) {
+                    $issues->notify(new approveIssueNotification($issues));
+                }
             }
+        } catch (ModelNotFoundException $e) {
+            return response()->json($issue, 201);
         }
         return response()->json($issue, 201);
     }
