@@ -44,14 +44,12 @@
                             </li>
                             <li class="nav-author">
                                 <div class="dropdown-custom">
-                                    <a href="javascript:;" class="nav-item-toggle"><img
-                                            v-bind:src="`dashboard/img/author/profile/`+user.avatar" alt="User"
-                                            class="rounded-circle"></a>
+                                    <a href="javascript:;" class="nav-item-toggle"><img v-bind:src="user.avatar"
+                                            alt="User" class="rounded-circle"></a>
                                     <div class="dropdown-wrapper">
                                         <div class="nav-author__info">
                                             <div class="author-img" v-if="user.role!='customer'">
-                                                <img :src="`dashboard/img/author/profile/`+user.avatar" alt="User"
-                                                    class="rounded-circle">
+                                                <img :src="user.avatar" alt="User" class="rounded-circle">
                                             </div>
                                             <div>
                                                 <h6>{{user.name}}</h6>

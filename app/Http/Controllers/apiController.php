@@ -702,13 +702,10 @@ class apiController extends Controller
     public function updateProfile($id, Request $request)
     {
         $profile = User::find($id);
-        if ($request->file('image')) {
-            $lamp = $request->file('image');
-            $filename =
-                time() . '-' .  $lamp->getClientOriginalName();
-            $lamp->move('dashboard/img/author/profile/', $filename);
-            $profile->avatar = $filename;
-        }
+        $uploadFile = Cloudinary::upload($request->file('image')->getRealPath(), [
+            'folder' => 'asset/user/profile'
+        ])->getSecurePath();
+        $profile->avatar = $uploadFile;
         $profile->name = $request->name;
         $profile->username = $request->username;
         $profile->email = $request->email;
