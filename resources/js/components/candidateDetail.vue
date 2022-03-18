@@ -173,18 +173,9 @@
                 if (this.candidates.status == false || this.candidates.status == true) {
                     this.isDisabled = true;
                     this.isDisabledInvite = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
                 } else {
                     this.isDisabled = false;
                     this.isDisabledInvite = false;
-=======
->>>>>>> 71a3774 (candidate upgrade view and details)
-=======
-                } else {
-                    this.isDisabled = false;
-                    this.isDisabledInvite = false;
->>>>>>> e26bc74 (button at candidate detail fix)
                 }
                 // this.$Progress.finish();
                 this.$isLoading(false);
