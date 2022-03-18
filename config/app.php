@@ -165,7 +165,6 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Understand\UnderstandLaravel5\UnderstandLaravel5ServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
 
