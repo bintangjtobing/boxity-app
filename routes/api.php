@@ -71,10 +71,14 @@ Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API
 Route::get('/blogs', 'apiController@getBlog');
+Route::post('/blogs/images', 'apiController@imagesInBlog')->name('dropzoneImages');
 Route::get('/blogs/{id}', 'apiController@getBlogById');
 Route::patch('/blogs/{id}', 'apiController@patchBlogById');
 Route::delete('/blogs/{id}', 'apiController@deleteBlogById');
 Route::post('/blogs', 'apiController@addNewBlog');
+
+Route::get('/categories', 'apiController@getCategories');
+Route::post('/categories', 'apiController@postCategories');
 
 // User Profile API
 Route::get('/u/{username}', 'apiController@getProfile');

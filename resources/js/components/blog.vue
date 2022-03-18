@@ -5,71 +5,8 @@
                 <div class="breadcrumb-main">
                     <h2 class="text-capitalize fw-700 breadcrumb-title">Blog management</h2>
                     <div class="action-btn">
-                        <a href="#" class="btn px-15 btn-primary" data-toggle="modal" data-target="#newMember">
-                            <i class="las la-plus fs-16"></i>New blog</a>
-
-                        <!-- Modal -->
-                        <div class="modal fade new-member" id="newMember" role="dialog" tabindex="-1"
-                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content modal-lg radius-xl">
-                                    <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">New blog</h6>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i class="fal fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="new-member-modal">
-                                            <form>
-                                                <div class="form-group mb-20">
-                                                    <input type="text" v-model="blog.title" class="form-control"
-                                                        placeholder="Blog title">
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <editor placeholder="Blog descriptions..."
-                                                        v-model="blog.description"
-                                                        api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om"
-                                                        :init="{
-                                                                height: 300,
-                                                                menubar: true,
-                                                                branding: false,
-                                                                plugins: 'code',
-                                                                toolbar:
-                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
-                                                        }" />
-                                                </div>
-                                                <div class="form-group mb-20">
-                                                    <select v-model="blog.category"
-                                                        class="form-control form-control-default px-15"
-                                                        id="exampleFormControlSelect1">
-                                                        <option value="" disabled>Select category:</option>
-                                                        <option value="Ekspor">Ekspor</option>
-                                                        <option value="Impor">Impor</option>
-                                                        <option value="Umum">Umum</option>
-                                                    </select>
-                                                </div>
-                                                <div class="button-group d-flex pt-25">
-                                                    <button v-on:click="handleSubmit"
-                                                        class="btn btn-primary-boxity btn-default btn-squared text-capitalize"
-                                                        data-dismiss="modal">submit
-                                                    </button>
-                                                    <button class="btn btn-light btn-default btn-squared fw-400
-                                                        text-capitalize b-light color-light" data-dismiss="modal"
-                                                        aria-label="Close">cancel
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal -->
-
-
+                        <router-link to="/blog-management/create" class="btn btn-sm btn-primary-boxity btn-add">
+                            <i class="las la-plus fs-16"></i>Create blog</router-link>
                     </div>
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
@@ -82,21 +19,21 @@
                             :items="blogs" :items-per-page="10" class="elevation-1">
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
-                                    <a href="#" class="text-dark fw-500">
+                                    <router-link :to="`/edit/blog/`+item.id" class="text-dark fw-500">
                                         <h6 v-if="item.title.length < 45">{{item.title}}
                                         </h6>
                                         <h6 v-if="item.title.length >= 45">
                                             {{item.title.substring(0,44)+"..."}}
                                         </h6>
-                                        <p>Created by {{item.user.name}} | {{item.created_at}}</p>
-                                    </a>
+                                    </router-link>
                                 </div>
                             </template>
+                            <template v-slot:[`item.views`]="{item}">
+                                <span>{{item.views}} Views</span>
+                            </template>
                             <template v-slot:item.actions="{item}">
-                                <router-link :to="`/detail/blogs/${item.id}`" class="view">
-                                    <i class="fad fa-eye"></i></router-link>
                                 <router-link :to="`/edit/blog/${item.id}`" class="edit">
-                                    <i class="fad fa-edit"></i></router-link>
+                                    <i class="fad fa-eye"></i></router-link>
                                 <a @click="deleteBlog(item.id)" class="remove">
                                     <i class="fad fa-trash"></i></a>
                             </template>
@@ -147,8 +84,11 @@
                     text: 'Title',
                     value: 'title'
                 }, {
-                    text: 'Category',
-                    value: 'category'
+                    text: 'Author',
+                    value: 'user.name'
+                }, {
+                    text: 'Uploaded date',
+                    value: 'created_at'
                 }, {
                     text: 'Views',
                     value: 'views'

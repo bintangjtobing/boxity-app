@@ -14,6 +14,7 @@ use App\customers;
 use App\album_photos;
 use App\albums;
 use App\blog;
+use App\categories;
 use App\candidates;
 use App\changeLog;
 use App\commentIssue;
@@ -27,6 +28,8 @@ use App\id_agamas;
 use App\issue;
 use App\id_domisilis;
 use App\inventoryItem;
+use App\blogImages;
+use App\blogCategories;
 use App\itemGroup;
 use App\jobvacancy;
 use App\Mail\AddComment;
@@ -619,11 +622,21 @@ class apiController extends Controller
     // BLOG API
     public function getBlog()
     {
-        return response()->json(blog::with('user')->orderBy('created_at', 'DESC')->get());
+        return response()->json(blog::with('user', 'image')->orderBy('created_at', 'DESC')->get());
+    }
+    public function imagesInBlog(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/blog'
+        ])->getSecurePath();
+        $images = blogImages::create([
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
     }
     public function getBlogById($id)
     {
-        return response()->json(blog::find($id));
+        return response()->json(blog::with('user', 'image')->find($id));
     }
     public function patchBlogById($id, Request $request)
     {
@@ -661,11 +674,9 @@ class apiController extends Controller
     public function addNewBlog(Request $request)
     {
         $blog = new blog();
-        foreach (['title', 'description', 'category'] as $field) {
-            if (isset($request->{$field})) {
-                $blog->{$field} = $request->{$field};
-            }
-        }
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+        $blog->category = json_encode($request->category, true);
         $blog->views = 0;
         $blog->userid = Auth::id();
 
@@ -677,6 +688,9 @@ class apiController extends Controller
         $saveLogs->save();
 
         $blog->save();
+        $file = DB::table('blog_images')
+            ->whereNull('blog_id')
+            ->update(array('blog_id' => $blog->id));
         return response()->json($blog);
     }
 
@@ -1076,6 +1090,14 @@ class apiController extends Controller
     {
         $newGoods = new goodsReceip();
         $newGoods->userid = Auth::id();
+        if ($request->type == 'outgoing') {
+            $newGoods->companies_receiver = $request->companies_receiver;
+            $newGoods->type = 'outgoing';
+            $newGoods->status = 3;
+        } else {
+            $newGoods->type = 'incoming';
+            $newGoods->status = 0;
+        }
         if ($request->receiverId) {
             $newGoods->receiverid = 0;
         } else {
@@ -1085,23 +1107,27 @@ class apiController extends Controller
         $newGoods->courier = $request->courier;
         $newGoods->receiptNumber = $request->receiptNumber;
         $newGoods->description = $request->description;
-        $newGoods->status = 0;
 
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
         $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Add new goods receipt ' . $newGoods->id . '.';
+        if ($newGoods->type == 'outgoing') {
+            $saveLogs->notes = 'Add new request outgoing document ' . $newGoods->id . '.';
+        } else {
+            $saveLogs->notes = 'Add new goods receipt ' . $newGoods->id . '.';
+        }
         $saveLogs->save();
-
         $newGoods->save();
-        $goods = User::find($newGoods->receiverid);
-        // return $goods->email;
-        $company = company_details::where('id', 1)->first();
 
-        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
-        return response()->json($goods);
-        // return response()->json($newGoods, 200);
+        if ($request->type == 'incoming') {
+            $goods = User::find($newGoods->receiverid);
+            // return $goods->email;
+            $company = company_details::first();
+            Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
+        }
+        // return response()->json($goods);
+        return response()->json($newGoods, 200);
     }
     public function getGoodsById($id, Request $req)
     {
@@ -2795,5 +2821,26 @@ class apiController extends Controller
 
         return response()->json(200);
         // dd($request->all());
+    }
+    public function getCategories()
+    {
+
+        return response()->json(categories::get());
+    }
+    public function postCategories(Request $request)
+    {
+        $cat = new categories();
+        $cat->categories_name = $request->categories_name;
+        $cat->description = $request->description;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id();
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Create new categories ' . $cat->categories_name . '.';
+        $saveLogs->save();
+
+        $cat->save();
+        return response()->json($cat, 201);
     }
 }

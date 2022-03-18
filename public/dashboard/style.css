@@ -2604,7 +2604,7 @@ table.table-rounded thead tr th,
 .atbd-mailCompose__action svg,
 .mail-details .mail-attatched__hover .btn-mail svg,
 .mail-details .mail-attatched__hover .btn-mail img {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 .bg-white,
@@ -4926,7 +4926,8 @@ ul {
 
 .navbar-left .navbar-brand svg,
 .navbar-left .navbar-brand img {
-    max-width: 120px;
+    width: auto;
+    height: 50px;
 }
 
 .navbar-left .navbar-brand .light {
