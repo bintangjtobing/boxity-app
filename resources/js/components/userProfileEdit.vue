@@ -33,8 +33,8 @@
                                                         @change="fileUpload">
                                                     <label for="file-upload">
                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
-                                                            :src="`/dashboard/img/author/profile/`+user.avatar"
-                                                            alt="profile img" v-if="!imagePreview">
+                                                            :src="user.avatar" :alt="user.name+` picture`"
+                                                            v-if="!imagePreview">
                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                             :src="imagePreview" alt="profile img" v-if="imagePreview">
                                                         <span class="cross" id="remove_pro_pic">

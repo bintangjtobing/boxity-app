@@ -45,7 +45,7 @@
                             <li class="nav-author">
                                 <div class="dropdown-custom">
                                     <a href="javascript:;" class="nav-item-toggle"><img v-bind:src="user.avatar"
-                                            alt="User" class="rounded-circle"></a>
+                                            :alt="user.name+` picture`" class="rounded-circle"></a>
                                     <div class="dropdown-wrapper">
                                         <div class="nav-author__info">
                                             <div class="author-img" v-if="user.role!='customer'">
