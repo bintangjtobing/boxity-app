@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <form @submit.prevent="submitHandle">
+        <form @submit.prevent="submitHandle(e='publish')">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card card-Vertical card-default card-md mb-4">
@@ -44,9 +44,9 @@
                     <div class="Vertical-form">
                         <div class="form-group my-2">
                             <div class="justify-content-end">
-                                <button v-on:click="submitHandle" type="submit"
+                                <a v-on:click="submitHandle(e='draft')"
                                     class="btn btn-secondary-boxity btn-default btn-block btn-squared px-30"
-                                    data-dismiss="modal">Save Draft</button>
+                                    data-dismiss="modal">Save Draft</a>
                             </div>
                         </div>
                     </div>
@@ -192,12 +192,14 @@
             this.getCategories();
         },
         methods: {
-            async submitHandle() {
+            async submitHandle(e) {
+                // console.log(e);
                 this.$isLoading(true);
                 await axios.post('/api/blogs', {
                         title: this.blog.title,
                         description: this.blog.description,
-                        category: this.categoriesArr
+                        category: this.categoriesArr,
+                        type: e,
                     }).then(response => {
                         document.getElementById('ding').play();
                         Swal.fire({
@@ -225,7 +227,7 @@
                         });
                     });
                 this.$isLoading(false);
-                // console.log(this.blog);
+                console.log(this.blog);
             },
             async handleSubmitNewCategories() {
                 // this.$Progress.start();

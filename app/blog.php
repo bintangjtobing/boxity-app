@@ -12,7 +12,7 @@ class blog extends Model
         'description',
         'category',
         'views',
-        'userid',
+        'userid', 'status'
     ];
     public function user()
     {

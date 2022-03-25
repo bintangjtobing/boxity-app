@@ -17,6 +17,14 @@
                         </v-card-title>
                         <v-data-table :loading="loading" loading-text="Loading... Please wait" :headers="headers"
                             :items="blogs" :items-per-page="10" class="elevation-1">
+                            <template v-slot:[`item.status`]="{item}">
+                                <span class="rounded-pill userDatatable-content-status color-success
+                                            bg-opacity-success active" v-if="item.status == 1"><i
+                                        class="fas fa-rss"></i>&nbsp; Published</span>
+                                <span class="rounded-pill userDatatable-content-status color-primary
+                                            bg-opacity-primary active" v-if="item.status == 0"><i
+                                        class="fas fa-file-lines"></i>&nbsp; Draft</span>
+                            </template>
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
                                     <router-link :to="`/edit/blog/`+item.id" class="text-dark fw-500">
@@ -86,6 +94,9 @@
                 }, {
                     text: 'Author',
                     value: 'user.name'
+                }, {
+                    text: 'Status',
+                    value: 'status'
                 }, {
                     text: 'Uploaded date',
                     value: 'created_at'

@@ -680,6 +680,11 @@ class apiController extends Controller
         $blog->views = 0;
         $blog->userid = Auth::id();
 
+        if ($request->type == 'draft') {
+            $blog->status = 0;
+        } else {
+            $blog->status = 1;
+        }
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id();
