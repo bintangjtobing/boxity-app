@@ -1237,8 +1237,8 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        $id = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
-        if ($id->provinsi == NULL && $id->domisili == NULL && $id->kecamatan == NULL && $id->kelurahan == NULL && $id->agama == NULL && $id->suku == NULL) {
+        $ids = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
+        if ($ids->provinsi == NULL && $ids->domisili == NULL && $ids->kecamatan == NULL && $ids->kelurahan == NULL && $ids->agama == NULL && $ids->suku == NULL) {
             return response()->json(candidates::with('posisi')->find($id)->first());
         } else {
             return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id)->first());
