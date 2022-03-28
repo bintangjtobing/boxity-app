@@ -1237,14 +1237,13 @@ class apiController extends Controller
     }
     public function getCandidateById($id)
     {
-        $ids = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
-        if ($ids->provinsi == NULL && $ids->domisili == NULL && $ids->kecamatan == NULL && $ids->kelurahan == NULL && $ids->agama == NULL && $ids->suku == NULL) {
-            return response()->json(candidates::with('posisi')->find($id)->first());
+        $getData = candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id);
+        if ($getData->provinsi == NULL && $getData->domisili == NULL && $getData->kecamatan == NULL && $getData->kelurahan == NULL && $getData->agama == NULL && $getData->suku == NULL) {
+            return response()->json(candidates::with('posisi')->where('id', $getData->id)->first());
         } else {
-            return response()->json(candidates::with('posisi', 'provinsi', 'domisili', 'kecamatan', 'kelurahan', 'agama', 'suku')->find($id)->first());
+            return response()->json($getData);
         }
-
-        // return response()->json(candidates::with('posisi')->find($id));
+        // return response()->json($getData);
     }
     public function patchCandidateById($id)
     {
