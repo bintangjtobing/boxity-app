@@ -214,6 +214,10 @@
                 loading: true,
                 goodsData: [],
                 headers: [{
+                    text: 'Created at',
+                    value: 'created_at',
+                    align: 'left',
+                }, {
                     text: 'Type',
                     value: 'type',
                     align: 'center',
