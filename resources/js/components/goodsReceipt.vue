@@ -42,8 +42,7 @@
                                             <p class="pt-1 d-block mb-0">
                                                 <i class="far fa-dolly"></i> via {{item.courier}} • <span
                                                     v-if="item.type=='incoming'">Received at
-                                                    {{item.created_at}}</span>
-                                                <i class="far fa-dolly"></i> via {{item.courier}} • <span
+                                                    {{item.created_at}}</span><span
                                                     v-if="item.type=='outgoing'">Sent at
                                                     {{item.created_at}}</span>
                                             </p>

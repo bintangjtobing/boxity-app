@@ -1379,8 +1379,8 @@ class apiController extends Controller
         $employee->phone = $request->phone;
         $employee->job_title = $request->job_title;
         $employee->job_type = $request->job_type;
-        $employee->departments = $request->departments;
-        $employee->sub_departments = $request->sub_departments;
+        $employee->departments = $request->departments_name;
+        $employee->sub_departments = $request->subdepartments_name;
         $employee->status = $request->status;
         $employee->save();
         // $company = company_details::where('id', 1)->first();
