@@ -8,13 +8,13 @@
     <title>Boxity - Setup Company - Step 1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{!!asset('auth/css/setupcompany.css')!!}">
-    <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
+    <link rel="shortcut icon" href="#" type="image/png" sizes="64x64">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body class="my-login-page">   
-    
+<body class="my-login-page">
+
 
 <div class="container">
     <div class="row justify-content-center mt-5">
@@ -22,7 +22,7 @@
         <form action="{{ route('companydetails.create.step.one.post') }}" method="POST">
                 @csrf
                 {{ csrf_field() }}
- 
+
                 <div class="card rounded">
                     <div class="py-3 px-4">
                         <h2 class="font-weight-bold">
@@ -30,11 +30,11 @@
                         </h2>
                         <p class="mt-3 mb-4 text-grey text-description">
                         Welcome to boxity platform, we want to collect your data, just for completing our site’s
-                            installation. Just fill in the information below and you’ll be on your way to using our platform. 
+                            installation. Just fill in the information below and you’ll be on your way to using our platform.
                         </p>
                         <hr>
                     </div>
-                    
+
                     <div class="card-body pt-0 ">
                             <!-- {{-- menampilkan error validasi --}}
                             @if (count($errors) > 0)
@@ -46,11 +46,11 @@
                                 </ul>
                             </div>
                             @endif -->
-                            
+
                             <h2 class="font-weight-bold mb-4">
                             Information Needed
                             </h2>
-                            
+
                             <div class="row my-2">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -60,7 +60,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
@@ -72,8 +72,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="row my-2">
                                 <div class="col-2">
                                     <div class="form-group">
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row my-2">
                                 <div class="col-4">
                                     <div class="form-group">
@@ -132,18 +132,18 @@
                                         <div class="text-danger text-small">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                  
+
                                 </div>
                             </div>
-                          
-                          
-                           
-                          
+
+
+
+
                     </div>
-  
+
                     <div class="text-right pb-4 px-3">
                         <button type="submit" class="btn">
-                            <div class="rounded-circle p-2 text-center d-flex justify-content-center wrap-icon"> 
+                            <div class="rounded-circle p-2 text-center d-flex justify-content-center wrap-icon">
                             <i class="fa fa-chevron-right" style="color: #fff; font-size: 20px;"  aria-hidden="true"></i>
                             </div>
                         </button>
@@ -154,7 +154,7 @@
     </div>
 </div>
 
-   
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

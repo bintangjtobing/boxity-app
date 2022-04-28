@@ -23,7 +23,7 @@ class authController extends Controller
     {
         $company = company_details::first();
         if (!$company) {
-            return view('auth.setcompanyone');
+            return view('auth.setcompanyone', ['company' => $company]);
         }
         if (
             !$company->company_id ||
@@ -35,11 +35,11 @@ class authController extends Controller
             !$company->email ||
             !$company->site
         ) {
-            return view('auth.setcompanyone');
+            return view('auth.setcompanyone', ['company' => $company]);
         } else if (!$company->meta_description || !$company->meta_keywords || !$company->taxNumber) {
-            return view('auth.setcompanytwo');
+            return view('auth.setcompanytwo', ['company' => $company]);
         } else if (!$company->icon || !$company->logo || !$company->logoblack) {
-            return view('auth.setcompanythree');
+            return view('auth.setcompanythree', ['company' => $company]);
             // return view('auth.loginnew', ['company' => $company]);
         } else {
             return view('auth.loginnew', ['company' => $company]);

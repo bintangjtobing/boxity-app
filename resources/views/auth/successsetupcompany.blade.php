@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{!!asset('auth/css/my-login.css')!!}">
-    <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
+    <link rel="shortcut icon" href="{{$company->icon}}" type="image/png" sizes="64x64">
     <meta name="description" content="{{$company->meta_description}}">
     <meta name="keywords" content="{{$company->meta_keywords}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,10 +33,10 @@
                     We’ll bring you to login’s page, and of course
                 you can start our platform. Enjoy.
             </h5>
-            </div> 
-               
             </div>
-           
+
+            </div>
+
             </div>
             <div> Redirecting you to login’s page in <span id="counter"></span>s</div>
         </div>
@@ -56,11 +56,11 @@
     <script src="{!!asset('auth/js/my-login.js')!!}"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script>
-        
+
         var seconds = 3;
         document.getElementById('counter').innerHTML = seconds
         var el = document.getElementById('counter');
-        
+
         function redirect() {
             // clearInterval(cancel)
             window.location='/'
@@ -75,15 +75,15 @@
         }
 
         var cancel = setInterval(incrementSeconds, 1000);
-        
+
         // if(seconds == 0) {
         //     clearInterval(cancel)
         //     window.location='/'
         // }
-        
-        //  let counter = 3 
+
+        //  let counter = 3
         //  let counterDOM = document.getElementById('counter').innerHTML = counter
-        // setInterval(function(){ 
+        // setInterval(function(){
         //     counter = counter - 1
         //     counterDOM.innerHTML = counter
         // }, 1000);

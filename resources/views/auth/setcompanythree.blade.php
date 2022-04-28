@@ -8,13 +8,13 @@
     <title>Boxity - Setup Company - Step 3</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{!!asset('auth/css/setupcompany.css')!!}">
-    <link rel="shortcut icon" href="{!!asset('icon.png')!!}" type="image/png" sizes="64x64">
+    <link rel="shortcut icon" href="#" type="image/png" sizes="64x64">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body class="my-login-page">   
-    
+<body class="my-login-page">
+
 
 <div class="container">
     <div class="row justify-content-center mt-5">
@@ -22,16 +22,16 @@
         <form action="{{ route('companydetails.create.step.three.post') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{ csrf_field() }}
- 
+
                 <div class="card rounded">
-                    
-                    
+
+
                     <div class="card-body pt-0 ">
-                            
+
                             <h2 class="font-weight-bold mb-4">
                             Image’s Company
                             </h2>
-                            
+
                             <div class="row my-2">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -44,7 +44,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
@@ -57,7 +57,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
@@ -71,23 +71,23 @@ File format supported is png ‘s file.</span>
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                             </div>
-                            
-                            
-                          
-                            
-                           
-                          
-                          
-                           
-                          
+
+
+
+
+
+
+
+
+
                     </div>
-  
+
                     <div class="text-right pb-4 px-3">
                         <button type="submit" class="btn">
-                            <div class="rounded-circle p-2 text-center d-flex justify-content-center wrap-icon"> 
+                            <div class="rounded-circle p-2 text-center d-flex justify-content-center wrap-icon">
                             <i class="fa fa-chevron-right" style="color: #fff; font-size: 20px;"  aria-hidden="true"></i>
                             </div>
                         </button>
@@ -98,7 +98,7 @@ File format supported is png ‘s file.</span>
     </div>
 </div>
 
-   
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
