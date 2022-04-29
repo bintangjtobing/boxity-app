@@ -55,7 +55,7 @@
                             <div class="Vertical-form">
                                 <div class="form-group reporter">
                                     <label for="">Reporter:</label><br>
-                                    <img v-bind:src="'dashboard/img/author/profile/'+imageUser" alt="avatar"
+                                    <img v-bind:src="imageUser" alt="avatar"
                                         class="rounded-circle reporterImg">
                                     <span>{{username}}</span>
                                 </div>
