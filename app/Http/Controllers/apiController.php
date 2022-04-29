@@ -315,7 +315,7 @@ class apiController extends Controller
     {
         $role = $this->getLoggedUser()->role;
         if ($role == 'user' || $role == 'it') {
-            return issue::with('user')
+            return issue::with('user', 'approver')
                 ->withCount('comments')
                 ->where('assignee', Auth::id())
                 ->where('status', '!=', '2')

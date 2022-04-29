@@ -74,7 +74,7 @@
                                     <span class="rounded-pill userDatatable-content-status color-success
                                                 bg-opacity-success active text-capitalize"><i
                                             class="fal fa-check-circle"></i>
-                                        &nbsp;Approved</span>
+                                        &nbsp;Approved by {{item.approver.name}}</span>
                                 </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
