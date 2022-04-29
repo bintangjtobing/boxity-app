@@ -392,10 +392,8 @@ class apiController extends Controller
         $issueGet = DB::table('issues')
             ->where('issues.id', '=', $id)
             ->join('users', 'issues.created_by', '=', 'users.id')
-            ->with('user','approver')
             ->select('issues.*', 'users.name', 'users.avatar')
             ->get();
-        // $issueGet = issue::find($id)->with('user','approver','creator')->get();
         return response()->json($issueGet);
     }
     public function getAssigneebyId($id)
