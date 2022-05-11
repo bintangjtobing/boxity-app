@@ -12,7 +12,7 @@
             <div class="col-xl-3 mb-25 my-4" v-for="contact in users" :key="contact.id">
                 <div class="card profile-card-3">
                     <div class="background-block">
-                        <img :src="`/dashboard/img/author/cover/`+contact.cover" class="background bg-opacity-success">
+                        <img :src="contact.cover" class="background bg-opacity-success">
                     </div>
                     <div class="card-content mt-n25">
                         <div class="card-content__body mt-n40 pt-0">
