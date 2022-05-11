@@ -26,7 +26,7 @@
                     <!-- Incoming Chat -->
                     <div class="media" v-if="message.to != contact.id">
                         <div class="chat-text-box__photo ">
-                            <img :src="`/dashboard/img/author/profile/`+contact.avatar"
+                            <img :src="contact.avatar"
                                 class="align-self-start mr-15 wh-46 circleImgProfile" alt="img">
                         </div>
                         <div class="media-body">

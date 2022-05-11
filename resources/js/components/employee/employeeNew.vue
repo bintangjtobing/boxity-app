@@ -132,7 +132,7 @@
                                                                         @change="fileUpload">
                                                                     <label for="file-upload">
                                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
-                                                                            :src="`/dashboard/img/author/profile/`+employeeData.employee_pic"
+                                                                            :src="employeeData.employee_pic"
                                                                             v-if="!imagePreview" alt="employee picture">
                                                                         <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex"
                                                                             :src="imagePreview" alt="profile img"

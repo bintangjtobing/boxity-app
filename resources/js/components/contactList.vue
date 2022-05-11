@@ -17,7 +17,7 @@
                     <div class="card-content mt-n25">
                         <div class="card-content__body mt-n40 pt-0">
                             <div class="profile-thumb-block position-relative d-flex justify-content-center">
-                                <img :src="`/dashboard/img/author/profile/`+contact.avatar" alt="profile-image"
+                                <img :src="contact.avatar" alt="profile-image"
                                     class="profile wh-120 bg-opacity-primary">
                             </div>
                             <div class="ap-nameAddress pb-3 pt-10">

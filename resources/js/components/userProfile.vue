@@ -10,7 +10,7 @@
                                 <div class="ap-img w-100 d-flex justify-content-center">
                                     <!-- Profile picture image-->
                                     <img class="ap-img__main rounded-circle mb-3  wh-120 d-flex bg-opacity-primary"
-                                        :src="`/dashboard/img/author/profile/`+users.avatar" alt="profile image">
+                                        :src="users.avatar" alt="profile image">
                                 </div>
                                 <div class="ap-nameAddress pb-3 pt-1">
                                     <h5 class="ap-nameAddress__title">{{users.name}}</h5>

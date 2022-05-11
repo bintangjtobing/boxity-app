@@ -21,7 +21,7 @@
                                             @click="selectContact(user)">
                                             <div class="user-list-item__wrapper">
                                                 <div class="avatar avatar-circle ml-0">
-                                                    <img :src="`/dashboard/img/author/profile/`+user.avatar"
+                                                    <img :src="user.avatar"
                                                         class="rounded-circle wh-46 d-flex bg-opacity-primary"
                                                         :alt="user.name">
                                                     <div class="badge-direction-bottom">

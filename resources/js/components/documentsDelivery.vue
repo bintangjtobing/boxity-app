@@ -50,7 +50,7 @@
                                     </template>
                                     <template v-slot:[`item.sender.name`]="{item}">
                                         <img class="rounded-circle wh-34"
-                                            :src="`/dashboard/img/author/profile/`+item.sender.avatar"
+                                            :src="item.sender.avatar"
                                             alt="author">&nbsp;
                                         {{item.sender.name}}
                                     </template>

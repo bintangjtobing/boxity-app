@@ -51,7 +51,7 @@
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
                                             <figure>
-                                                <img :src="`/dashboard/img/author/profile/`+issues.avatar"
+                                                <img :src="issues.avatar"
                                                     class="bg-opacity-primary d-flex" alt="Reporter avatar">
                                             </figure>
                                         </div>
@@ -77,7 +77,7 @@
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
                                             <figure>
-                                                <img :src="`/dashboard/img/author/profile/`+comment.user.avatar"
+                                                <img :src="comment.user.avatar"
                                                     class="bg-opacity-primary d-flex" alt="Reporter avatar">
                                             </figure>
                                         </div>
@@ -111,7 +111,7 @@
                         <div class="card-body pb-10">
                             <div class="reply-editor media">
                                 <div class="reply-editor__author">
-                                    <img :src="`/dashboard/img/author/profile/`+imageUser"
+                                    <img :src="imageUser"
                                         class="bg-opacity-primary d-flex" alt="Response">
                                 </div>
                                 <div class="reply-editor__form media-body">
