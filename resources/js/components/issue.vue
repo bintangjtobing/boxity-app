@@ -76,6 +76,12 @@
                                             class="fal fa-check-circle"></i>
                                         &nbsp;Approved by {{item.approver.name}}</span>
                                 </div>
+                                <div v-if="item.status==='2'">
+                                    <span class="rounded-pill userDatatable-content-status color-secondary
+                                                bg-opacity-secondary active text-capitalize"><i
+                                            class="fal fa-history"></i>
+                                        &nbsp;Closed Issue</span>
+                                </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
 
@@ -147,6 +153,12 @@
                                                 bg-opacity-success active text-capitalize"><i
                                             class="fal fa-check-circle"></i>
                                         &nbsp;Approved</span>
+                                </div>
+                                <div v-if="item.status==='2'">
+                                    <span class="rounded-pill userDatatable-content-status color-secondary
+                                                bg-opacity-secondary active text-capitalize"><i
+                                            class="fal fa-history"></i>
+                                        &nbsp;Closed Issue</span>
                                 </div>
                             </template>
                             <template v-slot:[`item.priority`]="{item}">
