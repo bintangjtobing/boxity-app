@@ -1520,7 +1520,7 @@ class apiController extends Controller
     }
     public function getAssignee()
     {
-        return response()->json(User::where('status', '==', 1)->where('id', '!=', Auth::id())->where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
+        return response()->json(User::where('status', 1)->where('id', '!=', Auth::id())->where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
     }
 
     // CUSTOMERS API CONTROLLER
@@ -1885,7 +1885,7 @@ class apiController extends Controller
         return response()->json(stockGroup::with('user')->orderBy('created_at', 'DESC')->get());
         // }
     }
-    public function postStockGroup(Request $request)
+    public function postSpostStockGroup(Request $request)
     {
         $stock = new stockGroup();
         $stock->stockgroup_id = $request->stockgroup_id;

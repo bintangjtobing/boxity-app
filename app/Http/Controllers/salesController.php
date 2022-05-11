@@ -123,12 +123,12 @@ class salesController extends Controller
         }
         return response()->json($query, 200);
     }
-    
+
     public function getSalesOrderByCustomer ($customerId) {
         $data = salesOrder::where('customer', $customerId)->with('items')->get();
         return response()->json($data);
     }
-    
+
     public function postSalesInvoice(Request $request)
     {
         $salesInv = new salesInvoice();
@@ -174,7 +174,7 @@ class salesController extends Controller
                 $inputToHistory->save();
 
                 // Get inventory item related
-                $itemRelated = inventoryItem::where('id', $getItemOnSI->item_code)->first();
+                $itemRelated = inventoryItem::where('item_code', $getItemOnSI->item_code)->first();
                 $getQtyItem = $itemRelated->qty;
                 $getInputQtyValue = $getItemOnSI->qtyShipped;
                 // Sum the value between get Qty Item and Get Value Inputted
@@ -182,7 +182,7 @@ class salesController extends Controller
 
                 // Update to inventory item
                 $getInventory = DB::table('inventory_items')
-                    ->where('id', $getItemOnSI->item_code)
+                    ->where('item_code', $getItemOnSI->item_code)
                     ->update(array(
                         'qty' => $sumQty,
                     ));
