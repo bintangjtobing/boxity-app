@@ -1520,7 +1520,7 @@ class apiController extends Controller
     }
     public function getAssignee()
     {
-        return response()->json(User::where('status', 1)->where('id', '!=', Auth::id())->where('divisi', '!=', 'developer')->orderBy('name', 'asc')->get());
+        return response()->json(User::where('status', 1)->where('id', '!=', Auth::id())->where('role', '=', 'it')->orWhere('role', '=', 'hrdga')->orderBy('name', 'asc')->get());
     }
 
     // CUSTOMERS API CONTROLLER
