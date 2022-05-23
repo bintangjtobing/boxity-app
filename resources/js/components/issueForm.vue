@@ -55,8 +55,7 @@
                             <div class="Vertical-form">
                                 <div class="form-group reporter">
                                     <label for="">Reporter:</label><br>
-                                    <img v-bind:src="imageUser" alt="avatar"
-                                        class="rounded-circle reporterImg">
+                                    <img v-bind:src="imageUser" alt="avatar" class="rounded-circle reporterImg">
                                     <span>{{username}}</span>
                                 </div>
                                 <div class="form-group my-2">
@@ -66,6 +65,7 @@
                         width: '100%',
                         name: 'name',
                       }" @dataSelected="onUserSelected"></selectSearch>
+                                    <span class="text-danger" v-if="required.assignees == 1">Assignees required!</span>
                                 </div>
                                 <div class="form-group my-3">
                                     <label for="">Priority:</label>
@@ -112,6 +112,9 @@
                 imageUser: '',
                 username: '',
                 users: {},
+                required: {
+                    assignees: 0,
+                },
                 issue: {
                     assignee: '',
                     title: '',
@@ -125,10 +128,10 @@
         },
         created() {
             // this.$Progress.start();
-                this.$isLoading(true);
+            this.$isLoading(true);
             this.assigneeGet();
             // this.$Progress.finish();
-                this.$isLoading(false);
+            this.$isLoading(false);
         },
         methods: {
             onUserSelected(param) {
@@ -146,40 +149,45 @@
             },
             async handleSubmit(event) {
                 event.preventDefault();
-                const payload = {};
-                _.forEach(['title', 'description', 'assignee', 'priority'], (field) => {
-                    if (this.issue[field]) {
-                        payload[field] = this.issue[field];
-                    }
-                });
+
                 // this.$Progress.start();
-                this.$isLoading(true);
-                await axios.post('/api/issue', payload).then(response => {
-                    document.getElementById('ding').play();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Congratulations',
-                        text: 'Success New issue.',
-                    });
-                    // this.$Progress.finish();
-                this.$isLoading(false);
-                    this.$router.push('/issues');
-                }).catch(error => {
-                    this.$Progress.fail();
-                    document.getElementById('failding').play();
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Something wrong.',
-                        confirmButtonText: `Ok`,
-                        html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-                it still exist, you can contact our developer. <br><br>Error message: ` +
-                            error,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
+                if (this.selected.assignee) {
+                    const payload = {};
+                    _.forEach(['title', 'description', 'assignee', 'priority'], (field) => {
+                        if (this.issue[field]) {
+                            payload[field] = this.issue[field];
                         }
                     });
-                });
+                    this.$isLoading(true);
+                    await axios.post('/api/issue', payload).then(response => {
+                        document.getElementById('ding').play();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Congratulations',
+                            text: 'Success New issue.',
+                        });
+                        // this.$Progress.finish();
+                        this.$isLoading(false);
+                        this.$router.push('/issues');
+                    }).catch(error => {
+                        this.$Progress.fail();
+                        document.getElementById('failding').play();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Something wrong.',
+                            confirmButtonText: `Ok`,
+                            html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
+it still exist, you can contact our developer. <br><br>Error message: ` +
+                                error,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    });
+                } else {
+                    this.required.assignees = 1;
+                }
             },
         },
     }

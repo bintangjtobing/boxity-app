@@ -323,7 +323,6 @@ class apiController extends Controller
                 ->get();
         } else {
             return issue::with('user')->with('comments')
-                ->where('status', '=', '0')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
