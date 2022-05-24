@@ -314,18 +314,9 @@ class apiController extends Controller
     public function getIssues()
     {
         $role = $this->getLoggedUser()->role;
-        if ($role == 'user' || $role == 'it') {
-            return issue::with('user', 'approver')
-                ->withCount('comments')
-                ->where('assignee', Auth::id())
-                ->where('status', '!=', '2')
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        } else {
-            return issue::with('user')->with('comments')
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        }
+        return issue::with('user', 'approver')->with('comments')
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
     public function getIssuesCount()
     {
