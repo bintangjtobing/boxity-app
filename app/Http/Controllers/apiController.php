@@ -342,7 +342,7 @@ class apiController extends Controller
     }
     public function getIssuesfromMe()
     {
-        $issueGet = issue::with('user')
+        $issueGet = issue::with('user', 'approver')
             ->withCount('comments')
             ->where('created_by', Auth::id())
             ->orderBy('created_at', 'DESC')
@@ -352,13 +352,13 @@ class apiController extends Controller
     public function getIssuesClosed()
     {
         if (Auth::user()->divisi == 'developer') {
-            $issueGet = issue::with('user')
+            $issueGet = issue::with('user', 'approver')
                 ->withCount('comments')
                 ->where('status', '=', '2')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         } else {
-            $issueGet = issue::with('user')
+            $issueGet = issue::with('user', 'approver')
                 ->withCount('comments')
                 ->where('assignee', Auth::id())
                 ->where('status', '=', '2')

@@ -51,8 +51,8 @@
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
                                             <figure>
-                                                <img :src="issues.avatar"
-                                                    class="bg-opacity-primary d-flex" alt="Reporter avatar">
+                                                <img :src="issues.avatar" class="bg-opacity-primary d-flex"
+                                                    alt="Reporter avatar">
                                             </figure>
                                         </div>
                                         <div class="atbd-comment-box__content media-body">
@@ -77,8 +77,8 @@
                                     <div class="atbd-comment-box media">
                                         <div class="atbd-comment-box__author">
                                             <figure>
-                                                <img :src="comment.user.avatar"
-                                                    class="bg-opacity-primary d-flex" alt="Reporter avatar">
+                                                <img :src="comment.user.avatar" class="bg-opacity-primary d-flex"
+                                                    alt="Reporter avatar">
                                             </figure>
                                         </div>
                                         <div class="atbd-comment-box__content media-body">
@@ -111,8 +111,7 @@
                         <div class="card-body pb-10">
                             <div class="reply-editor media">
                                 <div class="reply-editor__author">
-                                    <img :src="imageUser"
-                                        class="bg-opacity-primary d-flex" alt="Response">
+                                    <img :src="imageUser" class="bg-opacity-primary d-flex" alt="Response">
                                 </div>
                                 <div class="reply-editor__form media-body">
                                     <form @submit.prevent="handleComment">
@@ -257,10 +256,11 @@
 
                 // Load data approver
                 const approverProc = await axios.get('/api/issue/approver/' + this.$route.params.id);
-                if (!approverProc) {
-                    this.approver.name = '';
-                } else {
+                if (approverProc) {
                     this.approver.name = approverProc.data[0].name;
+                } else {
+                    this.approver.name = '';
+
                 }
                 // this.$Progress.finish();
             },
