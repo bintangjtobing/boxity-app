@@ -63,6 +63,11 @@
                             <template v-slot:[`item.title`]="{item}">
                                 <router-link :to="`/issues/${item.id}`">#{{item.id}} - {{item.title}}</router-link>
                             </template>
+                            <template v-slot:[`item.title`]="{item}">
+                                <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                    {{item.title}}
+                                </span>
+                            </template>
                             <template v-slot:[`item.status`]="{item}">
                                 <div v-if="item.status==='0'">
                                     <span class="rounded-pill userDatatable-content-status color-warning
@@ -140,6 +145,11 @@
                             </template>
                             <template v-slot:[`item.title`]="{item}">
                                 <router-link :to="`/issues/${item.id}`">#{{item.id}} - {{item.title}}</router-link>
+                            </template>
+                            <template v-slot:[`item.title`]="{item}">
+                                <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                    {{item.title}}
+                                </span>
                             </template>
                             <template v-slot:[`item.status`]="{item}">
                                 <div v-if="item.status==='0'">
@@ -229,7 +239,7 @@
                 fromYou: [],
                 headers: [{
                         text: 'Issue',
-                        value: 'title'
+                        value: 'title',
                     }, {
                         text: 'Reporter',
                         value: 'user.name'
