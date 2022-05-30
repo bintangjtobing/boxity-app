@@ -157,7 +157,7 @@
                                                             it on Issue Center</a>.
                                                         You're receiving this email because of your account on
                                                         our system.<br>
-                                                        <span><a href="{{env('APP_URL')}}/issues/{{$userfind->issueId}} "
+                                                        <span><a href="{{env('APP_URL')}}/issues/{{$userfind->issueId}}"
                                                                 target="_blank">{{env('APP_URL')}}/issues/{{$userfind->issueId}}</a></span>
                                                     </p>
                                                     <br>

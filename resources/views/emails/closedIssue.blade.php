@@ -165,7 +165,7 @@
                                                     <p style="text-align: left;  word-break: break-word;   margin: 0;">
                                                         Simpan lihat issue tersebut di link yang sudah
                                                         tersedia: <br>
-                                                        <span><a href="{{env('APP_URL')}}/issues/{{$issues->id}} "
+                                                        <span><a href="{{env('APP_URL')}}/issues/{{$issues->id}}"
                                                                 target="_blank">{{env('APP_URL')}}/issues/{{$issues->id}}</a></span>
                                                     </p>
                                                     <br>
