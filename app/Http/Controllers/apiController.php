@@ -316,7 +316,7 @@ class apiController extends Controller
         $role = $this->getLoggedUser()->role;
         return issue::with('user', 'approver')
             ->withCount('comments')
-            ->where('assignee', Auth::id())
+            // ->where('assignee', Auth::id())
             ->where('status', '!=', '2')
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -345,7 +345,6 @@ class apiController extends Controller
         $issueGet = issue::with('user')
             ->withCount('comments')
             ->where('created_by', Auth::id())
-            // ->where('status', '!=', '2')
             ->orderBy('created_at', 'DESC')
             ->get();
         return $issueGet;

@@ -107,7 +107,7 @@
                             </template>
                             <template v-slot:[`item.actions`]="{item}">
                                 <a v-on:click="approveIssue(item.id)" class="create"
-                                    v-if="item.status=='0' && user.role=='admin' || user.role=='head'">
+                                    v-if="item.status!=1 && user.role=='admin' || user.role=='head'">
                                     <i class="far fa-thumbs-up"></i> Approve</a>
                                 <router-link :to="`/issues/${item.id}`" class="edit">
                                     <i class="fad fa-eye"></i></router-link>
