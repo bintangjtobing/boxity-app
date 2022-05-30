@@ -394,7 +394,7 @@ class apiController extends Controller
             ->where('issues.id', '=', $id)
             ->join('users', 'issues.assignee', '=', 'users.id')
             ->select('users.name', 'users.avatar', 'issues.id', 'issues.title')
-            ->get();
+            ->first();
         return response()->json($issueGet);
     }
     public function getApprovedbyId($id)
@@ -403,7 +403,7 @@ class apiController extends Controller
             ->where('issues.id', '=', $id)
             ->join('users', 'issues.approved_by', '=', 'users.id')
             ->select('users.name', 'users.id', 'issues.status')
-            ->get();
+            ->first();
         return response()->json($issueGet);
     }
     public function postComment(Request $request)

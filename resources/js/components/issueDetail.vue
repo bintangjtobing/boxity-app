@@ -252,14 +252,14 @@
 
                 // Load data assignee
                 const assigneeProc = await axios.get('/api/issue/assignee/' + this.$route.params.id);
-                this.assignee = assigneeProc.data[0];
+                this.assignee = assigneeProc.data;
 
                 // Load data approver
                 const approverProc = await axios.get('/api/issue/approver/' + this.$route.params.id);
                 if (approverProc) {
-                    this.approver.name = approverProc.data[0].name;
+                    this.approver = approverProc.data;
                 } else {
-                    this.approver.name = '';
+                    this.approver = '';
 
                 }
                 // this.$Progress.finish();
