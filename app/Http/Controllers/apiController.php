@@ -296,7 +296,7 @@ class apiController extends Controller
         $issue->save();
 
         try {
-            if ($issue->status = '1') {
+            if ($issue->status == '1') {
                 $issues = issue::with('user')->with('assigne')->with('approver')->get()->find($issue->id);
                 $company = company_details::first();
 
