@@ -160,7 +160,12 @@
                                                                 style="color:green; background-color:rgba(132, 251, 167, 0)">Laporan
                                                                 ini telah disetujui Oleh
                                                                 {{$issues->approver()->first()->name}}</span>
-                                                            @endif<br>
+                                                            @endif
+                                                            @if ($issues->status=='0')
+                                                            <span
+                                                                style="color:red; background-color:rgba(132, 251, 167, 0)">Laporan
+                                                                ini belum disetujui.</span>
+                                                            @endif<br><br>
                                                             Mohon ditindak lanjuti laporan dengan nomor antrian
                                                             #{{$issues->id}} yang
                                                             berisi mengenai:
