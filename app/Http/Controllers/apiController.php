@@ -105,6 +105,7 @@ class apiController extends Controller
     public function checkCustomerConnected()
     {
         return companiesPic::where('user_id', Auth::id())->with('companyDetail')->get();
+        // return company_details::first();
     }
     public function customerRelateWarehouse()
     {
@@ -160,7 +161,7 @@ class apiController extends Controller
     }
     public function addUser(Request $request)
     {
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -256,7 +257,7 @@ class apiController extends Controller
         }
 
         $user->save();
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($user->email)->send(new confirmUpdateIssue($user, $company));
 
@@ -296,15 +297,15 @@ class apiController extends Controller
 
         try {
             if ($issue->status = '1') {
-                $issues = issue::with('user')->with('assigne')->get()->find($issue->id);
-                $company = company_details::where('id', 1)->first();
+                $issues = issue::with('user')->with('assigne')->with('approver')->get()->find($issue->id);
+                $company = company_details::first();
 
                 Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
                 // sendToTelegram
-                if ($issues->assigne->telegram_id) {
-                    $issues->notify(new approveIssueNotification($issues));
-                }
+                // if ($issues->assigne->telegram_id) {
+                //     $issues->notify(new approveIssueNotification($issues));
+                // }
             }
         } catch (ModelNotFoundException $e) {
             return response()->json($issue, 201);
@@ -420,12 +421,12 @@ class apiController extends Controller
 
         // if user signed not same as created by issue
         if (Auth::id() != $issueGet[0]->created_by) {
-            $company = company_details::where('id', 1)->first();
+            $company = company_details::first();
 
             Mail::to($issuefind[0]->user->email)->send(new AddComment($userfind[0], $issuefind[0], $company));
             return response()->json(200);
         } else {
-            $company = company_details::where('id', 1)->first();
+            $company = company_details::first();
 
             Mail::to($userfind[0]->user->email)->send(new addCommentToCreator($userfind[0], $issuefind[0], $company));
             return response()->json(200);
@@ -455,14 +456,14 @@ class apiController extends Controller
 
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($issues->assigne->email)->send(new makeNewIssue($issues, $company));
 
         // sendToTelegram
-        if ($issues->assigne->telegram_id) {
-            $issues->notify(new approveIssueNotification($issues));
-        }
+        // if ($issues->assigne->telegram_id) {
+        //     $issues->notify(new approveIssueNotification($issues));
+        // }
 
         return response()->json($issues, 201);
         // return response()->json($issues);
@@ -483,7 +484,7 @@ class apiController extends Controller
         $issue->save();
         $issues = issue::with('user')->with('assigne')->get()->find($id);
         $sendTo = $issues->user->email;
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($sendTo)->send(new closedIssue($issues, $company));
 
@@ -734,7 +735,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $profile->save();
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($profile->email)->send(new confirmUpdateProfile($profile, $company));
 
@@ -1243,7 +1244,7 @@ class apiController extends Controller
         $candidate->status = false;
         $candidate->updated_by = Auth::user()->name ?? 'Creator';
         $candidate->save();
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($candidate->email)->send(new rejectCandidate($candidate, $company));
         return response()->json(200);
@@ -1254,7 +1255,7 @@ class apiController extends Controller
         $candidate->status = true;
         $candidate->updated_by = Auth::user()->name ?? 'Creator';
         $candidate->save();
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to($candidate->email)->send(new inviteCandidate($candidate, $company));
         return response()->json(200);
@@ -1375,7 +1376,7 @@ class apiController extends Controller
         $employee->sub_departments = $request->subdepartments_name;
         $employee->status = $request->status;
         $employee->save();
-        // $company = company_details::where('id', 1)->first();
+        // $company = company_details::first();
 
         return response()->json(200);
         // dd($request->all());
@@ -2367,7 +2368,7 @@ class apiController extends Controller
             // PO Status 2, means having a Document Delivery ID
             ->update(array('ddrId' => $deliveryDocOrd->ddr_number, 'status' => '2'));
         $ddrGet = documentsDelivery::where('ddr_number', $deliveryDocOrd->ddr_number)->with('sender', 'createdBy', 'updatedBy')->first();
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         Mail::to('hrd@' + $company->site)->send(new newDocumentDelivery($ddrGet, $company));
 
@@ -2810,7 +2811,7 @@ class apiController extends Controller
         $employee->sub_departments = $request->sub_departments;
         $employee->status = $request->status;
         $employee->save();
-        // $company = company_details::where('id', 1)->first();
+        // $company = company_details::first();
 
         return response()->json(200);
         // dd($request->all());

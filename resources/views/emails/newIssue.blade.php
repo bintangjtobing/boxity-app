@@ -154,7 +154,13 @@
                                                             Email Pelapor: <a
                                                                 href="mailto:{{$issues->user()->first()->email}}?subject=Re:[Ticket#{{$issues->id}}] Important: Issue Report have been made to our systems."
                                                                 target="_top">{{$issues->user()->first()->email}}</a>
-                                                            <br><br>
+                                                            <br>
+                                                            Status laporan: @if ($issues->status=='1')
+                                                            <span
+                                                                style="color:green; background-color:rgba(132, 251, 167, 0)">Laporan
+                                                                ini telah disetujui Oleh
+                                                                {{$issues->approver()->first()->name}}</span>
+                                                            @endif<br>
                                                             Mohon ditindak lanjuti laporan dengan nomor antrian
                                                             #{{$issues->id}} yang
                                                             berisi mengenai:

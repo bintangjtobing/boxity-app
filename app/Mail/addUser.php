@@ -32,7 +32,7 @@ class addUser extends Mailable
      */
     public function build()
     {
-        $company = company_details::where('id', 1)->first();
+        $company = company_details::first();
 
         $string = base64_encode(random_bytes(10));
         return $this->from($string . '@' . $company->site, $company->companyName . ' Support System')
