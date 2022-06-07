@@ -21,7 +21,7 @@ class authController extends Controller
 {
     public function index()
     {
-        // $company = company_details::first();
+        $company = company_details::first();
         // if (!$company) {
         //     return view('auth.setcompanyone', ['company' => $company]);
         // }
