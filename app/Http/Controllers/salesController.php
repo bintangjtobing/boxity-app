@@ -124,7 +124,8 @@ class salesController extends Controller
         return response()->json($query, 200);
     }
 
-    public function getSalesOrderByCustomer ($customerId) {
+    public function getSalesOrderByCustomer($customerId)
+    {
         $data = salesOrder::where('customer', $customerId)->with('items')->get();
         return response()->json($data);
     }
@@ -174,7 +175,7 @@ class salesController extends Controller
                 $inputToHistory->save();
 
                 // Get inventory item related
-                $itemRelated = inventoryItem::where('item_code', $getItemOnSI->item_code)->first();
+                $itemRelated = inventoryItem::where('id', $getItemOnSI->item_code)->first();
                 $getQtyItem = $itemRelated->qty;
                 $getInputQtyValue = $getItemOnSI->qtyShipped;
                 // Sum the value between get Qty Item and Get Value Inputted
@@ -655,7 +656,7 @@ class salesController extends Controller
             "customerName" => $salesOrder->ecom_recipient_name,
             "customerAddress" => $salesOrder->ecom_address,
             "customerEmail" => $salesOrder->ecom_contact_num,
-            "customerCourier"=>$salesOrder->ecom_courier,
+            "customerCourier" => $salesOrder->ecom_courier,
             "bankPaymentName" => $bankAccount->bank->name,
             "bankPaymentAccountName" => $bankAccount->account_name,
             "bankPaymentNo" => $bankAccount->account_no,

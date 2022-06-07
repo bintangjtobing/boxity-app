@@ -57,7 +57,7 @@ class itemOnSalesController extends Controller
         $itemsSales->weightIn = $request->weightIn;
         $itemsSales->weightOut = $request->weightOut;
         $itemsSales->customerId = $request->customerid;
-        
+
 
         $itemsSales->salesingId = $request->so_number ?? '0';
         $itemsSales->so_status = $request->so_status ?? '1';
@@ -209,7 +209,7 @@ class itemOnSalesController extends Controller
         $itemSalesing->sales_related = $request->so_number;
         $itemSalesing->weightIn = $request->weightIn;
         $itemSalesing->weightOut = $request->weightOut;
-        
+
         // po status 1 means stored at database but not with the purchase order id;
         $itemSalesing->si_status = '1';
         $itemSalesing->created_by = Auth::id();
@@ -217,7 +217,7 @@ class itemOnSalesController extends Controller
         $itemSalesing->save();
 
         salesOrder::where('so_number', $request->so_number)->update(['status' => '1']);
-        
+
         return response()->json($itemSalesing, 200);
     }
     public function postItemSalesBySiNumber($si_number, Request $request)
@@ -241,11 +241,11 @@ class itemOnSalesController extends Controller
         $itemSalesing->created_by = Auth::id();
         $itemSalesing->updated_by = Auth::id();
         $itemSalesing->save();
-        
+
         salesInvoice::where('si_number', $request->salesingId)->update(['status' => '1']);
         salesOrder::where('so_number', $request->sales_related)->update(['status' => '1']);
-        
-        if ($request->qtyShipped>0) {
+
+        if ($request->qtyShipped > 0) {
             $inputToHistory = new itemHistory();
             $inputToHistory->itemId = $itemSalesing->item_code;
             $inputToHistory->itemOutId = $si_number;
@@ -254,22 +254,22 @@ class itemOnSalesController extends Controller
             $inputToHistory->qtyOut = $request->qtyShipped;
             $inputToHistory->remarks = $itemSalesing->remarks;
             $inputToHistory->save();
-            
+
             $itemSalesing = itemsSales::find($id);
             $itemSalesing->si_status = '2';
             $itemSalesing->save();
 
             $salesOrder = itemsSales::where('salesingId', $request->sales_related)->where('item_code', $request->item_code)->where('warehouseId', $request->warehouseId)
-            ->update(['qtyShipped' => $request->qtyShipped]);
+                ->update(['qtyShipped' => $request->qtyShipped]);
             if ($salesOrder->qtyShipped == $salesOrder->qtyOrdered) {
                 salesOrder::where('so_number', $request->sales_related)
-                ->update(['status' => '2']);
+                    ->update(['status' => '2']);
             }
-            
+
             $inventory = inventoryItem::where('id', $request->itemId)->first();
             $itemPurchase = DB::table('inventory_items')->where('id', $request->itemId)
-            ->update(['qty' => $inventory->qty - $request->qtyShipped]);
-            
+                ->update(['qty' => $inventory->qty - $request->qtyShipped]);
+
             salesInvoice::where('si_number', $request->salesingId)->update(['status' => '2']);
         }
         return response()->json($itemSalesing, 200);
@@ -301,18 +301,18 @@ class itemOnSalesController extends Controller
 
         $itemSalesing->updated_by = Auth::id();
         $itemSalesing->save();
-        
+
         $so = itemsSales::where('salesingId', $request->sales_related)->where('item_code', $request->itemid)->where('warehouseId', $request->warehouseId)->first();
-        
+
         itemsSales::where('salesingId', $request->sales_related)->where('item_code', $so->item_code)->where('warehouseId', $request->warehouseId)
-        ->update(['qtyShipped' => (($so->qtyShipped??0) + ($request->qtyShipped??0))]);
-        
+            ->update(['qtyShipped' => (($so->qtyShipped ?? 0) + ($request->qtyShipped ?? 0))]);
+
         $salesOrder = itemsSales::where('id', $so->id)->first();
-        
+
         salesInvoice::where('si_number', $request->salesingId)->update(['status' => '1']);
         salesOrder::where('so_number', $request->sales_related)->update(['status' => '1']);
-        
-        if ($request->qtyShipped>0) {
+
+        if ($request->qtyShipped > 0) {
             $inputToHistory = new itemHistory();
             $inputToHistory->itemId = $so->itemid;
             $inputToHistory->itemOutId = $request->salesingId;
@@ -321,24 +321,23 @@ class itemOnSalesController extends Controller
             $inputToHistory->qtyOut = $request->qtyShipped;
             $inputToHistory->remarks = $itemSalesing->remarks;
             $inputToHistory->save();
-            
+
             $itemSalesing = itemsSales::find($id);
             $itemSalesing->si_status = '2';
             $itemSalesing->save();
 
             if ($salesOrder->qtyShipped == $salesOrder->qtyOrdered) {
                 salesOrder::where('so_number', $request->sales_related)
-                ->update(['status' => '2']);
+                    ->update(['status' => '2']);
             }
-            
+
             $inventory = DB::table('inventory_items')->where('id', $request->itemid)->first();
             $itemPurchase = DB::table('inventory_items')->where('id', $request->itemid)
-            ->update(['qty' => $inventory->qty - $request->qtyShipped]);
-            
+                ->update(['qty' => $inventory->qty - $request->qtyShipped]);
+
             salesInvoice::where('si_number', $request->salesingId)->update(['status' => '2']);
-            
         }
-        
+
         return response()->json($itemPurchase, 200);
         // return $request->itemid;
     }
