@@ -728,3 +728,6 @@ body.swal2-shown>[aria-hidden="true"] {
 .dropzone-custom-title {
     font-size: 1rem;
 }
+.rounded-circle {
+    object-fit: cover !important;
+}
