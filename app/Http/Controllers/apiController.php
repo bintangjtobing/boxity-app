@@ -1962,11 +1962,7 @@ class apiController extends Controller
     // ItemGroup
     public function getItemGroup()
     {
-        if (Auth::user()->role != 'customer') {
-            return response()->json(itemGroup::where('created_by', Auth::id())->with('user')->orderBy('created_at', 'DESC')->get());
-        } else {
-            return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
-        }
+        return response()->json(itemGroup::with('user')->orderBy('created_at', 'DESC')->get());
     }
     public function postItemGroup(Request $request)
     {
