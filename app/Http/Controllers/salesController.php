@@ -183,7 +183,7 @@ class salesController extends Controller
 
                 // Update to inventory item
                 $getInventory = DB::table('inventory_items')
-                    ->where('item_code', $getItemOnSI->item_code)
+                    ->where('id', $getItemOnSI->item_code)
                     ->update(array(
                         'qty' => $sumQty,
                     ));
