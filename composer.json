@@ -9,8 +9,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "laravel/framework": "^7.0",
         "anhskohbo/no-captcha": "^3.3",
+        "arcanedev/log-viewer": "^7.1.0",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "doctrine/dbal": "^2.0",
         "fakerphp/faker": "^1.14",
@@ -18,6 +18,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel-notification-channels/telegram": "^0.5.1",
+        "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "laraveldaily/laravel-invoices": "^1.3",

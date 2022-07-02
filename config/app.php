@@ -167,6 +167,7 @@ return [
         Understand\UnderstandLaravel5\UnderstandLaravel5ServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
         /*
          * Package Service Providers...

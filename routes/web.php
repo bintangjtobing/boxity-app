@@ -43,6 +43,10 @@ Route::get('/login', function () {
     session()->regenerate();
     return Redirect::to('/login/' . csrf_token());
 })->name('login');
+Route::get('/log-viewer', [
+    'as'   => 'log-viewer::dashboard',
+    'uses' => '\Arcanedev\LogViewer\Http\Controllers\LogViewerController@index',
+]);
 Route::get('/login/{tokens}', 'authController@index');
 Route::post('/login/{csrf_token}', 'authController@loginProcess');
 Route::get('/getUserLoggedIn', 'apiController@getLoggedUser');
