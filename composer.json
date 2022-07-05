@@ -11,6 +11,7 @@
         "php": "^7.2.5",
         "anhskohbo/no-captcha": "^3.3",
         "arcanedev/log-viewer": "^7.1.0",
+        "binshops/laravel-blog": "^9.2",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "doctrine/dbal": "^2.0",
         "fakerphp/faker": "^1.14",
@@ -27,6 +28,7 @@
         "pusher/pusher-php-server": "~3.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "simplesoftwareio/simple-qrcode": "~4",
+        "spatie/laravel-analytics": "^3.11",
         "understand/understand-laravel": "^2.4"
     },
     "require-dev": {
