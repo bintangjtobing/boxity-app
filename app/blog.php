@@ -2,7 +2,10 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class blog extends Model
 {
@@ -12,7 +15,7 @@ class blog extends Model
         'description',
         'category',
         'views',
-        'userid', 'status'
+        'userid', 'status', 'slug'
     ];
     public function user()
     {
@@ -25,4 +28,11 @@ class blog extends Model
     protected $casts = [
         'created_at' => 'datetime:d M, Y',
     ];
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->slug = Str::slug($model->title, '-');
+        });
+    }
 }

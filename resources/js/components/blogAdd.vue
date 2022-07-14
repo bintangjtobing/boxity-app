@@ -26,12 +26,14 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
-                                            <editor placeholder="Remarks..." v-model="blog.description"
+                                            <editor placeholder="Blog article write here..." v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 1600,
+                                                                height: 800,
                                                                 menubar: true,
                                                                 branding: false,
-                                                                plugins: 'code',
+                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
+                                                                toolbar:
+                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
                                                         }" />
                                         </div>
                                     </div>
@@ -111,11 +113,9 @@
                                                                 height: 300,
                                                                 menubar: true,
                                                                 branding: false,
-                                                                plugins: 'code',
+                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
                                                                 toolbar:
-                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | \
-                                                                    alignleft aligncenter alignright alignjustify | \
-                                                                    bullist numlist outdent indent | removeformat'
+                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
                                                         }" />
                                                             </div>
                                                             <div class="button-group d-flex pt-25">

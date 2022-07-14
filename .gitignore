@@ -32,3 +32,4 @@ php.ini
 package-lock.json
 public/.htaccess
 public/js/app.js.LICENSE.txt
+public/blog_images/

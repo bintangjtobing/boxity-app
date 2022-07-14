@@ -7,7 +7,7 @@ return [
 
     //Your custom User model
     //Change it to \App\User::class for previous laravel versions
-    'user_model'=>\App\Models\User::class,
+    'user_model' => \App\User::class,
 
     // reading progress bar is the bar which shows on top of your post when you are scrolling down the page. You can disable this feature if you want
     'reading_progress_bar' => true,
@@ -76,16 +76,16 @@ return [
         'image_medium' => [ // this key must start with 'image_'. This is what the DB column must be named
             'w' => 600, // width in pixels
             'h' => 400, //height
-            'basic_key' => "medium",// same as the main key, but WITHOUT 'image_'.
-            'name' => "Medium",// description, used in the admin panel
+            'basic_key' => "medium", // same as the main key, but WITHOUT 'image_'.
+            'name' => "Medium", // description, used in the admin panel
             'enabled' => true, // see note above
             'crop' => true, // if true then we will crop and resize to exactly w/h. If false then it will maintain proportions, with a max width of 'w' and max height of 'h'. If you use these images as part of your website template then you should probably have this to true.
         ],
         'image_thumbnail' => [ // this key must start with 'image_'. This is what the DB column must be named
             'w' => 150, // width in pixels
             'h' => 150, //height
-            'basic_key' => "thumbnail",// same as the main key, but WITHOUT 'image_'.
-            'name' => "Thumbnail",// description, used in the admin panel
+            'basic_key' => "thumbnail", // same as the main key, but WITHOUT 'image_'.
+            'name' => "Thumbnail", // description, used in the admin panel
             'enabled' => true, // see note above
         ],
 
@@ -155,10 +155,10 @@ return [
         'disqus' => [
 
             // only applies if comments.type_of_comments_to_show is set to 'disqus'
-//              The following config option can be found by looking for the following line on the embed code of your disqus code:
-//                          s.src = 'https://yourusername_or_sitename.disqus.com/embed.js';
-//
-//             You must enter the whole url (but not the "s.src = '" part!)
+            //              The following config option can be found by looking for the following line on the embed code of your disqus code:
+            //                          s.src = 'https://yourusername_or_sitename.disqus.com/embed.js';
+            //
+            //             You must enter the whole url (but not the "s.src = '" part!)
             'src_url' => "https://GET_THIS_FROM_YOUR_EMBED_CODE.disqus.com/embed.js", // enter the url here, from the html snippet disqus provides
 
         ],
@@ -167,7 +167,7 @@ return [
     'search' => [
         'search_enabled' => true, //you can easily turn off search functionality
 
-        'limit-results'=> 50,
+        'limit-results' => 50,
         'enable_wildcards' => true,
         'weight' => [
             'title' => 1.5,
