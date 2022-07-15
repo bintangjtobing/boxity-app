@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <form @submit.prevent="submitHandle(e='publish')">
+        <form @submit.prevent="submitHandle">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card card-Vertical card-default card-md mb-4">
@@ -18,17 +18,19 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
+                                            <h6>Blog post title</h6>
                                             <input type="text" v-model="blog.title" placeholder="Enter title here"
-                                                class="form-control">
+                                                class="form-control mt-2">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
+                                            <h6 class="mb-2">Blog article</h6>
                                             <editor placeholder="Blog article write here..." v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
-                                                                height: 800,
+                                                                height: 600,
                                                                 menubar: true,
                                                                 branding: false,
                                                                 plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
@@ -38,17 +40,54 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="my-4">
+                                <h3>SEO Configurations:</h3>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-lg-12">
+                                            <h6>Title tag <span>(Optional)</span></h6>
+                                            <input type="text" v-model="blog.seo_title" class="form-control mt-2">
+                                            <small id="blog_seo_title_help" class="form-text text-muted">Enter a value
+                                                for the &lt;title&gt; tag. If nothing is provided here we will just use
+                                                the normal post title from above (optional)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-lg-12">
+                                            <h6>Descriptions tag <span>(Optional)</span></h6>
+                                            <textarea v-model="blog.seo_description" class="form-control mt-2" rows="3"
+                                                cols="10"></textarea>
+                                            <small id="blog_meta_desc_help" class="form-text text-muted">Meta
+                                                description is better with 160 characters maximum (optional)</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="Vertical-form">
-                        <div class="form-group my-2">
-                            <div class="justify-content-end">
-                                <a v-on:click="submitHandle(e='draft')"
-                                    class="btn btn-secondary-boxity btn-default btn-block btn-squared px-30"
-                                    data-dismiss="modal">Save Draft</a>
+                    <div class="card card-Vertical card-default card-md mb-4">
+                        <div class="card-body pb-md-30">
+                            <div class="Vertical-form">
+                                <div class="form-group my-2">
+                                    <h4>Published?</h4>
+                                    <select class="form-control form-control-default my-1" v-model="blog.type">
+                                        <option value="draft">
+                                            Draft
+                                        </option>
+                                        <option value="published">
+                                            Published
+                                        </option>
+                                    </select>
+                                    <small id="blog_is_published_help" class="form-text text-muted">Should this be
+                                        published? If not, then it
+                                        won't be
+                                        publicly viewable.
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +95,7 @@
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <h4>Feature Image</h4>
+                                    <h4>Featured Image</h4>
                                     <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
                                         :options="dropzoneOptions" class="dropzone mt-2">
                                         <div class="dropzone-custom-content">
@@ -66,6 +105,8 @@
                                                 computer</div>
                                         </div>
                                     </vue-dropzone>
+                                    <small class="form-text text-muted">
+                                        By default it will resize for all images based on the first image.</small>
                                 </div>
                             </div>
                         </div>
@@ -75,16 +116,13 @@
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
                                     <h4>Categories</h4>
-                                    <div class="categories_list">
-                                        <div v-for="categoriesGet in categoriesGet" :key="categoriesGet.id">
-                                            <input type="checkbox" :id="categoriesGet.id"
-                                                :value="categoriesGet.categories_name" v-model="categoriesArr">
-                                            <label :for="categoriesGet.id">{{categoriesGet.categories_name}}</label>
-                                        </div>
-                                        <span>
-                                            categories add: {{categoriesArr}}
-                                        </span>
-                                    </div>
+                                    <select class="form-control form-control-default my-1" v-model="blog.category">
+                                        <option value="">Select categories:</option>
+                                        <option v-for="categoriesGet in categoriesGet" :key="categoriesGet.id"
+                                            v-bind:value="categoriesGet.categories_name">
+                                            {{categoriesGet.categories_name}}
+                                        </option>
+                                    </select>
                                     <!-- Modal -->
                                     <div class="modal fade new-member" id="newCategory" role="dialog" tabindex="-1"
                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -198,8 +236,10 @@
                 await axios.post('/api/blogs', {
                         title: this.blog.title,
                         description: this.blog.description,
-                        category: this.categoriesArr,
-                        type: e,
+                        category: this.blog.category,
+                        type: this.blog.type,
+                        seo_title: this.blog.seo_title,
+                        seo_description: this.blog.seo_description,
                     }).then(response => {
                         document.getElementById('ding').play();
                         Swal.fire({

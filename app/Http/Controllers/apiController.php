@@ -121,7 +121,7 @@ class apiController extends Controller
         $getUser->status = '2';
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete user ' . $getUser->username . ' from user management.';
         $saveLogs->save();
@@ -188,13 +188,13 @@ class apiController extends Controller
         }
         $user->password = Hash::make($request->password);
         $user->unpassword = $request->password;
-        $user->createdBy = Auth::id();
+        $user->createdBy = Auth::id() ?? 1;
         $user->logip = $request->ip();
         $user->lastLogin = '0';
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add user ' . $user->username . ' to system.';
         $saveLogs->save();
@@ -242,7 +242,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update user ' . $user->username . ' from user management.';
         $saveLogs->save();
@@ -278,7 +278,7 @@ class apiController extends Controller
         $issue->assignee = $request->assignee;
         $issue->priority = $request->priority;
         if (auth()->user()->role == 'head') {
-            $issue->approved_by = Auth::id();
+            $issue->approved_by = Auth::id() ?? 1;
             $issue->status = '1';
         } else {
             $issue->approved_by = 0;
@@ -288,7 +288,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Request new issue ' . $issue->title . '.';
         $saveLogs->save();
@@ -410,7 +410,7 @@ class apiController extends Controller
     public function postComment(Request $request)
     {
         $newComment = new commentIssue();
-        $newComment->fromId = Auth::id();
+        $newComment->fromId = Auth::id() ?? 1;
         $newComment->issueId = $request->issueid;
         $newComment->comment = $request->comment;
         $newComment->save();
@@ -444,12 +444,12 @@ class apiController extends Controller
     public function approveIssue($id, Request $request)
     {
         $issue = issue::find($id);
-        $issue->approved_by = Auth::id();
+        $issue->approved_by = Auth::id() ?? 1;
         $issue->status = '1';
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Approve issue ' . $issue->id . '.';
         $saveLogs->save();
@@ -476,7 +476,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $req->ip();
         $saveLogs->notes = 'Close issue ' . $issue->id . '.';
         $saveLogs->save();
@@ -545,7 +545,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Make new job vacancy ' . $job->title . '.';
         $saveLogs->save();
@@ -565,7 +565,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Close job vacancy ' . $career->title . '.';
         $saveLogs->save();
@@ -580,7 +580,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete job vacancy ' . $career->title . '.';
         $saveLogs->save();
@@ -603,7 +603,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update new job vacancy ' . $job->title . '.';
         $saveLogs->save();
@@ -627,51 +627,16 @@ class apiController extends Controller
         ]);
         return response()->json($images, 201);
     }
-    public function getBlogById($id)
-    {
-        return response()->json(blog::with('user', 'image')->find($id));
-    }
-    public function patchBlogById($id, Request $request)
-    {
-        $blog = blog::find($id);
-        foreach (['title', 'description', 'category'] as $field) {
-            if (isset($request->{$field})) {
-                $blog->{$field} = $request->{$field};
-            }
-        }
-
-        // Save to logs
-        $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
-        $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Edit/update blog ' . $blog->title . '.';
-        $saveLogs->save();
-
-        $blog->save();
-        return response()->json($blog);
-    }
-    public function deleteBlogById($id, Request $request)
-    {
-        $blog = blog::find($id);
-
-        // Save to logs
-        $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
-        $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Delete blog ' . $blog->title . '.';
-        $saveLogs->save();
-
-        $blog->delete();
-        return response()->json([], 204);
-    }
     public function addNewBlog(Request $request)
     {
         $blog = new blog();
         $blog->title = $request->title;
         $blog->description = $request->description;
-        $blog->category = json_encode($request->category, true);
+        $blog->category = $request->category;
+        $blog->seo_title = $request->seo_title;
+        $blog->seo_description = $request->seo_description;
         $blog->views = 0;
-        $blog->userid = Auth::id();
+        $blog->userid = Auth::id() ?? 1;
 
         if ($request->type == 'draft') {
             $blog->status = 0;
@@ -680,9 +645,51 @@ class apiController extends Controller
         }
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new blog ' . $blog->title . '.';
+        $saveLogs->save();
+
+        $checkImage = DB::table('blog_images')->whereNull('blog_id')->get();
+        if ($checkImage->count() > 0) {
+            // ada data images yang kosong
+            $blog->save();
+        } else {
+            // tidak ada data images yg kosong
+            $images = blogImages::create([
+                'file' => 'https://res.cloudinary.com/boxity-id/image/upload/v1657854401/asset/blog/noimage.png',
+            ]);
+            $blog->save();
+        }
+        // $blog->save();
+        $file = DB::table('blog_images')
+            ->whereNull('blog_id')
+            ->update(array('blog_id' => $blog->id));
+        return response()->json($blog);
+    }
+    public function getBlogById($id)
+    {
+        return response()->json(blog::with('user', 'image')->find($id));
+    }
+    public function patchBlogById($id, Request $request)
+    {
+        $blog = blog::find($id);
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+        $blog->category = $request->category;
+        $blog->seo_title = $request->seo_title;
+        $blog->seo_description = $request->seo_description;
+        if ($request->type == 'draft') {
+            $blog->status = 0;
+        } else {
+            $blog->status = 1;
+        }
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Edit/update blog ' . $blog->title . '.';
         $saveLogs->save();
 
         $blog->save();
@@ -690,6 +697,20 @@ class apiController extends Controller
             ->whereNull('blog_id')
             ->update(array('blog_id' => $blog->id));
         return response()->json($blog);
+    }
+    public function deleteBlogById($id, Request $request)
+    {
+        $blog = blog::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete blog ' . $blog->title . '.';
+        $saveLogs->save();
+
+        $blog->delete();
+        return response()->json([], 204);
     }
 
     // PROFILE API
@@ -729,7 +750,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Update profile data.';
         $saveLogs->save();
@@ -754,7 +775,7 @@ class apiController extends Controller
         $user->unpassword = $request->password;
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Update profile data password.';
         $saveLogs->save();
@@ -804,7 +825,7 @@ class apiController extends Controller
     public function approvedQuote($id, Request $request)
     {
         $quote = quotes::find($id);
-        $quote->finishId = Auth::id();
+        $quote->finishId = Auth::id() ?? 1;
         $quote->status = 1;
         $quote->save();
         return response()->json($quote, 201);
@@ -850,7 +871,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new order track.';
         $saveLogs->save();
@@ -953,7 +974,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Update status track order.';
         $saveLogs->save();
@@ -995,7 +1016,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Terminate order track.';
         $saveLogs->save();
@@ -1084,7 +1105,7 @@ class apiController extends Controller
     public function postGoods(Request $request)
     {
         $newGoods = new goodsReceip();
-        $newGoods->userid = Auth::id();
+        $newGoods->userid = Auth::id() ?? 1;
         if ($request->type == 'outgoing') {
             $newGoods->companies_receiver = $request->companies_receiver;
             $newGoods->type = 'outgoing';
@@ -1105,7 +1126,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         if ($newGoods->type == 'outgoing') {
             $saveLogs->notes = 'Add new request outgoing document ' . $newGoods->id . '.';
@@ -1156,7 +1177,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new gallery.';
         $saveLogs->save();
@@ -1204,7 +1225,7 @@ class apiController extends Controller
         $popup = new popupWindow();
         $popup->title = $request->title;
         $popup->url = $request->url;
-        $popup->updated_by = Auth::id();
+        $popup->updated_by = Auth::id() ?? 1;
         $popup->save();
         return response()->json($popup, 201);
     }
@@ -1220,7 +1241,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete candidates.';
         $saveLogs->save();
@@ -1302,7 +1323,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Create New employee.';
         $saveLogs->save();
@@ -1315,7 +1336,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete employee.';
         $saveLogs->save();
@@ -1444,7 +1465,7 @@ class apiController extends Controller
     }
     public function sendChat(Request $request)
     {
-        $id = Auth::id();
+        $id = Auth::id() ?? 1;
         $message = new messages();
         $message->from = $id;
         $message->to = $request->contact_id;
@@ -1559,7 +1580,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new customer ' . $customer->id . ' .';
         $saveLogs->save();
@@ -1588,7 +1609,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update customer ' . $customers->id . ' .';
         $saveLogs->save();
@@ -1611,7 +1632,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add user list to company ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1635,7 +1656,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update customer list to company ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1684,7 +1705,7 @@ class apiController extends Controller
         }
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new supplier ' . $supplier->id . ' .';
         $saveLogs->save();
@@ -1712,7 +1733,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update supplier ' . $supplier->id . ' .';
         $saveLogs->save();
@@ -1752,11 +1773,11 @@ class apiController extends Controller
         $warehouse->address = $request->address;
         $warehouse->remarks = $request->remarks;
         $warehouse->pic = $request->pic;
-        $warehouse->created_by = Auth::id();
+        $warehouse->created_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new warehouse ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1766,7 +1787,7 @@ class apiController extends Controller
         if (Auth::user()->role == 'customer') {
             $warehouseCust = new warehouseCustomer();
             $warehouseCust->warehouse_id = $warehouse->id;
-            $warehouseCust->customer_id = Auth::id();
+            $warehouseCust->customer_id = Auth::id() ?? 1;
             $warehouseCust->save();
         }
         return response()->json($warehouse, 200);
@@ -1790,7 +1811,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update warehouse ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1836,7 +1857,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add customer list to warehouse ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1860,7 +1881,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update customer list to warehouse ' . $warehouse->warehouse_name . '.';
         $saveLogs->save();
@@ -1884,11 +1905,11 @@ class apiController extends Controller
         $stock->stockgroup_id = $request->stockgroup_id;
         $stock->name = $request->name;
         $stock->remarks = $request->remarks;
-        $stock->created_by = Auth::id();
+        $stock->created_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new stock group ' . $stock->name . '.';
         $saveLogs->save();
@@ -1913,11 +1934,11 @@ class apiController extends Controller
         $stock->stockgroup_id = $request->stockgroup_id;
         $stock->name = $request->name;
         $stock->remarks = $request->remarks;
-        $stock->created_by = Auth::id();
+        $stock->created_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update stock group ' . $stock->name . '.';
         $saveLogs->save();
@@ -1970,11 +1991,11 @@ class apiController extends Controller
         $itemGroup->itemgroup_id = $request->itemgroup_id;
         $itemGroup->name = $request->name;
         $itemGroup->remarks = $request->remarks;
-        $itemGroup->created_by = Auth::id();
+        $itemGroup->created_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new item group ' . $itemGroup->name . '.';
         $saveLogs->save();
@@ -1995,11 +2016,11 @@ class apiController extends Controller
         $itemGroup->itemgroup_id = $request->itemgroup_id;
         $itemGroup->name = $request->name;
         $itemGroup->remarks = $request->remarks;
-        $itemGroup->created_by = Auth::id();
+        $itemGroup->created_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update item group ' . $itemGroup->name . '.';
         $saveLogs->save();
@@ -2106,12 +2127,12 @@ class apiController extends Controller
         $inventory->volume = $request->volume;
         $inventory->unit = $request->unit;
         $inventory->customerId = $request->customerId;
-        $inventory->userid = Auth::id();
+        $inventory->userid = Auth::id() ?? 1;
         $inventory->warehouseid = $request->warehouseid;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new inventory item ' . $inventory->item_code . '.';
         $saveLogs->save();
@@ -2151,7 +2172,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Edit/update inventory item ' . $inventory->item_code . '.';
         $saveLogs->save();
@@ -2344,15 +2365,15 @@ class apiController extends Controller
     {
         $deliveryDocOrd = new documentsDelivery();
         $deliveryDocOrd->ddr_number = $request->ddr_number;
-        $deliveryDocOrd->senderName = Auth::id();
+        $deliveryDocOrd->senderName = Auth::id() ?? 1;
         $deliveryDocOrd->courier = $request->courier;
         $deliveryDocOrd->status = 1;
-        $deliveryDocOrd->created_by = Auth::id();
-        $deliveryDocOrd->updated_by = Auth::id();
+        $deliveryDocOrd->created_by = Auth::id() ?? 1;
+        $deliveryDocOrd->updated_by = Auth::id() ?? 1;
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Add new Documents Delivery ' . $deliveryDocOrd->ddr_number . '.';
         $saveLogs->save();
@@ -2387,7 +2408,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Update Documents Delivery ' . $ddr_number . '.';
         $saveLogs->save();
@@ -2414,7 +2435,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete Documents Delivery ' . $purchaseOrd->ddr_number . '.';
         $saveLogs->save();
@@ -2733,7 +2754,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Create New employee.';
         $saveLogs->save();
@@ -2746,7 +2767,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Delete employee.';
         $saveLogs->save();
@@ -2825,7 +2846,7 @@ class apiController extends Controller
 
         // Save to logs
         $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id();
+        $saveLogs->userId = Auth::id() ?? 1;
         $saveLogs->ipAddress = $request->ip();
         $saveLogs->notes = 'Create new categories ' . $cat->categories_name . '.';
         $saveLogs->save();

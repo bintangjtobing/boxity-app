@@ -15,7 +15,7 @@ class blog extends Model
         'description',
         'category',
         'views',
-        'userid', 'status', 'slug'
+        'userid', 'status', 'slug', 'seo_title', 'seo_description'
     ];
     public function user()
     {
