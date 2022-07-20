@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSEOonBlogs extends Migration
+class AddSlugOnCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddSEOonBlogs extends Migration
      */
     public function up()
     {
-        Schema::table('blogs', function (Blueprint $table) {
-            $table->string('seo_title')->nullable()->after('userid');
-            $table->longText('seo_description')->nullable()->after('seo_title');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('slug')->after('categories_name');
         });
     }
 
@@ -27,10 +26,9 @@ class AddSEOonBlogs extends Migration
     public function down()
     {
         Schema::table(
-            'blogs',
+            'categories',
             function (Blueprint $table) {
-                $table->dropColumn('seo_title');
-                $table->dropColumn('seo_description');
+                $table->dropColumn('slug');
             }
         );
     }

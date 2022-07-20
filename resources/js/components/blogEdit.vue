@@ -103,6 +103,10 @@
                                                 computer</div>
                                         </div>
                                     </vue-dropzone>
+                                    <small class="form-text text-muted">
+                                        File size max is 2MB. By default it will resize for all images based on the
+                                        first image.</small>
+                                    <h4 class="my-3">Current featured image</h4>
                                     <img :src="blog.image.file" :alt="blog.title" class="img-fluid">
                                 </div>
                             </div>
@@ -116,7 +120,7 @@
                                     <select class="form-control form-control-default my-1" v-model="blog.category">
                                         <option value="">Select categories:</option>
                                         <option v-for="categoriesGet in categoriesGet" :key="categoriesGet.id"
-                                            v-bind:value="categoriesGet.categories_name">
+                                            v-bind:value="categoriesGet.id">
                                             {{categoriesGet.categories_name}}
                                         </option>
                                     </select>
@@ -172,6 +176,15 @@
                                     <!-- Modal -->
                                     <hr style="margin-top: 0; margin-bottom: 10px;">
                                     <a href="#" data-toggle="modal" data-target="#newCategory">+ New Category</a>
+                                    <hr class="my-2">
+                                    <h4>Sub Categories</h4>
+                                    <select class="form-control form-control-default my-1" v-model="blog.subcategory">
+                                        <option value="">Select sub categories:</option>
+                                        <option v-for="subcategoriesGet in subcategoriesGet" :key="subcategoriesGet.id"
+                                            v-bind:value="subcategoriesGet.id">
+                                            {{subcategoriesGet.sub_categories_name}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -207,8 +220,10 @@
             return {
                 blog: {},
                 categories: {},
+                subcategories: {},
                 categoriesArr: [],
                 categoriesGet: [],
+                subcategoriesGet: [],
 
                 dropzoneOptions: {
                     url: '/api/blogs/images',
@@ -276,7 +291,9 @@
             },
             async getCategories() {
                 const resp = await axios.get('/api/categories');
+                const respSub = await axios.get('/api/sub-categories');
                 this.categoriesGet = resp.data;
+                this.subcategoriesGet = respSub.data;
             }
         },
     }

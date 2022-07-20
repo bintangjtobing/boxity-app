@@ -3,9 +3,7 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">
-                        New Blog
-                    </h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">blog edit</h2>
                 </div>
             </div>
         </div>
@@ -95,7 +93,7 @@
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <h4>Featured Image</h4>
+                                    <h4>Update Featured Image</h4>
                                     <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
                                         :options="dropzoneOptions" class="dropzone mt-2">
                                         <div class="dropzone-custom-content">
@@ -105,30 +103,7 @@
                                                 computer</div>
                                         </div>
                                     </vue-dropzone>
-                                    <small class="form-text text-muted">
-                                        By default it will resize for all images based on the first image.</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-Vertical card-default card-md mb-4">
-                        <div class="card-body pb-md-30">
-                            <div class="Vertical-form">
-                                <div class="form-group my-2">
-                                    <h4>Documents</h4>
-                                    <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
-                                        :options="dropzoneDocumentsOptions" class="dropzone mt-2">
-                                        <div class="dropzone-custom-content">
-                                            <h3 class="dropzone-custom-title">Drag and drop to upload
-                                                attachment!</h3>
-                                            <div class="subtitle">...or click to select a file from your
-                                                computer</div>
-                                        </div>
-                                    </vue-dropzone>
-                                    <small class="form-text text-muted">
-                                        Maximum files is 20MB. You can upload some documents here. Supported file
-                                        documents: .pdf, .pptx,
-                                        etc</small>
+                                    <img :src="blog.image.file" :alt="blog.title" class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -141,7 +116,7 @@
                                     <select class="form-control form-control-default my-1" v-model="blog.category">
                                         <option value="">Select categories:</option>
                                         <option v-for="categoriesGet in categoriesGet" :key="categoriesGet.id"
-                                            v-bind:value="categoriesGet.id">
+                                            v-bind:value="categoriesGet.categories_name">
                                             {{categoriesGet.categories_name}}
                                         </option>
                                     </select>
@@ -197,15 +172,6 @@
                                     <!-- Modal -->
                                     <hr style="margin-top: 0; margin-bottom: 10px;">
                                     <a href="#" data-toggle="modal" data-target="#newCategory">+ New Category</a>
-                                    <hr class="my-2">
-                                    <h4>Sub Categories</h4>
-                                    <select class="form-control form-control-default my-1" v-model="blog.subcategory">
-                                        <option value="">Select sub categories:</option>
-                                        <option v-for="subcategoriesGet in subcategoriesGet" :key="subcategoriesGet.id"
-                                            v-bind:value="subcategoriesGet.id">
-                                            {{subcategoriesGet.sub_categories_name}}
-                                        </option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -215,13 +181,12 @@
                             <div class="justify-content-end">
                                 <button type="submit"
                                     class="btn btn-primary-boxity btn-default btn-block btn-squared px-30"
-                                    data-dismiss="modal">Publish</button>
+                                    data-dismiss="modal">Update</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 </template>
@@ -236,34 +201,19 @@
             vueDropzone: vue2Dropzone,
         },
         title() {
-            return 'New Blog';
+            return 'Edit blog';
         },
         data() {
             return {
                 blog: {},
                 categories: {},
-                subcategories: {},
                 categoriesArr: [],
                 categoriesGet: [],
-                subcategoriesGet: [],
 
-                // Image
-                // TODO: callback to save the ids of the uploaded file
                 dropzoneOptions: {
                     url: '/api/blogs/images',
                     thumbnailWidth: 200,
                     maxFilesize: 2, // MB
-                    acceptedFiles: 'image/*',
-                    maxFiles: 1,
-                    addRemoveLinks: true,
-                    autoDiscover: false,
-                    dictRemoveFile: 'REMOVE'
-                },
-                dropzoneDocumentsOptions: {
-                    url: '/api/blogs/files',
-                    thumbnailWidth: 200,
-                    maxFilesize: 20, // MB
-                    acceptedFiles: 'application/pdf,.ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     addRemoveLinks: true,
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'
@@ -271,48 +221,31 @@
             }
         },
         created() {
+            this.loadDataBlog();
             this.getCategories();
         },
         methods: {
-            async submitHandle(e) {
-                // console.log(e);
+            async loadDataBlog() {
+                // this.$Progress.start();
                 this.$isLoading(true);
-                await axios.post('/api/blogs', {
-                        title: this.blog.title,
-                        description: this.blog.description,
-                        category: this.blog.category,
-                        subcategory: this.blog.subcategory,
-                        type: this.blog.type,
-                        seo_title: this.blog.seo_title,
-                        seo_description: this.blog.seo_description,
-                    }).then(response => {
-                        document.getElementById('ding').play();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Congratulations',
-                            text: 'Success Create New Blog',
-                        });
-                        this.$router.push('/blog-management');
-                        this.blog = {};
-                    })
-                    .catch(error => {
-                        this.$Progress.fail();
-                        document.getElementById('failding').play();
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Something wrong.',
-                            confirmButtonText: `Ok`,
-                            html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-                it still exist, you can contact our developer. <br><br>Error message: ` +
-                                error,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    });
+                const resp = await axios.get('/api/blogs/' + this.$route.params.id);
+                this.blog = resp.data;
+                // this.$Progress.finish();
                 this.$isLoading(false);
-                console.log(this.blog);
+            },
+            async submitHandle() {
+                // this.$Progress.start();
+                this.$isLoading(true);
+                await axios.patch('/api/blogs/' + this.$route.params.id, this.blog);
+                document.getElementById('ding').play();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Congratulations',
+                    text: 'Success update blog.',
+                });
+                // this.$Progress.finish();
+                this.$isLoading(false);
+                this.$router.push('/blog-management');
             },
             async handleSubmitNewCategories() {
                 // this.$Progress.start();
@@ -343,17 +276,9 @@
             },
             async getCategories() {
                 const resp = await axios.get('/api/categories');
-                const respSub = await axios.get('/api/sub-categories');
                 this.categoriesGet = resp.data;
-                this.subcategoriesGet = respSub.data;
             }
         },
     }
 
 </script>
-<style lang="css">
-    .form-group {
-        margin-bottom: 0;
-    }
-
-</style>

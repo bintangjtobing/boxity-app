@@ -115,33 +115,11 @@
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <h4>Documents</h4>
-                                    <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
-                                        :options="dropzoneDocumentsOptions" class="dropzone mt-2">
-                                        <div class="dropzone-custom-content">
-                                            <h3 class="dropzone-custom-title">Drag and drop to upload
-                                                attachment!</h3>
-                                            <div class="subtitle">...or click to select a file from your
-                                                computer</div>
-                                        </div>
-                                    </vue-dropzone>
-                                    <small class="form-text text-muted">
-                                        Maximum files is 20MB. You can upload some documents here. Supported file
-                                        documents: .pdf, .pptx,
-                                        etc</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-Vertical card-default card-md mb-4">
-                        <div class="card-body pb-md-30">
-                            <div class="Vertical-form">
-                                <div class="form-group my-2">
                                     <h4>Categories</h4>
                                     <select class="form-control form-control-default my-1" v-model="blog.category">
                                         <option value="">Select categories:</option>
                                         <option v-for="categoriesGet in categoriesGet" :key="categoriesGet.id"
-                                            v-bind:value="categoriesGet.id">
+                                            v-bind:value="categoriesGet.categories_name">
                                             {{categoriesGet.categories_name}}
                                         </option>
                                     </select>
@@ -197,15 +175,6 @@
                                     <!-- Modal -->
                                     <hr style="margin-top: 0; margin-bottom: 10px;">
                                     <a href="#" data-toggle="modal" data-target="#newCategory">+ New Category</a>
-                                    <hr class="my-2">
-                                    <h4>Sub Categories</h4>
-                                    <select class="form-control form-control-default my-1" v-model="blog.subcategory">
-                                        <option value="">Select sub categories:</option>
-                                        <option v-for="subcategoriesGet in subcategoriesGet" :key="subcategoriesGet.id"
-                                            v-bind:value="subcategoriesGet.id">
-                                            {{subcategoriesGet.sub_categories_name}}
-                                        </option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -242,10 +211,8 @@
             return {
                 blog: {},
                 categories: {},
-                subcategories: {},
                 categoriesArr: [],
                 categoriesGet: [],
-                subcategoriesGet: [],
 
                 // Image
                 // TODO: callback to save the ids of the uploaded file
@@ -253,17 +220,6 @@
                     url: '/api/blogs/images',
                     thumbnailWidth: 200,
                     maxFilesize: 2, // MB
-                    acceptedFiles: 'image/*',
-                    maxFiles: 1,
-                    addRemoveLinks: true,
-                    autoDiscover: false,
-                    dictRemoveFile: 'REMOVE'
-                },
-                dropzoneDocumentsOptions: {
-                    url: '/api/blogs/files',
-                    thumbnailWidth: 200,
-                    maxFilesize: 20, // MB
-                    acceptedFiles: 'application/pdf,.ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     addRemoveLinks: true,
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'
@@ -281,7 +237,6 @@
                         title: this.blog.title,
                         description: this.blog.description,
                         category: this.blog.category,
-                        subcategory: this.blog.subcategory,
                         type: this.blog.type,
                         seo_title: this.blog.seo_title,
                         seo_description: this.blog.seo_description,
@@ -343,9 +298,7 @@
             },
             async getCategories() {
                 const resp = await axios.get('/api/categories');
-                const respSub = await axios.get('/api/sub-categories');
                 this.categoriesGet = resp.data;
-                this.subcategoriesGet = respSub.data;
             }
         },
     }

@@ -64,6 +64,11 @@ import careerFormEdit from './components/careerFormEdit.vue';
 import careerView from './components/careerView.vue';
 import blogView from './components/blogView.vue';
 import blogEdit from './components/blogEdit.vue';
+import categories from './components/categories.vue';
+import categoriesAdd from './components/categoriesAdd.vue';
+import categoriesEdit from './components/categoriesEdit.vue';
+import subcategoriesAdd from './components/subcategoriesAdd.vue';
+import subcategoriesEdit from './components/subcategoriesEdit.vue';
 import userProfileEdit from './components/userProfileEdit.vue';
 import userProfile from './components/userProfile.vue';
 import quoteForm from './components/quoteForm.vue';
@@ -236,6 +241,26 @@ const routes = [{
         name: 'blogAdd',
         path: '/blog-management/create',
         component: BlogAdd
+    }, {
+        name: 'categories',
+        path: '/categories-management',
+        component: categories
+    }, {
+        name: 'categoriesAdd',
+        path: '/categories-management/create',
+        component: categoriesAdd
+    }, {
+        name: 'categories-edit',
+        path: '/edit/categories/:id',
+        component: categoriesEdit,
+    }, {
+        name: 'subcategoriesAdd',
+        path: '/sub-categories-management/create',
+        component: subcategoriesAdd
+    }, {
+        name: 'subcategories-edit',
+        path: '/edit/sub-categories/:id',
+        component: subcategoriesEdit,
     }, {
         name: 'track-delivery',
         path: '/track-delivery',

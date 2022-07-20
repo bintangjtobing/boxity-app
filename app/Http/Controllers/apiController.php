@@ -14,7 +14,10 @@ use App\customers;
 use App\album_photos;
 use App\albums;
 use App\blog;
+use App\subCategories;
 use App\categories;
+use App\categoriesImages;
+use App\subCategoriesImages;
 use App\candidates;
 use App\changeLog;
 use App\commentIssue;
@@ -29,6 +32,7 @@ use App\issue;
 use App\id_domisilis;
 use App\inventoryItem;
 use App\blogImages;
+use App\blogFiles;
 use App\blogCategories;
 use App\itemGroup;
 use App\jobvacancy;
@@ -127,7 +131,7 @@ class apiController extends Controller
         $saveLogs->save();
         $getUser->save();
 
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function checkUsersData(Request $req)
     {
@@ -572,7 +576,7 @@ class apiController extends Controller
 
         $career->status = 2;
         $career->save();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function deleteJob($id, Request $request)
     {
@@ -586,7 +590,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $career->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function getJobbyId($id)
     {
@@ -615,7 +619,7 @@ class apiController extends Controller
     // BLOG API
     public function getBlog()
     {
-        return response()->json(blog::with('user', 'image')->orderBy('created_at', 'DESC')->get());
+        return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
     }
     public function imagesInBlog(Request $request)
     {
@@ -627,12 +631,24 @@ class apiController extends Controller
         ]);
         return response()->json($images, 201);
     }
+    public function filesOnBlog(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/files',
+            'resource_type' => 'auto',
+        ])->getSecurePath();
+        $images = blogFiles::create([
+            'files' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
     public function addNewBlog(Request $request)
     {
         $blog = new blog();
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->category = $request->category;
+        $blog->subcategory = $request->subcategory;
         $blog->seo_title = $request->seo_title;
         $blog->seo_description = $request->seo_description;
         $blog->views = 0;
@@ -663,6 +679,9 @@ class apiController extends Controller
         }
         // $blog->save();
         $file = DB::table('blog_images')
+            ->whereNull('blog_id')
+            ->update(array('blog_id' => $blog->id));
+        $file = DB::table('blog_files')
             ->whereNull('blog_id')
             ->update(array('blog_id' => $blog->id));
         return response()->json($blog);
@@ -710,7 +729,174 @@ class apiController extends Controller
         $saveLogs->save();
 
         $blog->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
+    }
+
+    // Categories API
+    public function getCategories()
+    {
+        return response()->json(categories::with('image')->orderBy('created_at', 'DESC')->get());
+    }
+    public function imagesInCategories(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/categories'
+        ])->getSecurePath();
+        $images = categoriesImages::create([
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function addNewCategories(Request $request)
+    {
+        $cat = new categories();
+        $cat->categories_name = $request->categories_name;
+        $cat->description = $request->description;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Create new categories ' . $cat->categories_name . '.';
+        $saveLogs->save();
+
+        $checkImage = DB::table('sub_categories_images')->whereNull('sub_category_id')->get();
+        if ($checkImage->count() > 0) {
+            // ada data images yang kosong
+            $cat->save();
+        } else {
+            // tidak ada data images yg kosong
+            $images = subCategoriesImages::create([
+                'file' => 'https://res.cloudinary.com/boxity-id/image/upload/v1657854401/asset/blog/noimage.png',
+            ]);
+            $cat->save();
+        }
+        // $blog->sa
+        // $blog->save();
+        $file = DB::table('categories_images')
+            ->whereNull('category_id')
+            ->update(array('category_id' => $cat->id));
+        return response()->json($cat, 200);
+    }
+    public function getCategoriesById($id)
+    {
+        return response()->json(categories::with('image')->find($id));
+    }
+    public function patchCategoriesById($id, Request $request)
+    {
+        $cat = categories::find($id);
+        $cat->categories_name = $request->categories_name;
+        $cat->description = $request->description;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Edit/update categories ' . $cat->categories_name . '.';
+        $saveLogs->save();
+
+        $cat->save();
+        $file = DB::table('categories_images')
+            ->whereNull('category_id')
+            ->update(array('category_id' => $cat->id));
+        return response()->json($cat);
+    }
+    public function deleteCategoriesById($id, Request $request)
+    {
+        $cat = categories::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete categories ' . $cat->categories_name . '.';
+        $saveLogs->save();
+
+        $cat->delete();
+        return response()->json([], 200);
+    }
+
+    // Categories API
+    public function getSubCategories()
+    {
+        return response()->json(subCategories::with('image')->orderBy('created_at', 'DESC')->get());
+    }
+    public function imagesInSubCategories(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/subcategories'
+        ])->getSecurePath();
+        $images = subCategoriesImages::create([
+            'file' => $uploadFile,
+        ]);
+        return response()->json($images, 201);
+    }
+    public function addNewSubCategories(Request $request)
+    {
+        $cat = new subCategories();
+        $cat->sub_categories_name = $request->sub_categories_name;
+        $cat->description = $request->description;
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new subcategories ' . $cat->sub_categories_name . '.';
+        $saveLogs->save();
+
+        $checkImage = DB::table('sub_categories_images')->whereNull('sub_category_id')->get();
+        if ($checkImage->count() > 0) {
+            // ada data images yang kosong
+            $cat->save();
+        } else {
+            // tidak ada data images yg kosong
+            $images = subCategoriesImages::create([
+                'file' => 'https://res.cloudinary.com/boxity-id/image/upload/v1657854401/asset/blog/noimage.png',
+            ]);
+            $cat->save();
+        }
+        // $blog->save();
+        $file = DB::table('sub_categories_images')
+            ->whereNull('sub_category_id')
+            ->update(array('sub_category_id' => $cat->id));
+        return response()->json($cat);
+    }
+    public function getSubCategoriesById($id)
+    {
+        return response()->json(subCategories::with('image')->find($id));
+    }
+    public function patchSubCategoriesById($id, Request $request)
+    {
+        $cat = subCategories::find($id);
+        $cat->sub_categories_name = $request->sub_categories_name;
+        $cat->description = $request->description;
+
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Edit/update sub categories ' . $cat->sub_categories_name . '.';
+        $saveLogs->save();
+
+        $cat->save();
+        $file = DB::table('sub_categories_images')
+            ->whereNull('sub_category_id')
+            ->update(array('sub_category_id' => $cat->id));
+        return response()->json($cat);
+    }
+    public function deleteSubCategoriesById($id, Request $request)
+    {
+        $cat = subCategories::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete blog ' . $cat->sub_categories_name . '.';
+        $saveLogs->save();
+
+        $cat->delete();
+        return response()->json([], 200);
     }
 
     // PROFILE API
@@ -808,7 +994,7 @@ class apiController extends Controller
     {
         $career = quotes::find($id);
         $career->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function getQuotebyId($id)
     {
@@ -1247,7 +1433,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $getUser->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function getCandidateById($id)
     {
@@ -1342,7 +1528,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $getUser->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function getEmployeeById($id)
     {
@@ -1564,7 +1750,7 @@ class apiController extends Controller
         $getCustomers = suppliers::find($id);
         // $getUser->status = '2';
         $getCustomers->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function addCustomer(Request $request)
     {
@@ -1691,7 +1877,7 @@ class apiController extends Controller
         $getSuppliers = suppliers::find($id);
         // $getUser->status = '2';
         $getSuppliers->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function addSuppliers(Request $request)
     {
@@ -2773,7 +2959,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $getUser->delete();
-        return response()->json([], 204);
+        return response()->json([], 200);
     }
     public function getPayrollById($id)
     {
@@ -2832,26 +3018,5 @@ class apiController extends Controller
 
         return response()->json(200);
         // dd($request->all());
-    }
-    public function getCategories()
-    {
-
-        return response()->json(categories::get());
-    }
-    public function postCategories(Request $request)
-    {
-        $cat = new categories();
-        $cat->categories_name = $request->categories_name;
-        $cat->description = $request->description;
-
-        // Save to logs
-        $saveLogs = new userLogs();
-        $saveLogs->userId = Auth::id() ?? 1;
-        $saveLogs->ipAddress = $request->ip();
-        $saveLogs->notes = 'Create new categories ' . $cat->categories_name . '.';
-        $saveLogs->save();
-
-        $cat->save();
-        return response()->json($cat, 201);
     }
 }

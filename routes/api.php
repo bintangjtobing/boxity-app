@@ -71,14 +71,26 @@ Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API
 Route::get('/blogs', 'apiController@getBlog');
+Route::post('/blogs/files', 'apiController@filesOnBlog');
 Route::post('/blogs/images', 'apiController@imagesInBlog')->name('dropzoneImages');
 Route::get('/blogs/{id}', 'apiController@getBlogById');
 Route::patch('/blogs/{id}', 'apiController@patchBlogById');
 Route::delete('/blogs/{id}', 'apiController@deleteBlogById');
 Route::post('/blogs', 'apiController@addNewBlog');
-
+// Categories API
 Route::get('/categories', 'apiController@getCategories');
-Route::post('/categories', 'apiController@postCategories');
+Route::post('/categories/images', 'apiController@imagesInCategories');
+Route::get('/categories/{id}', 'apiController@getCategoriesById');
+Route::patch('/categories/{id}', 'apiController@patchCategoriesById');
+Route::delete('/categories/{id}', 'apiController@deleteCategoriesById');
+Route::post('/categories', 'apiController@addNewCategories');
+// Sub Categories API
+Route::get('/sub-categories', 'apiController@getSubCategories');
+Route::post('/sub-categories/images', 'apiController@imagesInSubCategories');
+Route::get('/sub-categories/{id}', 'apiController@getSubCategoriesById');
+Route::patch('/sub-categories/{id}', 'apiController@patchSubCategoriesById');
+Route::delete('/sub-categories/{id}', 'apiController@deleteSubCategoriesById');
+Route::post('/sub-categories', 'apiController@addNewSubCategories');
 
 // User Profile API
 Route::get('/u/{username}', 'apiController@getProfile');
