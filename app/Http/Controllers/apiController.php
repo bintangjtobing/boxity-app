@@ -187,8 +187,8 @@ class apiController extends Controller
             $arr = array(2, 4, 6);
             shuffle($arr);
             $randVal = $arr[0];
-            $user->avatar = $randVal . '.jpg';
-            $user->cover = $randVal . '.jpg';
+            $user->avatar = 'https://res.cloudinary.com/boxity-id/image/upload/v1640834537/assets/site%20needs/' . $randVal . '.jpg';
+            $user->cover = 'https://res.cloudinary.com/boxity-id/image/upload/v1655096064/assets/site%20needs/cover/' . $randVal . '.jpg';
         }
         $user->password = Hash::make($request->password);
         $user->unpassword = $request->password;
