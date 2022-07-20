@@ -760,13 +760,13 @@ class apiController extends Controller
         $saveLogs->notes = 'Create new categories ' . $cat->categories_name . '.';
         $saveLogs->save();
 
-        $checkImage = DB::table('sub_categories_images')->whereNull('sub_category_id')->get();
+        $checkImage = DB::table('categories_images')->whereNull('category_id')->get();
         if ($checkImage->count() > 0) {
             // ada data images yang kosong
             $cat->save();
         } else {
             // tidak ada data images yg kosong
-            $images = subCategoriesImages::create([
+            $images = categoriesImages::create([
                 'file' => 'https://res.cloudinary.com/boxity-id/image/upload/v1657854401/asset/blog/noimage.png',
             ]);
             $cat->save();
