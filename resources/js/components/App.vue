@@ -312,8 +312,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div v-if="permission.includes('ViewWarehouse') || permission.includes('ViewStockGroup') ||
-                            permission.includes('ViewItemGroup')">
+                        <div v-if="permission.includes('ViewWarehouse')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ isSidebar: sidebar, title: 'Warehouse', icon: 'inventory_2', listId:'menuCollapse4' }">
@@ -477,9 +476,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div v-if="permission.includes('ViewPermissionRole') || permission.includes('ViewGallery') ||
-                            permission.includes('ViewBlog') || permission.includes('ViewCategories')
-                           || permission.includes('ViewPopupWindow')">
+                        <div v-if="permission.includes('ViewPermissionRole')">
                             <li>
                                 <menuCollapse v-bind="{ isSidebar: sidebar, title: 'Permissions & Role', icon: 'manage_accounts',
                                     listId:'menuCollapse13' }">
@@ -493,6 +490,8 @@
                                     </ul>
                                 </menuCollapse>
                             </li>
+                        </div>
+                        <div v-if="permission.includes('ViewBlog') || permission.includes('ViewCategories')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Blog Management', icon: 'rss_feed' }">
@@ -512,6 +511,9 @@
                                     </ul>
                                 </menuCollapse>
                             </li>
+                        </div>
+                        <div v-if="permission.includes('ViewGallery')
+                           || permission.includes('ViewPopupWindow') || permission.includes('ViewSubscriptions')">
                             <li>
                                 <menuCollapse
                                     v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Main Web Config', icon: 'language' }">
