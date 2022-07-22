@@ -214,7 +214,7 @@ class apiController extends Controller
         }
         Mail::to($user->email)->send(new addUser($user, $company));
 
-        return response()->json($user, 201);
+        return response()->json($user, 200);
     }
     public function countUsers()
     {
@@ -312,9 +312,9 @@ class apiController extends Controller
                 // }
             }
         } catch (ModelNotFoundException $e) {
-            return response()->json($issue, 201);
+            return response()->json($issue, 200);
         }
-        return response()->json($issue, 201);
+        return response()->json($issue, 200);
     }
     public function getIssues()
     {
@@ -435,7 +435,7 @@ class apiController extends Controller
             Mail::to($userfind[0]->user->email)->send(new addCommentToCreator($userfind[0], $issuefind[0], $company));
             return response()->json(200);
         }
-        return response()->json(201);
+        return response()->json(200);
     }
     public function deleteComment($id)
     {
@@ -469,7 +469,7 @@ class apiController extends Controller
         //     $issues->notify(new approveIssueNotification($issues));
         // }
 
-        return response()->json($issues, 201);
+        return response()->json($issues, 200);
         // return response()->json($issues);
         // return new makeNewIssue($issues);
     }
@@ -498,7 +498,7 @@ class apiController extends Controller
         }
 
 
-        return response()->json($issues, 201);
+        return response()->json($issues, 200);
         // return new closedIssue($issues);
         // return response()->json($issues);
     }
@@ -561,7 +561,7 @@ class apiController extends Controller
         $jobViews->views = 0;
         $jobViews->job_id = $job->id;
         $jobViews->save();
-        return response()->json($job, 201);
+        return response()->json($job, 200);
     }
     public function closeJob($id, Request $request)
     {
@@ -613,7 +613,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $job->save();
-        return response()->json($job, 201);
+        return response()->json($job, 200);
     }
 
     // BLOG API
@@ -629,18 +629,28 @@ class apiController extends Controller
         $images = blogImages::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function filesOnBlog(Request $request)
     {
-        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
-            'folder' => 'asset/files',
-            'resource_type' => 'auto',
-        ])->getSecurePath();
-        $images = blogFiles::create([
-            'files' => $uploadFile,
-        ]);
-        return response()->json($images, 201);
+        $uploadedFile = $request->file('file');
+        $getExt = substr($uploadedFile->getClientOriginalName(), -3);
+        $filename = time() . $uploadedFile->getClientOriginalName();
+        if ($getExt == 'pdf') {
+            $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+                'folder' => 'asset/files',
+            ])->getSecurePath();
+            $images = blogFiles::create([
+                'files' => $uploadFile,
+            ]);
+            return response()->json($uploadFile, 200);
+        } else {
+            $request->file->move(public_path('asset/files'), $filename);
+            $fileDocument = blogFiles::create([
+                'files' => $filename,
+            ]);
+            return response()->json($fileDocument, 200);
+        }
     }
     public function addNewBlog(Request $request)
     {
@@ -745,7 +755,7 @@ class apiController extends Controller
         $images = categoriesImages::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function addNewCategories(Request $request)
     {
@@ -829,7 +839,7 @@ class apiController extends Controller
         $images = subCategoriesImages::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function addNewSubCategories(Request $request)
     {
@@ -951,7 +961,7 @@ class apiController extends Controller
             $profile->notify(new updateProfileNotifier($profile));
         }
 
-        return response()->json($profile, 201);
+        return response()->json($profile, 200);
         // return response($filename);
     }
     public function updatePassword($id, Request $request)
@@ -967,7 +977,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $user->save();
-        return response()->json($user, 201);
+        return response()->json($user, 200);
     }
 
     // QUOTE API
@@ -988,7 +998,7 @@ class apiController extends Controller
         $quotes->finishId = 0;
         $quotes->status = 0;
         $quotes->save();
-        return response()->json($quotes, 201);
+        return response()->json($quotes, 200);
     }
     public function deleteQuote($id)
     {
@@ -1006,7 +1016,7 @@ class apiController extends Controller
         $quotes->quoteid = $request->quoteid;
         $quotes->quoteen = $request->quoteen;
         $quotes->save();
-        return response()->json($quotes, 201);
+        return response()->json($quotes, 200);
     }
     public function approvedQuote($id, Request $request)
     {
@@ -1014,7 +1024,7 @@ class apiController extends Controller
         $quote->finishId = Auth::id() ?? 1;
         $quote->status = 1;
         $quote->save();
-        return response()->json($quote, 201);
+        return response()->json($quote, 200);
     }
 
     // API Track Delivery
@@ -1227,7 +1237,7 @@ class apiController extends Controller
         $note->favorite = 0;
         $note->userid = $this->getLoggedUser()->id;
         $note->save();
-        return response()->json($note, 201);
+        return response()->json($note, 200);
     }
     public function deleteNote($id)
     {
@@ -1337,7 +1347,7 @@ class apiController extends Controller
         $goods->status = 1;
         $goods->created_at = \Carbon\Carbon::now();
         $goods->save();
-        return response()->json($goods, 201);
+        return response()->json($goods, 200);
     }
 
 
@@ -1351,7 +1361,7 @@ class apiController extends Controller
         $fileDocument = FileDocument::create([
             'file' => $imageName,
         ]);
-        return response()->json($fileDocument, 201);
+        return response()->json($fileDocument, 200);
     }
 
     // Gallery API
@@ -1388,7 +1398,7 @@ class apiController extends Controller
             )
             ->groupBy('fileId')
             ->get();
-        return response()->json($album, 201);
+        return response()->json($album, 200);
     }
 
     // BANK LISTS
@@ -1413,7 +1423,7 @@ class apiController extends Controller
         $popup->url = $request->url;
         $popup->updated_by = Auth::id() ?? 1;
         $popup->save();
-        return response()->json($popup, 201);
+        return response()->json($popup, 200);
     }
 
     // Candidate API
@@ -1686,7 +1696,7 @@ class apiController extends Controller
         $comp->meta_description = $request->meta_description;
         $comp->meta_keywords = $request->meta_keywords;
         $comp->save();
-        return response()->json($comp, 201);
+        return response()->json($comp, 200);
     }
     public function saveMetaCompanyDetails(Request $request)
     {
@@ -1694,7 +1704,7 @@ class apiController extends Controller
         $comp->meta_description = $request->meta_description;
         $comp->meta_keywords = $request->meta_keywords;
         $comp->save();
-        return response()->json($comp, 201);
+        return response()->json($comp, 200);
     }
     public function bankCompanies()
     {
@@ -1773,7 +1783,7 @@ class apiController extends Controller
 
         $customer->save();
         // Mail::to($customer->email)->send(new addCustomer($customer));
-        return response()->json($customer, 201);
+        return response()->json($customer, 200);
     }
     public function countCustomers()
     {
@@ -1848,7 +1858,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $warehouse->save();
-        return response()->json($warehouse, 201);
+        return response()->json($warehouse, 200);
     }
     public function getUserOnCustomers()
     {
@@ -1897,7 +1907,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $supplier->save();
-        return response()->json($supplier, 201);
+        return response()->json($supplier, 200);
     }
     public function countSuppliers()
     {
@@ -2003,7 +2013,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $warehouse->save();
-        return response()->json($warehouse, 201);
+        return response()->json($warehouse, 200);
     }
 
     // Warehouse Customer
@@ -2073,7 +2083,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $warehouse->save();
-        return response()->json($warehouse, 201);
+        return response()->json($warehouse, 200);
     }
 
     // Stock Group
@@ -2130,7 +2140,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $stock->save();
-        return response()->json($stock, 201);
+        return response()->json($stock, 200);
     }
     public function deleteStockGroupById($id)
     {
@@ -2144,7 +2154,7 @@ class apiController extends Controller
         $images = imagesStockGroup::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function imagesInStockGroupStoreDelete($id)
     {
@@ -2159,7 +2169,7 @@ class apiController extends Controller
             'file' => $uploadFile,
             'stockGroupId' => $id,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function getImageInStockGroup($id)
     {
@@ -2233,7 +2243,7 @@ class apiController extends Controller
         $images = imagesItemGroup::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function imagesInItemGroupStoreDelete($id)
     {
@@ -2248,7 +2258,7 @@ class apiController extends Controller
             'file' => $uploadFile,
             'itemGroupId' => $id,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function getImageInItemGroup($id)
     {
@@ -2385,7 +2395,7 @@ class apiController extends Controller
         $images = imagesInventoryItem::create([
             'file' => $uploadFile,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     public function imagesInventoryItemStoreDelete($id)
     {
@@ -2400,7 +2410,7 @@ class apiController extends Controller
             'file' => $uploadFile,
             'itemid' => $id,
         ]);
-        return response()->json($images, 201);
+        return response()->json($images, 200);
     }
     // History item
     public function getHistoryItemById($id, Request $req)
@@ -2627,7 +2637,7 @@ class apiController extends Controller
         $saveLogs->save();
 
         $purchaseOrd->delete();
-        return response()->json(201);
+        return response()->json(200);
     }
     public function countDocumentsDelivery()
     {
