@@ -37,6 +37,9 @@
                                                                 toolbar:
                                                                     'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
                                                         }" />
+                                            <span class="text-muted" v-if="warningRequired==true"
+                                                style="color: red !important;">Article is
+                                                required!</span>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +129,7 @@
                                         </div>
                                     </vue-dropzone>
                                     <small class="form-text text-muted">
-                                        Maximum files is 20MB. You can upload some documents here. Supported file
+                                        Maximum files is 30MB. You can upload some documents here. Supported file
                                         documents: .pdf, .pptx,
                                         etc</small>
                                 </div>
@@ -240,6 +243,7 @@
         },
         data() {
             return {
+                warningRequired: false,
                 blog: {},
                 categories: {},
                 subcategories: {},
@@ -262,7 +266,7 @@
                 dropzoneDocumentsOptions: {
                     url: '/api/blogs/files',
                     thumbnailWidth: 200,
-                    maxFilesize: 20, // MB
+                    maxFilesize: 30, // MB
                     acceptedFiles: 'application/pdf,.ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     addRemoveLinks: true,
                     autoDiscover: false,
@@ -276,42 +280,48 @@
         methods: {
             async submitHandle(e) {
                 // console.log(e);
-                this.$isLoading(true);
-                await axios.post('/api/blogs', {
-                        title: this.blog.title,
-                        description: this.blog.description,
-                        category: this.blog.category,
-                        subcategory: this.blog.subcategory,
-                        type: this.blog.type,
-                        seo_title: this.blog.seo_title,
-                        seo_description: this.blog.seo_description,
-                    }).then(response => {
-                        document.getElementById('ding').play();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Congratulations',
-                            text: 'Success Create New Blog',
+                if (this.blog.description == null) {
+                    this.warningRequired = true
+                } else {
+                    this.$isLoading(true);
+                    await axios.post('/api/blogs', {
+                            title: this.blog.title,
+                            description: this.blog.description,
+                            category: this.blog.category,
+                            subcategory: this.blog.subcategory,
+                            type: this.blog.type,
+                            seo_title: this.blog.seo_title,
+                            seo_description: this.blog.seo_description,
+                        }).then(response => {
+                            document.getElementById('ding').play();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Congratulations',
+                                text: 'Success Create New Blog',
+                            });
+                            this.$router.push('/blog-management');
+                            this.blog = {};
+                        })
+                        .catch(error => {
+                            this.$Progress.fail();
+                            document.getElementById('failding').play();
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Something wrong.',
+                                confirmButtonText: `Ok`,
+                                html: `There is something wrong on my side. Please click ok to refresh this page and see what is
+                     it.
+                     If
+                     it still exist, you can contact our developer. <br><br>Error message: ` +
+                                    error,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
                         });
-                        this.$router.push('/blog-management');
-                        this.blog = {};
-                    })
-                    .catch(error => {
-                        this.$Progress.fail();
-                        document.getElementById('failding').play();
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Something wrong.',
-                            confirmButtonText: `Ok`,
-                            html: `There is something wrong on my side. Please click ok to refresh this page and see what is it. If
-                it still exist, you can contact our developer. <br><br>Error message: ` +
-                                error,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    });
-                this.$isLoading(false);
+                    this.$isLoading(false);
+                }
                 console.log(this.blog);
             },
             async handleSubmitNewCategories() {

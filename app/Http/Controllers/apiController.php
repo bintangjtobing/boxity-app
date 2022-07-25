@@ -1336,7 +1336,7 @@ class apiController extends Controller
             $goods = User::find($newGoods->receiverid);
             // return $goods->email;
             $company = company_details::first();
-            Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
+        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
         }
         // return response()->json($goods);
         return response()->json($newGoods, 200);
