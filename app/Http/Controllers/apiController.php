@@ -619,7 +619,11 @@ class apiController extends Controller
     // BLOG API
     public function getBlog()
     {
-        return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
+        if (Auth::user()->role == 'admin') {
+            return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
+        } else {
+            return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->orderBy('created_at', 'DESC')->get());
+        }
     }
     public function imagesInBlog(Request $request)
     {
@@ -1336,7 +1340,7 @@ class apiController extends Controller
             $goods = User::find($newGoods->receiverid);
             // return $goods->email;
             $company = company_details::first();
-        Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
+            Mail::to($goods->email)->send(new GoodsReceive($goods, $newGoods, $company));
         }
         // return response()->json($goods);
         return response()->json($newGoods, 200);
