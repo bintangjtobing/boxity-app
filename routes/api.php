@@ -493,3 +493,16 @@ Route::post('/payroll', 'apiController@newPayroll');
 Route::get('/payroll/{id}', 'apiController@getPayrollById');
 Route::patch('/payroll/{id}', 'apiController@patchPayrollById');
 Route::delete('/payroll/{id}', 'apiController@deletePayroll');
+
+// events
+Route::get('/events', 'apiController@getEvents');
+Route::post('/events/files', 'apiController@filesOnEvents');
+Route::post('/events/images', 'apiController@imagesInEvents')->name('dropzoneImages');
+Route::get('/events/{id}', 'apiController@getEventsById');
+Route::patch('/events/{id}', 'apiController@patchEventsById');
+Route::delete('/events/{id}', 'apiController@deleteEventsById');
+Route::post('/events', 'apiController@addNewEvents');
+
+// Participant
+Route::get('/participant', 'apiController@getParticipant');
+Route::get('/participant/{id}', 'apiController@getParticipantById');

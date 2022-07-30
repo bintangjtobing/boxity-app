@@ -14,6 +14,9 @@ use App\customers;
 use App\album_photos;
 use App\albums;
 use App\blog;
+use App\events;
+use App\event_images;
+use App\event_participants;
 use App\subCategories;
 use App\categories;
 use App\categoriesImages;
@@ -3032,5 +3035,111 @@ class apiController extends Controller
 
         return response()->json(200);
         // dd($request->all());
+    }
+
+    // Events Management
+    public function getEvents()
+    {
+        return response()->json(events::with('user', 'image')->orderBy('created_at', 'DESC')->get());
+    }
+    public function imagesInEvents(Request $request)
+    {
+        $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [
+            'folder' => 'asset/events'
+        ])->getSecurePath();
+        $images = event_images::create([
+            'file' => $uploadFile,
+            'type' => 'cover',
+        ]);
+        return response()->json($images, 200);
+    }
+    public function addNewEvents(Request $request)
+    {
+        $blog = new events();
+        $blog->event_name = $request->event_name;
+        $blog->start_date = $request->start_date;
+        $blog->end_date = $request->end_date;
+        $blog->event_content = $request->event_content;
+        $blog->organized_by = $request->organized_by;
+        $blog->type = $request->type;
+        $blog->userid = Auth::id() ?? 1;
+        $blog->status = $request->status;
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Add new events ' . $blog->event_name . '.';
+        $saveLogs->save();
+
+        $checkImage = DB::table('event_images')->whereNull('event_id')->get();
+        if ($checkImage->count() > 0) {
+            // ada data images yang kosong
+            $blog->save();
+        } else {
+            // tidak ada data images yg kosong
+            $images = event_images::create([
+                'file' => 'https://res.cloudinary.com/boxity-id/image/upload/v1657854401/asset/blog/noimage.png',
+                'type' => 'cover'
+            ]);
+            $blog->save();
+        }
+        // $blog->save();
+        $file = DB::table('event_images')
+            ->whereNull('event_id')
+            ->update(array('event_id' => $blog->id));
+        return response()->json($blog);
+    }
+    public function getEventsById($id)
+    {
+        return response()->json(events::with('user', 'image')->find($id));
+    }
+    public function patchEventsById($id, Request $request)
+    {
+        $blog = events::find($id);
+        $blog->event_name = $request->event_name;
+        $blog->start_date = $request->start_date;
+        $blog->end_date = $request->end_date;
+        $blog->event_content = $request->event_content;
+        $blog->organized_by = $request->organized_by;
+        $blog->type = $request->type;
+        $blog->userid = Auth::id() ?? 1;
+        $blog->status = $request->status;
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Edit/update event ' . $blog->event_name . '.';
+        $saveLogs->save();
+
+        $blog->save();
+        $file = DB::table('event_images')
+            ->whereNull('event_id')
+            ->update(array('event_id' => $blog->id));
+        return response()->json($blog);
+    }
+    public function deleteEventsById($id, Request $request)
+    {
+        $blog = events::find($id);
+
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Delete event ' . $blog->title . '.';
+        $saveLogs->save();
+
+        $blog->delete();
+        return response()->json([], 200);
+    }
+
+    // Participant Management
+    public function getParticipant()
+    {
+        return response()->json(event_participants::with('event')->orderBy('created_at', 'DESC')->get());
+    }
+    public function getParticipantById($id)
+    {
+        return response()->json(event_participants::with('event')->find($id));
     }
 }

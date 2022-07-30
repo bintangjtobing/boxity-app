@@ -512,6 +512,27 @@
                                 </menuCollapse>
                             </li>
                         </div>
+                        <div v-if="permission.includes('ViewEvents') || permission.includes('ViewParticipantEvents')">
+                            <li>
+                                <menuCollapse
+                                    v-bind="{ listId:'menuCollapse8', isSidebar: sidebar, title: 'Events & Participant Management', icon: 'rss_feed' }">
+                                    <ul id="menuCollapse8" style="padding: 0;">
+                                        <li v-if="permission.includes('ViewEvents')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Blog">
+                                            <router-link style="margin:0; width:100%" to="/events">
+                                                <span>See Events</span>
+                                            </router-link>
+                                        </li>
+                                        <li v-if="permission.includes('ViewParticipantEvents')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Categories Management">
+                                            <router-link style="margin:0; width:100%" to="/participant">
+                                                <span>Participants Joined</span>
+                                            </router-link>
+                                        </li>
+                                    </ul>
+                                </menuCollapse>
+                            </li>
+                        </div>
                         <div v-if="permission.includes('ViewGallery')
                            || permission.includes('ViewPopupWindow') || permission.includes('ViewSubscriptions')">
                             <li>

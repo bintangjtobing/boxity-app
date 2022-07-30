@@ -109,6 +109,12 @@ import employeeDetail from './components/employee/employeeDetail.vue';
 import inbox from './components/inbox.vue';
 import stockCard from './components/stockCard.vue';
 import stockWarehouse from './components/stockWarehouse.vue';
+import events from './components/events.vue'
+import eventsAdd from './components/eventsAdd.vue'
+import eventsEdit from './components/eventsEdit.vue'
+import eventsView from './components/eventsView.vue'
+import participant from './components/participants.vue'
+import participantDetail from './components/participantsDetail.vue'
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -566,6 +572,30 @@ const routes = [{
         name: 'stock-warehouse',
         path: '/report/warehouse',
         component: stockWarehouse
+    }, {
+        name: 'events',
+        path: '/events',
+        component: events
+    }, {
+        name: 'events-add',
+        path: '/events/create',
+        component: eventsAdd
+    }, {
+        name: 'events-edit',
+        path: '/edit/events/:id',
+        component: eventsEdit
+    }, {
+        name: 'events-view',
+        path: '/detail/events/:id',
+        component: eventsView
+    }, {
+        name: 'participant',
+        path: '/participant',
+        component: participant
+    }, {
+        name: 'participant-detail',
+        path: '/detail/participant/:id',
+        component: participantDetail
     }
 ]
 Vue.filter('toDecimal', num => {
