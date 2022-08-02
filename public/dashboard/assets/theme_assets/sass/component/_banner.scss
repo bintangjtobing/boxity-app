@@ -114,7 +114,7 @@
     }
 
     &--6 {
-        background-image: url("img/Rectangle381.png");
+        background-image: url("img/rectangle381.png");
         background-size: cover;
         background-position: center center;
 
@@ -157,8 +157,6 @@
         text-align: center;
 
         .slick-slider {
-            /*rtl:ignore*/
-            direction: ltr;
             outline: none;
             border: none;
             box-shadow: none;

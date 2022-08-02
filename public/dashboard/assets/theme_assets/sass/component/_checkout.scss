@@ -852,13 +852,16 @@
       text-transform: capitalize;
       height: 38px;
       @extend .content-center;
+      -webkit-print-color-adjust: exact;
 
       &:not(:last-child) {
         margin-right: 10px;
       }
 
-      &.download svg {
-        color: white;
+      &.download {
+        svg {
+          color: white;
+        }
       }
 
       svg {
@@ -880,6 +883,7 @@
 
 .payment-invoice-address {
   margin-bottom: 57px;
+  justify-content: space-between;
 
   @include sm {
     margin-bottom: 30px;
@@ -900,6 +904,7 @@
 .payment-invoice-qr {
   border-radius: 20px;
   flex-wrap: wrap;
+  -webkit-print-color-adjust: exact;
   @extend .bg-normal;
 
   @include e(number) {
@@ -918,6 +923,7 @@
 
   @include e(code) {
     text-align: center;
+    -webkit-print-color-adjust: exact;
 
     img {
       width: 270px;
@@ -970,6 +976,7 @@
     border-top: 1px solid rgb(241, 242, 246);
     border-bottom: 1px solid rgb(241, 242, 246);
     white-space: nowrap;
+    -webkit-print-color-adjust: exact;
   }
 
   table>thead>tr:first-child th:last-child {
@@ -1050,5 +1057,7 @@
     @extend .color-gray;
   }
 }
+
+
 
 //Wizard 6

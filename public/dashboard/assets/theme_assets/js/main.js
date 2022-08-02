@@ -3,7 +3,7 @@
   jQuery(function ($) {
 
     //preloader
-    $(window).on('load',function() {
+    $(window).on('load', function () {
       $("#overlayer").hide();
     });
 
@@ -116,15 +116,17 @@
   });
 
   /* Header mobile view */
-  $(window)
-    .bind("resize", function () {
+  $(window).on('resize', function(){
       var screenSize = window.innerWidth;
       if ($(this).width() <= 767.98) {
         $(".navbar-right__menu").appendTo(".mobile-author-actions");
-        $(".search-form").appendTo(".mobile-search");
+        // $(".search-form").appendTo(".mobile-search");
         $(".contents").addClass("expanded");
         $(".sidebar ").addClass("collapsed");
+      } else {
+        $(".navbar-right__menu").appendTo(".navbar-right");
       }
+
     })
     .trigger("resize");
 
@@ -190,11 +192,39 @@
     $(".mobile-nav-wrapper").removeClass("show");
   });
 
+  //click to move specific page
+  // Javascript to enable link to tab
+  var hash = location.hash.replace(/^#/, ''); // ^ means starting, meaning only match the first hash
+  if (hash) {
+    $('.ap-tab-main a[href="#' + hash + '"]').tab('show');
+  }
+  // Change hash for page-reload
+  $('.ap-tab-main a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+  })
+
+  //Print button
+  function printContent(el) {
+    var restorepage = document.body.innerHTML; // save original page html to variable
+    var printcontent = document.querySelector(el).innerHTML; // save content to be printed to variable
+    document.body.innerHTML = printcontent; // display only content to be printed in document body
+    window.print(); // print commands
+    document.body.innerHTML = restorepage; // restore original page content
+  }
+  if(
+    document.querySelector('.print-btn')
+  ){
+  document.querySelector('.print-btn').addEventListener('click', function () { // bind event to print button
+    printContent('.payment-invoice'); // initial print function on selector for content to be printed
+  });
+  }
+  
   let getData = (optionValue, defaultValue) =>
     typeof optionValue === "undefined" ? defaultValue : optionValue;
 
+      
   /* Slick Slider */
-  $(".slick-slider").each(function () {
+  $(".banner-slider").each(function () {
     $(this).slick({
       slidesToShow: getData($(this).data("slide-slick"), 1),
       slidesToScroll: getData($(this).data("slideScroll-slick"), 1),
@@ -204,7 +234,7 @@
       autoplaySpeed: getData($(this).data("autoplaySpeed-slick"), 5000),
       lazyLoad: getData($(this).data("lazyLoad-slick"), "ondemand"),
       centerMode: getData($(this).data("center-slick"), false),
-      rtl: getData($(this).data("rtl-slick"), false),
+      rtl: getData($(this).data("rtl-slick"), true),
       adaptiveHeight: getData($(this).data("adaptiveHeight-slick"), false),
       arrows: getData($(this).data("arrow-slick"), false),
       prevArrow: [
@@ -223,6 +253,12 @@
   $('a[data-toggle="tab"]').on("shown.bs.tab", function () {
     $(".slick-slider").slick("refresh");
   });
+
+//   $("html").attr("dir") == ("rtl"), function () {
+//     $(".banner-slider").each(function () {
+//       rtl:true
+//     });
+// };
 
   /* Dropdown Event */
   $(".dropdown-clickEvent a").on("click", function (e) {
@@ -509,7 +545,7 @@
     }
   });
 
-    $('.kb__select-wrapper select,.tagSelect-rtl select').select2({
+  $('.kb__select-wrapper select,.tagSelect-rtl select').select2({
     dir: "rtl",
     dropdownAutoWidth: true,
     dropdownParent: $('.kb__select-wrapper .select2,.tagSelect-rtl .select2')
@@ -824,54 +860,18 @@
     allowClear: true,
   });
 
-//  $('#mail-message, #mail-reply-message')
-// .trumbowyg({
-//     btnsDef: {
-//         // Create a new dropdown
-//         image: {
-//             dropdown: ['insertImage', 'upload'],
-//             ico: 'insertImage'
-//         }
-//     },
-//     // Redefine the button pane
-//     btns: [
-//         ['viewHTML'],
-//         ['formatting'],
-//         ['strong', 'em', 'del'],
-//         ['superscript', 'subscript'],
-//         ['link'],
-//         ['image'], // Our fresh created dropdown
-//         ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-//         ['unorderedList', 'orderedList'],
-//         ['horizontalRule'],
-//         ['removeformat'],
-//         ['fullscreen']
-//     ],
-//     plugins: {
-//         // Add imagur parameters to upload plugin for demo purposes
-//         upload: {
-//             serverPath: 'https://api.imgur.com/3/image',
-//             fileFieldName: 'image',
-//             headers: {
-//                 'Authorization': 'Client-ID xxxxxxxxxxxx'
-//             },
-//             urlPropertyName: 'data.link'
-//         }
-//     }
-// });
 
-
-$('#mail-message, #mail-reply-message')
-.trumbowyg({
-    btnsDef: {
+  $('#mail-message, #mail-reply-message')
+    .trumbowyg({
+      btnsDef: {
         // Create a new dropdown
         image: {
-            dropdown: ['insertImage', 'base64'],
-            ico: 'insertImage'
+          dropdown: ['insertImage', 'base64'],
+          ico: 'insertImage'
         }
-    },
-    // Redefine the button pane
-    btns: [
+      },
+      // Redefine the button pane
+      btns: [
         ['viewHTML'],
         ['formatting'],
         ['strong', 'em', 'del'],
@@ -883,13 +883,13 @@ $('#mail-message, #mail-reply-message')
         ['horizontalRule'],
         ['removeformat'],
         ['fullscreen']
-    ]
-});
+      ]
+    });
 
   /* Mail Compose Rich-text*/
   $("#mail-reply-message2,#mail-reply-message3").trumbowyg({
     btns: [
-      ["formatting","strong", "em","superscript", "subscript","link"],
+      ["formatting", "strong", "em", "superscript", "subscript", "link"],
       ["unorderedList", "orderedList"],
     ],
   });
@@ -966,7 +966,7 @@ $('#mail-message, #mail-reply-message')
     console.log(lastChild);
   });
 
-  $(".open-popup-modal").each(function(i, e){
+  $(".open-popup-modal").each(function (i, e) {
     $(e).on("click", function () {
       $(this).siblings(".popup-overlay").fadeIn('slow').addClass("active");
       $(this).siblings(".popup-overlay").children(".popup-content").fadeIn('slow').addClass("active");
@@ -976,13 +976,13 @@ $('#mail-message, #mail-reply-message')
 
   //close the edit title modal
   $("body").on("click", function (e) {
-    if(!e.target.closest('.open-popup-modal, .popup-content')){
+    if (!e.target.closest('.open-popup-modal, .popup-content')) {
       $(".popup-overlay, .popup-content").fadeIn('slow').removeClass("active");
       $("body").fadeIn('slow').removeClass("is-open");
     }
   });
-  window.addEventListener('keydown', function(e){
-    if((e.key=='Escape'||e.key=='Esc'||e.keyCode==27) && (e.target.nodeName=='BODY')){
+  window.addEventListener('keydown', function (e) {
+    if ((e.key == 'Escape' || e.key == 'Esc' || e.keyCode == 27) && (e.target.nodeName == 'BODY')) {
       $(".popup-overlay, .popup-content").fadeIn('slow').removeClass("active");
       $("body").fadeIn('slow').removeClass("is-open");
     }
@@ -999,9 +999,9 @@ $('#mail-message, #mail-reply-message')
   });
   /* sidebar scroll to active link on page load */
   const activeLink = document.querySelector('.sidebar_nav li a.active');
-  if(activeLink !== null){
+  if (activeLink !== null) {
     const activeLinkOffset = activeLink.offsetTop;
-    document.querySelector('.mCSB_container').style.top = activeLinkOffset+'px';
+    document.querySelector('.mCSB_container').style.top = activeLinkOffset + 'px';
   }
 
 
@@ -1228,9 +1228,9 @@ $('#mail-message, #mail-reply-message')
     }
   });
 
-
   // Testimonial Slider1
   $('.testimonial-slider1').slick({
+    rtl:true,
     dots: true,
     infinite: true,
     speed: 300,
@@ -1275,9 +1275,11 @@ $('#mail-message, #mail-reply-message')
         }
       }
     ]
+    
   });
 
   $('.testimonial-slider2').slick({
+    rtl:true,
     dots: false,
     infinite: true,
     speed: 300,
@@ -1320,6 +1322,7 @@ $('#mail-message, #mail-reply-message')
   });
 
   $('.testimonial-slider3-for').slick({
+    rtl:true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
@@ -1329,6 +1332,7 @@ $('#mail-message, #mail-reply-message')
     arrows: false
   });
   $('.testimonial-slider3-nav').slick({
+    rtl:true,
     dots: false,
     infinite: true,
     slidesToShow: 3,
@@ -1343,39 +1347,25 @@ $('#mail-message, #mail-reply-message')
     touchMove: true,
     arrows: false,
     responsive: [{
-        breakpoint: 1499,
+        breakpoint: 1899,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
-          infinite: true,
           centerMode: false,
           dots: true
         }
       },
       {
-        breakpoint: 767,
+        breakpoint: 1600,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1
         }
       },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
     ]
   });
   $('.testimonial-slider4').slick({
+    rtl:true,
     dots: false,
     infinite: true,
     speed: 300,
@@ -1384,6 +1374,12 @@ $('#mail-message, #mail-reply-message')
     prevArrow: '<div class="slider-arrow slider-prev las la-arrow-left"></div>',
     nextArrow: '<div class="slider-arrow slider-next las la-arrow-right"></div>',
   });
+
+  // $("html").attr("dir") == ("rtl"), function () {
+  //   $(".banner-slider").each(function () {
+  //     rtl:true
+  //   });
+  // };
 
 
   function compareDates(startDate, endDate, format) {
@@ -1397,7 +1393,10 @@ $('#mail-message, #mail-reply-message')
         endDate = temp;
       }
     } catch (ex) {}
-    return { start: startDate, end: endDate };
+    return {
+      start: startDate,
+      end: endDate
+    };
   }
 
   $.fn.dateRangePicker = function (options) {
@@ -1424,20 +1423,24 @@ $('#mail-message, #mail-reply-message')
         if (dateText.length > 1) {
           end = $.datepicker.parseDate(dateFormat, dateText[1]);
         }
-        lastDateRange = {start: start, end: end};
+        lastDateRange = {
+          start: start,
+          end: end
+        };
       } else {
         lastDateRange = null;
       }
     }
 
-    options.beforeShow = function(input, inst) {
+    options.beforeShow = function (input, inst) {
       var dateFormat = myDateRangeTarget.datepicker("option", "dateFormat");
       storePreviousDateRange($(input).val(), dateFormat);
       beforeShow.apply(myDateRangeTarget, arguments);
     };
 
-    options.beforeShowDay = function(date) {
-      var out = [true, ""], extraOut;
+    options.beforeShowDay = function (date) {
+      var out = [true, ""],
+        extraOut;
       if (lastDateRange && lastDateRange.start <= date) {
         if (lastDateRange.end && date <= lastDateRange.end) {
           out[1] = "ui-datepicker-range";
@@ -1453,7 +1456,7 @@ $('#mail-message, #mail-reply-message')
       return out;
     };
 
-    options.onSelect = function(dateText, inst) {
+    options.onSelect = function (dateText, inst) {
       var textStart;
       if (!inst.rangeStart) {
         inst.inline = true;
@@ -1466,32 +1469,33 @@ $('#mail-message, #mail-reply-message')
           var dateRange = compareDates(textStart, dateText, dateFormat);
           myDateRangeTarget.val(dateRange.start + options.rangeSeparator + dateRange.end);
           inst.rangeStart = null;
-          if (options.useHiddenAltFields){
+          if (options.useHiddenAltFields) {
             var myToField = myDateRangeTarget.attr("data-to-field");
             var myFromField = myDateRangeTarget.attr("data-from-field");
-            $("#"+myFromField).val(dateRange.start);
-            $("#"+myToField).val(dateRange.end);
+            $("#" + myFromField).val(dateRange.start);
+            $("#" + myToField).val(dateRange.end);
           }
         }
       }
       onSelect.apply(myDateRangeTarget, arguments);
     };
 
-    options.onClose = function(dateText, inst) {
+    options.onClose = function (dateText, inst) {
       inst.rangeStart = null;
       inst.inline = false;
       onClose.apply(myDateRangeTarget, arguments);
     };
 
-    return this.each(function() {
+    return this.each(function () {
       if (myDateRangeTarget.is("input")) {
         myDateRangeTarget.datepicker(options);
       }
       myDateRangeTarget.wrap("<div class=\"dateRangeWrapper\"></div>");
     });
   };
-   /* Range */
-  $(document).ready(function(){
+
+  /* Range */
+  $(document).ready(function () {
     $("#txtDateRange").dateRangePicker({
       showOn: "focus",
       rangeSeparator: " - ",
@@ -1502,14 +1506,12 @@ $('#mail-message, #mail-reply-message')
   });
 
   /* Preloader */
-  $(window).on('load',function() {
+  $(window).on('load', function () {
     $(".loader-overlay").delay(500).fadeOut("slow");
-    $("#overlayer").fadeOut(500, function() {
+    $("#overlayer").fadeOut(500, function () {
       $('body').removeClass('overlayScroll');
     });
   })
 
-
-
-
+  
 })(jQuery);

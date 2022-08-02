@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
-                                            <h6>Blog post title</h6>
+                                            <h6>Content post title</h6>
                                             <input type="text" v-model="blog.title" placeholder="Enter title here"
                                                 class="form-control mt-2">
                                         </div>
@@ -27,8 +27,9 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
-                                            <h6 class="mb-2">Blog article</h6>
-                                            <editor placeholder="Blog article write here..." v-model="blog.description"
+                                            <h6 class="mb-2">Content article</h6>
+                                            <editor placeholder="Content article write here..."
+                                                v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 600,
                                                                 menubar: true,
@@ -70,30 +71,66 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <h4>Published?</h4>
-                                    <select class="form-control form-control-default my-1" v-model="blog.type">
-                                        <option value="draft">
-                                            Draft
-                                        </option>
-                                        <option value="published">
-                                            Published
-                                        </option>
-                                    </select>
-                                    <small id="blog_is_published_help" class="form-text text-muted">Should this be
-                                        published? If not, then it
-                                        won't be
-                                        publicly viewable.
-                                    </small>
+                                    <div
+                                        style="padding:1.5rem; overflow-y: scroll; height: 150px; border: 1px solid rgba(0,0,0,.5); border-radius: 0.25rem;">
+                                        <h3 class="mb-3">Please read this terms and conditions.</h3>
+                                        <p>
+                                            <ol>
+                                                <li>Pengajar hanya boleh mengunggah konten milik mereka sendiri atau
+                                                    milik
+                                                    orang lain yang memiliki izin untuk menggunakannya. Artinya, mereka
+                                                    tidak boleh mengunggah konten/artikel yang bukan hasil karyanya,
+                                                    atau
+                                                    menggunakan konten/artikel berhak cipta milik orang lain, seperti
+                                                    dokumen, gambar, dan artikel tanpa memperoleh izin yang diperlukan.
+                                                </li>
+
+                                                <li>Saya setuju untuk tidak menjiplak sebagian kalimat pendek maupun
+                                                    panjang
+                                                    dari artikel lain tanpa menyebutkan sumbernya.</li>
+
+                                                <li>Penulis artikel bertanggung jawab atas konten artikel, dan dokumen
+                                                    yang
+                                                    diunggah dan yang mereka ajukan ke marsiajar.com. Jika artikel yang
+                                                    diajukan oleh penulis masuk ke dalam kategori plagiarisme, maka
+                                                    semua
+                                                    penulis artikel tersebut akan dapat dikenai sanksi berupa tidak
+                                                    diizinkan untuk mempublikasikan artikelnya kembali di platform
+                                                    marsiajar.com ini.</li>
+
+                                                <li>Jika plagiarisme ditemukan dengan kategori menyimpang atau
+                                                    mengandung
+                                                    SARA, dan atau diluar dari ketentuan dan kebijakan yang sudah
+                                                    ditentukan
+                                                    oleh marsiajar.com, maka admin berhak untuk memberikan sanksi sesuai
+                                                    dengan kebijakan tim editorial marsiajar.com.</li>
+                                            </ol>
+                                        </p>
+                                    </div>
+                                    <input type="checkbox" id="agree" v-model="TnC" class="mt-3">
+                                    <label for="agree"> Check here to indicate that you have read and agree to the terms
+                                        of the <a href="#">creator agreement</a>.</label>
+                                    <span class="text-muted" v-if="warningRequired==true"
+                                        style="color: red !important;">Please have attention on this!</span>
+                                </div>
+                            </div>
+                            <div class="Vertical-form">
+                                <div class="form-group my-2">
+                                    <div class="justify-content-end">
+                                        <button type="submit"
+                                            class="btn btn-primary-boxity btn-default btn-block btn-squared px-30"
+                                            data-dismiss="modal">Publish</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-4">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
@@ -213,18 +250,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="Vertical-form">
-                        <div class="form-group my-2">
-                            <div class="justify-content-end">
-                                <button type="submit"
-                                    class="btn btn-primary-boxity btn-default btn-block btn-squared px-30"
-                                    data-dismiss="modal">Publish</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-
         </form>
     </div>
 </template>
@@ -239,12 +266,13 @@
             vueDropzone: vue2Dropzone,
         },
         title() {
-            return 'New Blog';
+            return 'New Content';
         },
         data() {
             return {
                 warningRequired: false,
                 blog: {},
+                TnC: false,
                 categories: {},
                 subcategories: {},
                 categoriesArr: [],
@@ -280,7 +308,7 @@
         methods: {
             async submitHandle(e) {
                 // console.log(e);
-                if (this.blog.description == null) {
+                if (this.blog.description == null || this.TnC == false) {
                     this.warningRequired = true
                 } else {
                     this.$isLoading(true);

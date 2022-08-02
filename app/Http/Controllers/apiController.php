@@ -670,12 +670,7 @@ class apiController extends Controller
         $blog->seo_description = $request->seo_description;
         $blog->views = 0;
         $blog->userid = Auth::id() ?? 1;
-
-        if ($request->type == 'draft') {
-            $blog->status = 0;
-        } else {
-            $blog->status = 1;
-        }
+        $blog->status = 0;
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id() ?? 1;
@@ -705,7 +700,7 @@ class apiController extends Controller
     }
     public function getBlogById($id)
     {
-        return response()->json(blog::with('user', 'image')->find($id));
+        return response()->json(blog::with('user', 'image', 'file')->find($id));
     }
     public function patchBlogById($id, Request $request)
     {

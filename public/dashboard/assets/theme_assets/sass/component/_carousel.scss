@@ -1,13 +1,14 @@
 // Slider Css
 
 .slick-slider {
-  direction: ltr;
+ 
   @include e("single") {
     float: left;
     justify-content: center;
     align-items: center;
     min-height: 150px;
     @extend .bg-gray;
+
     p {
       font-size: 18px;
       font-weight: 500;

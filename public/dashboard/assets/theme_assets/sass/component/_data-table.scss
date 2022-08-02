@@ -241,3 +241,16 @@
 .footable-pagination-wrapper .label-default {
     display: none;
 }
+
+//Fix Icon problem
+.fooicon{
+    font-weight: 900;
+    font-family: 'Font Awesome 5 Free' !important;
+}
+
+.fooicon.fooicon-sort{
+    font-family: "Line Awesome Free"!important;
+}
+.fooicon.fooicon-sort:before{
+    content: '\f338';
+}

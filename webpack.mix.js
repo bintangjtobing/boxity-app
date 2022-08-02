@@ -7,6 +7,7 @@ mix.styles([
     'public/dashboard/assets/vendor_assets/css/bootstrap/bootstrap.css',
     'public/dashboard/assets/vendor_assets/css/daterangepicker.css',
     'public/dashboard/assets/vendor_assets/css/fontawesome.css',
+    'public/dashboard/assets/vendor_assets/css/footable.standalone.min.css',
     'public/dashboard/assets/vendor_assets/css/fullcalendar@5.2.0.css',
     'public/dashboard/assets/vendor_assets/css/jquery-jvectormap-2.0.5.css',
     'public/dashboard/assets/vendor_assets/css/jquery.mCustomScrollbar.min.css',

@@ -3,9 +3,15 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">blog edit</h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Content edit</h2>
                 </div>
             </div>
+        </div>
+        <div class="row my-3">
+            <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-arrow-left"></i></span>
+            <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                    class="fad fa-sync"></i></span>
         </div>
         <form @submit.prevent="submitHandle">
             <div class="row">
@@ -16,7 +22,7 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
-                                            <h6>Blog post title</h6>
+                                            <h6>Content post title</h6>
                                             <input type="text" v-model="blog.title" placeholder="Enter title here"
                                                 class="form-control mt-2">
                                         </div>
@@ -25,8 +31,9 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-lg-12">
-                                            <h6 class="mb-2">Blog article</h6>
-                                            <editor placeholder="Blog article write here..." v-model="blog.description"
+                                            <h6 class="mb-2">Content article</h6>
+                                            <editor placeholder="Content article write here..."
+                                                v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
                                                                 height: 600,
                                                                 menubar: true,
@@ -65,26 +72,41 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card card-Vertical card-default card-md mb-4" v-if="blog.file">
+                        <div class="card-body pb-md-30">
+                            <div class="Vertical-form">
+                                <div class="form-group my-2">
+                                    <h4>Preview document / image</h4>
+                                    <div class="single-post-txt">
+                                        <iframe :src="blog.file.files" align="center" height="620" width="100%"
+                                            frameborder="0" scrolling="auto"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="card card-Vertical card-default card-md mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <h4>Published?</h4>
-                                    <select class="form-control form-control-default my-1" v-model="blog.type">
-                                        <option value="draft">
-                                            Draft
-                                        </option>
-                                        <option value="published">
-                                            Published
+                                    <h4>Status of post</h4>
+                                    <small class="form-text text-muted" v-if="blog.status==0">Current status of this
+                                        post
+                                        is
+                                        <b><abbr title="Pending">waiting for approval or still in
+                                                draft</abbr></b>.</small>
+                                    <small class="form-text text-muted" v-if="blog.status==1">Current status of this
+                                        post
+                                        is
+                                        approved and published!</small>
+                                    <select class="form-control form-control-default my-1" v-model="blog.status"
+                                        v-if="this.users.role == 'admin'">
+                                        <option :value="1">
+                                            Approve and published
                                         </option>
                                     </select>
-                                    <small id="blog_is_published_help" class="form-text text-muted">Should this be
-                                        published? If not, then it
-                                        won't be
-                                        publicly viewable.
-                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -125,12 +147,13 @@
                                         </option>
                                     </select>
                                     <!-- Modal -->
-                                    <div class="modal fade new-member" id="newCategory" role="dialog" tabindex="-1"
+                                    <div class=" modal fade new-member" id="newCategory" role="dialog" tabindex="-1"
                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content modal-lg radius-xl">
                                                 <div class="modal-header">
-                                                    <h6 class="modal-title fw-500" id="staticBackdropLabel">New category
+                                                    <h6 class="modal-title fw-500" id="staticBackdropLabel">New
+                                                        category
                                                     </h6>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
@@ -214,11 +237,12 @@
             vueDropzone: vue2Dropzone,
         },
         title() {
-            return 'Edit blog';
+            return 'Edit Content';
         },
         data() {
             return {
                 blog: {},
+                users: {},
                 categories: {},
                 subcategories: {},
                 categoriesArr: [],
@@ -238,8 +262,13 @@
         created() {
             this.loadDataBlog();
             this.getCategories();
+            this.getUserLogged();
         },
         methods: {
+            async getUserLogged() {
+                const user = await axios.get('/getUserLoggedIn');
+                this.users = user.data;
+            },
             async loadDataBlog() {
                 // this.$Progress.start();
                 this.$isLoading(true);
@@ -294,7 +323,14 @@
                 const respSub = await axios.get('/api/sub-categories');
                 this.categoriesGet = resp.data;
                 this.subcategoriesGet = respSub.data;
-            }
+            },
+            routerBack() {
+                this.$router.go(-1);
+            },
+            routerRefresh() {
+                this.loadDataBlog();
+                this.getCategories();
+            },
         },
     }
 

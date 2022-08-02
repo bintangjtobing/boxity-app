@@ -38,6 +38,7 @@
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery/jquery-ui.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/bootstrap/popper.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/bootstrap/bootstrap.min.js')!!}"></script>
+    <script src="{!!asset('dashboard/assets/vendor_assets/js/moment/moment.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/accordion.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/autoComplete.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/Chart.min.js')!!}"></script>
@@ -46,6 +47,8 @@
     <script src="{!!asset('dashboard/assets/vendor_assets/js/drawer.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/dynamicBadge.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/dynamicCheckbox.js')!!}"></script>
+    <script src="{!!asset('dashboard/assets/vendor_assets/js/feather.min.js')!!}"></script>
+    <script src="{!!asset('dashboard/assets/vendor_assets/js/footable.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/fullcalendar@5.2.0.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/google-chart.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/jquery-jvectormap-2.0.5.min.js')!!}"></script>
@@ -68,13 +71,15 @@
     <script src="{!!asset('dashboard/assets/vendor_assets/js/slick.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/trumbowyg.min.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/vendor_assets/js/wickedpicker.min.js')!!}"></script>
+    <script src="{!!asset('dashboard/assets/vendor_assets/js/drag-drop.js')!!}"></script>
+    <script src="{!!asset('dashboard/assets/vendor_assets/js/footable.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/full-calendar.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/googlemap-init.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/icon-loader.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/jvectormap-init.js')!!}"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/leaflet-init.js')!!}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="{!!asset('dashboard/assets/theme_assets/js/main.js')!!}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
 

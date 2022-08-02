@@ -3,11 +3,17 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="breadcrumb-main">
-                    <h2 class="text-capitalize fw-700 breadcrumb-title">Blog management</h2>
+                    <h2 class="text-capitalize fw-700 breadcrumb-title">Content management</h2>
                     <div class="action-btn">
                         <router-link to="/blog-management/create" class="btn btn-sm btn-primary-boxity btn-add">
-                            <i class="las la-plus fs-16"></i>Create blog</router-link>
+                            <i class="las la-plus fs-16"></i> Create Content</router-link>
                     </div>
+                </div>
+                <div class="row mt-4">
+                    <span @click="routerBack" class="btn btn-circle-light-boxity fa-center"><i
+                            class="fad fa-arrow-left"></i></span>
+                    <span @click="routerRefresh" class="btn btn-circle-light-boxity fa-center"><i
+                            class="fad fa-sync"></i></span>
                 </div>
                 <div class="userDatatable global-shadow border p-15 bg-white radius-xl w-100 my-30">
                     <div class="table-responsive">
@@ -20,10 +26,10 @@
                             <template v-slot:[`item.status`]="{item}">
                                 <span class="rounded-pill userDatatable-content-status color-success
                                             bg-opacity-success active" v-if="item.status == 1"><i
-                                        class="fas fa-rss"></i>&nbsp; Published</span>
+                                        class="fas fa-check"></i>&nbsp; Approved & Published</span>
                                 <span class="rounded-pill userDatatable-content-status color-primary
                                             bg-opacity-primary active" v-if="item.status == 0"><i
-                                        class="fas fa-file-lines"></i>&nbsp; Draft</span>
+                                        class="fas fa-file"></i>&nbsp; Draft / Waiting for approval</span>
                             </template>
                             <template v-slot:item.title="{ item }">
                                 <div class="userDatatable-inline-title my-3">
@@ -46,6 +52,162 @@
                                     <i class="fad fa-trash"></i></a>
                             </template>
                         </v-data-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mb-25">
+                <div class="card card-overview border-0">
+                    <div class="card-header">
+                        <h6>Content Engagement Overview</h6>
+                        <div class="card-extra">
+                            <div class="card-tab btn-group nav nav-tabs">
+                                <a class="btn btn-xs btn-white active border-light" id="f_today-tab" data-toggle="tab"
+                                    href="#f_overview-today" role="tab" area-controls="f_overview"
+                                    aria-selected="true">Today</a>
+                                <a class="btn btn-xs btn-white border-light" id="f_week-tab" data-toggle="tab"
+                                    href="#f_overview-week" role="tab" area-controls="f_overview"
+                                    aria-selected="false">Week</a>
+                                <a class="btn btn-xs btn-white border-light" id="f_month-tab" data-toggle="tab"
+                                    href="#f_overview-month" role="tab" area-controls="f_overview"
+                                    aria-selected="false">Month</a>
+                                <a class="btn btn-xs btn-white border-light" id="f_year-tab" data-toggle="tab"
+                                    href="#f_overview-year" role="tab" area-controls="f_overview"
+                                    aria-selected="false">Year</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pb-0">
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="f_overview-today" role=""
+                                aria-labelledby="f_overview-tab">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card-overview__left">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12 col-md-6">
+                                                    <div class="overview-single">
+                                                        <div class="overview-content">
+                                                            <h1>Rp. 2,845</h1>
+                                                            <p>Earnings</p>
+                                                            <div>
+                                                                <span class="color-success"><i
+                                                                        data-feather="trending-up"></i>
+                                                                    <strong>25%</strong></span>
+                                                                <small>Rp. 2,641 (prev)</small>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="overview-single__chart">
+                                                                    <div class="parentContainer">
+                                                                        <div>
+                                                                            <canvas id="lineChartOne"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card-overview__right">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12 col-md-6">
+                                                    <div class="overview-single">
+
+
+
+
+
+                                                        <div class="overview-content">
+                                                            <h1>25,142</h1>
+                                                            <p>Total Content Views</p>
+                                                            <div>
+                                                                <span class="color-danger"><i
+                                                                        data-feather="trending-down"></i>
+                                                                    <strong>15%</strong></span>
+                                                                <small>2,641 (prev)</small>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- <div class="overview-single__chart">
+                                                                    <div class="parentContainer">
+
+
+                                                                        <div>
+                                                                            <canvas id="lineChartThree"></canvas>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="f_overview-week" role="" aria-labelledby="f_overview-tab">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card-overview__left">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12 col-md-6">
+                                                    <div class="overview-single">
+                                                        <div class="overview-content">
+                                                            <h1>25,845</h1>
+                                                            <p>Engaged Users</p>
+                                                            <div>
+                                                                <span class="color-success"><i
+                                                                        data-feather="trending-up"></i>
+                                                                    <strong>25%</strong></span>
+                                                                <small>20,641 (prev)</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card-overview__right">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-12 col-md-6">
+                                                    <div class="overview-single">
+                                                        <div class="overview-content">
+                                                            <h1>9,142</h1>
+                                                            <p>Total Page Likes</p>
+                                                            <div>
+                                                                <span class="color-danger"><i
+                                                                        data-feather="trending-down"></i>
+                                                                    <strong>23%</strong></span>
+                                                                <small>20,641 (prev)</small>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- <div class="overview-single__chart">
+                                                                    <div class="parentContainer">
+
+
+                                                                        <div>
+                                                                            <canvas id="lineChartSeven"></canvas>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +238,7 @@
             'editor': Editor
         },
         title() {
-            return 'Blog';
+            return 'Content';
         },
         data() {
             return {
@@ -184,6 +346,12 @@
                         }
                     });
                 });
+            },
+            routerBack() {
+                this.$router.go(-1);
+            },
+            routerRefresh() {
+                this.loadBlogs();
             },
         },
     }
