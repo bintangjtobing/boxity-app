@@ -71,6 +71,8 @@ use App\itemsPurchase;
 use App\documentsDelivery;
 use App\itemOndocumentsDelivery;
 use App\Mail\newDocumentDelivery;
+use App\Mail\makeNewContent;
+use App\Mail\makeNewContentToCreator;
 use App\itemsSales;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\approveIssueNotification;
@@ -626,7 +628,7 @@ class apiController extends Controller
         if (Auth::user()->role == 'admin') {
             return response()->json(blog::with('user', 'earnings', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
         } else {
-            return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->orderBy('created_at', 'DESC')->get());
+            return response()->json(blog::with('user', 'earnings', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->orderBy('created_at', 'DESC')->get());
         }
     }
     public function sumViewsBlog()
@@ -706,6 +708,13 @@ class apiController extends Controller
             ]);
             $blog->save();
         }
+        $blogs = blog::with('user')->find($blog->id);
+        $admin = User::where('role', 'admin')->get();
+        $creator = User::find(Auth::id());
+        foreach ($admin as $admin) {
+            Mail::to($admin->email)->send(new makeNewContent($blogs, $admin));
+        }
+        Mail::to(Auth::user()->email)->send(new makeNewContentToCreator($blogs, $creator));
         // $blog->save();
         $file = DB::table('blog_images')
             ->whereNull('blog_id')

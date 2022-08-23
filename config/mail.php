@@ -87,6 +87,9 @@ return [
     'username' => env('MAIL_USERNAME'),
 
     'password' => env('MAIL_PASSWORD'),
+    'client_site' => env('CLIENT_SITE'),
+    'client_name' => env('CLIENT_NAME'),
+    'client_phone' => env('CLIENT_PHONE'),
 
     /*
     |--------------------------------------------------------------------------

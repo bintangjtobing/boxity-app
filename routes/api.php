@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\apiController;
+use App\User;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -17,7 +18,6 @@ Route::get('/test-pdf', function () {
     return $pdf->stream();
 });
 Route::get('/customer-connected', 'apiController@checkCustomerConnected');
-
 
 // Users API
 Route::get('/users', 'apiController@getUsers');

@@ -80,7 +80,7 @@
                                         <h3 class="mb-3">Please read this terms and conditions.</h3>
                                         <p>
                                             <ol>
-                                                <li>Pengajar hanya boleh mengunggah konten milik mereka sendiri atau
+                                                <li>Pembuat hanya boleh mengunggah konten milik mereka sendiri atau
                                                     milik
                                                     orang lain yang memiliki izin untuk menggunakannya. Artinya, mereka
                                                     tidak boleh mengunggah konten/artikel yang bukan hasil karyanya,
@@ -95,19 +95,22 @@
 
                                                 <li>Penulis artikel bertanggung jawab atas konten artikel, dan dokumen
                                                     yang
-                                                    diunggah dan yang mereka ajukan ke marsiajar.com. Jika artikel yang
+                                                    diunggah dan yang mereka ajukan ke platform ini.
+                                                    Jika artikel yang
                                                     diajukan oleh penulis masuk ke dalam kategori plagiarisme, maka
                                                     semua
                                                     penulis artikel tersebut akan dapat dikenai sanksi berupa tidak
-                                                    diizinkan untuk mempublikasikan artikelnya kembali di platform
-                                                    marsiajar.com ini.</li>
+                                                    diizinkan untuk mempublikasikan artikelnya kembali di platform ini.
+                                                </li>
 
                                                 <li>Jika plagiarisme ditemukan dengan kategori menyimpang atau
                                                     mengandung
                                                     SARA, dan atau diluar dari ketentuan dan kebijakan yang sudah
                                                     ditentukan
-                                                    oleh marsiajar.com, maka admin berhak untuk memberikan sanksi sesuai
-                                                    dengan kebijakan tim editorial marsiajar.com.</li>
+                                                    oleh pihak platform yang tersedia, maka admin berhak untuk
+                                                    memberikan
+                                                    sanksi sesuai
+                                                    dengan kebijakan tim editorial platform.</li>
                                             </ol>
                                         </p>
                                     </div>
