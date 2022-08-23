@@ -647,6 +647,14 @@ class apiController extends Controller
             return response()->json(blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning'));
         }
     }
+    public function countContent()
+    {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(blog::where('status', 1)->count());
+        } else {
+            return response()->json(blog::where('userid', Auth::id())->where('status', 1)->count());
+        }
+    }
     public function imagesInBlog(Request $request)
     {
         $uploadFile = Cloudinary::upload($request->file('file')->getRealPath(), [

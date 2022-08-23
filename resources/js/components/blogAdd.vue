@@ -77,40 +77,13 @@
                                 <div class="form-group my-2">
                                     <div
                                         style="padding:1.5rem; overflow-y: scroll; height: 150px; border: 1px solid rgba(0,0,0,.5); border-radius: 0.25rem;">
-                                        <h3 class="mb-3">Please read this terms and conditions.</h3>
+                                        <h3 class="mb-3">Syarat dan ketentuan</h3>
                                         <p>
                                             <ol>
-                                                <li>Pembuat hanya boleh mengunggah konten milik mereka sendiri atau
-                                                    milik
-                                                    orang lain yang memiliki izin untuk menggunakannya. Artinya, mereka
-                                                    tidak boleh mengunggah konten/artikel yang bukan hasil karyanya,
-                                                    atau
-                                                    menggunakan konten/artikel berhak cipta milik orang lain, seperti
-                                                    dokumen, gambar, dan artikel tanpa memperoleh izin yang diperlukan.
+                                                <li>Dengan mengunggah dokumen ini, saya bertanggung jawab atas keaslian dari dokumen yang diunggah ke platform  ini.
                                                 </li>
 
-                                                <li>Saya setuju untuk tidak menjiplak sebagian kalimat pendek maupun
-                                                    panjang
-                                                    dari artikel lain tanpa menyebutkan sumbernya.</li>
-
-                                                <li>Penulis artikel bertanggung jawab atas konten artikel, dan dokumen
-                                                    yang
-                                                    diunggah dan yang mereka ajukan ke platform ini.
-                                                    Jika artikel yang
-                                                    diajukan oleh penulis masuk ke dalam kategori plagiarisme, maka
-                                                    semua
-                                                    penulis artikel tersebut akan dapat dikenai sanksi berupa tidak
-                                                    diizinkan untuk mempublikasikan artikelnya kembali di platform ini.
-                                                </li>
-
-                                                <li>Jika plagiarisme ditemukan dengan kategori menyimpang atau
-                                                    mengandung
-                                                    SARA, dan atau diluar dari ketentuan dan kebijakan yang sudah
-                                                    ditentukan
-                                                    oleh pihak platform yang tersedia, maka admin berhak untuk
-                                                    memberikan
-                                                    sanksi sesuai
-                                                    dengan kebijakan tim editorial platform.</li>
+                                                <li>Jika di lain hari ditemukan bahwa terdapat pihak yang mengakui atau menyatakan kepemilikan dari konten yang diunggah, maka saya akan bertanggung jawab penuh terhadap hukum yang berlaku dan platform ini tidak memiliki keterkaitan dengan hal tersebut.</li>
                                             </ol>
                                         </p>
                                     </div>

@@ -42,7 +42,7 @@
                                     <div class="tab-pane fade active show" id="f_overview-today" role=""
                                         aria-labelledby="f_overview-tab">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="card-overview__left">
                                                     <div class="row">
                                                         <div class="col-xl-6 col-lg-12 col-md-6">
@@ -69,7 +69,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="card-overview__right">
                                                     <div class="row">
                                                         <div class="col-xl-6 col-lg-12 col-md-6">
@@ -81,7 +81,45 @@
 
                                                                 <div class="overview-content">
                                                                     <h1>{{sumViews|toDecimal}}</h1>
-                                                                    <p>Total Content Views</p>
+                                                                    <p>Total Views</p>
+                                                                    <div>
+                                                                        <span class="color-success"><i
+                                                                                data-feather="trending-up"></i>
+                                                                            <strong>100%</strong></span>
+                                                                        <small>0 (prev)</small>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- <div class="overview-single__chart">
+                                                                    <div class="parentContainer">
+
+
+                                                                        <div>
+                                                                            <canvas id="lineChartThree"></canvas>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="card-overview__right">
+                                                    <div class="row">
+                                                        <div class="col-xl-6 col-lg-12 col-md-6">
+                                                            <div class="overview-single">
+
+
+
+
+
+                                                                <div class="overview-content">
+                                                                    <h1>{{countContent|toDecimal}}</h1>
+                                                                    <p>Total Content</p>
                                                                     <div>
                                                                         <span class="color-success"><i
                                                                                 data-feather="trending-up"></i>
@@ -203,7 +241,7 @@
                                 <span>{{item.views}} Views</span>
                             </template>
                             <template v-slot:[`item.earnings.earning`]="{item}">
-                                <span v-if="item.earnings !== null">Rp. {{item.earnings.earning}}</span>
+                                <span v-if="item.earnings !== null">Rp. {{item.earnings.earning|toDecimal}}</span>
                                 <span v-else>Rp. 0</span>
                             </template>
                             <template v-slot:item.actions="{item}">
@@ -281,6 +319,7 @@
                 }],
                 sumViews: 0,
                 sumEarning: 0,
+                countContent: 0,
                 // end datatable
             }
         },
@@ -300,6 +339,8 @@
                 this.sumViews = respSumViews.data;
                 const respSumEarn = await axios.get('/api/blogs/sum-earnings');
                 this.sumEarning = respSumEarn.data;
+                const respCountContent = await axios.get('/api/blogs/count');
+                this.countContent = respCountContent.data;
                 // this.$Progress.finish();
                 this.$isLoading(false);
             },
