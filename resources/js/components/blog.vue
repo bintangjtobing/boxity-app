@@ -202,6 +202,10 @@
                             <template v-slot:[`item.views`]="{item}">
                                 <span>{{item.views}} Views</span>
                             </template>
+                            <template v-slot:[`item.earnings.earning`]="{item}">
+                                <span v-if="item.earnings !== null">Rp. {{item.earnings.earning}}</span>
+                                <span v-else>Rp. 0</span>
+                            </template>
                             <template v-slot:item.actions="{item}">
                                 <router-link :to="`/edit/blog/${item.id}`" class="edit">
                                     <i class="fad fa-eye"></i></router-link>
@@ -266,6 +270,9 @@
                 }, {
                     text: 'Views',
                     value: 'views'
+                }, {
+                    text: 'Earnings',
+                    value: 'earnings.earning'
                 }, {
                     text: 'Actions',
                     value: 'actions',

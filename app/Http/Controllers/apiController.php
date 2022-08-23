@@ -624,7 +624,7 @@ class apiController extends Controller
     public function getBlog()
     {
         if (Auth::user()->role == 'admin') {
-            return response()->json(blog::with('user', 'earning', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
+            return response()->json(blog::with('user', 'earnings', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->orderBy('created_at', 'DESC')->get());
         }

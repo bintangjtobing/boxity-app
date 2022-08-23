@@ -25,7 +25,7 @@ class blog extends Model
     {
         return $this->belongsTo(blogImages::class, 'id', 'blog_id');
     }
-    public function earning()
+    public function earnings()
     {
         return $this->belongsTo(blogEarnings::class, 'id', 'blogid');
     }
