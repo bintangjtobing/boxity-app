@@ -36,6 +36,12 @@
     MAIL_USERNAME=de6b1c11b67b43 <- Your mail username / email
     MAIL_PASSWORD=7badd9a3876f36 <- Your mail password
     MAIL_ENCRYPTION=tls
+    
+    SET CLIENT CONFIG
+    CLIENT_NAME=xxx
+    CLIENT_SITE=xxx
+    CLIENT_PHONE=xxxx
+    CLIENT_ADDRESS='xxx'
     ```
 5. Install composer by running
     ```sh
