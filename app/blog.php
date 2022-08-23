@@ -25,6 +25,10 @@ class blog extends Model
     {
         return $this->belongsTo(blogImages::class, 'id', 'blog_id');
     }
+    public function earning()
+    {
+        return $this->belongsTo(blogEarnings::class, 'id', 'blogid');
+    }
     public function subcategories()
     {
         return $this->belongsTo(subCategories::class, 'subcategory', 'id');

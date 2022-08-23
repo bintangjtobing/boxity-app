@@ -36,6 +36,7 @@ use App\id_domisilis;
 use App\inventoryItem;
 use App\blogImages;
 use App\blogFiles;
+use App\blogEarnings;
 use App\blogCategories;
 use App\itemGroup;
 use App\jobvacancy;
@@ -623,9 +624,25 @@ class apiController extends Controller
     public function getBlog()
     {
         if (Auth::user()->role == 'admin') {
-            return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
+            return response()->json(blog::with('user', 'earning', 'image', 'file', 'categories', 'subcategories')->orderBy('created_at', 'DESC')->get());
         } else {
             return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->orderBy('created_at', 'DESC')->get());
+        }
+    }
+    public function sumViewsBlog()
+    {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(blog::sum('views'));
+        } else {
+            return response()->json(blog::with('user', 'image', 'file', 'categories', 'subcategories')->where('userid', Auth::id())->sum('views'));
+        }
+    }
+    public function sumEarningsBlog()
+    {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(blogEarnings::sum('earning'));
+        } else {
+            return response()->json(blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning'));
         }
     }
     public function imagesInBlog(Request $request)

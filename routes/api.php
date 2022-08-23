@@ -71,6 +71,8 @@ Route::patch('/career/{id}', 'apiController@updateJob');
 
 // Blog API
 Route::get('/blogs', 'apiController@getBlog');
+Route::get('/blogs/sum-view', 'apiController@sumViewsBlog');
+Route::get('/blogs/sum-earnings', 'apiController@sumEarningsBlog');
 Route::post('/blogs/files', 'apiController@filesOnBlog');
 Route::post('/blogs/images', 'apiController@imagesInBlog')->name('dropzoneImages');
 Route::get('/blogs/{id}', 'apiController@getBlogById');

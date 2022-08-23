@@ -36,6 +36,17 @@ Route::get('/sign-out', function (Request $request) {
     return redirect('/');
 })->name('logout');
 
+Route::get('/test-n', function () {
+    $n = 3000;
+    $limit = 1000;
+
+    $total = 0;
+    for ($n; $n >= $limit; $n /= $limit) {
+        $total += 1;
+    }
+    return response()->json($total);
+});
+
 Route::get('/print/report-warehouse', 'apiController@printReportWarehouse');
 
 // Auth url
