@@ -33,7 +33,7 @@ class makeNewContentToCreator extends Mailable
     public function build()
     {
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@' . config('mail.client_site'), 'Content Report ')
+        return $this->from($string . '@' . config('mail.client_site'), 'Content Report '. config('mail.client_name'))
             ->subject('Congratulations! Your content is awaiting to approved by administrator/moderator of ' . config('mail.client_name'))
             ->markdown('emails.newContentToCreator');
     }

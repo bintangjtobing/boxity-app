@@ -33,7 +33,7 @@ class makeNewContent extends Mailable
     public function build()
     {
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@' . config('mail.client_site'), 'Content Report')
+        return $this->from($string . '@' . config('mail.client_site'), 'Content Report '. config('mail.client_name'))
             ->subject('[Content#00' . $this->blogs->id . '] Important: New content have been made to our system.')
             ->markdown('emails.newContent');
     }
