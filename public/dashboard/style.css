@@ -2707,7 +2707,7 @@ table.table-rounded tbody tr td,
 .fc-theme-standard .fc-scrollgrid,
 .c-event-form .form-control-md,
 .payment-method-card {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .border-deep,
@@ -4452,7 +4452,7 @@ ul {
     box-shadow: 0 8px 10px #9299b815;
     padding: 10px 12px !important;
     border-radius: 3px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     min-width: 80px;
     -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease;
@@ -4585,7 +4585,7 @@ ul {
     font-weight: 600;
     width: 100%;
     padding: 10px 18px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
 }
 
@@ -4787,7 +4787,7 @@ ul {
 
 .daterangepicker.show-calendar .drp-buttons .cancelBtn {
     color: #5a5f7d;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 5px;
 }
 
@@ -5475,7 +5475,7 @@ ul {
     right: 40px;
     height: 50px;
     background-color: #fff;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 6px;
 }
 
@@ -5956,7 +5956,7 @@ ul {
     width: 36px;
     height: 36px;
     z-index: 9;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-left: 0;
     border-radius: 0 5px 5px 0;
 }
@@ -7630,7 +7630,7 @@ ul {
 
 .card.card-bordered {
     border-radius: 4px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .card.card-bordered .card-header {
@@ -8263,7 +8263,7 @@ table.table-rounded tbody tr td.card .card-body,
 }
 
 .feature-cards7 .banner-card.banner-card-border {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .feature-cards7 .banner-card.banner-card-border .banner-card__top .banner-card__title {
@@ -10658,7 +10658,7 @@ table.table-rounded tbody tr td.card .card-body,
     text-transform: capitalize;
     padding: 8px 14px;
     border-radius: 5px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .ffw button:focus {
@@ -10666,7 +10666,7 @@ table.table-rounded tbody tr td.card .card-body,
 }
 
 .ffw button.friends-follow {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .ffw button.friends-follow svg {
@@ -11304,7 +11304,7 @@ table.table-rounded tbody tr td.card .card-body,
 
 .signUp-socialBtn li button {
     box-shadow: 0px 5px 15px #9299b81a;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     background: #f8f9fb;
     white-space: nowrap;
 }
@@ -11564,7 +11564,7 @@ table.table-rounded tbody tr td.card .card-body,
 
 /* table top region */
 .table-top-regions {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     max-height: 289px;
     max-width: 300px;
     overflow-y: auto;
@@ -13695,7 +13695,7 @@ input.is-invalid~label::after {
 
 .atbd-date-ranger {
     margin: 20px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 5px;
 }
 
@@ -14671,7 +14671,7 @@ input.is-invalid~label::after {
 }
 
 .drawer-profile-box {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 3px;
 }
 
@@ -15003,7 +15003,7 @@ select.select-arrow-none::-ms-expand,
 }
 
 .tooltip .tooltip-inner {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     box-shadow: 0 8px 15px rgba(146, 153, 184, 0.15);
 }
 
@@ -15922,7 +15922,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 }
 
 .fc-theme-standard .fc-list {
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 @media only screen and (max-width: 1599px) {
@@ -16120,7 +16120,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
     text-transform: capitalize;
     font-size: 13px;
     font-weight: 500;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     margin-right: 30px;
 }
 
@@ -16134,7 +16134,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 #full-calendar .fc-toolbar-chunk .fc-button.fc-prev-button,
 #full-calendar .fc-toolbar-chunk .fc-button.fc-next-button {
     padding: 0.25em 0.563em;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
 }
 
@@ -17696,7 +17696,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 
 .product-cart__cupon input {
     width: 180px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     margin-right: 10px;
     height: 44px;
 }
@@ -17826,7 +17826,7 @@ table.fc-scrollgrid thead .fc-scroller-harness .fc-scroller {
 
 .order-summery {
     border-radius: 20px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .order-summery .card-body {
@@ -19342,7 +19342,7 @@ table.table-rounded tbody tr td:last-child {
 
 .add-product {
     border-radius: 20px;
-    border: 1px solid #F1F2F6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     background-color: #f8f9fb;
     padding: 30px;
 }
@@ -20113,7 +20113,7 @@ table.table-rounded tbody tr td:last-child {
 .application-faqs .panel {
     border-radius: 5px;
     margin-bottom: 5px;
-    border: 1px solid #F1F2F6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .application-faqs .button-group button {
@@ -21406,7 +21406,7 @@ table.table-rounded tbody tr td:last-child {
     border-radius: 6px;
     padding: 30px;
     transition: all 0.3s ease;
-    border: 1px solid #F1F2F6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .banner-feature--15:hover {
@@ -23908,7 +23908,7 @@ table.table-rounded tbody tr td:last-child {
 }
 
 .formElement-editor .trumbowyg-box {
-    border: 1px solid #F1F2F6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
 }
 
@@ -24161,7 +24161,7 @@ table.table-rounded tbody tr td:last-child {
 }
 
 .footable.adv-table .pagination>li>a {
-    border: 1px solid #F1F2F6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     width: 32px;
     height: 32px;
     display: flex;
@@ -25290,7 +25290,7 @@ table.table-rounded tbody tr td:last-child {
     margin: 10px 5px;
     flex: 0 0 20%;
     padding: 10px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(146, 153, 184, 0.1);
 }
@@ -25615,7 +25615,7 @@ table.table-rounded tbody tr td:last-child {
 .reply-form {
     padding: 10px 30px 30px 30px;
     border-radius: 5px;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
     box-shadow: 0 10px 40px rgba(146, 153, 184, 0.15);
 }
 
@@ -25981,7 +25981,7 @@ table.table-rounded tbody tr td:last-child {
     right: 0;
     top: auto;
     left: auto;
-    border: 1px solid #f1f2f6;
+    border: 1px solid 1px solid rgba(0, 0, 0, .3);
 }
 
 .jvectormap-container .jvectormap-zoomin {
@@ -26302,3 +26302,9 @@ th,
 td {
     border-right: 1px solid #f3f3f3;
 }
+
+.form-control {
+    border: 1px solid rgba(0, 0, 0, .3);
+}
+p img{
+max-width: 100%;height:auto;}

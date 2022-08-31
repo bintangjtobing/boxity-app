@@ -86,6 +86,7 @@ import userGuide from './components/userGuide.vue';
 import notFoundPage from './components/notFoundPage.vue';
 import directMessage from './components/dm.vue';
 import settings from './components/settings.vue';
+import insight from './components/insight.vue';
 import customers from './components/customers.vue';
 import customerForm from './components/customersForm.vue';
 import suppliers from './components/suppliers.vue';
@@ -370,6 +371,10 @@ const routes = [{
         name: 'settings',
         path: '/settings',
         component: settings
+    }, {
+        name: 'insight-overview',
+        path: '/insight/overview',
+        component: insight
     }, {
         name: 'suppliers',
         path: '/suppliers',

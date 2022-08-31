@@ -80,10 +80,14 @@
                                         <h3 class="mb-3">Syarat dan ketentuan</h3>
                                         <p>
                                             <ol>
-                                                <li>Dengan mengunggah dokumen ini, saya bertanggung jawab atas keaslian dari dokumen yang diunggah ke platform  ini.
+                                                <li>Dengan mengunggah dokumen ini, saya bertanggung jawab atas keaslian
+                                                    dari dokumen yang diunggah ke platform ini.
                                                 </li>
 
-                                                <li>Jika di lain hari ditemukan bahwa terdapat pihak yang mengakui atau menyatakan kepemilikan dari konten yang diunggah, maka saya akan bertanggung jawab penuh terhadap hukum yang berlaku dan platform ini tidak memiliki keterkaitan dengan hal tersebut.</li>
+                                                <li>Jika di lain hari ditemukan bahwa terdapat pihak yang mengakui atau
+                                                    menyatakan kepemilikan dari konten yang diunggah, maka saya akan
+                                                    bertanggung jawab penuh terhadap hukum yang berlaku dan platform ini
+                                                    tidak memiliki keterkaitan dengan hal tersebut.</li>
                                             </ol>
                                         </p>
                                     </div>
@@ -161,6 +165,9 @@
                                             {{categoriesGet.categories_name}}
                                         </option>
                                     </select>
+                                    <span class="text-muted" v-if="warningRequired==true"
+                                        style="color: red !important;">Categories is
+                                        required!</span>
                                     <!-- Modal -->
                                     <div class="modal fade new-member" id="newCategory" role="dialog" tabindex="-1"
                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -222,6 +229,9 @@
                                             {{subcategoriesGet.sub_categories_name}}
                                         </option>
                                     </select>
+                                    <span class="text-muted" v-if="warningRequired==true"
+                                        style="color: red !important;">Sub Categories is
+                                        required!</span>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +294,8 @@
         methods: {
             async submitHandle(e) {
                 // console.log(e);
-                if (this.blog.description == null || this.TnC == false) {
+                if (this.blog.description == null || this.TnC == false || this.blog.category || this.blog
+                    .subcategory) {
                     this.warningRequired = true
                 } else {
                     this.$isLoading(true);

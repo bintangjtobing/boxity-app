@@ -64,6 +64,10 @@
                                                         <i class="fad fa-user-cog"></i> Profile</router-link>
                                                 </li>
                                                 <li>
+                                                    <router-link to="/insight/overview">
+                                                        <i class="fad fa-analytics"></i> Insight</router-link>
+                                                </li>
+                                                <li>
                                                     <router-link to="/settings">
                                                         <i class="fad fa-cog"></i> Settings</router-link>
                                                 </li>
@@ -441,7 +445,7 @@
                                 </menuCollapse>
                             </li>
                         </div>
-                        <div>
+                        <div v-if="permission.includes('ViewWarehouse')">
                             <label>
                                 <menuCollapse v-bind=" { isSidebar: sidebar, title: 'Report Card' , icon: 'receipt_long' ,
                             listId:'menuCollapse15' }">
@@ -451,7 +455,8 @@
                                                 <span>Stock Report</span>
                                             </router-link>
                                         </li> -->
-                                        <li data-bs-toggle="tooltip" data-bs-placement="right" title="Warehouse Report">
+                                        <li v-if="permission.includes('ViewWarehouse')" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Warehouse Report">
                                             <router-link style="margin:0; width:100%" :to="'/report/warehouse'">
                                                 <span>Warehouse Report</span>
                                             </router-link>
