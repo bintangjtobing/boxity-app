@@ -35,7 +35,7 @@ class doneReset extends Mailable
         $company = company_details::first();
 
         $string = base64_encode(random_bytes(10));
-        return $this->from($string . '@' . $company->site, $company->company_name . 'Support System')
+        return $this->from($string . '@' . $company->site, $company->company_name . ' Support System')
             ->subject('You have been successfully reset your password!')
             ->markdown('emails.doneReset');
     }

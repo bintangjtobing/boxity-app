@@ -3092,7 +3092,7 @@ class apiController extends Controller
         $blog->organized_by = $request->organized_by;
         $blog->type = $request->type;
         $blog->userid = Auth::id() ?? 1;
-        $blog->status = $request->status;
+        $blog->status = $request->status ?? 1;
         // Save to logs
         $saveLogs = new userLogs();
         $saveLogs->userId = Auth::id() ?? 1;
