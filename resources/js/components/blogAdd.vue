@@ -31,12 +31,13 @@
                                             <editor placeholder="Content article write here..."
                                                 v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
+                                                                file_picker_types: 'file image media',
                                                                 height: 600,
                                                                 menubar: true,
                                                                 branding: false,
-                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
+                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code media',
                                                                 toolbar:
-                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
+                                                                    'undo redo | fontselect | formatselect | removeformat bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | checklist code',
                                                         }" />
                                             <span class="text-muted" v-if="warningRequired==true"
                                                 style="color: red !important;">Article is
@@ -75,25 +76,13 @@
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
-                                    <div
-                                        style="padding:1.5rem; overflow-y: scroll; height: 150px; border: 1px solid rgba(0,0,0,.5); border-radius: 0.25rem;">
-                                        <h3 class="mb-3">Syarat dan ketentuan</h3>
-                                        <p>
-                                            <ol>
-                                                <li>Dengan mengunggah dokumen ini, saya bertanggung jawab atas keaslian
-                                                    dari dokumen yang diunggah ke platform ini.
-                                                </li>
-
-                                                <li>Jika di lain hari ditemukan bahwa terdapat pihak yang mengakui atau
-                                                    menyatakan kepemilikan dari konten yang diunggah, maka saya akan
-                                                    bertanggung jawab penuh terhadap hukum yang berlaku dan platform ini
-                                                    tidak memiliki keterkaitan dengan hal tersebut.</li>
-                                            </ol>
-                                        </p>
-                                    </div>
-                                    <input type="checkbox" id="agree" v-model="TnC" class="mt-3">
-                                    <label for="agree"> Check here to indicate that you have read and agree to the terms
-                                        of the <a href="#">creator agreement</a>.</label>
+                                    <input type="checkbox" id="agree" v-model="TnC" v-if="this.TnC == true" disabled
+                                        class="mt-3">
+                                    <input type="checkbox" id="agree" v-model="TnC" v-else class="mt-3">
+                                    <label for="agree"> Click here to indicate that you have read and agree to the <a
+                                            href="#" @click="modalShow">terms
+                                            of the creator
+                                            agreement.</a></label>
                                     <span class="text-muted" v-if="warningRequired==true"
                                         style="color: red !important;">Please have attention on this!</span>
                                 </div>
@@ -291,6 +280,9 @@
         created() {
             this.getCategories();
         },
+        mounted() {
+            this.modalShow();
+        },
         methods: {
             async submitHandle(e) {
                 // console.log(e);
@@ -371,6 +363,19 @@
                 const respSub = await axios.get('/api/sub-categories');
                 this.categoriesGet = resp.data;
                 this.subcategoriesGet = respSub.data;
+            },
+            modalShow() {
+                Swal.fire({
+                    title: '<strong class="align-left">Terms and conditions</strong>',
+                    html: '<div class="align-left f-14"><ol><li>Dengan mengunggah dokumen ini, saya bertanggung jawab atas keaslian dari dokumen yang diunggah ke platform ini. </li><li>Jika di lain hari ditemukan bahwa terdapat pihak yang mengakui atau menyatakan kepemilikan dari konten yang diunggah, maka saya akan bertanggung jawab penuh terhadap hukum yang berlaku dan platform ini tidak memiliki keterkaitan dengan hal tersebut.</li></ol></div>',
+                    focusConfirm: true,
+                    confirmButtonText: 'Got It!',
+                    allowOutsideClick: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.TnC = true;
+                    }
+                });
             }
         },
     }

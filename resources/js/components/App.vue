@@ -636,6 +636,7 @@
         </div>
         <div class="overlay-dark-sidebar"></div>
         <div class="customizer-overlay"></div>
+
     </div>
 </template>
 <script>
