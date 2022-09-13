@@ -26306,12 +26306,81 @@ td {
 .form-control {
     border: 1px solid rgba(0, 0, 0, .3);
 }
-p img{
-max-width: 100%;height:auto;}
+
+p img {
+    max-width: 100%;
+    height: auto;
+}
 
 .align-left {
     text-align: left;
 }
-.f-14{
+
+.f-14 {
     font-size: 14px;
+}
+
+.status-requested {
+    background: #FFFBF2;
+    border: 1px solid #F9A618;
+    color: #F9A618;
+    border-radius: .5rem;
+    text-transform: capitalize;
+}
+
+.status-approved {
+    background: #EFF3FF;
+    border: 1px solid #233B7B;
+    color: #233B7B;
+    border-radius: .5rem;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #F2FEFF;
+    border: 1px solid #0470EE;
+    color: #0470EE;
+    border-radius: .5rem;
+    text-transform: capitalize;
+}
+
+.status-selesai {
+    background: #F2FFF6;
+    border: 1px solid #26BC50;
+    color: #26BC50;
+    border-radius: .5rem;
+    text-transform: capitalize;
+}
+
+.status-gagal {
+    background: #FFF6F2;
+    border: 1px solid #E81313;
+    color: #E81313;
+    border-radius: .5rem;
+    text-transform: capitalize;
+}
+
+.status-requested:hover {
+    background: #FFF8E5;
+    transition: .5ms ease-in-out;
+}
+
+.status-approved:hover {
+    background: #DCE5FF;
+    transition: .5ms ease-in-out;
+}
+
+.status-pending:hover {
+    background: #E3FDFF;
+    transition: .5ms ease-in-out;
+}
+
+.status-selesai:hover {
+    background: #DDFFE7;
+    transition: .5ms ease-in-out;
+}
+
+.status-gagal:hover {
+    background: #FFEBE2;
+    transition: .5ms ease-in-out;
 }

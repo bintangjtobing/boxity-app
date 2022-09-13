@@ -91,6 +91,8 @@ use App\Http\Middleware\EncryptCookies;
 use App\imagesInventoryItem;
 use App\imagesItemGroup;
 use App\imagesStockGroup;
+use App\withdraw;
+use App\withdrawLog;
 use App\PayrollTransactionHistory;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use DateTime;
@@ -3170,5 +3172,49 @@ class apiController extends Controller
     public function getParticipantById($id)
     {
         return response()->json(event_participants::with('event')->find($id));
+    }
+
+    public function getHistoryWithdraw()
+    {
+        if ($this->getLoggedUser()->role == 'admin') {
+            return response()->json(withdraw::orderBy('created_at', 'DESC')->with('requester', 'approver', 'banks')->get());
+        } else {
+            return response()->json(withdraw::orderBy('created_at', 'DESC')->with('requester', 'approver', 'banks')->where('requested_by', '=', Auth::id())->get());
+        }
+    }
+    public function addHistoryWithdraw(Request $request)
+    {
+        $history = new withdraw();
+        $history->price = intval($request->price);
+        $history->bank_id = $request->bank_id;
+        $history->requested_by = Auth::id();
+        $history->account_no = $request->account_no;
+        $history->account_number = $request->account_name;
+        $history->approved_by = 0;
+        $history->status = 0;
+        $history->remarks = 'Requested by creator/requester.';
+        // Save to logs
+        $saveLogs = new userLogs();
+        $saveLogs->userId = Auth::id() ?? 1;
+        $saveLogs->ipAddress = $request->ip();
+        $saveLogs->notes = 'Request withdraw ' . $history->price . ' from blogs earnings.';
+        $saveLogs->save();
+        $history->save();
+
+        // Save to withdraw logs
+        $saveHistory = new withdrawLog();
+        $saveHistory->withdraw_id = $history->id;
+        $saveHistory->requested_by = Auth::id();
+        $saveHistory->remarks = Auth::user()->name . ' request withdraw with amount ' . $history->price . ' from blogs earnings.';
+        $saveHistory->save();
+        return response()->json(200);
+    }
+    public function getHistoryLogWithdraw()
+    {
+        if ($this->getLoggedUser()->role == 'admin') {
+            return response()->json(withdrawLog::orderBy('created_at', 'DESC')->with('wd', 'requester')->get());
+        } else {
+            return response()->json(withdrawLog::orderBy('created_at', 'DESC')->with('wd', 'requester')->where('requested_by', Auth::id())->get());
+        }
     }
 }

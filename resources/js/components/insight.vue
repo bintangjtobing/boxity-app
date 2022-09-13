@@ -53,7 +53,7 @@
                                                                     <div>
                                                                         <span class="color-success"><i
                                                                                 data-feather="trending-up"></i>
-                                                                            <strong>100%</strong></span>
+                                                                            <strong>{{this.percentageEarnings}}%</strong></span>
                                                                         <small>Rp. 0 (prev)</small>
                                                                     </div>
                                                                 </div>
@@ -261,7 +261,9 @@
                                         </p>
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <a href="#" class="btn btn-primary btn-block">Request for a withdraw</a>
+                                                <a href="/request/withdraw" class="btn btn-primary-boxity btn-block"
+                                                    :class="{disabled : enoughCoins}">Request for a
+                                                    withdraw</a>
                                             </div>
                                         </div>
                                     </div>
@@ -282,6 +284,7 @@
         },
         data() {
             return {
+                enoughCoins: true,
                 sumViews: 0,
                 sumEarning: 0,
                 countContent: 0,
@@ -322,6 +325,9 @@
                 console.log('Total Get Earnings: ', awal);
                 console.log('Total Earnings: ', total);
                 console.log('hasil persentase: ', getPercentage);
+                if (awal >= 300000) {
+                    this.enoughCoins = false;
+                }
             },
         },
     }

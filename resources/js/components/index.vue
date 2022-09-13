@@ -139,6 +139,7 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2';
     var moment = require('moment');
     export default {
         title() {
@@ -155,6 +156,9 @@
         mounted() {
             this.svIssue();
         },
+        beforeMount() {
+            this.modalShow();
+        },
         created() {
             this.currentTime = moment().format("Do MMMM YYYY, h:mm:ss a");
             setInterval(() => this.updateCurrentTime(), 1 * 1000);
@@ -170,6 +174,19 @@
             },
             updateCurrentTime() {
                 this.currentTime = moment().format("Do MMMM YYYY, h:mm:ss a");
+            },
+            modalShow() {
+                Swal.fire({
+                    title: '<strong style="text-align:left !important;">For mutual convenience</strong>',
+                    html: '<div class="align-left" style="font-size:14px;"><p>Hello friends, for the convenience of your eyes seeing this platform running well, lets set this screen with a <b>zoom width of 80%</b>, lets go 😉. <br>You can set it through the help button and settings in the browser settings of each friend.<br><br>Thank You 😉</p></div>',
+                    focusConfirm: true,
+                    confirmButtonText: 'Got It!',
+                    allowOutsideClick: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.TnC = true;
+                    }
+                });
             }
         },
     }

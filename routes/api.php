@@ -509,3 +509,8 @@ Route::post('/events', 'apiController@addNewEvents');
 // Participant
 Route::get('/participant', 'apiController@getParticipant');
 Route::get('/participant/{id}', 'apiController@getParticipantById');
+
+// History Withdraw
+Route::get('/history/withdraw', 'apiController@getHistoryWithdraw');
+Route::post('/history/withdraw', 'apiController@addHistoryWithdraw');
+Route::get('/history/log-withdraw', 'apiController@getHistoryLogWithdraw');

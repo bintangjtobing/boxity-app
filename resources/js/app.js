@@ -116,6 +116,7 @@ import eventsEdit from './components/eventsEdit.vue'
 import eventsView from './components/eventsView.vue'
 import participant from './components/participants.vue'
 import participantDetail from './components/participantsDetail.vue'
+import earningsWithdraw from './components/earningsWithdraw.vue'
 
 // Purchase Modules
 import purchaseOrder from './components/purchases/purchaseOrder.vue';
@@ -375,6 +376,10 @@ const routes = [{
         name: 'insight-overview',
         path: '/insight/overview',
         component: insight
+    }, {
+        name: 'withdraw',
+        path: '/request/withdraw',
+        component: earningsWithdraw
     }, {
         name: 'suppliers',
         path: '/suppliers',
