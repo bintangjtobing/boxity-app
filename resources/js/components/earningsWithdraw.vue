@@ -105,7 +105,7 @@
                                                     <div class="justify-content-end">
                                                         <button type="submit"
                                                             class="btn btn-primary-boxity btn-default btn-block btn-squared px-30"
-                                                            data-dismiss="modal">Request</button>
+                                                            :disabled="isDisabled==true">Request</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,8 +126,9 @@
                                         <hr style="margin: 1.5rem;">
                                         <div class="table-responsive">
                                             <v-data-table :loading="loadingLog" loading-text="Loading... Please wait"
-                                                :headers="headersLog" :items="historiesLog" :items-per-page="10"
-                                                class="elevation-1">
+                                                :headers="headersLog" :items="historiesLog"
+                                                :footer-props="{'items-per-page-options':[6,10]}" :options="optionsLog"
+                                                :items-per-page="6" class="elevation-1">
                                                 <template v-slot:[`item.withdraw_id`]="{item}">
                                                     BCI-BLWID-000{{item.withdraw_id}}
                                                 </template>
@@ -160,7 +161,7 @@
                             </ol>
                         </p>
                     </div>
-                    <div class="card card-Vertical card-default card-md mt-4 mb-2">
+                    <div class="card card-Vertical card-default card-md mt-4 mb-4">
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group">
@@ -197,36 +198,39 @@
                                                     <span class="rounded-pill userDatatable-content-status status-gagal"
                                                         v-if="item.status == 4">
                                                         Failed! </span>
+                                                    <span class="rounded-pill userDatatable-content-status status-gagal"
+                                                        v-if="item.status == 5">
+                                                        Rejected! </span>
                                                 </template>
                                                 <template v-slot:[`item.actions`]="{item}"
                                                     v-if="this.users.role == 'admin'">
                                                     <div class="table-actions">
-                                                        <a href="#">
+                                                        <a href="#" @click="sendStatus('approve',item.id)">
                                                             <span
                                                                 class="rounded-pill userDatatable-content-status status-selesai my-1 mx-1"
                                                                 v-if="item.status==0"><i class="fas fa-check"></i>&nbsp;
                                                                 Approve </span>
                                                         </a>
-                                                        <a href="#">
+                                                        <a href="#" @click="sendStatus('decline',item.id)">
                                                             <span
                                                                 class="rounded-pill userDatatable-content-status status-gagal my-1 mx-1"
                                                                 v-if="item.status==0"><i class="fas fa-times"></i>&nbsp;
                                                                 Decline </span>
                                                         </a>
-                                                        <a href="#">
+                                                        <a href="#" @click="sendStatus('process',item.id)">
                                                             <span
                                                                 class="rounded-pill userDatatable-content-status status-pending my-1 mx-1"
                                                                 v-if="item.status==1"><i
                                                                     class="fas fa-arrow-right"></i>&nbsp;
                                                                 Process transfer </span>
                                                         </a>
-                                                        <a href="#">
+                                                        <a href="#" @click="sendStatus('done',item.id)">
                                                             <span
                                                                 class="rounded-pill userDatatable-content-status status-selesai my-1 mx-1"
                                                                 v-if="item.status==2"><i class="fas fa-check"></i>&nbsp;
                                                                 Transfer Done </span>
                                                         </a>
-                                                        <a href="#">
+                                                        <a href="#" @click="sendStatus('cancel',item.id)">
                                                             <span
                                                                 class="rounded-pill userDatatable-content-status status-gagal my-1 mx-1"
                                                                 v-if="item.status==2"><i class="fas fa-times"></i>&nbsp;
@@ -265,6 +269,7 @@
                 histories: [],
                 historiesLog: [],
                 TnC: false,
+                isDisabled: true,
                 search: '',
                 loading: true,
                 loadingLog: true,
@@ -278,6 +283,9 @@
                 bank: {},
                 users: {},
                 options: {
+                    itemsPerPage: 6
+                },
+                optionsLog: {
                     itemsPerPage: 6
                 },
                 warningRequired: false,
@@ -324,6 +332,8 @@
         },
         methods: {
             async loadData() {
+                // Untuk hitung ulang wallet
+                axios.get('/api/blogs/sum-earnings');
                 // this.$Progress.start();
                 this.$isLoading(true);
                 axios.get('/getUserLoggedIn').then(resp => {
@@ -341,8 +351,8 @@
                 });
                 const respSumViews = await axios.get('/api/blogs/sum-view');
                 this.sumViews = respSumViews.data;
-                const respSumEarn = await axios.get('/api/blogs/sum-earnings');
-                this.sumEarning = respSumEarn.data;
+                const respSumEarn = await axios.get('/api/wallet');
+                this.sumEarning = respSumEarn.data.amount ?? respSumEarn.data;
                 const respCountContent = await axios.get('/api/blogs/count');
                 this.countContent = respCountContent.data;
                 // Load logged user
@@ -362,6 +372,7 @@
                 console.log('hasil persentase: ', getPercentage);
                 if (awal >= 300000) {
                     this.enoughCoins = false;
+                    this.isDisabled = false;
                 }
             },
             async submitHandle(e) {
@@ -405,6 +416,22 @@
                 }
 
             },
+            async sendStatus(e, ids) {
+                console.log(e);
+                await axios.put('/api/history/withdraw', {
+                    id: ids,
+                    type: e,
+                }).then(response => {
+                    document.getElementById('ding').play();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Congratulations',
+                        text: 'Success update the process',
+                    });
+                    this.$router.push('/request/withdraw');
+                    this.loadData();
+                });
+            }
         },
     }
 

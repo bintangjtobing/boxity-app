@@ -34,11 +34,11 @@
                                 <div class="dropdown-custom">
                                     <a href="https://help.boxity.id" target="_blank" class="nav-item-toggle">
                                         <span style="font-size: 1.10rem;" class="mx-2"><i
-                                                class="fal fa-question-circle"></i></span>
+                                                class="far fa-question-circle"></i></span>
                                     </a>
                                     <router-link to="/inbox" class="nav-item-toggle">
                                         <span style="font-size: 1.10rem;" class="mx-2"><i
-                                                class="fal fa-inbox-in"></i></span>
+                                                class="fas fa-inbox"></i></span>
                                     </router-link>
                                 </div>
                             </li>
@@ -61,15 +61,27 @@
                                                 <li>
                                                     <router-link
                                                         :to="{ name: 'userProfileEdit', params: { username:user.username }}">
-                                                        <i class="fad fa-user-cog"></i> Profile</router-link>
+                                                        <i class="far fa-user"
+                                                            style="margin-right: 12px !important;"></i>Profile
+                                                    </router-link>
                                                 </li>
                                                 <li>
                                                     <router-link to="/insight/overview">
-                                                        <i class="fad fa-analytics"></i> Insight</router-link>
+                                                        <i class="fas fa-chart-line"
+                                                            style="margin-right: 12px !important;"></i>Insight
+                                                    </router-link>
+                                                </li>
+                                                <li>
+                                                    <router-link to="/user-logs">
+                                                        <i class="fas fa-clipboard-list"
+                                                            style="margin-right: 12px !important;"></i>Activity
+                                                    </router-link>
                                                 </li>
                                                 <li>
                                                     <router-link to="/settings">
-                                                        <i class="fad fa-cog"></i> Settings</router-link>
+                                                        <i class="fas fa-cog"
+                                                            style="margin-right: 12px !important;"></i>Settings
+                                                    </router-link>
                                                 </li>
                                             </ul>
                                             <a v-on:click="signOutConfirm" class="nav-author__signout">
@@ -122,11 +134,11 @@
                                         <li>
                                             <router-link
                                                 :to="{ name: 'userProfileEdit', params: { username:user.username }}">
-                                                <i class="fad fa-user-cog"></i> Profile</router-link>
+                                                <i class="far fa-user"></i> Profile</router-link>
                                         </li>
                                         <li>
                                             <router-link to="/settings">
-                                                <i class="fad fa-cog"></i> Settings</router-link>
+                                                <i class="fas fa-cog"></i> Settings</router-link>
                                         </li>
                                     </ul>
                                     <a v-on:click="signOutConfirm" class="nav-author__signout">

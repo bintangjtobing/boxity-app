@@ -307,6 +307,7 @@
                 const respSumViews = await axios.get('/api/blogs/sum-view');
                 this.sumViews = respSumViews.data;
                 const respSumEarn = await axios.get('/api/blogs/sum-earnings');
+                // console.log('respSumEarn: ', respSumEarn)
                 this.sumEarning = respSumEarn.data;
                 const respCountContent = await axios.get('/api/blogs/count');
                 this.countContent = respCountContent.data;

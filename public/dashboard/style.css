@@ -26384,3 +26384,9 @@ p img {
     background: #FFEBE2;
     transition: .5ms ease-in-out;
 }
+
+.navbar-right__menu .nav-author__options ul li a svg,
+.navbar-right__menu .nav-author__options ul li a span,
+.navbar-right__menu .nav-author__options ul li a i {
+    margin-right: 12px;
+}

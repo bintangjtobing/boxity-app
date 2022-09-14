@@ -94,6 +94,7 @@ use App\imagesStockGroup;
 use App\withdraw;
 use App\withdrawLog;
 use App\PayrollTransactionHistory;
+use App\wallet;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use DateTime;
 use Mail;
@@ -646,6 +647,42 @@ class apiController extends Controller
         if (Auth::user()->role == 'admin') {
             return response()->json(blogEarnings::sum('earning'));
         } else {
+            $calculateEarnings = blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning');
+            $getWallet = wallet::where('userid', Auth::id())->orderBy('created_at', 'DESC')->first();
+            // If user id not exist
+            if (!$getWallet) {
+                $saveNew = new wallet();
+                $saveNew->userid = Auth::id();
+                $saveNew->amount = $calculateEarnings;
+                $saveNew->currency = 'IDR';
+                $saveNew->type = 'income';
+                $saveNew->save();
+            }
+            if ($getWallet) {
+                if ($getWallet->type == 'outcome') {
+                    // get wallet row where type income
+                    $getWalletIncome = wallet::where('userid', Auth::id())->where('type', 'income')->orderBy('created_at', 'DESC')->first();
+                    $getWalletOutcome
+                        = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
+                    $newRow = new wallet();
+                    $newRow->amount = $getWalletIncome->amount - $getWalletOutcome->amount;
+                    $newRow->userid = Auth::id();
+                    $newRow->currency = 'IDR';
+                    $newRow->type = 'balance';
+                    $newRow->save();
+                    // return response()->json($getWalletCurrent);
+                }
+                // else if ($getWallet->type == 'balance') {
+                //     $getWalletOutcome
+                //         = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
+                //     $newRow = new wallet();
+                //     $newRow->amount = $calculateEarnings - $getWalletOutcome->amount;
+                //     $newRow->userid = Auth::id();
+                //     $newRow->currency = 'IDR';
+                //     $newRow->type = 'income';
+                //     $newRow->save();
+                // }
+            }
             return response()->json(blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning'));
         }
     }
@@ -3207,7 +3244,79 @@ class apiController extends Controller
         $saveHistory->requested_by = Auth::id();
         $saveHistory->remarks = Auth::user()->name . ' request withdraw with amount ' . $history->price . ' from blogs earnings.';
         $saveHistory->save();
+
+        $calculateWallet = new wallet();
+        $calculateWallet->userid = $history->requested_by;
+        $calculateWallet->amount = $history->price;
+        $calculateWallet->type = 'outcome';
+        $calculateWallet->save();
+
         return response()->json(200);
+    }
+    public function updateStatusWithdraw(Request $request)
+    {
+        $history = withdraw::find($request->id);
+        if ($request->type == 'approve') {
+            $history->status = 1;
+            $history->approved_by = Auth::id();
+            $history->remarks = 'Approved by ' . Auth::user()->name;
+            $history->save();
+
+            // Save to withdraw logs
+            $saveHistory = new withdrawLog();
+            $saveHistory->withdraw_id = $history->id;
+            $saveHistory->requested_by = $history->requested_by;
+            $saveHistory->remarks = Auth::user()->name . ' has been approve the request of withdraw no. BCI-BLWID-000' . $history->id;
+            $saveHistory->save();
+        }
+        if ($request->type == 'decline') {
+            $history->status = 5;
+            $history->remarks = 'Rejected by ' . Auth::user()->name;
+            $history->save();
+
+            // Save to withdraw logs
+            $saveHistory = new withdrawLog();
+            $saveHistory->withdraw_id = $history->id;
+            $saveHistory->requested_by = $history->requested_by;
+            $saveHistory->remarks = 'The request no. BCI-BLWID-000' . $history->id . ' has been rejected by ' . Auth::user()->name;
+            $saveHistory->save();
+        }
+        if ($request->type == 'process') {
+            $history->status = 2;
+            $history->remarks = 'This request is under process on transfer.';
+            $history->save();
+
+            // Save to withdraw logs
+            $saveHistory = new withdrawLog();
+            $saveHistory->withdraw_id = $history->id;
+            $saveHistory->requested_by = $history->requested_by;
+            $saveHistory->remarks = 'The request no. BCI-BLWID-000' . $history->id . ' has been proceed on transfer. And please wait for the next update.';
+            $saveHistory->save();
+        }
+        if ($request->type == 'done') {
+            $history->status = 3;
+            $history->remarks = 'The transfer to recipient has been succeed.';
+            $history->save();
+
+            // Save to withdraw logs
+            $saveHistory = new withdrawLog();
+            $saveHistory->withdraw_id = $history->id;
+            $saveHistory->requested_by = $history->requested_by;
+            $saveHistory->remarks = 'The request no. BCI-BLWID-000' . $history->id . ' has been successfully transfered.';
+            $saveHistory->save();
+        }
+        if ($request->type == 'cancel') {
+            $history->status = 4;
+            $history->remarks = 'The transfer to recipient has been succeed.';
+            $history->save();
+
+            // Save to withdraw logs
+            $saveHistory = new withdrawLog();
+            $saveHistory->withdraw_id = $history->id;
+            $saveHistory->requested_by = $history->requested_by;
+            $saveHistory->remarks = 'The request no. BCI-BLWID-000' . $history->id . ' has something wrong, please kindly check your account number or bank recipient, and contact your administrator.';
+            $saveHistory->save();
+        }
     }
     public function getHistoryLogWithdraw()
     {

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\apiController;
 use App\User;
+use App\wallet;
+use App\blogEarnings;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -38,6 +40,15 @@ Route::get('/assignees', 'apiController@getAssignee');
 
 // BANK LISTS
 Route::get('/bank', 'apiController@getBankList');
+
+// Get Wallet Data
+Route::get('/wallet', function () {
+    if (Auth::user()->role == 'admin') {
+        return response()->json(blogEarnings::sum('earning'));
+    } else {
+        return response()->json(wallet::where('userid', Auth::id())->orderBy('created_at', 'DESC')->first());
+    }
+});
 
 // Issue API
 Route::post('/issue', 'apiController@addNewIssue');
@@ -513,4 +524,5 @@ Route::get('/participant/{id}', 'apiController@getParticipantById');
 // History Withdraw
 Route::get('/history/withdraw', 'apiController@getHistoryWithdraw');
 Route::post('/history/withdraw', 'apiController@addHistoryWithdraw');
+Route::put('/history/withdraw', 'apiController@updateStatusWithdraw');
 Route::get('/history/log-withdraw', 'apiController@getHistoryLogWithdraw');
