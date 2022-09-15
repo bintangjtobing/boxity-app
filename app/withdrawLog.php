@@ -9,7 +9,7 @@ class withdrawLog extends Model
     protected $table = 'withdraw_logs';
     protected $fillable = ['remarks', 'requested_by'];
     protected $casts = [
-        'updated_at' => 'datetime:d M, Y h:m:s',
+        'updated_at' => 'datetime:M d, Y',
     ];
     public function wd()
     {

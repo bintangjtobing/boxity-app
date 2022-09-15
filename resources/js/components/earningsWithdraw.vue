@@ -238,8 +238,13 @@
                                                         </a>
                                                     </div>
                                                 </template>
+                                                <template v-slot:[`item.created_at`]="{item}">
+                                                    <span style="color:#F95B12; font-size: .875rem;">{{item.created_at}}
+                                                        -
+                                                        {{item.updated_at}}</span>
+                                                </template>
                                                 <template v-slot:[`item.price`]="{item}">
-                                                    Rp. {{item.price|toDecimal}}
+                                                    IDR {{item.price|toDecimal}}
                                                 </template>
                                                 <template v-slot:[`item.account_number`]="{item}">
                                                     <b>{{item.banks.name}}</b> - {{item.account_number}} -
@@ -290,25 +295,21 @@
                 },
                 warningRequired: false,
                 headers: [{
+                    text: 'Transaction date',
+                    value: 'created_at',
+                    width: '15%'
+                }, {
+                    text: 'Amount',
+                    value: 'price',
+                    width: '15%'
+                }, {
                     text: 'Recipient',
                     value: 'account_number',
                     width: '25%'
                 }, {
-                    text: 'Nominal',
-                    value: 'price',
-                    width: '15%'
-                }, {
                     text: 'Requested by',
                     value: 'requester.name',
                     width: '10%'
-                }, {
-                    text: 'Requested date',
-                    value: 'created_at',
-                    width: '10%'
-                }, {
-                    text: 'Updated date',
-                    value: 'updated_at',
-                    width: '15%'
                 }, {
                     text: 'Status',
                     value: 'status',
@@ -319,14 +320,14 @@
                     width: '15%'
                 }],
                 headersLog: [{
+                    text: 'Date Requested',
+                    value: 'updated_at'
+                }, {
                     text: 'Log ID',
                     value: 'withdraw_id'
                 }, {
                     text: 'Activity',
                     value: 'remarks'
-                }, {
-                    text: 'Updated at',
-                    value: 'updated_at'
                 }],
             }
         },
@@ -369,7 +370,7 @@
                 const respSumEarnX = await axios.get('/api/blogs/sum-earnings');
                 const fromWallet = await axios.get('/api/wallet');
                 console.log(fromWallet);
-                const walletAmount = fromWallet.data.amount;
+                const walletAmount = fromWallet.data;
                 const awal = parseInt(respSumEarnX.data);
                 const total = this.totalEarnings;
                 const getPercentage = (walletAmount / total) * 100;

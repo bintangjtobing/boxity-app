@@ -309,7 +309,7 @@
                 this.sumViews = respSumViews.data;
                 const respSumEarn = await axios.get('/api/wallet');
                 // console.log('respSumEarn: ', respSumEarn)
-                this.sumEarning = respSumEarn.data.amount;
+                this.sumEarning = respSumEarn.data;
                 const respCountContent = await axios.get('/api/blogs/count');
                 this.countContent = respCountContent.data;
                 // Load logged user
@@ -320,7 +320,7 @@
             },
             async calculatePercentage() {
                 const respSumEarnX = await axios.get('/api/wallet');
-                const awal = parseInt(respSumEarnX.data.amount);
+                const awal = parseInt(respSumEarnX.data);
                 const total = this.totalEarnings;
                 const getPercentage = (awal / total) * 100;
                 this.percentageEarnings = Math.round(getPercentage);

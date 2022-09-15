@@ -11,8 +11,8 @@ class withdraw extends Model
         'price', 'bank_id', 'requested_by', 'approved_by', 'account_no', 'account_number', 'status', 'remarks'
     ];
     protected $casts = [
-        'created_at' => 'datetime:d M, Y h:m',
-        'updated_at' => 'datetime:d M, Y h:m',
+        'created_at' => 'datetime:M d, Y',
+        'updated_at' => 'datetime:M d, Y',
     ];
     public function requester()
     {
