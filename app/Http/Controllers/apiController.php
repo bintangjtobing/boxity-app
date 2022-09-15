@@ -647,41 +647,51 @@ class apiController extends Controller
         if (Auth::user()->role == 'admin') {
             return response()->json(blogEarnings::sum('earning'));
         } else {
+            // kalkulasi jumlah pendapatan dari tiap blog di tiap user id
             $calculateEarnings = blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning');
+
+            // ambil data jumlah dana di data wallet terakhir
             $getWallet = wallet::where('userid', Auth::id())->orderBy('created_at', 'DESC')->first();
-            // If user id not exist
-            if (!$getWallet) {
-                $saveNew = new wallet();
-                $saveNew->userid = Auth::id();
-                $saveNew->amount = $calculateEarnings;
-                $saveNew->currency = 'IDR';
-                $saveNew->type = 'income';
-                $saveNew->save();
-            }
-            if ($getWallet) {
-                if ($getWallet->type == 'outcome') {
-                    // get wallet row where type income
-                    $getWalletIncome = wallet::where('userid', Auth::id())->where('type', 'income')->orderBy('created_at', 'DESC')->first();
-                    $getWalletOutcome
-                        = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
-                    $newRow = new wallet();
-                    $newRow->amount = $getWalletIncome->amount - $getWalletOutcome->amount;
-                    $newRow->userid = Auth::id();
-                    $newRow->currency = 'IDR';
-                    $newRow->type = 'balance';
-                    $newRow->save();
-                    // return response()->json($getWalletCurrent);
+
+            // if earning reach 300K then
+            if ($calculateEarnings == 300000) {
+                // If user id not exist
+                if (!$getWallet) {
+                    $saveNew = new wallet();
+                    $saveNew->userid = Auth::id();
+                    $saveNew->amount = 300000;
+                    $saveNew->currency = 'IDR';
+                    $saveNew->type = 'income';
+                    $saveNew->save();
                 }
-                // else if ($getWallet->type == 'balance') {
-                //     $getWalletOutcome
-                //         = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
-                //     $newRow = new wallet();
-                //     $newRow->amount = $calculateEarnings - $getWalletOutcome->amount;
-                //     $newRow->userid = Auth::id();
-                //     $newRow->currency = 'IDR';
-                //     $newRow->type = 'income';
-                //     $newRow->save();
-                // }
+                if ($getWallet) {
+                    // jika wallet terakhir memiliki tipe outcome
+                    if ($getWallet->type == 'outcome') {
+                        // get wallet row where type income order by desc created at
+                        $getWalletIncome = wallet::where('userid', Auth::id())->where('type', 'income')->orderBy('created_at', 'DESC')->first();
+
+                        // get wallet row where type outcome order by desc created at
+                        $getWalletOutcome
+                            = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
+
+                        $newRow = new wallet();
+                        $newRow->amount = $getWalletIncome->amount - $getWalletOutcome->amount;
+                        $newRow->userid = Auth::id();
+                        $newRow->currency = 'IDR';
+                        $newRow->type = 'balance';
+                        $newRow->save();
+                    }
+                    // else if ($getWallet->type == 'balance') {
+                    //     $getWalletOutcome
+                    //         = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
+                    //     $newRow = new wallet();
+                    //     $newRow->amount = $calculateEarnings - $getWalletOutcome->amount;
+                    //     $newRow->userid = Auth::id();
+                    //     $newRow->currency = 'IDR';
+                    //     $newRow->type = 'income';
+                    //     $newRow->save();
+                    // }
+                }
             }
             return response()->json(blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning'));
         }

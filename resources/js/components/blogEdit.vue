@@ -35,12 +35,13 @@
                                             <editor placeholder="Content article write here..."
                                                 v-model="blog.description"
                                                 api-key="8ll77vzod9z7cah153mxwug6wu868fhxsr291kw3tqtbu9om" :init="{
+                                                                file_picker_types: 'file image media',
                                                                 height: 600,
                                                                 menubar: true,
                                                                 branding: false,
-                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
+                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code media',
                                                                 toolbar:
-                                                                    'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
+                                                                    'undo redo | fontselect | formatselect | removeformat bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | checklist code',
                                                         }" />
                                         </div>
                                     </div>

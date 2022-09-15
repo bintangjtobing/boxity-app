@@ -33,7 +33,7 @@
                                                                 height: 600,
                                                                 menubar: true,
                                                                 branding: false,
-                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code',
+                                                                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code media',
                                                                 toolbar:
                                                                     'undo redo | fontselect | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | checklist | code | emoticons | media | insertfile'
                                                         }" />
