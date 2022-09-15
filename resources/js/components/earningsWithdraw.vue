@@ -370,7 +370,7 @@
                 const respSumEarnX = await axios.get('/api/blogs/sum-earnings');
                 const fromWallet = await axios.get('/api/wallet');
                 console.log(fromWallet);
-                const walletAmount = fromWallet.data;
+                const walletAmount = fromWallet.data.amount ?? fromWallet.data;
                 const awal = parseInt(respSumEarnX.data);
                 const total = this.totalEarnings;
                 const getPercentage = (walletAmount / total) * 100;
