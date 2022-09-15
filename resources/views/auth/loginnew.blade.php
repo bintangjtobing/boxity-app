@@ -23,10 +23,9 @@
             </div>
             <div class="row align-items-center">
 
-                <div class="col-6 mx-auto mt-5">
+                <div class="col-6 mx-auto">
                     <div class="">
-                        <img style="height: 350px" src="{!!asset('auth/img/illustration.png')!!}"
-                            alt="boxity + {{$company->company_id}}">
+                        <img src="{!!asset('auth/img/logins.svg')!!}" alt="boxity + {{$company->company_id}}">
                     </div>
                 </div>
                 <div class="col-6 mx-auto">
