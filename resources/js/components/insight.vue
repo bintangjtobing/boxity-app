@@ -301,14 +301,15 @@
             async loadCompany() {
                 // this.$Progress.start();
                 this.$isLoading(true);
+                axios.get('/api/blogs/sum-earnings');
                 axios.get('/api/bank').then(resp => {
                     this.bank = resp.data;
                 });
                 const respSumViews = await axios.get('/api/blogs/sum-view');
                 this.sumViews = respSumViews.data;
-                const respSumEarn = await axios.get('/api/blogs/sum-earnings');
+                const respSumEarn = await axios.get('/api/wallet');
                 // console.log('respSumEarn: ', respSumEarn)
-                this.sumEarning = respSumEarn.data;
+                this.sumEarning = respSumEarn.data.amount;
                 const respCountContent = await axios.get('/api/blogs/count');
                 this.countContent = respCountContent.data;
                 // Load logged user
@@ -318,8 +319,8 @@
                 this.$isLoading(false);
             },
             async calculatePercentage() {
-                const respSumEarnX = await axios.get('/api/blogs/sum-earnings');
-                const awal = parseInt(respSumEarnX.data);
+                const respSumEarnX = await axios.get('/api/wallet');
+                const awal = parseInt(respSumEarnX.data.amount);
                 const total = this.totalEarnings;
                 const getPercentage = (awal / total) * 100;
                 this.percentageEarnings = Math.round(getPercentage);

@@ -42,13 +42,7 @@ Route::get('/assignees', 'apiController@getAssignee');
 Route::get('/bank', 'apiController@getBankList');
 
 // Get Wallet Data
-Route::get('/wallet', function () {
-    if (Auth::user()->role == 'admin') {
-        return response()->json(blogEarnings::sum('earning'));
-    } else {
-        return response()->json(wallet::where('userid', Auth::id())->orderBy('created_at', 'DESC')->first());
-    }
-});
+Route::get('/wallet', 'apiController@wallet');
 
 // Issue API
 Route::post('/issue', 'apiController@addNewIssue');

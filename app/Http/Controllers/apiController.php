@@ -99,6 +99,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use DateTime;
 use Mail;
 use PDF;
+use stdClass;
 
 class apiController extends Controller
 {
@@ -653,45 +654,19 @@ class apiController extends Controller
             // ambil data jumlah dana di data wallet terakhir
             $getWallet = wallet::where('userid', Auth::id())->orderBy('created_at', 'DESC')->first();
 
-            // if earning reach 300K then
-            if ($calculateEarnings == 300000) {
-                // If user id not exist
-                if (!$getWallet) {
-                    $saveNew = new wallet();
-                    $saveNew->userid = Auth::id();
-                    $saveNew->amount = 300000;
-                    $saveNew->currency = 'IDR';
-                    $saveNew->type = 'income';
-                    $saveNew->save();
-                }
-                if ($getWallet) {
-                    // jika wallet terakhir memiliki tipe outcome
-                    if ($getWallet->type == 'outcome') {
-                        // get wallet row where type income order by desc created at
-                        $getWalletIncome = wallet::where('userid', Auth::id())->where('type', 'income')->orderBy('created_at', 'DESC')->first();
-
-                        // get wallet row where type outcome order by desc created at
-                        $getWalletOutcome
-                            = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
-
-                        $newRow = new wallet();
-                        $newRow->amount = $getWalletIncome->amount - $getWalletOutcome->amount;
-                        $newRow->userid = Auth::id();
-                        $newRow->currency = 'IDR';
-                        $newRow->type = 'balance';
-                        $newRow->save();
-                    }
-                    // else if ($getWallet->type == 'balance') {
-                    //     $getWalletOutcome
-                    //         = wallet::where('userid', Auth::id())->where('type', 'outcome')->orderBy('created_at', 'DESC')->first();
-                    //     $newRow = new wallet();
-                    //     $newRow->amount = $calculateEarnings - $getWalletOutcome->amount;
-                    //     $newRow->userid = Auth::id();
-                    //     $newRow->currency = 'IDR';
-                    //     $newRow->type = 'income';
-                    //     $newRow->save();
-                    // }
-                }
+            // If user id not exist
+            if (!$getWallet) {
+                $saveNew = new wallet();
+                $saveNew->userid = Auth::id();
+                $saveNew->amount = $calculateEarnings;
+                $saveNew->currency = 'IDR';
+                $saveNew->type = 'income';
+                $saveNew->save();
+            }
+            if ($getWallet) {
+                $load = wallet::where('userid', Auth::id())->first();
+                $load->amount = $calculateEarnings;
+                $load->save();
             }
             return response()->json(blogEarnings::with('user', 'blog')->where('userid', Auth::id())->sum('earning'));
         }
@@ -3255,12 +3230,6 @@ class apiController extends Controller
         $saveHistory->remarks = Auth::user()->name . ' request withdraw with amount ' . $history->price . ' from blogs earnings.';
         $saveHistory->save();
 
-        $calculateWallet = new wallet();
-        $calculateWallet->userid = $history->requested_by;
-        $calculateWallet->amount = $history->price;
-        $calculateWallet->type = 'outcome';
-        $calculateWallet->save();
-
         return response()->json(200);
     }
     public function updateStatusWithdraw(Request $request)
@@ -3334,6 +3303,26 @@ class apiController extends Controller
             return response()->json(withdrawLog::orderBy('created_at', 'DESC')->with('wd', 'requester')->get());
         } else {
             return response()->json(withdrawLog::orderBy('created_at', 'DESC')->with('wd', 'requester')->where('requested_by', Auth::id())->get());
+        }
+    }
+    public function wallet()
+    {
+        if (Auth::user()->role == 'admin') {
+            return response()->json(blogEarnings::sum('earning'));
+        } else {
+            $calculateSumWithdraw =
+                withdraw::where('requested_by', Auth::id())->where('status', 3)->sum('price');
+            $getWallet = wallet::where('userid', Auth::id())->with('user', 'withdrawer')->orderBy('created_at', 'DESC')->first();
+            $getCurrentConditionWallet = $getWallet->amount - $calculateSumWithdraw;
+
+            // Test case
+            $test = new stdClass();
+            $test->name = $getWallet->user->name;
+            $test->amount = $getCurrentConditionWallet;
+            $test->currency = $getWallet->currency;
+            $test->updated_at = $getWallet->updated_at;
+
+            return response()->json($test, 200);
         }
     }
 }

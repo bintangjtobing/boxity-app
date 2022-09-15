@@ -300,10 +300,14 @@
                 }, {
                     text: 'Requested by',
                     value: 'requester.name',
-                    width: '15%'
+                    width: '10%'
                 }, {
                     text: 'Requested date',
                     value: 'created_at',
+                    width: '10%'
+                }, {
+                    text: 'Updated date',
+                    value: 'updated_at',
                     width: '15%'
                 }, {
                     text: 'Status',
@@ -312,7 +316,7 @@
                 }, {
                     text: 'Act',
                     value: 'actions',
-                    width: '20%'
+                    width: '15%'
                 }],
                 headersLog: [{
                     text: 'Log ID',
@@ -327,8 +331,8 @@
             }
         },
         mounted() {
-            this.loadData();
             this.calculatePercentage();
+            this.loadData();
         },
         methods: {
             async loadData() {
@@ -363,16 +367,21 @@
             },
             async calculatePercentage() {
                 const respSumEarnX = await axios.get('/api/blogs/sum-earnings');
+                const fromWallet = await axios.get('/api/wallet');
+                console.log(fromWallet);
+                const walletAmount = fromWallet.data.amount;
                 const awal = parseInt(respSumEarnX.data);
                 const total = this.totalEarnings;
-                const getPercentage = (awal / total) * 100;
+                const getPercentage = (walletAmount / total) * 100;
                 this.percentageEarnings = Math.round(getPercentage);
                 console.log('Total Get Earnings: ', awal);
                 console.log('Total Earnings: ', total);
                 console.log('hasil persentase: ', getPercentage);
-                if (awal >= 300000) {
+                if (walletAmount >= 300000) {
                     this.enoughCoins = false;
                     this.isDisabled = false;
+                } else {
+                    console.log('salah', this.isDisabled);
                 }
             },
             async submitHandle(e) {

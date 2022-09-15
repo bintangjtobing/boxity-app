@@ -13,8 +13,12 @@ class wallet extends Model
     protected $casts = [
         'updated_at' => 'datetime:d M, Y h:m:s',
     ];
-    public function approver()
+    public function user()
     {
         return $this->belongsTo(User::class, 'userid');
+    }
+    public function withdrawer()
+    {
+        return $this->belongsTo(withdraw::class, 'userid', 'requested_by');
     }
 }
