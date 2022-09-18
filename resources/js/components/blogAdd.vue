@@ -39,7 +39,7 @@
                                                                 toolbar:
                                                                     'undo redo | fontselect | formatselect | removeformat bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | checklist code',
                                                         }" />
-                                            <span class="text-muted" v-if="warningRequired==true"
+                                            <span class="text-muted" v-if="warningRequiredArticle==true"
                                                 style="color: red !important;">Article is
                                                 required!</span>
                                         </div>
@@ -83,7 +83,7 @@
                                             href="#" @click="modalShow">terms
                                             of the creator
                                             agreement.</a></label>
-                                    <span class="text-muted" v-if="warningRequired==true"
+                                    <span class="text-muted" v-if="warningRequiredToC==true"
                                         style="color: red !important;">Please have attention on this!</span>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                             {{categoriesGet.categories_name}}
                                         </option>
                                     </select>
-                                    <span class="text-muted" v-if="warningRequired==true"
+                                    <span class="text-muted" v-if="warningRequiredCategories==true"
                                         style="color: red !important;">Categories is
                                         required!</span>
                                     <!-- Modal -->
@@ -218,7 +218,7 @@
                                             {{subcategoriesGet.sub_categories_name}}
                                         </option>
                                     </select>
-                                    <span class="text-muted" v-if="warningRequired==true"
+                                    <span class="text-muted" v-if="warningRequiredSubCategories==true"
                                         style="color: red !important;">Sub Categories is
                                         required!</span>
                                 </div>
@@ -245,7 +245,10 @@
         },
         data() {
             return {
-                warningRequired: false,
+                warningRequiredArticle: false,
+                warningRequiredToC: false,
+                warningRequiredCategories: false,
+                warningRequiredSubCategories: false,
                 blog: {},
                 TnC: false,
                 categories: {},
@@ -280,15 +283,17 @@
         created() {
             this.getCategories();
         },
-        mounted() {
-            this.modalShow();
-        },
         methods: {
             async submitHandle(e) {
                 // console.log(e);
-                if (this.blog.description == null || this.TnC == false || this.blog.category || this.blog
-                    .subcategory) {
-                    this.warningRequired = true
+                if (this.blog.description == null) {
+                    this.warningRequiredArticle = true
+                } else if (this.TnC == false) {
+                    this.warningRequiredToC = true
+                } else if (this.blog.category) {
+                    this.warningRequiredCategories = true
+                } else if (this.blog.subcategory) {
+                    this.warningRequiredSubCategories = true
                 } else {
                     this.$isLoading(true);
                     await axios.post('/api/blogs', {
