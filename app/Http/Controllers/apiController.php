@@ -51,6 +51,8 @@ use App\Mail\GoodsReceive;
 use App\Mail\makeNewIssue;
 use App\Mail\rejectCandidate;
 use App\Mail\inviteCandidate;
+use App\Mail\confirmRequestToAdmin;
+use App\Mail\confirmRequestToRequester;
 use App\messages;
 use App\careerViews;
 use App\notepad;
@@ -782,7 +784,10 @@ class apiController extends Controller
         $saveLogs->save();
 
         $blog->save();
-        $file = DB::table('blog_images')
+        $blogImages = DB::table('blog_images')
+            ->whereNull('blog_id')
+            ->update(array('blog_id' => $blog->id));
+        $blogFiles = DB::table('blog_files')
             ->whereNull('blog_id')
             ->update(array('blog_id' => $blog->id));
         return response()->json($blog);
@@ -3223,6 +3228,17 @@ class apiController extends Controller
         $saveLogs->save();
         $history->save();
 
+        // ambil data history barusan
+        $getHistory = withdraw::with('requester', 'banks')->find($history->id);
+
+        // ambil data user yang memiliki role admin
+        $admin = User::where('role', 'admin')->get();
+        foreach ($admin as $admin) {
+            Mail::to($admin->email)->send(new confirmRequestToAdmin($getHistory, $admin));
+        }
+        // kirim email konfirmasi ke user requester
+        Mail::to($getHistory->requester->email)->send(new confirmRequestToRequester($getHistory));
+
         // Save to withdraw logs
         $saveHistory = new withdrawLog();
         $saveHistory->withdraw_id = $history->id;
@@ -3230,7 +3246,7 @@ class apiController extends Controller
         $saveHistory->remarks = Auth::user()->name . ' request withdraw with amount ' . $history->price . ' from blogs earnings.';
         $saveHistory->save();
 
-        return response()->json(200);
+        return response()->json($getHistory);
     }
     public function updateStatusWithdraw(Request $request)
     {

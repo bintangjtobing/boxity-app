@@ -139,6 +139,28 @@
                         <div class="card-body pb-md-30">
                             <div class="Vertical-form">
                                 <div class="form-group my-2">
+                                    <h4>Documents</h4>
+                                    <vue-dropzone useCustomSlot ref="document-upload" id="dropzone"
+                                        :options="dropzoneDocumentsOptions" class="dropzone mt-2">
+                                        <div class="dropzone-custom-content">
+                                            <h3 class="dropzone-custom-title">Drag and drop to upload
+                                                attachment!</h3>
+                                            <div class="subtitle">...or click to select a file from your
+                                                computer</div>
+                                        </div>
+                                    </vue-dropzone>
+                                    <small class="form-text text-muted">
+                                        Maximum files is 30MB. You can upload some documents here. Supported file
+                                        documents: .pdf, .pptx,
+                                        etc</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-Vertical card-default card-md mb-4">
+                        <div class="card-body pb-md-30">
+                            <div class="Vertical-form">
+                                <div class="form-group my-2">
                                     <h4>Categories</h4>
                                     <select class="form-control form-control-default my-1" v-model="blog.category">
                                         <option value="">Select categories:</option>
@@ -254,6 +276,15 @@
                     url: '/api/blogs/images',
                     thumbnailWidth: 200,
                     maxFilesize: 2, // MB
+                    addRemoveLinks: true,
+                    autoDiscover: false,
+                    dictRemoveFile: 'REMOVE'
+                },
+                dropzoneDocumentsOptions: {
+                    url: '/api/blogs/files',
+                    thumbnailWidth: 200,
+                    maxFilesize: 30, // MB
+                    acceptedFiles: 'application/pdf,.ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     addRemoveLinks: true,
                     autoDiscover: false,
                     dictRemoveFile: 'REMOVE'
