@@ -150,7 +150,7 @@
                                         </div>
                                     </vue-dropzone>
                                     <small class="form-text text-muted">
-                                        Maximum files is 30MB. You can upload some documents here. Supported file
+                                        Maximum files is 10MB. You can upload some documents here. Supported file
                                         documents: .pdf, .pptx,
                                         etc</small>
                                 </div>
