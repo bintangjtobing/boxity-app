@@ -42,7 +42,7 @@ class authController extends Controller
         //     return view('auth.setcompanythree', ['company' => $company]);
         //     // return view('auth.loginnew', ['company' => $company]);
         // } else {
-        return view('auth.loginnew', ['company' => $company]);
+            return view('auth.loginnew', ['company' => $company]);
         // }
     }
 
@@ -215,28 +215,28 @@ class authController extends Controller
     }
     public function loginProcess(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'g-recaptcha-response' => 'required|captcha'
-        // ]);
-        // if ($validator->fails()) {
-        //     return back()->with('gagal', 'The re-captcha response is required!');
-        // } else {
-        $remember_me = $request->has('remember') ? true : false;
-        $request->merge(['status' => '1']);
-        if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
-            $user = User::where(['email' => $request->email])->first();
-            Auth::loginUsingId($user->id, TRUE);
+        $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+        if ($validator->fails()) {
+            return back()->with('gagal', 'The re-captcha response is required!');
+        } else {
+            $remember_me = $request->has('remember') ? true : false;
+            $request->merge(['status' => '1']);
+            if (Auth::attempt($request->only('email', 'password', 'status'), $remember_me)) {
+                $user = User::where(['email' => $request->email])->first();
+                Auth::loginUsingId($user->id, TRUE);
 
-            $saveLogs = new userLogs();
-            $saveLogs->userId = Auth::id();
-            $saveLogs->ipAddress = $request->ip();
-            $saveLogs->notes = 'Logged in to system.';
-            $saveLogs->save();
+                $saveLogs = new userLogs();
+                $saveLogs->userId = Auth::id();
+                $saveLogs->ipAddress = $request->ip();
+                $saveLogs->notes = 'Logged in to system.';
+                $saveLogs->save();
 
-            return redirect('/');
+                return redirect('/');
+            }
+            return back()->with('gagal', ' Please check your auth status or your input!');
         }
-        return back()->with('gagal', ' Please check your auth status or your input!');
-        // }
         // return 200;
     }
 }
