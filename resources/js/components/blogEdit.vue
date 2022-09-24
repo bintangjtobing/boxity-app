@@ -283,7 +283,7 @@
                 dropzoneDocumentsOptions: {
                     url: '/api/blogs/files',
                     thumbnailWidth: 200,
-                    maxFilesize: 30, // MB
+                    maxFilesize: 500, // MB
                     acceptedFiles: 'application/pdf,.ppt,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     addRemoveLinks: true,
                     autoDiscover: false,
