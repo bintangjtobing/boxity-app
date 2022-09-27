@@ -285,16 +285,20 @@
         },
         methods: {
             async submitHandle(e) {
-                // console.log(e);
+                console.log('terisi apa tidaknya:', this.blog);
                 if (this.blog.description == null) {
                     this.warningRequiredArticle = true
                 } else if (this.TnC == false) {
                     this.warningRequiredToC = true
-                } else if (this.blog.category) {
+                } else if (!this.blog.category) {
                     this.warningRequiredCategories = true
-                } else if (this.blog.subcategory) {
+                } else if (!this.blog.subcategory) {
                     this.warningRequiredSubCategories = true
                 } else {
+                    this.warningRequiredArticle = false;
+                    this.warningRequiredToC = false;
+                    this.warningRequiredCategories = false;
+                    this.warningRequiredSubCategories = false;
                     this.$isLoading(true);
                     await axios.post('/api/blogs', {
                             title: this.blog.title,
