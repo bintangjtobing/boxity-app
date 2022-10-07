@@ -770,10 +770,19 @@ class apiController extends Controller
         $blog->category = $request->category;
         $blog->seo_title = $request->seo_title;
         $blog->seo_description = $request->seo_description;
-        if ($request->type == 'draft') {
-            $blog->status = 0;
-        } else {
-            $blog->status = 1;
+        
+        // jika tipe blog yg dikirim adalah draft maka, admin ataupun user biasa tidak bisa approve atau berstatus 0
+        if ($request->status == 0) {
+            if(auth::user()->role !== 'admin' || auth::user()->role == 'admin'){
+                $blog->status = 0;
+            }
+        }
+        if($request->status == 1){
+            if(auth::user()->role !== 'admin'){
+                $blog->status = 0;
+            }else{
+                $blog->status = 1;
+            }
         }
 
         // Save to logs
