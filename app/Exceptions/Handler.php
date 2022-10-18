@@ -34,17 +34,18 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function report(\Exception $e)
+    public function report(Throwable $exception)
     {
-        if ($e instanceof \Exception) {
-            // emails.exception is the template of your email
-            // it will have access to the $error that we are passing below
-            Mail::send('emails.exception', ['error' => $e->getMessage()], function ($m) {
-                $m->from('system@boxity.id', 'New Log Report for Boxity Platform')->to('hello@bintangtobing.com', 'New log report for boxity application')->subject('New log report for boxity application');
-            });
-        }
+        // if ($e instanceof \Exception) {
+        //     // emails.exception is the template of your email
+        //     // it will have access to the $error that we are passing below
+        //     Mail::send('emails.exception', ['error' => $e->getMessage()], function ($m) {
+        //         $m->from('system@boxity.id', 'New Log Report for Boxity Platform')->to('hello@bintangtobing.com', 'New log report for boxity application')->subject('New log report for boxity application');
+        //     });
+        // }
 
-        parent::report($e);
+        // parent::report($e);
+        parent::report($exception);
     }
 
     /**
