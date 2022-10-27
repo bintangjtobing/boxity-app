@@ -544,6 +544,7 @@ class apiController extends Controller
     {
         $job = DB::table('jobvacancies')
             ->join('jobvacancies_views', 'jobvacancies.id', 'jobvacancies_views.job_id')
+            ->orderBy('jobvacancies.created_at', 'DESC')
             ->select('jobvacancies.*', 'jobvacancies_views.views')
             ->get();
         // return jobvacancy::orderBy('created_at', 'desc')->get();
@@ -773,14 +774,14 @@ class apiController extends Controller
 
         // jika tipe blog yg dikirim adalah draft maka, admin ataupun user biasa tidak bisa approve atau berstatus 0
         if ($request->status == 0) {
-            if(Auth::user()->role !== 'admin' || Auth::user()->role == 'admin'){
+            if (Auth::user()->role !== 'admin' || Auth::user()->role == 'admin') {
                 $blog->status = 0;
             }
         }
-        if($request->status == 1){
-            if(Auth::user()->role !== 'admin'){
+        if ($request->status == 1) {
+            if (Auth::user()->role !== 'admin') {
                 $blog->status = 0;
-            }else{
+            } else {
                 $blog->status = 1;
             }
         }
